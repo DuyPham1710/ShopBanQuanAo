@@ -1,0 +1,189 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.breadcrumb a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-container {
+  display: flex;
+  gap: 30px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  height: 400px;
+  width: 1200px;
+}
+
+.summer-shirt {
+  font-size: 55px;           /* Kích thước chữ */
+  font-weight: bold;         /* Độ đậm của chữ */
+  color: #333;               /* Màu chữ */
+  margin: 20px 0;           /* Khoảng cách trên và dưới */
+}
+
+.product-image img {
+  width: 340px;
+  height: 398px;
+  margin-top: -20px;
+  object-fit: cover;
+  
+}
+
+.product-details h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.product-details p {
+  margin: 5px 0;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.sale-price {
+  color: red;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.original-price {
+  font-size: 18px;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.button-group {
+  width: 145px;
+  display: flex;
+  align-items: center;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-group1 {
+  width: 210px;
+  display: flex;
+  align-items: center;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  background-color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #007bff;
+  transition: background-color 0.3s;
+}
+
+.button:not(:last-child) {
+  border-right: 1px solid #007bff;
+}
+
+.button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.button:focus {
+  outline: none;
+  background-color: #0056b3;
+  color: white;
+}
+
+.color select {
+  padding: 5px;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.buy-now {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.add-to-cart {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.box-container {
+  width: 500px;          /* Đặt chiều rộng của container */
+  display: flex;        /* Để linh hoạt căn giữa hoặc thay đổi bố cục */
+  justify-content: center; /* Căn giữa nội dung */
+}
+
+.divider {
+  width: 100%;            /* Chiều rộng đầy đủ */
+  border: none;           /* Xóa kiểu đường mặc định */
+  border-top: 1px solid #ddd; /* Đường phân cách có màu nhạt và độ dày 2px */
+  margin: 0;              /* Xóa khoảng cách mặc định của hr */
+}
+
+.box-container1 {
+  height: 70px;          /* Đặt chiều cao của container */
+  display: flex;          /* Để linh hoạt căn giữa hoặc thay đổi bố cục */
+  justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+  align-items: center;     /* Căn giữa nội dung theo chiều dọc */
+  margin-top: -70px;       /* Khoảng cách từ trên xuống */
+  margin-left: -50px;
+}
+
+.change-details {
+  display: flex;                  /* Sử dụng Flexbox cho lớp cha */
+  justify-content: space-between; /* Căn giữa và tạo khoảng cách giữa các phần tử */
+  align-items: center;            /* Căn giữa theo chiều dọc */
+  padding: 20px;                  /* Thêm khoảng đệm xung quanh */
+}
+
+.details-group {
+  display: flex;                  /* Sử dụng Flexbox cho nhóm chi tiết */
+  align-items: center;            /* Căn giữa các phần tử theo chiều dọc */
+}
+
+.quantity, .size, .color {
+  margin-right: 20px;            /* Khoảng cách giữa các nhóm */
+}
+
+.divider1 {
+  height: 1px;                   /* Đặt chiều cao của đường kẻ */
+  width: 100%;                   /* Chiều rộng đầy đủ */
+  background-color: #ddd;       /* Màu sắc cho đường kẻ */
+  margin: 5px 0;                 /* Khoảng cách trên và dưới đường kẻ */
+}
+

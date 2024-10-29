@@ -1,0 +1,134 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.view-more {
+    float: right;
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid #ddd; /* Viền xung quanh sản phẩm */
+    border-radius: 10px; /* Góc bo tròn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    cursor: pointer; 
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi di chuột */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Đổ bóng cho hiệu ứng 3D */
+}
+.discount {
+    background: black;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 4px;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    max-width: 200px; /* Chiều rộng tối đa của hình ảnh */
+    max-height: 200px; /* Chiều cao tối đa của hình ảnh */
+    border-bottom: 1px solid #ddd;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
+    margin: 0 auto;
+}
+
+.product-info {
+    padding: 15px;
+    text-align: left;
+}
+
+.product-info h3 {
+    font-size: 20px; 
+    margin-bottom: 5px;
+    font-weight: 700; 
+    
+}
+
+.product-info .hot {
+    background: #cb2d2d;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.price {
+    font-size: 18px;
+    color: #cb2d2d;
+    font-weight: bold;
+}
+
+.original-price {
+    font-size: 16px;
+    color: #888;
+    text-decoration: line-through;
+    margin-left: 5px;
+    font-weight: 700;
+}
+
+.buy-now {
+    margin-top: 14px; 
+    font-size: 16px; 
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Căn đều 2 bên */
+    margin-bottom: 20px; /* Khoảng cách dưới cho phần tiêu đề */
+}
+
+.section-header h2 {
+    font-size: 1.5rem; /* Kích thước chữ tiêu đề */
+    margin: 0;
+}
+
+.section-header .view-more {
+    font-size: 1rem; /* Kích thước chữ cho "Xem Thêm" */
+    color: #007bff;
+    text-decoration: none;
+}
+
+.section-header .view-more:hover {
+    text-decoration: underline; /* Gạch chân khi hover */
+}
