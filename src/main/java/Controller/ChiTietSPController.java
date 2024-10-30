@@ -35,6 +35,7 @@ public class ChiTietSPController extends HttpServlet {
 	    int maMau = Integer.parseInt(request.getParameter("maMau"));
 	    int maHinhAnh = Integer.parseInt(request.getParameter("maHinhAnh"));
 	    String duongDanHinh = request.getParameter("duongDanHinh");
+	    SanPham sp = new SanPham(maSP, tenSP, mota, gia, soLuong, maDanhMuc, maKichCo, maMau, maHinhAnh, duongDanHinh);
 	    
 	    Connection conn = null;
 		try {
@@ -45,25 +46,40 @@ public class ChiTietSPController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
-		SanPham sp = null;
+		List<String> listMau = null;
 		try {
-			sp = DBUtils.layThongTinSanPham(conn, maSP, tenSP, mota, gia, soLuong, maDanhMuc, maKichCo, maMau, maHinhAnh, duongDanHinh);
+			listMau = DBUtils.layMauSP(conn, maSP);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
+		List<String> listSize = null;
+		try {
+			listSize = DBUtils.laySizeSP(conn, maSP);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
 		
-		request.setAttribute("SanPham", sp);
-    	
+		request.setAttribute("sp", sp);
+		request.setAttribute("ListMau", listMau);
+		request.setAttribute("ListSize", listSize);
+		
 		RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietSP.jsp");
 		req.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String method = request.getParameter("method");
+		if (method.equals("get")) {
+			doGet(request, response);
+		}
+		else {
+			
+		}
 	}
 
 }

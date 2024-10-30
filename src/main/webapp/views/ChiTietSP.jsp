@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <!-- Google Fonts -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./css/ChiTietSP.css">
+<link rel="stylesheet" href="./views/css/style.css">
+<link rel="stylesheet" href="./views/css/ChiTietSP.css">
 </head>
 <body>
 	<!-- Navbar -->
@@ -23,7 +23,7 @@
             <div class="justify-content-between d-flex align-items-center">
                 <div class="d-flex align-items-center">
                     <a class="navbar-brand" href="/project_web/views/home.jsp">
-                        <img src="./images/logo.jpg" alt="Logo">
+                        <img src="./views/images/logo.jpg" alt="Logo">
                     </a>
                      <form class="d-flex">
 		                <input class="form-control me-2" type="search" placeholder="Search Products" aria-label="Search">
@@ -35,7 +35,7 @@
                 <div class="navbar-nav">
                     <a class="nav-link" href="/project_web/views/home.jsp">TRANG CHỦ</a>
                     <a class="nav-link" href="SanPhamController">SẢN PHẨM</a>
-                    <span class="nav-icon"><a href="#"><i class="fas fa-shopping-bag"></i></a></span>
+                    <span class="nav-icon"><a href="/project_web/views/GioHang.jsp"><i class="fas fa-shopping-bag"></i></a></span>
                     <span class="nav-icon"><a href="#"><i class="fas fa-user"></i></a></span>
                 </div>
             </div>
@@ -64,11 +64,11 @@
             <form class="product">
 		        <div class="product-container">
 		            <div class="product-image">
-		                <img src="https://cdn.kkfashion.vn/28393-large_default/ao-kieu-nu-co-so-mi-hoa-tiet-caro-asm16-18.jpg" alt="White Shirt">
+		                <img src="${sp.duongDanHinh}" alt="${sp.tenSP}">
 		            </div>
 		            
 		            <div class="product-details">
-		                <h1 class="summer-shirt">Summer Shirt</h1>
+		                <h1 class="summer-shirt">${sp.tenSP}</h1>
 		                <p>Thương hiệu: <a href="#">Golden Accessories</a></p>
 		                <div class="box-container">
 		                    <hr class="divider">
@@ -76,7 +76,7 @@
 		                <p>Giá:</p> 
 		
 		                <div class="price">
-		                    <span class="sale-price">40.000₫</span>
+		                    <span class="sale-price">${sp.gia}₫</span>
 		                    <span class="original-price">100.000₫</span>
 		                </div>
 		                <div class="box-container">
@@ -87,22 +87,38 @@
 		                <div class="change-details">
 		                    <div class="details-group">
 		                        <div class="quantity">
-		                            <p>Số lượng:</p>
-		                            <div class="button-group">
-		                                <button class="button">-</button>
-		                                <button class="button">1</button>
-		                                <button class="button">+</button>
-		                            </div>
-		                            
-		                        </div>
-		                        
+								    <p>Số lượng:</p>
+								    <div class="button-group">
+								        <button type="button" class="button" onclick="changeQuantity(-1)">-</button>
+								        <button type="button" class="button" id="quantity">1</button><!-- Giá trị mặc định là 1 -->
+								        <button type="button" class="button" onclick="changeQuantity(1)">+</button>
+								    </div>	
+								</div>
+		                        <script>
+								    function changeQuantity(value) {
+								        // Lấy phần tử hiển thị số lượng
+								        const quantityElement = document.getElementById("quantity");
+								        let quantity = parseInt(quantityElement.innerText);
+								        
+								        // Tăng hoặc giảm số lượng
+								        quantity += value;
+								        
+								        // Đảm bảo số lượng không nhỏ hơn 1
+								        if (quantity < 1) {
+								            quantity = 1;
+								        }
+								
+								        // Cập nhật lại giá trị số lượng trên trang
+								        quantityElement.innerText = quantity;
+								    }
+								</script>
 		                        <div class="size">
 		                            <p>Size:</p>
 		                            <div class="button-group1">
-		                                <button class="button">S</button>
-		                                <button class="button">M</button>
-		                                <button class="button">L</button>
-		                                <button class="button">XL</button>
+		                            	<c:forEach var="size" items="${ListSize}">			                    
+					                         <button class="button">${size}</button>
+						                </c:forEach>
+
 		                            </div>
 		                            
 		                        </div>
@@ -111,12 +127,11 @@
 		                        <div class="color">
 		                            <p>Màu sắc:</p>
 		                            <div class="color-selector">
-		                                <select class="form-control">
-		                                    <option value="red">Đỏ</option>
-		                                    <option value="blue">Xanh dương</option>
-		                                    <option value="green">Xanh lá</option>
-		                                    <option value="yellow">Vàng</option>
-		                                </select>
+		                            	<select class="form-select" name="tenmau">
+						                    <c:forEach var="color" items="${ListMau}">
+						                       <option value="${color}">${color}</option>
+						                    </c:forEach>
+						                </select>
 		                            </div>
 		                        </div>
 		                    </div>

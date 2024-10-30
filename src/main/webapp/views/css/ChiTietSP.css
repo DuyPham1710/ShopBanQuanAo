@@ -127,21 +127,36 @@
 }
 
 .buy-now {
-  background-color: red;
+  background-color: #ff5733; /* Màu nền nút Mua Ngay */
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+  font-weight: bold; /* Chữ đậm */
+  border-radius: 8px; /* Bo tròn */
+  transition: background-color 0.3s;
 }
 
+/* CSS cho nút "Thêm vào giỏ hàng" */
 .add-to-cart {
-  background-color: #007bff;
+  background-color: #007bff; /* Màu nền nút Thêm vào giỏ hàng */
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+  font-weight: bold; /* Chữ đậm */
+  border-radius: 8px; /* Bo tròn */
+  transition: background-color 0.3s;
 }
 
+/* Hiệu ứng hover */
+.buy-now:hover {
+  background-color: #e44d2e; /* Màu nền khi hover */
+}
+
+.add-to-cart:hover {
+  background-color: #0056b3; /* Màu nền khi hover */
+}
 .box-container {
   width: 500px;          /* Đặt chiều rộng của container */
   display: flex;        /* Để linh hoạt căn giữa hoặc thay đổi bố cục */

@@ -32,9 +32,9 @@
 		            </form>
                 </div>
                 <div class="navbar-nav">
-                    <a class="btn btn-primary" href="#">TRANG CHỦ</a>
+                    <a class="btn btn-primary" href="home.jsp">TRANG CHỦ</a>
                     <a class="nav-link" href="/project_web/SanPhamController">SẢN PHẨM</a>
-                    <span class="nav-icon"><a href="#"><i class="fas fa-shopping-bag"></i></a></span>
+                    <span class="nav-icon"><a href="/project_web/views/GioHang.jsp"><i class="fas fa-shopping-bag"></i></a></span>
                     <span class="nav-icon"><a href="#"><i class="fas fa-user"></i></a></span>
                 </div>
             </div>

@@ -34,27 +34,31 @@ public class DBUtils {
 		return listSP;
 	}
 	
-	public static SanPham layThongTinSanPham(Connection conn, int maSP, String tenSP, String mota, float gia, int soLuong, int maDanhMuc, int maKichCo, int maMau, int maHinhAnh, String duongDanHinh) throws SQLException {
-		SanPham sp = new SanPham();
-		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, Gia, SoLuong, MaDanhMuc, MaKichCo, MaMau, MaHinhAnh, DuongDanHinh from SanPham as sp, HinhAnhSanPham as img where sp.MaSanPham = img.MaSanPham";
+	public static List<String> layMauSP(Connection conn, int maSP) throws SQLException {
+	
+		String sql = "select TenMau from SanPham, MauSac where SanPham.MaMau = MauSac.MaMau and SanPham.MaSanPham = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
 		ResultSet rs = ps.executeQuery();
 		
+		List<String> listMau = new ArrayList<String>();
 		while (rs.next()) {	
-			SanPham sp = new SanPham(
-					rs.getInt("maSP"), 
-					rs.getString("TenSanPham"), 
-					rs.getString("MoTa"), 
-					rs.getFloat("Gia"), 
-					rs.getInt("SoLuong"), 
-					rs.getInt("MaDanhMuc"), 
-					rs.getInt("MaKichCo"), 
-					rs.getInt("MaMau"), 
-					rs.getInt("MaHinhAnh"), 
-					rs.getString("DuongDanHinh"));
-			
-			listSP.add(sp);	
+			listMau.add(rs.getString("TenMau"));
 		}
-		return listSP;
+		return listMau;
+	}
+	
+	public static List<String> laySizeSP(Connection conn, int maSP) throws SQLException {
+		
+		String sql = "select TenKichCo from SanPham, KichCo where SanPham.MaKichCo = KichCo.MaKichCo and SanPham.MaSanPham = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
+		ResultSet rs = ps.executeQuery();
+		
+		List<String> listMau = new ArrayList<String>();
+		while (rs.next()) {	
+			listMau.add(rs.getString("TenKichCo"));
+		}
+		return listMau;
 	}
 }
