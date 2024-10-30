@@ -53,10 +53,7 @@
 				            	<i class="fas fa-home"></i>
 				            </a>
 			            </li>
-			            <a href="/project_web/SanPhamController">
-			            	 <li class="breadcrumb-item active" id="product-item"> Sản phẩm</li>
-			            </a>	
-			           
+			            <li class="breadcrumb-item active" id="product-item"> Sản phẩm / ${sp.tenSP}</li>
 			        </ol>
 			    </nav>
 			</div>
