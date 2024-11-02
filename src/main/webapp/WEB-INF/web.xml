@@ -29,4 +29,14 @@
     <servlet-name>ChiTietSPController</servlet-name>
     <url-pattern>/ChiTietSPController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>loginController</display-name>
+    <servlet-name>loginController</servlet-name>
+    <servlet-class>Controller.loginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loginController</servlet-name>
+    <url-pattern>/loginController</url-pattern>
+  </servlet-mapping>
 </web-app>

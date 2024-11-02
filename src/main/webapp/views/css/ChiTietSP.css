@@ -60,9 +60,10 @@
 }
 
 .sale-price {
-  color: red;
-  font-size: 24px;
+  color: #cb2d2d;
+  font-size: 30px;
   margin-right: 10px;
+  font-weight: bold;
 }
 
 .original-price {
@@ -75,7 +76,7 @@
   width: 145px;
   display: flex;
   align-items: center;
-  border: 2px solid #007bff;
+  border: 2px solid #888888;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -85,10 +86,12 @@
   width: 210px;
   display: flex;
   align-items: center;
-  border: 2px solid #007bff;
+  border: 2px solid #888888;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: auto;              
+  max-width: 100%;
 }
 
 .button {
@@ -97,27 +100,27 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  color: #007bff;
+  color: #111111;
   transition: background-color 0.3s;
 }
 
 .button:not(:last-child) {
-  border-right: 1px solid #007bff;
+  border-right: 1px solid #111111;
 }
 
 .button:hover {
-  background-color: #007bff;
+  background-color: #111111;
   color: white;
 }
 
 .button:focus {
   outline: none;
-  background-color: #0056b3;
+  background-color: #111111;
   color: white;
 }
 
 .color select {
-  padding: 5px;
+  padding-right: 40px !important;
 }
 
 .buttons {
@@ -139,7 +142,7 @@
 
 /* CSS cho nút "Thêm vào giỏ hàng" */
 .add-to-cart {
-  background-color: #007bff; /* Màu nền nút Thêm vào giỏ hàng */
+  background-color: rgb(25, 118, 210); /* Màu nền nút Thêm vào giỏ hàng */
   color: white;
   border: none;
   padding: 10px 20px;
@@ -200,5 +203,19 @@
   width: 100%;                   /* Chiều rộng đầy đủ */
   background-color: #ddd;       /* Màu sắc cho đường kẻ */
   margin: 5px 0;                 /* Khoảng cách trên và dưới đường kẻ */
+}
+
+.color-selector {
+  display: inline-flex;           /* Căn chỉnh linh hoạt với nội dung */
+  align-items: center;            /* Căn giữa theo chiều dọc */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: fit-content; ;                    /* Tự động thay đổi kích thước theo nội dung */
+}
+
+.color-selector .form-select {
+  width: auto;                    /* Căn chỉnh chiều rộng linh hoạt với nội dung */
+  padding: 8px 15px;              /* Điều chỉnh padding cho phù hợp */
+  font-size: 14px;
 }
 

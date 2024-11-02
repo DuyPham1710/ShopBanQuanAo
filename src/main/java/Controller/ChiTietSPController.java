@@ -26,20 +26,19 @@ public class ChiTietSPController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int maSP = Integer.parseInt(request.getParameter("maSP"));
-	    String tenSP = request.getParameter("tenSP");
-	    String mota = request.getParameter("mota");
-	    float gia = Float.parseFloat(request.getParameter("gia"));
-	    int soLuong = Integer.parseInt(request.getParameter("soLuong"));
-	    int maDanhMuc = Integer.parseInt(request.getParameter("maDanhMuc"));
-	    int maKichCo = Integer.parseInt(request.getParameter("maKichCo"));
-	    int maMau = Integer.parseInt(request.getParameter("maMau"));
-	    int maHinhAnh = Integer.parseInt(request.getParameter("maHinhAnh"));
-	    String duongDanHinh = request.getParameter("duongDanHinh");
-	    SanPham sp = new SanPham(maSP, tenSP, mota, gia, soLuong, maDanhMuc, maKichCo, maMau, maHinhAnh, duongDanHinh);
-	    
+
 	    Connection conn = null;
 		try {
 			conn = new ConnectJDBC().getConnection();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		SanPham sp = null;
+		try {
+			sp = DBUtils.layThongTinSP(conn, maSP);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -73,8 +73,8 @@
 		                <p>Giá:</p> 
 		
 		                <div class="price">
-		                    <span class="sale-price">${sp.gia}₫</span>
-		                    <span class="original-price">100.000₫</span>
+		                    <span class="sale-price">${sp.giaHienTai}₫</span>
+		                    <span class="original-price">${sp.giaBanDau}₫</span>
 		                </div>
 		                <div class="box-container">
 		                    <hr class="divider">
@@ -134,8 +134,6 @@
 		                    </div>
 		                </div>
 		                
-		                
-		                
 		                <div class="buttons">
 		                    <button class="buy-now">Mua Ngay</button>
 		                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
@@ -143,7 +141,14 @@
 		            </div>
 		        </div>
 		    </form>
-            
+            <div class="product-description mt-4">
+			    <h2>Mô tả sản phẩm</h2>
+			    <p>
+			        <!-- Bạn có thể thay thế nội dung bên dưới bằng thông tin mô tả sản phẩm thực tế -->
+			        Sản phẩm này được làm từ chất liệu cao cấp, mang lại sự thoải mái và phong cách cho người sử dụng. Với thiết kế hiện đại và màu sắc đa dạng, sản phẩm này phù hợp với nhiều dịp khác nhau. 
+			        Hãy tận hưởng sự thoải mái và tự tin khi diện sản phẩm này.
+			    </p>
+			</div>
         </div>
     </div>
 </body>

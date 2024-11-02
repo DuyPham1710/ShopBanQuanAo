@@ -43,7 +43,10 @@ h2 {
     text-align: center;
     position: relative;
     cursor: pointer; 
-    transition: transform 0.1s ease, box-shadow 0.3s ease;
+    
+}
+.hover-effect {
+	transition: transform 0.1s ease, box-shadow 0.3s ease;
 }
 .product-card:hover {
     transform: scale(1.05); /* Phóng to nhẹ khi di chuột */

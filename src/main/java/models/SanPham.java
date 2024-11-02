@@ -4,33 +4,29 @@ public class SanPham {
 	private int maSP;
 	private String tenSP;
 	private String mota;
-	private float gia;
+	private int giaBanDau;
+	private int giamGia;
+	private float giaHienTai;
 	private int soLuong;
 	private int maDanhMuc;
-	private int maKichCo;
-	private int maMau;
 	private int maHinhAnh;
 	private String duongDanHinh;
 	
-	public SanPham(int maSP, String tenSP, String mota, float gia, int soLuong, int maDanhMuc, int maKichCo, int maMau, int maHinhAnh, String duongDanHinh) {
+	public SanPham(int maSP, String tenSP, String mota, int giaBanDau, int giamGia, int soLuong, int maDanhMuc, int maHinhAnh, String duongDanHinh) {
 		this.maSP = maSP;
 		this.tenSP = tenSP;
 		this.mota = mota;
-		this.gia = gia;
+		this.giaBanDau = giaBanDau;
+		this.giamGia = giamGia;
 		this.soLuong = soLuong;
 		this.maDanhMuc = maDanhMuc;
-		this.maKichCo = maKichCo;
-		this.maMau = maMau;
+	
 		this.maHinhAnh = maHinhAnh;
 		this.duongDanHinh = duongDanHinh;
+		this.giaHienTai = (giaBanDau - (giaBanDau * ((float)giamGia/100)));
 	}
 	
-	public int getMaKichCo() {
-		return maKichCo;
-	}
-	public void setMaKichCo(int maKichCo) {
-		this.maKichCo = maKichCo;
-	}
+
 	public int getMaDanhMuc() {
 		return maDanhMuc;
 	}
@@ -43,11 +39,11 @@ public class SanPham {
 	public void setSoLuong(int soLuong) {
 		this.soLuong = soLuong;
 	}
-	public float getGia() {
-		return gia;
+	public int getGiaBanDau() {
+		return giaBanDau;
 	}
-	public void setGia(int gia) {
-		this.gia = gia;
+	public void setGiaBanDau(int giaBanDau) {
+		this.giaBanDau = giaBanDau;
 	}
 	public String getMota() {
 		return mota;
@@ -84,12 +80,22 @@ public class SanPham {
 		this.maHinhAnh = maHinhAnh;
 	}
 
-	public int getMaMau() {
-		return maMau;
+	
+
+	public int getGiamGia() {
+		return giamGia;
 	}
 
-	public void setMaMau(int maMau) {
-		this.maMau = maMau;
+	public void setGiamGia(int giamGia) {
+		this.giamGia = giamGia;
+	}
+
+	public float getGiaHienTai() {
+		return giaHienTai;
+	}
+
+	public void setGiaHienTai(float giaHienTai) {
+		this.giaHienTai = giaHienTai;
 	}
 	
 }

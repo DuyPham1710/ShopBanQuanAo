@@ -12,20 +12,20 @@ import models.SanPham;
 public class DBUtils {
 	public static List<SanPham> DanhSachSP(Connection conn) throws SQLException {
 		List<SanPham> listSP = new ArrayList<SanPham>();
-		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, Gia, SoLuong, MaDanhMuc, MaKichCo, MaMau, MaHinhAnh, DuongDanHinh from SanPham as sp, HinhAnhSanPham as img where sp.MaSanPham = img.MaSanPham";
+		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, MaDanhMuc, MaHinhAnh, DuongDanHinh from SanPham as sp, HinhAnhSanPham as img where sp.MaSanPham = img.MaSanPham";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		
 		while (rs.next()) {	
+			int giaBanDau = (int)(rs.getFloat("GiaBanDau"));
 			SanPham sp = new SanPham(
 					rs.getInt("maSP"), 
 					rs.getString("TenSanPham"), 
 					rs.getString("MoTa"), 
-					rs.getFloat("Gia"), 
+					giaBanDau,
+					rs.getInt("GiamGia"), 
 					rs.getInt("SoLuong"), 
 					rs.getInt("MaDanhMuc"), 
-					rs.getInt("MaKichCo"), 
-					rs.getInt("MaMau"), 
 					rs.getInt("MaHinhAnh"), 
 					rs.getString("DuongDanHinh"));
 			
@@ -34,9 +34,33 @@ public class DBUtils {
 		return listSP;
 	}
 	
+	public static SanPham layThongTinSP(Connection conn, int maSP) throws SQLException {
+		
+		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, MaDanhMuc, MaHinhAnh, DuongDanHinh from SanPham as sp, HinhAnhSanPham as img where sp.MaSanPham = img.MaSanPham and sp.MaSanPham = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()) {
+			int giaBanDau = (int)(rs.getFloat("GiaBanDau"));
+			SanPham sp = new SanPham(
+					rs.getInt("maSP"), 
+					rs.getString("TenSanPham"), 
+					rs.getString("MoTa"), 
+					giaBanDau,
+					rs.getInt("GiamGia"), 
+					rs.getInt("SoLuong"), 
+					rs.getInt("MaDanhMuc"), 
+					rs.getInt("MaHinhAnh"), 
+					rs.getString("DuongDanHinh"));
+			return sp;
+		}
+		return null;
+	}
+	
+	
 	public static List<String> layMauSP(Connection conn, int maSP) throws SQLException {
 	
-		String sql = "select TenMau from SanPham, MauSac where SanPham.MaMau = MauSac.MaMau and SanPham.MaSanPham = ?";
+		String sql = "select TenMau from MauSac where MauSac.MaSanPham = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, maSP);
 		ResultSet rs = ps.executeQuery();
@@ -50,7 +74,7 @@ public class DBUtils {
 	
 	public static List<String> laySizeSP(Connection conn, int maSP) throws SQLException {
 		
-		String sql = "select TenKichCo from SanPham, KichCo where SanPham.MaKichCo = KichCo.MaKichCo and SanPham.MaSanPham = ?";
+		String sql = "select TenKichCo from KichCo where KichCo.MaSanPham = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, maSP);
 		ResultSet rs = ps.executeQuery();

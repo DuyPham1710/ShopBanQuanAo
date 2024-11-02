@@ -66,26 +66,17 @@
 			    <div class="product-grid">
 				     <c:forEach var="sp" items="${ListSP}">
 				     	<form action="./ChiTietSPController" method="post">
-				     		<div class="product-card" onclick="this.closest('form').submit();">
-					            <div class="discount">-60%</div>
+				     		<div class="product-card hover-effect" onclick="this.closest('form').submit();">
+					            <div class="discount">-${sp.giamGia}%</div>
 					            <img src="${sp.duongDanHinh}" alt="${sp.tenSP}">
 					            <div class="product-info">
 					                <h3>${sp.tenSP} <span class="hot">Hot</span></h3>
-					                <p class="price">${sp.gia}đ <span class="original-price">100.000đ</span></p>
+					                <p class="price">${sp.giaHienTai}đ <span class="original-price">${sp.giaBanDau}đ</span></p>
 					                <h4 class="buy-now">Mua Ngay</h4>
 					            </div>
 					        </div>
 					        <input type="hidden" name="method" value="get">
-					        <input type="hidden" name="maSP" value="${sp.maSP}">
-				            <input type="hidden" name="tenSP" value="${sp.tenSP}">
-				            <input type="hidden" name="mota" value="${sp.mota}">
-				            <input type="hidden" name="gia" value="${sp.gia}">
-				            <input type="hidden" name="soLuong" value="${sp.soLuong}">
-				            <input type="hidden" name="maDanhMuc" value="${sp.maDanhMuc}">
-				            <input type="hidden" name="maKichCo" value="${sp.maKichCo}">
-				            <input type="hidden" name="maMau" value="${sp.maMau}">
-				            <input type="hidden" name="maHinhAnh" value="${sp.maHinhAnh}">
-				            <input type="hidden" name="duongDanHinh" value="${sp.duongDanHinh}">
+					        <input type="hidden" name="maSP" value="${sp.maSP}">	           
 				     	</form>
 				    </c:forEach>
 				        
