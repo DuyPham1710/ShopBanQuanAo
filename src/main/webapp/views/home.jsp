@@ -21,7 +21,7 @@
         <div class="container-fluid">
             <div class="justify-content-between d-flex align-items-center">
                 <div class="d-flex align-items-center">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="home.jsp">
                         <img src="./images/logo.jpg" alt="Logo">
                     </a>
                      <form class="d-flex">
@@ -70,7 +70,8 @@
             
         </div>
     </div>
-
+	
+    <jsp:include page="footer.jsp" />
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

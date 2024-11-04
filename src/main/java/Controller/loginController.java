@@ -6,9 +6,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Account;
-import models.actBean;
+import models.SanPham;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.util.List;
+
+import DAO.AccountDAO;
+import DBConnection.ConnectJDBC;
 
 public class loginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,11 +31,28 @@ public class loginController extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
+		
+		Connection conn = null;
+		try {
+			conn = new ConnectJDBC().getConnection();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
 		Account acountBean = new Account(username, password);
-		int valid = acountBean.validate();
-		if (valid != 0) {
+		int ID = 0;
+		try {
+			ID = AccountDAO.Validate(conn, acountBean);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (ID != 0) {
 		//	request.getRequestDispatcher("/views/home.jsp").forward(request, response);
-			if (valid == 1) {
+			if (ID == 1) {
 				response.sendRedirect("/project_web/views/Admin.jsp");
 			}
 			else {

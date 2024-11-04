@@ -12,6 +12,26 @@ CREATE TABLE Account
 )
 GO
 
+CREATE TABLE DiaChiNhanHang
+(
+	Madiachi INT primary key,
+	TenDiaChi nvarchar(200)
+)
+GO
+
+CREATE TABLE NguoiDung
+(
+	ID INT references Account(ID),
+	CCCD varchar(20) primary key,
+	Hoten nvarchar(50),
+	Gioitinh nvarchar(50),
+	SDT varchar(12),
+	NgaySinh date,
+	Madiachi int references DiaChiNhanHang(Madiachi),
+	email varchar(50)
+)
+GO
+
 -- Bảng Danh mục sản phẩm
 CREATE TABLE DanhMucSanPham (
     MaDanhMuc INT PRIMARY KEY,
@@ -73,7 +93,23 @@ GO
 
 INSERT INTO Account (username, pass, position) VALUES 
 (N'admin', N'123', N'admin'),
-(N'user', N'123', N'user');
+(N'duy', N'1', N'user'),
+(N'lam', N'1', N'user'),
+(N'luan', N'1', N'user');
+GO
+
+INSERT INTO DiaChiNhanHang (Madiachi, TenDiaChi)
+VALUES 
+(1, N'123 Đường Lê Lợi, Quận 1, TP. HCM'),
+(2, N'456 Đường Hai Bà Trưng, Quận 3, TP. HCM'),
+(3, N'789 Đường Nguyễn Huệ, Quận 1, TP. HCM');
+GO
+
+INSERT INTO NguoiDung (ID, CCCD, Hoten, Gioitinh, SDT, NgaySinh, Madiachi, email)
+VALUES 
+(2, '123456789012', N'Phạm Ngọc Duy', N'Nam', '0794821201', '2004-10-17', 1, 'duy@gmail.com'),
+(3, '234567890123', N'Nguyễn Hữu Ngọc Lam', N'Nam', '0912345678', '2004-10-22', 2, 'lam@gmail.com'),
+(4, '345678901234', N'Nguyễn Văn Luân', N'Nam', '0923456789', '2004-08-30', 3, 'luan@gmail.com');
 GO
 
 INSERT INTO DanhMucSanPham (MaDanhMuc, TenDanhMuc) VALUES 

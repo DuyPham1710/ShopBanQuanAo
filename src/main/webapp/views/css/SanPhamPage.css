@@ -118,7 +118,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Căn đều 2 bên */
-    margin-bottom: 20px; /* Khoảng cách dưới cho phần tiêu đề */
+    margin-bottom: 50px; /* Khoảng cách dưới cho phần tiêu đề */
 }
 
 .section-header h2 {

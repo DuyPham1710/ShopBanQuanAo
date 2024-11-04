@@ -73,12 +73,12 @@
 }
 
 .button-group {
-  width: 145px;
   display: flex;
   align-items: center;
   border: 2px solid #888888;
   border-radius: 8px;
   overflow: hidden;
+  width: auto; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -92,6 +92,16 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: auto;              
   max-width: 100%;
+ /*  margin-right: 80px; */
+}
+
+.quantity {
+	/* margin-right: 80px;	 */
+}
+
+.quantity-display {
+	width: 60px;
+	text-align: center;	
 }
 
 .button {
@@ -101,6 +111,7 @@
   font-size: 16px;
   cursor: pointer;
   color: #111111;
+  user-select: none;
   transition: background-color 0.3s;
 }
 
@@ -161,11 +172,18 @@
   background-color: #0056b3; /* Màu nền khi hover */
 }
 .box-container {
-  width: 500px;          /* Đặt chiều rộng của container */
-  display: flex;        /* Để linh hoạt căn giữa hoặc thay đổi bố cục */
-  justify-content: center; /* Căn giữa nội dung */
+  	width: 780px;
+    display: flex;
+    justify-content: center;
+    background-color: #e0e0e0;
 }
-
+.vertical-divider {
+    width: 1px;               /* Độ rộng của đường kẻ dọc */
+    height: 80px;             /* Chiều cao của đường kẻ */
+    background-color: #e0e0e0; /* Màu sắc của đường kẻ */
+    margin-left: 50px;
+    margin-right: 50px;           /* Khoảng cách với các phần tử xung quanh */
+}
 .divider {
   width: 100%;            /* Chiều rộng đầy đủ */
   border: none;           /* Xóa kiểu đường mặc định */
@@ -194,10 +212,6 @@
   align-items: center;            /* Căn giữa các phần tử theo chiều dọc */
 }
 
-.quantity, .size, .color {
-  margin-right: 20px;            /* Khoảng cách giữa các nhóm */
-}
-
 .divider1 {
   height: 1px;                   /* Đặt chiều cao của đường kẻ */
   width: 100%;                   /* Chiều rộng đầy đủ */
@@ -219,3 +233,113 @@
   font-size: 14px;
 }
 
+.product-description {
+  gap: 30px;
+  border-top: 2px solid #ddd;
+  margin-top: 110px;
+  margin-left: 60px;
+  height: 224px;
+  width: 1200px;
+}
+
+.description h4 {
+    font-weight: bold;      /* Làm cho chữ đậm hơn */
+    color: #333;            /* Màu của tiêu đề */
+    margin-bottom: 30px;    /* Tạo khoảng cách với mô tả bên dưới */
+}
+
+.description p {
+    color: #707070;            /* Màu cho mô tả sản phẩm */
+    line-height: 1.6;       /* Khoảng cách giữa các dòng trong đoạn mô tả */
+    margin-top: 24px;       /* Khoảng cách trên để cách xa thẻ h5 thêm chút */
+}
+
+.description {
+	padding-top: 50px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;  
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid #ddd; /* Viền xung quanh sản phẩm */
+    border-radius: 10px; /* Góc bo tròn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    cursor: pointer; 
+    
+}
+.hover-effect {
+	transition: transform 0.1s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi di chuột */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Đổ bóng cho hiệu ứng 3D */
+}
+.discount {
+    background: black;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 4px;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    max-width: 200px; /* Chiều rộng tối đa của hình ảnh */
+    max-height: 200px; /* Chiều cao tối đa của hình ảnh */
+    border-bottom: 1px solid #ddd;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
+    margin: 0 auto;
+}
+
+.product-info {
+    padding: 15px;
+    text-align: left;
+}
+
+.product-info h3 {
+    font-size: 20px; 
+    margin-bottom: 5px;
+    font-weight: 700; 
+    
+}
+
+.product-info .hot {
+    background: #cb2d2d;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.price {
+    font-size: 18px;
+    color: #cb2d2d;
+    font-weight: bold;
+}
+
+.original-price {
+    font-size: 16px;
+    color: #888;
+    text-decoration: line-through;
+    margin-left: 5px;
+    font-weight: 700;
+}
+
+.buy-now-similar {
+    margin-top: 14px; 
+    font-size: 16px; 
+}

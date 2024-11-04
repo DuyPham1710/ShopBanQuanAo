@@ -53,7 +53,9 @@
 				            	<i class="fas fa-home"></i>
 				            </a>
 			            </li>
-			            <li class="breadcrumb-item active" id="product-item"> Sản phẩm / ${sp.tenSP}</li>
+			            <li class="breadcrumb-item active" id="product-item">
+						    <a href="SanPhamController">Sản phẩm / ${sp.tenSP}</a>
+						</li>
 			        </ol>
 			    </nav>
 			</div>
@@ -86,11 +88,12 @@
 		                        <div class="quantity">
 								    <p>Số lượng:</p>
 								    <div class="button-group">
-								        <button type="button" class="button" onclick="changeQuantity(-1)">-</button>
-								        <button type="button" class="button" id="quantity">1</button><!-- Giá trị mặc định là 1 -->
-								        <button type="button" class="button" onclick="changeQuantity(1)">+</button>
+								        <div class="button" onclick="changeQuantity(-1)">-</div>
+								        <div class="button quantity-display" id="quantity">1</div>
+								        <div class="button" onclick="changeQuantity(1)">+</div>
 								    </div>	
 								</div>
+								<div class="vertical-divider"></div> <!-- Đường kẻ dọc -->
 		                        <script>
 								    function changeQuantity(value) {
 								        // Lấy phần tử hiển thị số lượng
@@ -113,13 +116,13 @@
 		                            <p>Size:</p>
 		                            <div class="button-group1">
 		                            	<c:forEach var="size" items="${ListSize}">			                    
-					                         <button class="button">${size}</button>
+					                      <button type="button" class="button">${size}</button>
 						                </c:forEach>
-
+										
 		                            </div>
 		                            
 		                        </div>
-		                     
+		                     	<div class="vertical-divider"></div> <!-- Đường kẻ dọc -->
 		                        
 		                        <div class="color">
 		                            <p>Màu sắc:</p>
@@ -141,15 +144,43 @@
 		            </div>
 		        </div>
 		    </form>
-            <div class="product-description mt-4">
-			    <h2>Mô tả sản phẩm</h2>
-			    <p>
-			        <!-- Bạn có thể thay thế nội dung bên dưới bằng thông tin mô tả sản phẩm thực tế -->
-			        Sản phẩm này được làm từ chất liệu cao cấp, mang lại sự thoải mái và phong cách cho người sử dụng. Với thiết kế hiện đại và màu sắc đa dạng, sản phẩm này phù hợp với nhiều dịp khác nhau. 
-			        Hãy tận hưởng sự thoải mái và tự tin khi diện sản phẩm này.
-			    </p>
+            <div class="product-description">
+            	<div class="description">
+            		<h4>Mô tả sản phẩm</h4>
+				    <p>
+				       ${sp.mota}
+				    </p>
+            	</div>
+			    
+			</div>
+			
+			<div class="product-description">
+            	<div class="description">
+            		<h4>Các sản phẩm tương tự</h4>
+					<div class="product-grid">
+					     <c:forEach var="sp" items="${ListSPTuongTu}">
+					     	<form action="./ChiTietSPController" method="post">
+					     		<div class="product-card hover-effect" onclick="this.closest('form').submit();">
+						            <div class="discount">-${sp.giamGia}%</div>
+						            <img src="${sp.duongDanHinh}" alt="${sp.tenSP}">
+						            <div class="product-info">
+						                <h3>${sp.tenSP} <span class="hot">Hot</span></h3>
+						                <p class="price">${sp.giaHienTai}đ <span class="original-price">${sp.giaBanDau}đ</span></p>
+						                <h4 class="buy-now-similar">Mua Ngay</h4>
+						            </div>
+						        </div>
+						        <input type="hidden" name="method" value="get">
+						        <input type="hidden" name="maSP" value="${sp.maSP}">	           
+					     	</form>
+					    </c:forEach>
+					        
+				    </div>
+            	</div>
+			    
 			</div>
         </div>
     </div>
+    
+    <jsp:include page="footer.jsp" />
 </body>
 </html>

@@ -3,10 +3,13 @@ package models;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
+import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
 public class Account {
+	static int ID;
 	private String username;
 	private String password;
 	private String position;
@@ -26,25 +29,5 @@ public class Account {
 	}
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	
-	public int validate() {
-		String sql = "select ID from Account where username = ? and pass = ?";
-		try {
-			Connection conn = new ConnectJDBC().getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			ps.setString(2, password);
-			ResultSet rs = ps.executeQuery();
-			
-			if (rs.next()) {	
-				return rs.getInt("ID");
-			}
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return 0;
-		
 	}
 }

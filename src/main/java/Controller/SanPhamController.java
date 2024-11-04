@@ -7,8 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.SanPham;
-import models.SinhVien;
-import utils.DBUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,6 +15,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
 public class SanPhamController extends HttpServlet {
@@ -38,7 +37,7 @@ public class SanPhamController extends HttpServlet {
 		
 		List<SanPham> listSP = null;
 		try {
-			listSP = DBUtils.DanhSachSP(conn);
+			listSP = SanPhamDAO.DanhSachSP(conn);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -7,12 +7,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.SanPham;
-import utils.DBUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
+import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
 
@@ -38,7 +38,7 @@ public class ChiTietSPController extends HttpServlet {
 		
 		SanPham sp = null;
 		try {
-			sp = DBUtils.layThongTinSP(conn, maSP);
+			sp = SanPhamDAO.layThongTinSP(conn, maSP);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -47,7 +47,7 @@ public class ChiTietSPController extends HttpServlet {
 		
 		List<String> listMau = null;
 		try {
-			listMau = DBUtils.layMauSP(conn, maSP);
+			listMau = SanPhamDAO.layMauSP(conn, maSP);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -56,7 +56,16 @@ public class ChiTietSPController extends HttpServlet {
 		
 		List<String> listSize = null;
 		try {
-			listSize = DBUtils.laySizeSP(conn, maSP);
+			listSize = SanPhamDAO.laySizeSP(conn, maSP);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		List<SanPham> listSPTuongTu = null;
+		try {
+			listSPTuongTu = SanPhamDAO.DanhSachSPTuongTu(conn, sp.getMaSP(), sp.getMaDanhMuc());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -66,6 +75,7 @@ public class ChiTietSPController extends HttpServlet {
 		request.setAttribute("sp", sp);
 		request.setAttribute("ListMau", listMau);
 		request.setAttribute("ListSize", listSize);
+		request.setAttribute("ListSPTuongTu", listSPTuongTu);
 		
 		RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietSP.jsp");
 		req.forward(request, response);

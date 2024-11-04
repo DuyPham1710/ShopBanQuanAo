@@ -1,4 +1,4 @@
-package utils;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import models.SanPham;
 
-public class DBUtils {
+public class SanPhamDAO {
 	public static List<SanPham> DanhSachSP(Connection conn) throws SQLException {
 		List<SanPham> listSP = new ArrayList<SanPham>();
 		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, MaDanhMuc, MaHinhAnh, DuongDanHinh from SanPham as sp, HinhAnhSanPham as img where sp.MaSanPham = img.MaSanPham";
@@ -84,5 +84,33 @@ public class DBUtils {
 			listMau.add(rs.getString("TenKichCo"));
 		}
 		return listMau;
+	}
+	
+	public static List<SanPham> DanhSachSPTuongTu(Connection conn, int maSP, int maDanhMuc) throws SQLException {
+		List<SanPham> listSP = new ArrayList<SanPham>();
+		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, MaDanhMuc, MaHinhAnh, DuongDanHinh "
+				+ "from SanPham as sp, HinhAnhSanPham as img "
+				+ "where sp.MaSanPham = img.MaSanPham and sp.MaDanhMuc = ? and sp.MaSanPham <> ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maDanhMuc);
+		ps.setInt(2, maSP);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {	
+			int giaBanDau = (int)(rs.getFloat("GiaBanDau"));
+			SanPham sp = new SanPham(
+					rs.getInt("maSP"), 
+					rs.getString("TenSanPham"), 
+					rs.getString("MoTa"), 
+					giaBanDau,
+					rs.getInt("GiamGia"), 
+					rs.getInt("SoLuong"), 
+					rs.getInt("MaDanhMuc"), 
+					rs.getInt("MaHinhAnh"), 
+					rs.getString("DuongDanHinh"));
+			
+			listSP.add(sp);	
+		}
+		return listSP;
 	}
 }
