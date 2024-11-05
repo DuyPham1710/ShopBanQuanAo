@@ -39,4 +39,14 @@
     <servlet-name>loginController</servlet-name>
     <url-pattern>/loginController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GioHangController</display-name>
+    <servlet-name>GioHangController</servlet-name>
+    <servlet-class>Controller.GioHangController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GioHangController</servlet-name>
+    <url-pattern>/GioHangController</url-pattern>
+  </servlet-mapping>
 </web-app>

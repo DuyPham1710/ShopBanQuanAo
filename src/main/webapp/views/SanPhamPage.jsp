@@ -33,9 +33,9 @@
 		            </form>
                 </div>
                 <div class="navbar-nav">
-                    <a class="nav-link" href="/project_web/views/home.jsp">TRANG CHỦ</a>
-                    <a class="btn btn-primary" href="SanPhamController">SẢN PHẨM</a>
-                    <span class="nav-icon"><a href="/project_web/views/GioHang.jsp"><i class="fas fa-shopping-bag"></i></a></span>
+                    <a class="nav-link font-weight-bold" href="/project_web/views/home.jsp">TRANG CHỦ</a>
+                    <a class="btn btn-primary font-weight-bold" href="SanPhamController">SẢN PHẨM</a>
+                    <span class="nav-icon"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
                     <span class="nav-icon"><a href="#"><i class="fas fa-user"></i></a></span>
                 </div>
             </div>
@@ -44,7 +44,7 @@
 
     <!-- Banner -->
     <div class="container mt-4">
-        <div class="row">
+        <div class="container">
             <div class="col-md-12">
 			    <nav aria-label="breadcrumb">
 			        <ol class="breadcrumb">

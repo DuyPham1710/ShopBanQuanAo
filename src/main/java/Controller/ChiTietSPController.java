@@ -6,12 +6,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.GioHang;
 import models.SanPham;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
+import DAO.AccountDAO;
+import DAO.GioHangDAO;
 import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
@@ -87,7 +90,30 @@ public class ChiTietSPController extends HttpServlet {
 			doGet(request, response);
 		}
 		else {
-			
+			 int maSP = Integer.parseInt(request.getParameter("maSP"));
+			 int soLuong = Integer.parseInt(request.getParameter("soLuong"));
+			 String size = request.getParameter("size");
+			 String mauSac = request.getParameter("tenmau");
+			 
+			 Connection conn = null;
+			 try {
+				 conn = new ConnectJDBC().getConnection();
+			 }
+			 catch (Exception e) {
+				 e.printStackTrace();
+				 response.getWriter().println("Error: " + e.getMessage());
+			 }
+			 
+			 GioHang gh = new GioHang(AccountDAO.getID(), maSP, soLuong, size, mauSac);
+			 try {
+				GioHangDAO.ThemGioHang(conn, gh);
+			 }
+			 catch (Exception e) {
+				 e.printStackTrace();
+				 response.getWriter().println("Error: " + e.getMessage());
+			 }
+			 doGet(request, response);
+			// System.out.print(AccountDAO.getID() + " " + maSP + " " + soLuong + " " + size + " " + mauSac);
 		}
 	}
 

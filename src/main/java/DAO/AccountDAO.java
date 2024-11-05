@@ -11,7 +11,7 @@ import models.Account;
 import models.SanPham;
 
 public class AccountDAO {
-	static int ID = 0;
+	private static int ID = 0;
 	public static int Validate(Connection conn, Account acount) throws SQLException {
 		String sql = "select ID from Account where username = ? and pass = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
@@ -24,6 +24,12 @@ public class AccountDAO {
 			return rs.getInt("ID");
 		}
 		return 0;
+	}
+	public static int getID() {
+		return ID;
+	}
+	public static void setID(int ID) {
+		AccountDAO.ID = ID;
 	}
 	
 }

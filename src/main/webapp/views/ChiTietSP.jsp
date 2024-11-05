@@ -33,9 +33,9 @@
 		            </form>
                 </div>
                 <div class="navbar-nav">
-                    <a class="nav-link" href="/project_web/views/home.jsp">TRANG CHỦ</a>
-                    <a class="nav-link" href="SanPhamController">SẢN PHẨM</a>
-                    <span class="nav-icon"><a href="/project_web/views/GioHang.jsp"><i class="fas fa-shopping-bag"></i></a></span>
+                    <a class="nav-link font-weight-bold" href="/project_web/views/home.jsp">TRANG CHỦ</a>
+                    <a class="nav-link font-weight-bold" href="SanPhamController">SẢN PHẨM</a>
+                    <span class="nav-icon"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
                     <span class="nav-icon"><a href="#"><i class="fas fa-user"></i></a></span>
                 </div>
             </div>
@@ -44,7 +44,7 @@
     
      <!-- Banner -->
     <div class="container mt-4">
-        <div class="row">
+        <div class="container-fluid">
             <div class="col-md-12">
 			    <nav aria-label="breadcrumb">
 			        <ol class="breadcrumb">
@@ -60,7 +60,9 @@
 			    </nav>
 			</div>
 
-            <form class="product">
+            <form action="./ChiTietSPController" method="post" class="product">
+            	 <input type="hidden" name="method" value="post">
+            	  <input type="hidden" name="maSP" value="${sp.maSP}">	 
 		        <div class="product-container">
 		            <div class="product-image">
 		                <img src="${sp.duongDanHinh}" alt="${sp.tenSP}">
@@ -90,6 +92,7 @@
 								    <div class="button-group">
 								        <div class="button" onclick="changeQuantity(-1)">-</div>
 								        <div class="button quantity-display" id="quantity">1</div>
+								        <input type="hidden" name="soLuong" id="hiddenQuantity" value="1">
 								        <div class="button" onclick="changeQuantity(1)">+</div>
 								    </div>	
 								</div>
@@ -110,15 +113,21 @@
 								
 								        // Cập nhật lại giá trị số lượng trên trang
 								        quantityElement.innerText = quantity;
+								        hiddenQuantity.value = quantity;
 								    }
+								    function setSize(button, size) {
+								        const hiddenSize = document.getElementById("hiddenSize");
+								        hiddenSize.value = size; // Cập nhật giá trị ẩn khi chọn size
+								    }
+								   
 								</script>
 		                        <div class="size">
 		                            <p>Size:</p>
 		                            <div class="button-group1">
 		                            	<c:forEach var="size" items="${ListSize}">			                    
-					                      <button type="button" class="button">${size}</button>
+					                      <button type="button" class="button selected" onclick="setSize(this,'${size}')">${size}</button>
 						                </c:forEach>
-										
+										<input type="hidden" name="size" id="hiddenSize" value="">
 		                            </div>
 		                            
 		                        </div>
@@ -139,11 +148,20 @@
 		                
 		                <div class="buttons">
 		                    <button class="buy-now">Mua Ngay</button>
-		                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+		                    <button class="add-to-cart" onclick="addToCart()">Thêm vào giỏ hàng</button>
 		                </div>
 		            </div>
 		        </div>
 		    </form>
+		    
+		   <div class="alert alert-success alert-dismissible fade show" role="alert" id="cart-alert" style="display:none;">
+			    Thêm vào giỏ hàng thành công!
+			    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			        <span aria-hidden="true">&times;</span>
+			    </button>
+			</div>
+
+		    
             <div class="product-description">
             	<div class="description">
             		<h4>Mô tả sản phẩm</h4>
@@ -182,5 +200,23 @@
     </div>
     
     <jsp:include page="footer.jsp" />
+    <script>
+	    function addToCart() {
+	        // Gửi biểu mẫu để thêm vào giỏ hàng
+	        document.querySelector('.product').submit();
+	
+	        // Hiển thị thông báo
+	        const alert = document.getElementById("cart-alert");
+	        alert.style.display = 'block'; // Hiển thị thông báo
+	        setTimeout(() => {
+	            $(alert).alert('close'); // Sử dụng jQuery để ẩn thông báo sau 10 giây
+	        }, 10000); // Thay đổi thời gian ở đây (10000 milliseconds = 10 seconds)
+	    }
+	</script>
+
+    <!-- jQuery (Bootstrap's JavaScript plugins require jQuery) -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

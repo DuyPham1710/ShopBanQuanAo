@@ -32,9 +32,9 @@
 		            </form>
                 </div>
                 <div class="navbar-nav">
-                    <a class="btn btn-primary" href="home.jsp">TRANG CHỦ</a>
-                    <a class="nav-link" href="/project_web/SanPhamController">SẢN PHẨM</a>
-                    <span class="nav-icon"><a href="/project_web/views/GioHang.jsp"><i class="fas fa-shopping-bag"></i></a></span>
+                    <a class="btn btn-primary font-weight-bold" href="home.jsp">TRANG CHỦ</a>
+                    <a class="nav-link font-weight-bold" href="/project_web/SanPhamController">SẢN PHẨM</a>
+                    <span class="nav-icon"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
                     <span class="nav-icon"><a href="#"><i class="fas fa-user"></i></a></span>
                 </div>
             </div>
@@ -42,8 +42,8 @@
     </nav>
 
     <!-- Banner -->
-    <div class="container mt-4">
-        <div class="row">
+    <div class="container mt-3">
+        <div class="container">
             <div class="col-md-12">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -60,8 +60,8 @@
                         phong cách thông qua thời trang, thương hiệu vượt qua ranh giới của thời trang 
                         thông thường bằng cách không ngừng sáng tạo các trang phục với các bộ sưu tập độc đáo.
                     </p>
-                    <a href="/project_web/SanPhamController" class="btn btn-dark"><i class="fas fa-shopping-cart"></i> MUA NGAY</a>
-                    <a href="#" class="btn btn-primary">LIÊN HỆ VỚI CHÚNG TÔI</a>
+                    <a href="/project_web/SanPhamController" class="btn btn-dark font-weight-bold"><i class="fas fa-shopping-cart"></i> MUA NGAY</a>
+                    <a href="#" class="btn btn-primary font-weight-bold">LIÊN HỆ VỚI CHÚNG TÔI</a>
                 </div>
                 <div class="banner-image">
                     <img src="https://daviesfashion.netlify.app/static/media/introduction.d3445e0c714cc8e20077.png" alt="Banner Image" class="img-fluid rounded">

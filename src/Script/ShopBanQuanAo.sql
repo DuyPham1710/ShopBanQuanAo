@@ -246,3 +246,27 @@ INSERT INTO HinhAnhSanPham (MaHinhAnh, MaSanPham, DuongDanHinh, MoTaHinh) VALUES
 (10, 9, N'https://cdn.vortexs.io/api/images/57594672-cf3f-4d37-8678-4cd0ceefb19d/1920/w/giay-mlb-chunky-liner-basic-la-white-navy-3asxclb3n-07nyd.jpeg', N'Hình 1 của Giày sneaker'),
 (11, 10, N'https://product.hstatic.net/1000397717/product/o1cn01cink2i2563qi0gpbo___2214434137476-0-cib_0007fb5a30ce416ca110bbf8c95fd828_master.jpg', N'Hình 1 túi xách da');
 GO
+
+
+-- PROCEDURE GioHang
+CREATE PROCEDURE proc_ThemGioHang @ID int, @MaSP int, @SoLuong int, @KichThuoc nvarchar(50), @MauSac nvarchar(50)
+AS
+BEGIN
+	INSERT INTO GioHang(IDNguoiMua, MaSanPham, SoLuong, KichThuoc, MauSac)
+    VALUES (@ID, @MaSP, @SoLuong, @KichThuoc, @MauSac);
+END;
+GO
+
+CREATE PROCEDURE proc_CapNhatGioHang @ID int, @MaSP int, @SoLuong int, @KichThuoc nvarchar(50), @MauSac nvarchar(50)
+AS
+BEGIN
+	UPDATE GioHang set SoLuong = SoLuong + @SoLuong, KichThuoc = @KichThuoc, MauSac = @MauSac WHERE MaSanPham = @MaSP and IDNguoiMua = @ID;
+END;
+GO
+
+CREATE PROCEDURE proc_XoaGioHang @MaSP int
+AS
+BEGIN
+	DELETE GioHang WHERE MaSanPham = @MaSP;
+END;
+GO
