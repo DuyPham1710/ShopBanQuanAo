@@ -8,10 +8,17 @@ public class SanPham {
 	private int giamGia;
 	private float giaHienTai;
 	private int soLuong;
+	private int maMau;
+	private String tenMau;
+	private int maKichThuoc;
+	private String tenKichThuoc;
 	private int maDanhMuc;
 	private int maHinhAnh;
 	private String duongDanHinh;
 	
+	public SanPham() {
+	
+	}
 	public SanPham(int maSP, String tenSP, String mota, int giaBanDau, int giamGia, int soLuong, int maDanhMuc, int maHinhAnh, String duongDanHinh) {
 		this.maSP = maSP;
 		this.tenSP = tenSP;
@@ -26,7 +33,12 @@ public class SanPham {
 		this.giaHienTai = (giaBanDau - (giaBanDau * ((float)giamGia/100)));
 	}
 	
-
+	public SanPham(int maMau, String tenMau) {
+		this.maMau = maMau;
+		this.tenMau = tenMau;
+	}
+	
+	
 	public int getMaDanhMuc() {
 		return maDanhMuc;
 	}
@@ -96,6 +108,46 @@ public class SanPham {
 
 	public void setGiaHienTai(float giaHienTai) {
 		this.giaHienTai = giaHienTai;
+	}
+
+
+	public String getTenKichThuoc() {
+		return tenKichThuoc;
+	}
+
+
+	public void setTenKichThuoc(String tenKichThuoc) {
+		this.tenKichThuoc = tenKichThuoc;
+	}
+
+
+	public int getMaKichThuoc() {
+		return maKichThuoc;
+	}
+
+
+	public void setMaKichThuoc(int maKichThuoc) {
+		this.maKichThuoc = maKichThuoc;
+	}
+
+
+	public String getTenMau() {
+		return tenMau;
+	}
+
+
+	public void setTenMau(String tenMau) {
+		this.tenMau = tenMau;
+	}
+
+
+	public int getMaMau() {
+		return maMau;
+	}
+
+
+	public void setMaMau(int maMau) {
+		this.maMau = maMau;
 	}
 	
 }

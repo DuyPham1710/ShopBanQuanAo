@@ -125,7 +125,7 @@
 		                            <p>Size:</p>
 		                            <div class="button-group1">
 		                            	<c:forEach var="size" items="${ListSize}">			                    
-					                      <button type="button" class="button selected" onclick="setSize(this,'${size}')">${size}</button>
+					                      <button type="button" class="button selected" onclick="setSize(this,'${size.maKichThuoc}')">${size.tenKichThuoc}</button>
 						                </c:forEach>
 										<input type="hidden" name="size" id="hiddenSize" value="">
 		                            </div>
@@ -138,7 +138,7 @@
 		                            <div class="color-selector">
 		                            	<select class="form-select" name="tenmau">
 						                    <c:forEach var="color" items="${ListMau}">
-						                       <option value="${color}">${color}</option>
+						                       <option value="${color.maMau}">${color.tenMau}</option>
 						                    </c:forEach>
 						                </select>
 		                            </div>

@@ -52,6 +52,9 @@ public class GioHangController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int maSP = Integer.parseInt(request.getParameter("maSP"));
+		int maKichThuoc = Integer.parseInt(request.getParameter("maKichThuoc"));
+		int maMau = Integer.parseInt(request.getParameter("maMau"));
+		System.out.println(maSP + " " + maKichThuoc + " " + maMau);
 		Connection conn = null;
 		try {
 			conn = new ConnectJDBC().getConnection();
@@ -59,17 +62,16 @@ public class GioHangController extends HttpServlet {
 		catch (Exception e) {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
-			//System.out.println("maSP = " + maSP);
+		
 		}
-		
-		
+				
 		try {
-			GioHangDAO.XoaGioHang(conn, maSP);
+			GioHangDAO.XoaGioHang(conn, maSP, maKichThuoc, maMau);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
-		//	System.out.println("maSP = " + maSP);
+			System.out.println("Lỗi");
 		}
 		doGet(request, response);
 	}

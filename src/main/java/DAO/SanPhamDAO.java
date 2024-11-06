@@ -58,31 +58,36 @@ public class SanPhamDAO {
 	}
 	
 	
-	public static List<String> layMauSP(Connection conn, int maSP) throws SQLException {
+	public static List<SanPham> layMauSP(Connection conn, int maSP) throws SQLException {
 	
-		String sql = "select TenMau from MauSac where MauSac.MaSanPham = ?";
+		String sql = "select MaMau, TenMau from MauSac where MauSac.MaSanPham = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, maSP);
 		ResultSet rs = ps.executeQuery();
 		
-		List<String> listMau = new ArrayList<String>();
-		while (rs.next()) {	
-			listMau.add(rs.getString("TenMau"));
+		List<SanPham> listMau = new ArrayList<SanPham>();
+		while (rs.next()) {
+			SanPham sp = new SanPham(rs.getInt("MaMau"), rs.getString("TenMau"));
+			listMau.add(sp);
 		}
 		return listMau;
 	}
 	
-	public static List<String> laySizeSP(Connection conn, int maSP) throws SQLException {
+	public static List<SanPham> laySizeSP(Connection conn, int maSP) throws SQLException {
 		
-		String sql = "select TenKichCo from KichCo where KichCo.MaSanPham = ?";
+		String sql = "select MaKichCo, TenKichCo from KichCo where KichCo.MaSanPham = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, maSP);
 		ResultSet rs = ps.executeQuery();
 		
-		List<String> listMau = new ArrayList<String>();
+		List<SanPham> listMau = new ArrayList<SanPham>();
 		while (rs.next()) {	
-			listMau.add(rs.getString("TenKichCo"));
+			SanPham sp = new SanPham();
+			sp.setMaKichThuoc(rs.getInt("MaKichCo"));
+			sp.setTenKichThuoc(rs.getString("TenKichCo"));
+			listMau.add(sp);
 		}
+		
 		return listMau;
 	}
 	

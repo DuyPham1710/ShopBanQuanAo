@@ -75,21 +75,21 @@
 		                            <div class="ml-3">
 		                                <p class="mb-1 font-weight-bold">Blue Pants</p>
 		                                <p class="mb-0 text-muted">${gh.tenSP}</p>
-		                                <p class="mb-0 text-muted">Size: ${gh.kichThuoc}, Màu: ${gh.mauSac}</p>
+		                                <p class="mb-0 text-muted">Size: ${gh.tenKichThuoc}, Màu: ${gh.tenMau}</p>
 		
 		                            </div>
 		                        </div>
 		                        <div class="cart-quantity" style="width: 25%;">
 		                           <div class="button-group">
-									    <div class="button" onclick="changeQuantity(-1, ${gh.maSP})">-</div>
-									    <div class="button quantity-display" id="quantity-${gh.maSP}">${gh.soLuong}</div>
+									    <div class="button" onclick="changeQuantity(-1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau})">-</div>
+									    <div class="button quantity-display" id="quantity-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.soLuong}</div>
 									    <input type="hidden" name="soLuong" id="hiddenQuantity-${gh.maSP}" value="${gh.soLuong}">
-									    <div class="button" onclick="changeQuantity(1, ${gh.maSP})">+</div>
+									    <div class="button" onclick="changeQuantity(1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau})">+</div>
 									</div>
 								    <script>
-									    function changeQuantity(value, maSP) {
+									    function changeQuantity(value, maSP, maKichThuoc, maMau) {
 									        // Lấy phần tử hiển thị số lượng và giá trị ẩn của sản phẩm tương ứng
-									        const quantityElement = document.getElementById("quantity-" + maSP);
+									        const quantityElement = document.getElementById("quantity-" + maSP + "-" + maKichThuoc + "-" + maMau);
 									        const hiddenQuantity = document.getElementById("hiddenQuantity-" + maSP);
 									        
 									        // Chuyển đổi số lượng thành số nguyên
@@ -103,6 +103,10 @@
 									            quantity = 1;
 									        }
 									        
+									      /*   if (quantity > maxQuantity) {
+									            alert("Số lượng không được vượt quá số lượng tồn kho.");
+									            quantity = maxQuantity;
+									        } */
 									        // Cập nhật lại giá trị số lượng trên trang và giá trị ẩn
 									        quantityElement.innerText = quantity;
 									        hiddenQuantity.value = quantity;
@@ -114,6 +118,8 @@
 		                            <p class="mb-0 text-muted"><del>${gh.giaBanDau * gh.soLuong}đ</del></p>
 		                        </div>
 		                        <input type="hidden" name="maSP" value="${gh.maSP}">	
+		                        <input type="hidden" name="maKichThuoc" value="${gh.maKichThuoc}">	
+		                        <input type="hidden" name="maMau" value="${gh.maMau}">	
 		                        <div class="cart-action" style="width: 5%;"><button class="btn btn-link text-danger"><i class="fas fa-trash-alt"></i></button></div>
 		                    </div>
 	                    </form>

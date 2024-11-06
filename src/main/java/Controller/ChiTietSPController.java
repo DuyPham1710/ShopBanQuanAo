@@ -48,7 +48,7 @@ public class ChiTietSPController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
-		List<String> listMau = null;
+		List<SanPham> listMau = null;
 		try {
 			listMau = SanPhamDAO.layMauSP(conn, maSP);
 		}
@@ -57,7 +57,7 @@ public class ChiTietSPController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
-		List<String> listSize = null;
+		List<SanPham> listSize = null;
 		try {
 			listSize = SanPhamDAO.laySizeSP(conn, maSP);
 		}
@@ -91,9 +91,9 @@ public class ChiTietSPController extends HttpServlet {
 		}
 		else {
 			 int maSP = Integer.parseInt(request.getParameter("maSP"));
+			 int maKichThuoc = Integer.parseInt(request.getParameter("size"));
+			 int maMauSac = Integer.parseInt(request.getParameter("tenmau"));
 			 int soLuong = Integer.parseInt(request.getParameter("soLuong"));
-			 String size = request.getParameter("size");
-			 String mauSac = request.getParameter("tenmau");
 			 
 			 Connection conn = null;
 			 try {
@@ -104,7 +104,7 @@ public class ChiTietSPController extends HttpServlet {
 				 response.getWriter().println("Error: " + e.getMessage());
 			 }
 			 
-			 GioHang gh = new GioHang(AccountDAO.getID(), maSP, soLuong, size, mauSac);
+			 GioHang gh = new GioHang(AccountDAO.getID(), maSP, maKichThuoc, maMauSac, soLuong);
 			 try {
 				GioHangDAO.ThemGioHang(conn, gh);
 			 }
@@ -113,7 +113,6 @@ public class ChiTietSPController extends HttpServlet {
 				 response.getWriter().println("Error: " + e.getMessage());
 			 }
 			 doGet(request, response);
-			// System.out.print(AccountDAO.getID() + " " + maSP + " " + soLuong + " " + size + " " + mauSac);
 		}
 	}
 

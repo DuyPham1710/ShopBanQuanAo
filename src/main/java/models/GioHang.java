@@ -3,64 +3,83 @@ package models;
 public class GioHang {
 	private int ID;
 	private int maSP;
-	private String TenSP;
+	private String tenSP;
 	private int giaBanDau;
 	private float giaHienTai;
-	private int SoLuong;
-	private String KichThuoc;
-	private String MauSac;
-	private String DuongDanHinh;
+	private int soLuong;
+	private int maKichThuoc;
+	private String tenKichThuoc;
+	private int maMau;
+	private String tenMau;
+	private String duongDanHinh;
 	
-	public GioHang(int ID, int maSP, int SoLuong, String KichThuoc, String MauSac) {
+	public GioHang(int ID, int maSP, int maKichThuoc, int maMau, int soLuong) {
 		this.ID = ID;
 		this.maSP = maSP;
-		this.SoLuong = SoLuong;
-		this.KichThuoc = KichThuoc;
-		this.MauSac = MauSac;
+		this.maKichThuoc = maKichThuoc;
+		this.maMau = maMau;
+		this.soLuong = soLuong;
 	}
 	
-	public GioHang(int maSP, String TenSP, String KichThuoc, String MauSac, int SoLuong, int giaBanDau, float giaHienTai, String DuongDanHinh) {
+	public GioHang(int maSP, String tenSP, int maKichThuoc, String tenKichThuoc, int maMau, String tenMau, int soLuong, int giaBanDau, float giaHienTai, String duongDanHinh) {
 		this.maSP = maSP;
-		this.TenSP = TenSP;
-		this.SoLuong = SoLuong;
-		this.KichThuoc = KichThuoc;
-		this.MauSac = MauSac;
-		this.SoLuong = SoLuong;
+		this.tenSP = tenSP;
+		this.maKichThuoc = maKichThuoc;
+		this.tenKichThuoc = tenKichThuoc;
+		this.maMau = maMau;
+		this.tenMau = tenMau;
+		this.soLuong = soLuong;
 		this.giaBanDau = giaBanDau;
 		this.giaHienTai = giaHienTai;
-		this.DuongDanHinh = DuongDanHinh;
+		this.duongDanHinh = duongDanHinh;
 	}
 
 	public String getDuongDanHinh() {
-		return DuongDanHinh;
+		return duongDanHinh;
 	}
 
 	public void setDuongDanHinh(String duongDanHinh) {
-		DuongDanHinh = duongDanHinh;
+		this.duongDanHinh = duongDanHinh;
 	}
 
-	public String getMauSac() {
-		return MauSac;
+	public String getTenMau() {
+		return tenMau;
 	}
 
-	public void setMauSac(String mauSac) {
-		MauSac = mauSac;
+	public void setTenMau(String tenMau) {
+		this.tenMau = tenMau;
 	}
 
-	public String getKichThuoc() {
-		return KichThuoc;
+	public int getMaMau() {
+		return maMau;
 	}
 
-	public void setKichThuoc(String kichThuoc) {
-		KichThuoc = kichThuoc;
+	public void setMaMau(int maMau) {
+		this.maMau = maMau;
+	}
+
+	public String getTenKichThuoc() {
+		return tenKichThuoc;
+	}
+
+	public void setTenKichThuoc(String tenKichThuoc) {
+		this.tenKichThuoc = tenKichThuoc;
+	}
+
+	public int getMaKichThuoc() {
+		return maKichThuoc;
+	}
+
+	public void setMaKichThuoc(int maKichThuoc) {
+		this.maKichThuoc = maKichThuoc;
 	}
 
 	public int getSoLuong() {
-		return SoLuong;
+		return soLuong;
 	}
 
 	public void setSoLuong(int soLuong) {
-		SoLuong = soLuong;
+		this.soLuong = soLuong;
 	}
 
 	public float getGiaHienTai() {
@@ -80,11 +99,11 @@ public class GioHang {
 	}
 
 	public String getTenSP() {
-		return TenSP;
+		return tenSP;
 	}
 
 	public void setTenSP(String tenSP) {
-		TenSP = tenSP;
+		this.tenSP = tenSP;
 	}
 
 	public int getMaSP() {
@@ -102,6 +121,6 @@ public class GioHang {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	
 
+	
 }

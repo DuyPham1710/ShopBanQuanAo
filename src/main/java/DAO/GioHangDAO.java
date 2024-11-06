@@ -12,12 +12,15 @@ import models.GioHang;
 
 public class GioHangDAO {
 	public static void ThemGioHang(Connection conn, GioHang gh) throws SQLException {
-		 String checkSQL = "select SoLuong FROM GioHang where IDNguoiMua = ? and MaSanPham = ?";
+		 String checkSQL = "select 1 FROM GioHang where IDNguoiMua = ? and MaSanPham = ? and MaKichCo = ? and MaMau = ?";
 		 String sql = "";
 		 PreparedStatement checkStmt = conn.prepareStatement(checkSQL);
 		 checkStmt.setInt(1, gh.getID()); 
 		 checkStmt.setInt(2, gh.getMaSP()); 
-         ResultSet rs = checkStmt.executeQuery();
+		 checkStmt.setInt(3, gh.getMaKichThuoc()); 
+		 checkStmt.setInt(4, gh.getMaMau()); 
+      
+		 ResultSet rs = checkStmt.executeQuery();
          if (rs.next()) {
              // Nếu sản phẩm đã tồn tại, cập nhật số lượng
         	 sql = "{call proc_CapNhatGioHang(?, ?, ?, ?, ?)}";
@@ -29,25 +32,25 @@ public class GioHangDAO {
          CallableStatement stmt = conn.prepareCall(sql) ;
          stmt.setInt(1, gh.getID()); 
          stmt.setInt(2, gh.getMaSP()); 
-         stmt.setInt(3, gh.getSoLuong());   
-         stmt.setString(4, gh.getKichThuoc()); 
-         stmt.setString(5, gh.getMauSac());   
+         stmt.setInt(3, gh.getMaKichThuoc());   
+         stmt.setInt(4, gh.getMaMau()); 
+         stmt.setInt(5, gh.getSoLuong());   
     
          stmt.executeUpdate();
 		
 	}
-	public static void XoaGioHang(Connection conn, int maSP) throws SQLException {
-       	String sql = "{call proc_XoaGioHang(?)}";
+	public static void XoaGioHang(Connection conn, int maSP, int maKichThuoc, int maMau) throws SQLException {
+       	String sql = "{call proc_XoaGioHang(?, ?, ?)}";
         CallableStatement stmt = conn.prepareCall(sql) ;
         stmt.setInt(1, maSP); 
+        stmt.setInt(2, maKichThuoc); 
+        stmt.setInt(3, maMau); 
         stmt.executeUpdate();
 		
 	}
 	public static List<GioHang> DanhSachGioHang(Connection conn) throws SQLException {
 		List<GioHang> listGH = new ArrayList<GioHang>();
-		String sql = "select sp.MaSanPham as maSP, TenSanPham, KichThuoc, MauSac, gh.SoLuong as SoLuongGH, GiaBanDau, GiaBanDau - GiaBanDau*(GiamGia/100.0) as GiaHienTai, DuongDanHinh "
-				+ "from SanPham as sp, HinhAnhSanPham, GioHang as gh "
-				+ "where sp.MaSanPham = HinhAnhSanPham.MaSanPham and sp.MaSanPham = gh.MaSanPham and gh.IDNguoiMua = ?";
+		String sql = "{call proc_DanhSachGioHang(?)}";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, AccountDAO.getID());
 		ResultSet rs = ps.executeQuery();
@@ -55,9 +58,11 @@ public class GioHangDAO {
 		while (rs.next()) {			
 			GioHang gh = new GioHang(
 					rs.getInt("maSP"), 
-					rs.getString("TenSanPham"), 
-					rs.getString("KichThuoc"), 
-					rs.getString("MauSac"), 
+					rs.getString("TenSanPham"),
+					rs.getInt("MaKichCo"),
+					rs.getString("TenKichCo"), 
+					rs.getInt("MaMau"),
+					rs.getString("TenMau"), 
 					rs.getInt("SoLuongGH"), 
 					rs.getInt("GiaBanDau"), 
 					rs.getFloat("GiaHienTai"), 

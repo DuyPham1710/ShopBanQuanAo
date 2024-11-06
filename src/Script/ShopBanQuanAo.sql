@@ -81,14 +81,17 @@ GO
 
 CREATE TABLE GioHang
 (
-	IDNguoiMua int references Account(ID),
-	MaSanPham int references SanPham(MaSanPham),
-	SoLuong int,
-	KichThuoc NVARCHAR(50),
-	MauSac NVARCHAR(50)
-	primary key (IDNguoiMua, MaSanPham)
-)
+    IDNguoiMua INT REFERENCES Account(ID),
+    MaSanPham INT REFERENCES SanPham(MaSanPham),
+    MaKichCo INT,
+    MaMau INT,
+    SoLuong INT,
+    PRIMARY KEY (IDNguoiMua, MaSanPham, MaKichCo, MaMau),
+    FOREIGN KEY (MaKichCo, MaSanPham) REFERENCES KichCo(MaKichCo, MaSanPham),
+    FOREIGN KEY (MaMau, MaSanPham) REFERENCES MauSac(MaMau, MaSanPham)
+);
 GO
+
 
 
 INSERT INTO Account (username, pass, position) VALUES 
@@ -249,24 +252,43 @@ GO
 
 
 -- PROCEDURE GioHang
-CREATE PROCEDURE proc_ThemGioHang @ID int, @MaSP int, @SoLuong int, @KichThuoc nvarchar(50), @MauSac nvarchar(50)
+CREATE PROCEDURE proc_ThemGioHang @ID int, @MaSP int, @MaKichCo int, @MaMau int, @SoLuong int
 AS
 BEGIN
-	INSERT INTO GioHang(IDNguoiMua, MaSanPham, SoLuong, KichThuoc, MauSac)
-    VALUES (@ID, @MaSP, @SoLuong, @KichThuoc, @MauSac);
+	INSERT INTO GioHang(IDNguoiMua, MaSanPham, MaKichCo, MaMau, SoLuong)
+    VALUES (@ID, @MaSP, @MaKichCo, @MaMau, @SoLuong);
 END;
 GO
 
-CREATE PROCEDURE proc_CapNhatGioHang @ID int, @MaSP int, @SoLuong int, @KichThuoc nvarchar(50), @MauSac nvarchar(50)
+CREATE PROCEDURE proc_CapNhatGioHang @ID int, @MaSP int, @MaKichCo int, @MaMau int, @SoLuong int
 AS
-BEGIN
-	UPDATE GioHang set SoLuong = SoLuong + @SoLuong, KichThuoc = @KichThuoc, MauSac = @MauSac WHERE MaSanPham = @MaSP and IDNguoiMua = @ID;
+BEGIN	
+    UPDATE GioHang
+    SET SoLuong = SoLuong + @SoLuong
+    WHERE IDNguoiMua = @ID 
+        AND MaSanPham = @MaSP 
+        AND MaKichCo = @MaKichCo 
+        AND MaMau = @MaMau;
 END;
 GO
 
-CREATE PROCEDURE proc_XoaGioHang @MaSP int
+CREATE PROCEDURE proc_XoaGioHang @MaSP int, @MaKichCo int, @MaMau int
 AS
 BEGIN
-	DELETE GioHang WHERE MaSanPham = @MaSP;
+	DELETE GioHang WHERE MaSanPham = @MaSP and MaKichCo = @MaKichCo and MaMau = @MaMau;
+END;
+GO
+
+CREATE PROCEDURE proc_DanhSachGioHang @IDNguoiMua int
+AS
+BEGIN
+	select Q.*, TenMau, TenKichCo
+	from
+		(select SanPham.MaSanPham as maSP, TenSanPham, GioHang.SoLuong as SoLuongGH, GiaBanDau, GiaBanDau - GiaBanDau*(GiamGia/100.0) as GiaHienTai, DuongDanHinh, MaKichCo, MaMau, IDNguoiMua
+		from SanPham, HinhAnhSanPham, GioHang
+		where SanPham.MaSanPham = HinhAnhSanPham.MaSanPham and SanPham.MaSanPham = GioHang.MaSanPham and GioHang.IDNguoiMua = @IDNguoiMua) Q,
+		MauSac, 
+		KichCo
+	where Q.maSP = MauSac.MaSanPham and MauSac.MaSanPham = KichCo.MaSanPham and Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau
 END;
 GO
