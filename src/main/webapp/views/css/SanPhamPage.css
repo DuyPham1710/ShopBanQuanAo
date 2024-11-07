@@ -10,9 +10,8 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 12000px;
     margin: 20px auto;
-    padding: 20px;
 }
 
 h2 {

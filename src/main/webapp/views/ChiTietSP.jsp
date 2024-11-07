@@ -18,7 +18,7 @@
 </head>
 <body>
 	<!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar1">
         <div class="container-fluid">
             <div class="justify-content-between d-flex align-items-center">
                 <div class="d-flex align-items-center">
@@ -43,7 +43,7 @@
     </nav>
     
      <!-- Banner -->
-    <div class="container mt-4">
+    <div class="container mt">
         <div class="container-fluid">
             <div class="col-md-12">
 			    <nav aria-label="breadcrumb">
@@ -90,15 +90,15 @@
 		                        <div class="quantity">
 								    <p>Số lượng:</p>
 								    <div class="button-group">
-								        <div class="button" onclick="changeQuantity(-1)">-</div>
+								        <div class="button" onclick="changeQuantity(-1, ${sp.soLuong})">-</div>
 								        <div class="button quantity-display" id="quantity">1</div>
 								        <input type="hidden" name="soLuong" id="hiddenQuantity" value="1">
-								        <div class="button" onclick="changeQuantity(1)">+</div>
+								        <div class="button" onclick="changeQuantity(1, ${sp.soLuong})">+</div>
 								    </div>	
 								</div>
 								<div class="vertical-divider"></div> <!-- Đường kẻ dọc -->
 		                        <script>
-								    function changeQuantity(value) {
+								    function changeQuantity(value, maxValue) {
 								        // Lấy phần tử hiển thị số lượng
 								        const quantityElement = document.getElementById("quantity");
 								        let quantity = parseInt(quantityElement.innerText);
@@ -110,7 +110,16 @@
 								        if (quantity < 1) {
 								            quantity = 1;
 								        }
-								
+								        /* if (quantity > maxValue) {
+							            	alert("Số lượng không được vượt quá số lượng tồn kho.");
+								            quantity = maxValue;
+								        }  */
+								        if (quantity > maxValue) {
+								            // Hiển thị toast khi số lượng vượt quá tồn kho
+								            const toast = new bootstrap.Toast(document.getElementById('quantityToast'));
+								            toast.show();
+								            quantity = maxValue; // Đặt lại số lượng về giá trị tối đa
+								        }
 								        // Cập nhật lại giá trị số lượng trên trang
 								        quantityElement.innerText = quantity;
 								        hiddenQuantity.value = quantity;
@@ -154,12 +163,7 @@
 		        </div>
 		    </form>
 		    
-		   <div class="alert alert-success alert-dismissible fade show" role="alert" id="cart-alert" style="display:none;">
-			    Thêm vào giỏ hàng thành công!
-			    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			        <span aria-hidden="true">&times;</span>
-			    </button>
-			</div>
+		  
 
 		    
             <div class="product-description">
@@ -200,20 +204,34 @@
     </div>
     
     <jsp:include page="footer.jsp" />
-    <script>
-	    function addToCart() {
-	        // Gửi biểu mẫu để thêm vào giỏ hàng
-	        document.querySelector('.product').submit();
-	
-	        // Hiển thị thông báo
-	        const alert = document.getElementById("cart-alert");
-	        alert.style.display = 'block'; // Hiển thị thông báo
-	        setTimeout(() => {
-	            $(alert).alert('close'); // Sử dụng jQuery để ẩn thông báo sau 10 giây
-	        }, 10000); // Thay đổi thời gian ở đây (10000 milliseconds = 10 seconds)
-	    }
+     <script>
+     	function addToCart() {
+     		const toast = new bootstrap.Toast(document.getElementById('cartToast'));
+            toast.show();
+		}
 	</script>
-
+	<!-- Toast thông báo khi số lượng vượt quá tồn kho -->
+	<div class="toast-container position-fixed top-60px end-0 p-3" id="toast-container">
+	  <div id="quantityToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="6000">
+	    <div class="d-flex">
+	      <div class="toast-body">
+	        Số lượng bạn yêu cầu vượt quá số lượng tồn kho.
+	      </div>
+	      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+	    </div>
+	  </div>
+	</div>
+	
+	 <div class="toast-container position-fixed top-60px end-0 p-3" id="toast-container">
+		<div id="cartToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+			<div class="d-flex">
+				<div class="toast-body">
+					Thêm vào giỏ hàng thành công!
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+		</div>
+	</div>
     <!-- jQuery (Bootstrap's JavaScript plugins require jQuery) -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<!-- Bootstrap JS -->

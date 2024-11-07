@@ -1,10 +1,19 @@
 @charset "UTF-8";
 body {
+    position: relative;
     font-family: 'Roboto', sans-serif; /* Apply the custom font */
 }
-.navbar {
+.navbar1 {
+	position: fixed !important;
+	top: 0;
+	width: 100%;
+	z-index: 2000;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
+.mt {
+	margin-top: 6rem !important;	
+}
+
 .navbar-brand img {
     height: 40px; /* Giữ kích thước hình ảnh giống nhau */
     width: auto; /* Tự động điều chỉnh chiều rộng */

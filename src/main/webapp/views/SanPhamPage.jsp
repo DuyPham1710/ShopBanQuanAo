@@ -18,7 +18,7 @@
 </head>
 <body>
 	<!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar1">
         <div class="container-fluid">
             <div class="justify-content-between d-flex align-items-center">
                 <div class="d-flex align-items-center">
@@ -43,7 +43,7 @@
     </nav>
 
     <!-- Banner -->
-    <div class="container mt-4">
+    <div class="container mt">
         <div class="container">
             <div class="col-md-12">
 			    <nav aria-label="breadcrumb">

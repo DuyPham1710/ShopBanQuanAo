@@ -14,10 +14,11 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./views/css/styleGioHang.css">
+    <link rel="stylesheet" href="./views/css/style.css">
 </head>
 <body>
      <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar1">
         <div class="container-fluid">
             <div class="justify-content-between d-flex align-items-center">
                 <div class="d-flex align-items-center">
@@ -42,7 +43,7 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container my-5">
+    <div class="container mt">
         <div class="row">
             <!-- Product Cart -->
             <div class="col-md-8">

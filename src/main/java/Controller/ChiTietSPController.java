@@ -90,29 +90,37 @@ public class ChiTietSPController extends HttpServlet {
 			doGet(request, response);
 		}
 		else {
-			 int maSP = Integer.parseInt(request.getParameter("maSP"));
-			 int maKichThuoc = Integer.parseInt(request.getParameter("size"));
-			 int maMauSac = Integer.parseInt(request.getParameter("tenmau"));
-			 int soLuong = Integer.parseInt(request.getParameter("soLuong"));
-			 
-			 Connection conn = null;
-			 try {
-				 conn = new ConnectJDBC().getConnection();
-			 }
-			 catch (Exception e) {
-				 e.printStackTrace();
-				 response.getWriter().println("Error: " + e.getMessage());
-			 }
-			 
-			 GioHang gh = new GioHang(AccountDAO.getID(), maSP, maKichThuoc, maMauSac, soLuong);
-			 try {
-				GioHangDAO.ThemGioHang(conn, gh);
-			 }
-			 catch (Exception e) {
-				 e.printStackTrace();
-				 response.getWriter().println("Error: " + e.getMessage());
-			 }
-			 doGet(request, response);
+			if (AccountDAO.getID() == 0) {
+				response.sendRedirect("/project_web/views/login.jsp");
+			}
+			else {
+				 int maSP = Integer.parseInt(request.getParameter("maSP"));
+				 int maKichThuoc = Integer.parseInt(request.getParameter("size"));
+				 int maMauSac = Integer.parseInt(request.getParameter("tenmau"));
+				 int soLuong = Integer.parseInt(request.getParameter("soLuong"));
+				 
+				 Connection conn = null;
+				 try {
+					 conn = new ConnectJDBC().getConnection();
+				 }
+				 catch (Exception e) {
+					 e.printStackTrace();
+					 response.getWriter().println("Error: " + e.getMessage());
+				 }
+				 
+				 GioHang gh = new GioHang(AccountDAO.getID(), maSP, maKichThuoc, maMauSac, soLuong);
+				 try {
+					GioHangDAO.ThemGioHang(conn, gh);
+					 Thread.sleep(3000);
+					 
+				 }
+				 catch (Exception e) {
+					 e.printStackTrace();
+					 response.getWriter().println("Error: " + e.getMessage());
+				 }
+				 doGet(request, response);
+			}
+			
 		}
 	}
 

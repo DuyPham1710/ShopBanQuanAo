@@ -1,56 +1,12 @@
 body {
     font-family: 'Roboto', sans-serif; /* Apply the custom font */
 }
-.navbar {
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-.navbar-brand img {
-    height: 40px;
-}
-.search-bar {
-    width: 300px;
-    color: #a2a2a2; 
-}
-.nav-link, .navbar-brand {
-    color: #000 !important;
-    font-weight: 700; /* Make font bold */
-}
 .btn-primary {
     margin-left: 15px;
     color: #fff;
     font-weight: 700; /* Make button text bold */
 }
-.nav-icon {
-    font-size: 20px;
-    color: #6c757d;
-    margin-left: 15px;
-}
-.nav-icon-primary{
-    font-size: 20px;
-    color: #6c757d;
-    margin-left: 15px;
-}
-.nav-icon i {
-    color: #696969; /* Change icon color to gray */
-}
 
-.navbar .navbar-nav {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-.navbar .form-inline {
-    display: flex;
-    align-items: center;
-}
-.navbar .justify-content-between {
-    flex: 1; /* Allows the container to take available space for centering */
-    display: flex;
-    justify-content: space-between; /* Aligns content on both ends */
-    max-width: 1200px; /* Set a maximum width */
-    margin: 0 auto; /* Centers the div */
-}
-/* General Container and Breadcrumb */
 .container {
     margin-top: 50px;
 }
