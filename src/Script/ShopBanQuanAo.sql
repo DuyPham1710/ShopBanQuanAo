@@ -12,13 +12,6 @@ CREATE TABLE Account
 )
 GO
 
-CREATE TABLE DiaChiNhanHang
-(
-	Madiachi INT primary key,
-	TenDiaChi nvarchar(200)
-)
-GO
-
 CREATE TABLE NguoiDung
 (
 	ID INT references Account(ID),
@@ -27,8 +20,17 @@ CREATE TABLE NguoiDung
 	Gioitinh nvarchar(50),
 	SDT varchar(12),
 	NgaySinh date,
-	Madiachi int references DiaChiNhanHang(Madiachi),
+--	Madiachi int references DiaChiNhanHang(Madiachi),
 	email varchar(50)
+)
+GO
+
+CREATE TABLE DiaChiNhanHang
+(
+	Madiachi INT,
+	IDNguoiDung INT references Account(ID),
+	TenDiaChi nvarchar(200),
+	primary key(Madiachi, IDNguoiDung)
 )
 GO
 
@@ -101,19 +103,20 @@ INSERT INTO Account (username, pass, position) VALUES
 (N'luan', N'1', N'user');
 GO
 
-INSERT INTO DiaChiNhanHang (Madiachi, TenDiaChi)
+INSERT INTO DiaChiNhanHang (Madiachi, IDNguoiDung, TenDiaChi)
 VALUES 
-(1, N'123 Đường Lê Lợi, Quận 1, TP. HCM'),
-(2, N'456 Đường Hai Bà Trưng, Quận 3, TP. HCM'),
-(3, N'789 Đường Nguyễn Huệ, Quận 1, TP. HCM');
+(1, 2, N'123 Đường Lê Lợi, Quận 1, TP. HCM'),
+(2, 2, N'456 Đường Hai Bà Trưng, Quận 3, TP. HCM'),
+(3, 2, N'789 Đường Nguyễn Huệ, Quận 1, TP. HCM');
 GO
 
-INSERT INTO NguoiDung (ID, CCCD, Hoten, Gioitinh, SDT, NgaySinh, Madiachi, email)
+INSERT INTO NguoiDung (ID, CCCD, Hoten, Gioitinh, SDT, NgaySinh, email)
 VALUES 
-(2, '123456789012', N'Phạm Ngọc Duy', N'Nam', '0794821201', '2004-10-17', 1, 'duy@gmail.com'),
-(3, '234567890123', N'Nguyễn Hữu Ngọc Lam', N'Nam', '0912345678', '2004-10-22', 2, 'lam@gmail.com'),
-(4, '345678901234', N'Nguyễn Văn Luân', N'Nam', '0923456789', '2004-08-30', 3, 'luan@gmail.com');
+(2, '123456789012', N'Phạm Ngọc Duy', N'Nam', '0794821201', '2004-10-17', 'duy@gmail.com'),
+(3, '234567890123', N'Nguyễn Hữu Ngọc Lam', N'Nam', '0912345678', '2004-10-22', 'lam@gmail.com'),
+(4, '345678901234', N'Nguyễn Văn Luân', N'Nam', '0923456789', '2004-08-30', 'luan@gmail.com');
 GO
+
 
 INSERT INTO DanhMucSanPham (MaDanhMuc, TenDanhMuc) VALUES 
 (1, N'Áo thun'),
@@ -142,6 +145,10 @@ INSERT INTO SanPham (MaSanPham, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, M
 GO
 
 INSERT INTO KichCo (MaKichCo, MaSanPham, TenKichCo) VALUES 
+(1, 1, N'S'),
+(2, 1, N'M'),
+(3, 1, N'L'),
+(4, 1, N'XL'),
 -- Áo sơ mi nữ caro
 (1, 2, N'S'),
 (2, 2, N'M'),

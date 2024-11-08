@@ -7,19 +7,15 @@ public class NguoiDung {
     private String hoTen;      
     private String gioiTinh;    
     private String sdt;          
-    private Date ngaySinh;      
-    private int maDiaChi;     
-    private String tenDiaChi;    
+    private Date ngaySinh;         
     private String email;
     
-	public NguoiDung(String cccd, String hoTen, String gioiTinh, String sdt, Date ngaySinh, int maDiaChi, String tenDiaChi, String email) {
+	public NguoiDung(String cccd, String hoTen, String gioiTinh, String sdt, Date ngaySinh, String email) {
 		this.cccd = cccd;
 		this.hoTen = hoTen;
 		this.gioiTinh = gioiTinh;
 		this.sdt = sdt;
 		this.ngaySinh = ngaySinh;
-		this.maDiaChi = maDiaChi;
-		this.tenDiaChi = tenDiaChi;
 		this.email = email;
 	}
 
@@ -29,22 +25,6 @@ public class NguoiDung {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getTenDiaChi() {
-		return tenDiaChi;
-	}
-
-	public void setTenDiaChi(String tenDiaChi) {
-		this.tenDiaChi = tenDiaChi;
-	}
-
-	public int getMaDiaChi() {
-		return maDiaChi;
-	}
-
-	public void setMaDiaChi(int maDiaChi) {
-		this.maDiaChi = maDiaChi;
 	}
 
 	public Date getNgaySinh() {

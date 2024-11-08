@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 <link rel="stylesheet" href="./views/css/style.css">
 <link rel="stylesheet" href="./views/css/ChiTietSP.css">
-<script src="./views/js/scriptGioHang.js"></script>
+<script src="./views/js/scriptChiTietSP.js"></script>
 </head>
 <body>
 	<!-- Navbar -->
@@ -97,36 +97,9 @@
 								        <div class="button" onclick="changeQuantity(1, ${sp.soLuong})">+</div>
 								    </div>	
 								</div>
+								
 								<div class="vertical-divider"></div> <!-- Đường kẻ dọc -->
-		                        <script>
-								    function changeQuantity(value, maxValue) {
-								        // Lấy phần tử hiển thị số lượng
-								        const quantityElement = document.getElementById("quantity");
-								        let quantity = parseInt(quantityElement.innerText);
-								        
-								        // Tăng hoặc giảm số lượng
-								        quantity += value;
-								        
-								        // Đảm bảo số lượng không nhỏ hơn 1
-								        if (quantity < 1) {
-								            quantity = 1;
-								        }
-								        
-								        if (quantity > maxValue) {
-								            // Hiển thị toast khi số lượng vượt quá tồn kho
-								            showErrorToast();
-								            quantity = maxValue; // Đặt lại số lượng về giá trị tối đa
-								        }
-								        // Cập nhật lại giá trị số lượng trên trang
-								        quantityElement.innerText = quantity;
-								        hiddenQuantity.value = quantity;
-								    }
-								    function setSize(button, size) {
-								        const hiddenSize = document.getElementById("hiddenSize");
-								        hiddenSize.value = size; // Cập nhật giá trị ẩn khi chọn size
-								    }
-								    
-								</script>
+		                
 		                        <div class="size">
 		                            <p>Size:</p>
 		                            <div class="button-group1">
@@ -154,7 +127,6 @@
 		                
 		                <div class="buttons">
 		                    <button class="buy-now">Mua Ngay</button>
-		                <!--     <button class="add-to-cart" onclick="addToCart()">Thêm vào giỏ hàng</button> -->
 		                  <button class="add-to-cart" onclick="showSuccessToast();">Thêm vào giỏ hàng</button>
 		                </div>
 		            </div>
@@ -201,12 +173,6 @@
     </div>
     
     <jsp:include page="footer.jsp" />
-     <script>
-     	function addToCart() {
-     		const toast = new bootstrap.Toast(document.getElementById('cartToast'));
-            toast.show();
-		}
-	</script>
     <!-- jQuery (Bootstrap's JavaScript plugins require jQuery) -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<!-- Bootstrap JS -->

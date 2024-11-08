@@ -42,7 +42,7 @@
             </div>
         </div>
     </nav>
-
+	
     <!-- Main Content -->
     <div class="container1">
     	 <div class="container1 mt">
@@ -95,7 +95,9 @@
 									    <input type="hidden" name="soLuong" id="hiddenQuantity-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}" value="${gh.soLuongGH}">
 									    <div class="button" onclick="changeQuantity(1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau}, ${gh.soLuongSP}, ${gh.giaHienTai}, ${gh.giaBanDau})">+</div>
 									</div>
-								    
+									
+								
+								 
 		                        </div>
 		                        <div class="cart-price" style="width: 20%;">
 		                            <p class="mb-0 price" id="currentPrice-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.giaHienTai * gh.soLuongGH}đ</p>
@@ -111,7 +113,7 @@
                     
                 </div>
             </div>
-    
+    		
             <!-- Order Summary -->
            
            	<div class="col-md-4">
@@ -145,20 +147,8 @@
     </div>
     </div>
    
-    
+     <div id="toast__Alert"></div>   
     <jsp:include page="footer.jsp" />
-    
-    <!-- Toast thông báo khi số lượng vượt quá tồn kho -->
-	<div class="toast-container position-fixed top-60px end-0 p-3" id="toast-container">
-	  <div id="quantityToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="6000">
-	    <div class="d-flex">
-	      <div class="toast-body">
-	        Số lượng bạn yêu cầu vượt quá số lượng tồn kho.
-	      </div>
-	      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-	    </div>
-	  </div>
-	</div>
     
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

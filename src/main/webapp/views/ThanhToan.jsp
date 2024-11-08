@@ -75,12 +75,13 @@
 	            <div class="info-row">
 	                <span class="label">Địa chỉ:</span>
 	                <div class="address-container">
+	                	
 	                    <select class="detail" id="addressSelect" onchange="checkOtherOption()">
-	                    	<option value="${nguoiDung.tenDiaChi}">${nguoiDung.tenDiaChi}</option>
-	                        <option value="268 Lý Thường Kiệt, Phường 14, Quận 10, Thành phố Hồ Chí Minh">268 Lý Thường Kiệt, Phường 14, Quận 10, Thành phố Hồ Chí Minh</option>
-	                        <option value="123 Nguyễn Thị Minh Khai, Quận 3, Thành phố Hồ Chí Minh">123 Nguyễn Thị Minh Khai, Quận 3, Thành phố Hồ Chí Minh</option>
-	                        <option value="456 Lê Văn Sỹ, Quận Phú Nhuận, Thành phố Hồ Chí Minh">456 Lê Văn Sỹ, Quận Phú Nhuận, Thành phố Hồ Chí Minh</option>
-	                        <option value="other">Khác (Nhập địa chỉ mới)</option>
+	                    	<c:forEach var="diaChi" items="${ListDC}">
+		                		<option value="${diaChi}">${diaChi}</option>
+		                	</c:forEach>
+	                    	 <option></option>
+	                       <option value="other">Khác (Nhập địa chỉ mới)</option>
 	                    </select>
 	                    
 	                    <input type="text" id="otherAddress" placeholder="Nhập địa chỉ mới" style="display:none; margin-top: 10px;">

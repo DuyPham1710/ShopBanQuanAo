@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import models.NguoiDung;
 
 public class NguoiDungDAO {
-public static NguoiDung LayThongTinNguoiDung(Connection conn) throws SQLException {
-		
-		String sql = "select NguoiDung.*, TenDiaChi from NguoiDung, DiaChiNhanHang where NguoiDung.Madiachi = DiaChiNhanHang.Madiachi and NguoiDung.ID = ?";
+	public static NguoiDung LayThongTinNguoiDung(Connection conn) throws SQLException {
+			
+		String sql = "select * from NguoiDung where NguoiDung.ID = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, AccountDAO.getID());
 		ResultSet rs = ps.executeQuery();
@@ -21,8 +21,6 @@ public static NguoiDung LayThongTinNguoiDung(Connection conn) throws SQLExceptio
 					rs.getString("GioiTinh"), 
 					rs.getString("SDT"), 
 					rs.getDate("NgaySinh"), 
-					rs.getInt("MaDiaChi"), 
-					rs.getString("TenDiaChi"), 
 					rs.getString("email"));
 		
 			return nguoiDung;
