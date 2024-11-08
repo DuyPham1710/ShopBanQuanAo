@@ -199,3 +199,10 @@ body {
   background-color: #111111;
   color: white;
 }
+
+#toast-container {
+    position: fixed;
+    top: 60px; /* Đặt Toast xuất hiện ngay dưới Navbar */
+    right: 0px;
+    z-index: 1050; /* Đảm bảo Toast nằm trên các phần tử khác */
+}

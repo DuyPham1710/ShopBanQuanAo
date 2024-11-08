@@ -6,7 +6,7 @@ public class SanPham {
 	private String mota;
 	private int giaBanDau;
 	private int giamGia;
-	private float giaHienTai;
+	private int giaHienTai;
 	private int soLuong;
 	private int maMau;
 	private String tenMau;
@@ -30,7 +30,7 @@ public class SanPham {
 	
 		this.maHinhAnh = maHinhAnh;
 		this.duongDanHinh = duongDanHinh;
-		this.giaHienTai = (giaBanDau - (giaBanDau * ((float)giamGia/100)));
+		this.giaHienTai = (int)(giaBanDau - (giaBanDau * ((float)giamGia/100)));
 	}
 	
 	public SanPham(int maMau, String tenMau) {
@@ -102,11 +102,11 @@ public class SanPham {
 		this.giamGia = giamGia;
 	}
 
-	public float getGiaHienTai() {
+	public int getGiaHienTai() {
 		return giaHienTai;
 	}
 
-	public void setGiaHienTai(float giaHienTai) {
+	public void setGiaHienTai(int giaHienTai) {
 		this.giaHienTai = giaHienTai;
 	}
 

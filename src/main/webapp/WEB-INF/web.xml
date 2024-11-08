@@ -49,4 +49,14 @@
     <servlet-name>GioHangController</servlet-name>
     <url-pattern>/GioHangController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ThanhToanController</display-name>
+    <servlet-name>ThanhToanController</servlet-name>
+    <servlet-class>Controller.ThanhToanController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ThanhToanController</servlet-name>
+    <url-pattern>/ThanhToanController</url-pattern>
+  </servlet-mapping>
 </web-app>

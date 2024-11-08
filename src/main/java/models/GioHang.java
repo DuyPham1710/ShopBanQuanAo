@@ -5,30 +5,32 @@ public class GioHang {
 	private int maSP;
 	private String tenSP;
 	private int giaBanDau;
-	private float giaHienTai;
-	private int soLuong;
+	private int giaHienTai;
+	private int soLuongSP;
+	private int soLuongGH;
 	private int maKichThuoc;
 	private String tenKichThuoc;
 	private int maMau;
 	private String tenMau;
 	private String duongDanHinh;
 	
-	public GioHang(int ID, int maSP, int maKichThuoc, int maMau, int soLuong) {
+	public GioHang(int ID, int maSP, int maKichThuoc, int maMau, int soLuongGH) {
 		this.ID = ID;
 		this.maSP = maSP;
 		this.maKichThuoc = maKichThuoc;
 		this.maMau = maMau;
-		this.soLuong = soLuong;
+		this.soLuongGH = soLuongGH;
 	}
 	
-	public GioHang(int maSP, String tenSP, int maKichThuoc, String tenKichThuoc, int maMau, String tenMau, int soLuong, int giaBanDau, float giaHienTai, String duongDanHinh) {
+	public GioHang(int maSP, String tenSP, int maKichThuoc, String tenKichThuoc, int maMau, String tenMau, int soLuongSP, int soLuongGH, int giaBanDau, int giaHienTai, String duongDanHinh) {
 		this.maSP = maSP;
 		this.tenSP = tenSP;
 		this.maKichThuoc = maKichThuoc;
 		this.tenKichThuoc = tenKichThuoc;
 		this.maMau = maMau;
 		this.tenMau = tenMau;
-		this.soLuong = soLuong;
+		this.soLuongSP = soLuongSP;
+		this.soLuongGH = soLuongGH;
 		this.giaBanDau = giaBanDau;
 		this.giaHienTai = giaHienTai;
 		this.duongDanHinh = duongDanHinh;
@@ -74,19 +76,11 @@ public class GioHang {
 		this.maKichThuoc = maKichThuoc;
 	}
 
-	public int getSoLuong() {
-		return soLuong;
-	}
-
-	public void setSoLuong(int soLuong) {
-		this.soLuong = soLuong;
-	}
-
-	public float getGiaHienTai() {
+	public int getGiaHienTai() {
 		return giaHienTai;
 	}
 
-	public void setGiaHienTai(float giaHienTai) {
+	public void setGiaHienTai(int giaHienTai) {
 		this.giaHienTai = giaHienTai;
 	}
 
@@ -120,6 +114,22 @@ public class GioHang {
 
 	public void setID(int iD) {
 		ID = iD;
+	}
+
+	public int getSoLuongGH() {
+		return soLuongGH;
+	}
+
+	public void setSoLuongGH(int soLuongGH) {
+		this.soLuongGH = soLuongGH;
+	}
+
+	public int getSoLuongSP() {
+		return soLuongSP;
+	}
+
+	public void setSoLuongSP(int soLuongSP) {
+		this.soLuongSP = soLuongSP;
 	}
 
 	

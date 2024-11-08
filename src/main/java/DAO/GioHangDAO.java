@@ -34,7 +34,7 @@ public class GioHangDAO {
          stmt.setInt(2, gh.getMaSP()); 
          stmt.setInt(3, gh.getMaKichThuoc());   
          stmt.setInt(4, gh.getMaMau()); 
-         stmt.setInt(5, gh.getSoLuong());   
+         stmt.setInt(5, gh.getSoLuongGH());   
     
          stmt.executeUpdate();
 		
@@ -56,6 +56,7 @@ public class GioHangDAO {
 		ResultSet rs = ps.executeQuery();
 		
 		while (rs.next()) {			
+			int giaHienTai = (int)(rs.getFloat("GiaHienTai"));
 			GioHang gh = new GioHang(
 					rs.getInt("maSP"), 
 					rs.getString("TenSanPham"),
@@ -63,9 +64,10 @@ public class GioHangDAO {
 					rs.getString("TenKichCo"), 
 					rs.getInt("MaMau"),
 					rs.getString("TenMau"), 
+					rs.getInt("SoLuongSP"),
 					rs.getInt("SoLuongGH"), 
 					rs.getInt("GiaBanDau"), 
-					rs.getFloat("GiaHienTai"), 
+					giaHienTai,
 					rs.getString("DuongDanHinh"));
 			
 			listGH.add(gh);	

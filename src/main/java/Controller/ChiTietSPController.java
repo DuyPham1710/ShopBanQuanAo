@@ -28,60 +28,70 @@ public class ChiTietSPController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int maSP = Integer.parseInt(request.getParameter("maSP"));
+		if (AccountDAO.getID() == 0) {
+			response.sendRedirect("/project_web/views/login.jsp");
+		}
+		else {
+			int maSP = 0; 
+            if (request.getParameter("maSP") != null) {
+            	maSP = Integer.parseInt(request.getParameter("maSP"));
+            }
+		
 
-	    Connection conn = null;
-		try {
-			conn = new ConnectJDBC().getConnection();
+		    Connection conn = null;
+			try {
+				conn = new ConnectJDBC().getConnection();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			SanPham sp = null;
+			try {
+				sp = SanPhamDAO.layThongTinSP(conn, maSP);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			List<SanPham> listMau = null;
+			try {
+				listMau = SanPhamDAO.layMauSP(conn, maSP);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			List<SanPham> listSize = null;
+			try {
+				listSize = SanPhamDAO.laySizeSP(conn, maSP);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			List<SanPham> listSPTuongTu = null;
+			try {
+				listSPTuongTu = SanPhamDAO.DanhSachSPTuongTu(conn, sp.getMaSP(), sp.getMaDanhMuc());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			request.setAttribute("sp", sp);
+			request.setAttribute("ListMau", listMau);
+			request.setAttribute("ListSize", listSize);
+			request.setAttribute("ListSPTuongTu", listSPTuongTu);
+			
+			RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietSP.jsp");
+			req.forward(request, response);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		SanPham sp = null;
-		try {
-			sp = SanPhamDAO.layThongTinSP(conn, maSP);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		List<SanPham> listMau = null;
-		try {
-			listMau = SanPhamDAO.layMauSP(conn, maSP);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		List<SanPham> listSize = null;
-		try {
-			listSize = SanPhamDAO.laySizeSP(conn, maSP);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		List<SanPham> listSPTuongTu = null;
-		try {
-			listSPTuongTu = SanPhamDAO.DanhSachSPTuongTu(conn, sp.getMaSP(), sp.getMaDanhMuc());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		request.setAttribute("sp", sp);
-		request.setAttribute("ListMau", listMau);
-		request.setAttribute("ListSize", listSize);
-		request.setAttribute("ListSPTuongTu", listSPTuongTu);
-		
-		RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietSP.jsp");
-		req.forward(request, response);
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -111,7 +121,7 @@ public class ChiTietSPController extends HttpServlet {
 				 GioHang gh = new GioHang(AccountDAO.getID(), maSP, maKichThuoc, maMauSac, soLuong);
 				 try {
 					GioHangDAO.ThemGioHang(conn, gh);
-					 Thread.sleep(3000);
+					 Thread.sleep(2000);
 					 
 				 }
 				 catch (Exception e) {

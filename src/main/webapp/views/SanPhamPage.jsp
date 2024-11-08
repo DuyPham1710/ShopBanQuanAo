@@ -43,8 +43,8 @@
     </nav>
 
     <!-- Banner -->
-    <div class="container mt">
-        <div class="container">
+    <div class="container1 mt">
+        <div class="container1">
             <div class="col-md-12">
 			    <nav aria-label="breadcrumb">
 			        <ol class="breadcrumb">
@@ -58,7 +58,7 @@
 			    </nav>
 			</div>
 
-            <div class="container">
+            <div class="container1">
 			    <div class="section-header">
 				    <h2>Được mua nhiều</h2>
 				    <a href="#" class="view-more">Xem Thêm</a>

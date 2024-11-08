@@ -284,7 +284,7 @@ AS
 BEGIN
 	select Q.*, TenMau, TenKichCo
 	from
-		(select SanPham.MaSanPham as maSP, TenSanPham, GioHang.SoLuong as SoLuongGH, GiaBanDau, GiaBanDau - GiaBanDau*(GiamGia/100.0) as GiaHienTai, DuongDanHinh, MaKichCo, MaMau, IDNguoiMua
+		(select SanPham.MaSanPham as maSP, TenSanPham, SanPham.SoLuong as SoLuongSP, GioHang.SoLuong as SoLuongGH, GiaBanDau, GiaBanDau - GiaBanDau*(GiamGia/100.0) as GiaHienTai, DuongDanHinh, MaKichCo, MaMau, IDNguoiMua
 		from SanPham, HinhAnhSanPham, GioHang
 		where SanPham.MaSanPham = HinhAnhSanPham.MaSanPham and SanPham.MaSanPham = GioHang.MaSanPham and GioHang.IDNguoiMua = @IDNguoiMua) Q,
 		MauSac, 

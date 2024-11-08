@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 <link rel="stylesheet" href="./views/css/style.css">
 <link rel="stylesheet" href="./views/css/ChiTietSP.css">
+<script src="./views/js/scriptGioHang.js"></script>
 </head>
 <body>
 	<!-- Navbar -->
@@ -34,7 +35,7 @@
                 </div>
                 <div class="navbar-nav">
                     <a class="nav-link font-weight-bold" href="/project_web/views/home.jsp">TRANG CHỦ</a>
-                    <a class="nav-link font-weight-bold" href="SanPhamController">SẢN PHẨM</a>
+                    <a class="btn btn-primary font-weight-bold" href="SanPhamController">SẢN PHẨM</a>
                     <span class="nav-icon"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
                     <span class="nav-icon"><a href="#"><i class="fas fa-user"></i></a></span>
                 </div>
@@ -110,14 +111,10 @@
 								        if (quantity < 1) {
 								            quantity = 1;
 								        }
-								        /* if (quantity > maxValue) {
-							            	alert("Số lượng không được vượt quá số lượng tồn kho.");
-								            quantity = maxValue;
-								        }  */
+								        
 								        if (quantity > maxValue) {
 								            // Hiển thị toast khi số lượng vượt quá tồn kho
-								            const toast = new bootstrap.Toast(document.getElementById('quantityToast'));
-								            toast.show();
+								            showErrorToast();
 								            quantity = maxValue; // Đặt lại số lượng về giá trị tối đa
 								        }
 								        // Cập nhật lại giá trị số lượng trên trang
@@ -128,7 +125,7 @@
 								        const hiddenSize = document.getElementById("hiddenSize");
 								        hiddenSize.value = size; // Cập nhật giá trị ẩn khi chọn size
 								    }
-								   
+								    
 								</script>
 		                        <div class="size">
 		                            <p>Size:</p>
@@ -157,14 +154,14 @@
 		                
 		                <div class="buttons">
 		                    <button class="buy-now">Mua Ngay</button>
-		                    <button class="add-to-cart" onclick="addToCart()">Thêm vào giỏ hàng</button>
+		                <!--     <button class="add-to-cart" onclick="addToCart()">Thêm vào giỏ hàng</button> -->
+		                  <button class="add-to-cart" onclick="showSuccessToast();">Thêm vào giỏ hàng</button>
 		                </div>
 		            </div>
 		        </div>
 		    </form>
-		    
+		     <div id="toast__Alert"></div>
 		  
-
 		    
             <div class="product-description">
             	<div class="description">
@@ -210,28 +207,6 @@
             toast.show();
 		}
 	</script>
-	<!-- Toast thông báo khi số lượng vượt quá tồn kho -->
-	<div class="toast-container position-fixed top-60px end-0 p-3" id="toast-container">
-	  <div id="quantityToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="6000">
-	    <div class="d-flex">
-	      <div class="toast-body">
-	        Số lượng bạn yêu cầu vượt quá số lượng tồn kho.
-	      </div>
-	      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-	    </div>
-	  </div>
-	</div>
-	
-	 <div class="toast-container position-fixed top-60px end-0 p-3" id="toast-container">
-		<div id="cartToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
-			<div class="d-flex">
-				<div class="toast-body">
-					Thêm vào giỏ hàng thành công!
-				</div>
-				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-		</div>
-	</div>
     <!-- jQuery (Bootstrap's JavaScript plugins require jQuery) -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<!-- Bootstrap JS -->

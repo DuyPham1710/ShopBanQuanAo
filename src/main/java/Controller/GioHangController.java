@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
+import DAO.AccountDAO;
 import DAO.GioHangDAO;
 import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
@@ -26,28 +27,40 @@ public class GioHangController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection conn = null;
-		try {
-			conn = new ConnectJDBC().getConnection();
+		if (AccountDAO.getID() == 0) {
+			response.sendRedirect("/project_web/views/login.jsp");
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
+		else {
+			Connection conn = null;
+			try {
+				conn = new ConnectJDBC().getConnection();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			List<GioHang> listGH = null;
+			try {
+				listGH = GioHangDAO.DanhSachGioHang(conn);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			int totalTemp = 0;
+			for (int i=0; i<listGH.size(); i++) {
+				totalTemp += (listGH.get(i).getGiaHienTai() * listGH.get(i).getSoLuongGH());
+			}
+			
+			request.setAttribute("ListGH", listGH);
+			request.setAttribute("totalTemp", totalTemp);
+	    	
+			RequestDispatcher req = request.getRequestDispatcher("/views/GioHang.jsp");
+			req.forward(request, response);
 		}
 		
-		List<GioHang> listGH = null;
-		try {
-			listGH = GioHangDAO.DanhSachGioHang(conn);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		request.setAttribute("ListGH", listGH);
-    	
-		RequestDispatcher req = request.getRequestDispatcher("/views/GioHang.jsp");
-		req.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

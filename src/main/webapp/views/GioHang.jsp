@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./views/css/styleGioHang.css">
     <link rel="stylesheet" href="./views/css/style.css">
+    <script src="./views/js/scriptGioHang.js"></script>
 </head>
 <body>
      <!-- Navbar -->
@@ -43,16 +44,23 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container mt">
+    <div class="container1">
+    	 <div class="container1 mt">
         <div class="row">
             <!-- Product Cart -->
             <div class="col-md-8">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-white px-0">
-                        <li class="breadcrumb-item"><a href="./index.html">Trang chủ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
-                    </ol>
-                </nav>
+                <div class="col-md-12">
+				    <nav aria-label="breadcrumb">
+				        <ol class="breadcrumb">
+				            <li class="breadcrumb-item" id="home-item">
+					            <a href="/project_web/views/home.jsp">
+					            	<i class="fas fa-home"></i>
+					            </a>
+				            </li>
+				            <li class="breadcrumb-item active" id="product-item"> Giỏ hàng</li>
+				        </ol>
+				    </nav>
+				</div>
     
                 <!-- Cart Header -->
                 <div class="cart-header d-flex border-top border-bottom py-2 font-weight-bold">
@@ -82,41 +90,16 @@
 		                        </div>
 		                        <div class="cart-quantity" style="width: 25%;">
 		                           <div class="button-group">
-									    <div class="button" onclick="changeQuantity(-1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau})">-</div>
-									    <div class="button quantity-display" id="quantity-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.soLuong}</div>
-									    <input type="hidden" name="soLuong" id="hiddenQuantity-${gh.maSP}" value="${gh.soLuong}">
-									    <div class="button" onclick="changeQuantity(1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau})">+</div>
+									    <div class="button" onclick="changeQuantity(-1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau}, ${gh.soLuongSP}, ${gh.giaHienTai}, ${gh.giaBanDau})">-</div>
+									    <div class="button quantity-display" id="quantity-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.soLuongGH}</div>
+									    <input type="hidden" name="soLuong" id="hiddenQuantity-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}" value="${gh.soLuongGH}">
+									    <div class="button" onclick="changeQuantity(1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau}, ${gh.soLuongSP}, ${gh.giaHienTai}, ${gh.giaBanDau})">+</div>
 									</div>
-								    <script>
-									    function changeQuantity(value, maSP, maKichThuoc, maMau) {
-									        // Lấy phần tử hiển thị số lượng và giá trị ẩn của sản phẩm tương ứng
-									        const quantityElement = document.getElementById("quantity-" + maSP + "-" + maKichThuoc + "-" + maMau);
-									        const hiddenQuantity = document.getElementById("hiddenQuantity-" + maSP);
-									        
-									        // Chuyển đổi số lượng thành số nguyên
-									        let quantity = parseInt(quantityElement.innerText);
-									        
-									        // Tăng hoặc giảm số lượng
-									        quantity += value;
-									        
-									        // Đảm bảo số lượng không nhỏ hơn 1
-									        if (quantity < 1) {
-									            quantity = 1;
-									        }
-									        
-									      /*   if (quantity > maxQuantity) {
-									            alert("Số lượng không được vượt quá số lượng tồn kho.");
-									            quantity = maxQuantity;
-									        } */
-									        // Cập nhật lại giá trị số lượng trên trang và giá trị ẩn
-									        quantityElement.innerText = quantity;
-									        hiddenQuantity.value = quantity;
-									    }
-									</script>
+								    
 		                        </div>
 		                        <div class="cart-price" style="width: 20%;">
-		                            <p class="mb-0 price">${gh.giaHienTai * gh.soLuong}đ</p>
-		                            <p class="mb-0 text-muted"><del>${gh.giaBanDau * gh.soLuong}đ</del></p>
+		                            <p class="mb-0 price" id="currentPrice-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.giaHienTai * gh.soLuongGH}đ</p>
+		                            <p class="mb-0 text-muted"><del id="originalPrice-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.giaBanDau * gh.soLuongGH}đ</del></p>
 		                        </div>
 		                        <input type="hidden" name="maSP" value="${gh.maSP}">	
 		                        <input type="hidden" name="maKichThuoc" value="${gh.maKichThuoc}">	
@@ -130,31 +113,53 @@
             </div>
     
             <!-- Order Summary -->
-            <div class="col-md-4">
-                <div class="card">
+           
+           	<div class="col-md-4">
+                <div class="card card1">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Thông tin đơn hàng</h5>
                         <div class="d-flex justify-content-between">
                             <span>Tạm tính</span>
-                            <span>105,000đ</span>
+                            <span class="totalTemp">${totalTemp}</span>
+                           
                         </div>
                         <div class="d-flex justify-content-between">
                             <span>Phí vận chuyển</span>
-                            <span>30,000đ</span>
+                            <span>30 000đ</span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold text-danger">
                             <span>Tổng tiền</span>
-                            <span>135,000đ</span>
+                            <span class="total">${totalTemp + 30000}đ</span>
                         </div>
-                        <button class="btn btn-dark btn-block mt-3">THANH TOÁN ĐƠN HÀNG</button>
+                        <form action="./ThanhToanController" method="post">
+                        	 <input type="hidden" name="totalTemp" value="${totalTemp}">
+                        	<button class="btn btn-dark btn-block mt-3">THANH TOÁN ĐƠN HÀNG</button>
+                    	 </form>
                     </div>
                 </div>
             </div>
+         
+            
         </div>
     </div>
+    </div>
+   
     
     <jsp:include page="footer.jsp" />
+    
+    <!-- Toast thông báo khi số lượng vượt quá tồn kho -->
+	<div class="toast-container position-fixed top-60px end-0 p-3" id="toast-container">
+	  <div id="quantityToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="6000">
+	    <div class="d-flex">
+	      <div class="toast-body">
+	        Số lượng bạn yêu cầu vượt quá số lượng tồn kho.
+	      </div>
+	      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+	    </div>
+	  </div>
+	</div>
+    
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

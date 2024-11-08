@@ -42,12 +42,12 @@
     </nav>
 
     <!-- Banner -->
-    <div class="container mt">
-        <div class="container">
+    <div class="container1 mt">
+        <div class="container1">
             <div class="col-md-12">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i> Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="home.jsp"><i class="fas fa-home"></i> Trang chủ</a></li>
                     </ol>
                 </nav>
             </div>
@@ -64,7 +64,7 @@
                     <a href="#" class="btn btn-primary font-weight-bold">LIÊN HỆ VỚI CHÚNG TÔI</a>
                 </div>
                 <div class="banner-image">
-                    <img src="https://daviesfashion.netlify.app/static/media/introduction.d3445e0c714cc8e20077.png" alt="Banner Image" class="img-fluid rounded">
+                    <img src="./images/home.png" alt="Banner Image" class="img-fluid rounded">
                 </div>
             </div>
             
