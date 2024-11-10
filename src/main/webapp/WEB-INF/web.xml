@@ -59,4 +59,14 @@
     <servlet-name>ThanhToanController</servlet-name>
     <url-pattern>/ThanhToanController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TaiKhoanController</display-name>
+    <servlet-name>TaiKhoanController</servlet-name>
+    <servlet-class>Controller.TaiKhoanController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TaiKhoanController</servlet-name>
+    <url-pattern>/TaiKhoanController</url-pattern>
+  </servlet-mapping>
 </web-app>

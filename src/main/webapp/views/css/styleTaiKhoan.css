@@ -1,0 +1,75 @@
+@charset "UTF-8";
+body {
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.profile-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.sidebar {
+    min-height: 100%;
+}
+
+.list-group-item.active {
+    background-color: #f35d5d;
+    border-color: #f35d5d;
+    color: white;
+}
+
+.profile-form h4 {
+    font-size: 24px;
+}
+
+.profile-form p {
+    color: #777;
+    font-size: 14px;
+}
+
+.profile-pic {
+    max-width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.form-group{
+    margin-bottom: 10px;
+}
+.form-group label {
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.btn-danger {
+    background-color: #f35d5d;
+    border: none;
+}
+
+.sidebar .list-group-item {
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+.avatar{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover; /* Đảm bảo ảnh giữ được tỷ lệ khi cắt */
+    border: 2px solid #ddd; /* Đường viền nhẹ cho ảnh */
+    margin-bottom: 15px; /* Khoảng cách dưới */
+}
+#profilePic {
+    display: none; /* Ẩn input để không hiển thị đường dẫn */
+}
+
+.col-md-3.form-group {
+    display: flex;
+    flex-direction: column; /* Đặt các phần tử con theo chiều dọc */
+    align-items: center;    /* Căn giữa theo chiều ngang */
+    text-align: center;     /* Đảm bảo văn bản trong label cũng được căn giữa */
+}
+
