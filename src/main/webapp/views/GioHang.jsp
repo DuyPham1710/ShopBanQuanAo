@@ -37,7 +37,20 @@
                     <a class="nav-link font-weight-bold" href="/project_web/views/home.jsp">TRANG CHỦ</a>
                     <a class="nav-link font-weight-bold" href="/project_web/SanPhamController">SẢN PHẨM</a>
                     <span class="nav-icon-primary"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
-                    <span class="nav-icon"><a href="/project_web/TaiKhoanController"><i class="fas fa-user"></i></a></span>
+                     <span class="nav-icon" id="account-icon">
+                        <a href="/project_web/TaiKhoanController">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </span>
+
+                    <div class="account-info" id="account-info">
+                        <ul>
+                            <li class="account-info-item"><a href="/project_web/TaiKhoanController">Tài khoản của tôi</a></li>
+                            <li class="account-info-item"><a href="#">Đơn mua</a></li>
+                            <li class="account-info-item"><a href="/project_web/views/login.jsp">Đăng xuất</a></li>
+                        </ul>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +77,7 @@
     
                 <!-- Cart Header -->
                 <div class="cart-header d-flex border-top border-bottom py-2 font-weight-bold">
-                    <div class="col-1 cart-check"><input type="checkbox"></div>
+                    <div class="col-1 cart-check"><input type="checkbox" id="selectAll"></div>
                     <div class="col-5 cart-product">Sản phẩm</div>
                     <div class="col-3 cart-quantity">Số lượng</div>
                     <div class="col-2 cart-price">Giá</div>
@@ -80,32 +93,32 @@
 	                    	<div class="cart-item d-flex align-items-center py-3">
 		                        <div class="cart-check" style="width: 5%;"><input type="checkbox"></div>
 		                        <div class="cart-product d-flex align-items-center" style="width: 45%;">
-		                            <img src="${gh.duongDanHinh}" alt="${gh.tenSP}" class="img-thumbnail" style="width: 80px; height: auto;">
+		                            <img src="${gh.sanPham.hinhAnhSP.duongDanHinh}" alt="${gh.sanPham.tenSP}" class="img-thumbnail" style="width: 80px; height: auto;">
 		                            <div class="ml-3">
 		                                <p class="mb-1 font-weight-bold">Blue Pants</p>
-		                                <p class="mb-0 text-muted">${gh.tenSP}</p>
-		                                <p class="mb-0 text-muted">Size: ${gh.tenKichThuoc}, Màu: ${gh.tenMau}</p>
+		                                <p class="mb-0 text-muted">${gh.sanPham.tenSP}</p>
+		                                <p class="mb-0 text-muted">Size: ${gh.sanPham.kichCo[0].tenKichCo}, Màu: ${gh.sanPham.mauSac[0].tenMau}</p>
 		
 		                            </div>
 		                        </div>
 		                        <div class="cart-quantity" style="width: 25%;">
 		                           <div class="button-group">
-									    <div class="button" onclick="changeQuantity(-1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau}, ${gh.soLuongSP}, ${gh.giaHienTai}, ${gh.giaBanDau})">-</div>
-									    <div class="button quantity-display" id="quantity-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.soLuongGH}</div>
-									    <input type="hidden" name="soLuong" id="hiddenQuantity-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}" value="${gh.soLuongGH}">
-									    <div class="button" onclick="changeQuantity(1, ${gh.maSP}, ${gh.maKichThuoc}, ${gh.maMau}, ${gh.soLuongSP}, ${gh.giaHienTai}, ${gh.giaBanDau})">+</div>
+									    <div class="button" onclick="changeQuantity(-1, ${gh.sanPham.maSP}, ${gh.sanPham.kichCo[0].maKichCo}, ${gh.sanPham.mauSac[0].maMau}, ${gh.sanPham.soLuong}, ${gh.sanPham.giaHienTai}, ${gh.sanPham.giaBanDau})">-</div>
+									    <div class="button quantity-display" id="quantity-${gh.sanPham.maSP}-${gh.sanPham.kichCo[0].maKichCo}-${gh.sanPham.mauSac[0].maMau}">${gh.soLuongGH}</div>
+									    <input type="hidden" name="soLuong" id="hiddenQuantity-${gh.sanPham.maSP}-${gh.sanPham.kichCo[0].maKichCo}-${gh.sanPham.mauSac[0].maMau}" value="${gh.soLuongGH}">
+									    <div class="button" onclick="changeQuantity(1, ${gh.sanPham.maSP}, ${gh.sanPham.kichCo[0].maKichCo}, ${gh.sanPham.mauSac[0].maMau}, ${gh.sanPham.soLuong}, ${gh.sanPham.giaHienTai}, ${gh.sanPham.giaBanDau})">+</div>
 									</div>
 									
 								
 								 
 		                        </div>
 		                        <div class="cart-price" style="width: 20%;">
-		                            <p class="mb-0 price" id="currentPrice-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.giaHienTai * gh.soLuongGH}đ</p>
-		                            <p class="mb-0 text-muted"><del id="originalPrice-${gh.maSP}-${gh.maKichThuoc}-${gh.maMau}">${gh.giaBanDau * gh.soLuongGH}đ</del></p>
+		                            <p class="mb-0 price" id="currentPrice-${gh.sanPham.maSP}-${gh.sanPham.kichCo[0].maKichCo}-${gh.sanPham.mauSac[0].maMau}">${gh.sanPham.giaHienTai * gh.soLuongGH}đ</p>
+		                            <p class="mb-0 text-muted"><del id="originalPrice-${gh.sanPham.maSP}-${gh.sanPham.kichCo[0].maKichCo}-${gh.sanPham.mauSac[0].maMau}">${gh.sanPham.giaBanDau * gh.soLuongGH}đ</del></p>
 		                        </div>
-		                        <input type="hidden" name="maSP" value="${gh.maSP}">	
-		                        <input type="hidden" name="maKichThuoc" value="${gh.maKichThuoc}">	
-		                        <input type="hidden" name="maMau" value="${gh.maMau}">	
+		                        <input type="hidden" name="maSP" value="${gh.sanPham.maSP}">	
+		                        <input type="hidden" name="maKichThuoc" value="${gh.sanPham.kichCo[0].maKichCo}">	
+		                        <input type="hidden" name="maMau" value="${gh.sanPham.mauSac[0].maMau}">	
 		                        <div class="cart-action" style="width: 5%;"><button class="btn btn-link text-danger"><i class="fas fa-trash-alt"></i></button></div>
 		                    </div>
 	                    </form>
@@ -149,7 +162,42 @@
    
      <div id="toast__Alert"></div>   
     <jsp:include page="footer.jsp" />
-    
+   <!-- Modal -->
+	<div class="modal fade" id="emptyCartModal" tabindex="-1" role="dialog" aria-labelledby="emptyCartModalLabel" aria-hidden="true" style="z-index: 9999">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="emptyCartModalLabel">Thông báo</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        Vui lòng chọn ít nhất một sản phẩm trước khi thanh toán.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+		//Handle select all checkboxes
+		document.getElementById('selectAll').addEventListener('change', function() {
+		    const checkboxes = document.querySelectorAll(".cart-item input[type='checkbox']");
+		    checkboxes.forEach((checkbox) => {
+		        checkbox.checked = this.checked;
+		    });
+		});
+		document.querySelector("form[action='./ThanhToanController']").addEventListener("submit", function (e) {
+		    const selectedItems = document.querySelectorAll(".cart-item input[type='checkbox']:checked");
+		    
+		    if (selectedItems.length === 0) {
+		        e.preventDefault(); // Ngừng gửi form
+		        $('#emptyCartModal').modal('show'); // Hiển thị modal thông báo
+		    }
+		});
+	</script>
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

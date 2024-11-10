@@ -37,7 +37,20 @@
                     <a class="nav-link font-weight-bold" href="/project_web/views/home.jsp">TRANG CHỦ</a>
                     <a class="nav-link font-weight-bold" href="/project_web/SanPhamController">SẢN PHẨM</a>
                     <span class="nav-icon"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
-                    <span class="nav-icon"><a href="/project_web/TaiKhoanController"><i class="fas fa-user"></i></a></span>
+                     <span class="nav-icon" id="account-icon">
+                        <a href="/project_web/TaiKhoanController">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </span>
+
+                    <div class="account-info" id="account-info">
+                        <ul>
+                            <li class="account-info-item"><a href="/project_web/TaiKhoanController">Tài khoản của tôi</a></li>
+                            <li class="account-info-item"><a href="#">Đơn mua</a></li>
+                            <li class="account-info-item"><a href="/project_web/views/login.jsp">Đăng xuất</a></li>
+                        </ul>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,8 +90,8 @@
 	                <div class="address-container">
 	                	
 	                    <select class="detail" id="addressSelect" onchange="checkOtherOption()">
-	                    	<c:forEach var="diaChi" items="${ListDC}">
-		                		<option value="${diaChi}">${diaChi}</option>
+	                    	<c:forEach var="diaChi" items="${nguoiDung.diaChiNhanHang}">
+		                		<option value="${diaChi.tenDiaChi}">${diaChi.tenDiaChi}</option>
 		                	</c:forEach>
 	                    	 <option></option>
 	                       <option value="other">Khác (Nhập địa chỉ mới)</option>
@@ -133,17 +146,17 @@
 	            </div>
 	            <c:forEach var="gh" items="${ListGH}">
 	            	 <div class="product-item">
-		                <img src="${gh.duongDanHinh }" alt="${gh.tenSP}">
+		                <img src="${gh.sanPham.hinhAnhSP.duongDanHinh}" alt="${gh.sanPham.tenSP}">
 		                <div class="product-info">
-		                    <h4>${gh.tenSP}</h4>
+		                    <h4>${gh.sanPham.tenSP}</h4>
 		                    <p class="brand">Golden Accessories</p>
-		                    <p class="details">Size: ${gh.tenKichThuoc}, Màu: ${gh.tenMau}</p>
+		                    <p class="details">Size: ${gh.sanPham.kichCo[0].tenKichCo}, Màu: ${gh.sanPham.mauSac[0].tenMau}</p>
 		                </div>
 		                <div class="product-quantity">
 		                    <p>${gh.soLuongGH}</p>
 		                </div>
 		                <div class="product-price">
-		                    <p class="price">${gh.giaHienTai * gh.soLuongGH}đ</p>
+		                    <p class="price">${gh.sanPham.giaHienTai * gh.soLuongGH}đ</p>
 		                </div>
 		            </div>
 	            </c:forEach>

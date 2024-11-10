@@ -64,19 +64,9 @@ public class ThanhToanController extends HttpServlet {
     				response.getWriter().println("Error: " + e.getMessage());
     			}
     			
-    			List<String> ListDC = null;
-    			try {
-    				ListDC = DiaChiDAO.LayDanhSachDiaChi(conn);
-    			}
-    			catch (Exception e) {
-    				e.printStackTrace();
-    				response.getWriter().println("Error: " + e.getMessage());
-    			}
-    			
     			request.setAttribute("ListGH", listGH);
     			request.setAttribute("totalTemp", totalTemp);
     			request.setAttribute("nguoiDung", nguoiDung);
-    			request.setAttribute("ListDC", ListDC);
     			
     			RequestDispatcher req = request.getRequestDispatcher("/views/ThanhToan.jsp");
     			req.forward(request, response);

@@ -36,7 +36,20 @@
                     <a class="nav-link font-weight-bold" href="/project_web/views/home.jsp">TRANG CHỦ</a>
                     <a class="nav-link font-weight-bold" href="SanPhamController">SẢN PHẨM</a>
                     <span class="nav-icon"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
-                    <span class="nav-icon-primary"><a href="/project_web/TaiKhoanController"><i class="fas fa-user"></i></a></span>
+                    <span class="nav-icon-primary" id="account-icon">
+                        <a href="/project_web/TaiKhoanController">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </span>
+
+                    <div class="account-info" id="account-info">
+                        <ul>
+                            <li class="account-info-item"><a href="/project_web/TaiKhoanController">Tài khoản của tôi</a></li>
+                            <li class="account-info-item"><a href="#">Đơn mua</a></li>
+                            <li class="account-info-item"><a href="/project_web/views/login.jsp">Đăng xuất</a></li>
+                        </ul>
+                        
+                    </div>
                 </div>
             </div>
         </div>

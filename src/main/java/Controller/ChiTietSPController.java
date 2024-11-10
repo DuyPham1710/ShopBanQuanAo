@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.GioHang;
+import models.KichCo;
+import models.MauSac;
 import models.SanPham;
 
 import java.io.IOException;
@@ -37,7 +39,6 @@ public class ChiTietSPController extends HttpServlet {
             	maSP = Integer.parseInt(request.getParameter("maSP"));
             }
 		
-
 		    Connection conn = null;
 			try {
 				conn = new ConnectJDBC().getConnection();
@@ -56,7 +57,7 @@ public class ChiTietSPController extends HttpServlet {
 				response.getWriter().println("Error: " + e.getMessage());
 			}
 			
-			List<SanPham> listMau = null;
+			List<MauSac> listMau = null;
 			try {
 				listMau = SanPhamDAO.layMauSP(conn, maSP);
 			}
@@ -65,7 +66,7 @@ public class ChiTietSPController extends HttpServlet {
 				response.getWriter().println("Error: " + e.getMessage());
 			}
 			
-			List<SanPham> listSize = null;
+			List<KichCo> listSize = null;
 			try {
 				listSize = SanPhamDAO.laySizeSP(conn, maSP);
 			}
@@ -74,9 +75,12 @@ public class ChiTietSPController extends HttpServlet {
 				response.getWriter().println("Error: " + e.getMessage());
 			}
 			
+			sp.setMauSac(listMau);
+			sp.setKichCo(listSize);
+			
 			List<SanPham> listSPTuongTu = null;
 			try {
-				listSPTuongTu = SanPhamDAO.DanhSachSPTuongTu(conn, sp.getMaSP(), sp.getMaDanhMuc());
+				listSPTuongTu = SanPhamDAO.DanhSachSPTuongTu(conn, sp.getMaSP(), sp.getDanhMuc().getMaDanhMuc());
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -84,8 +88,6 @@ public class ChiTietSPController extends HttpServlet {
 			}
 			
 			request.setAttribute("sp", sp);
-			request.setAttribute("ListMau", listMau);
-			request.setAttribute("ListSize", listSize);
 			request.setAttribute("ListSPTuongTu", listSPTuongTu);
 			
 			RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietSP.jsp");
@@ -118,9 +120,10 @@ public class ChiTietSPController extends HttpServlet {
 					 response.getWriter().println("Error: " + e.getMessage());
 				 }
 				 
-				 GioHang gh = new GioHang(AccountDAO.getID(), maSP, maKichThuoc, maMauSac, soLuong);
+				 SanPham sp = new SanPham(maSP, maKichThuoc, maMauSac);
+				 GioHang gh = new GioHang(sp, soLuong);
 				 try {
-					GioHangDAO.ThemGioHang(conn, gh);
+					 GioHangDAO.ThemGioHang(conn, gh);
 					 Thread.sleep(2000);
 					 
 				 }

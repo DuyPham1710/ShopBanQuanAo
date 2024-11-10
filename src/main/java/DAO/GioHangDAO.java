@@ -9,16 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.GioHang;
+import models.HinhAnhSanPham;
+import models.KichCo;
+import models.MauSac;
+import models.SanPham;
 
 public class GioHangDAO {
 	public static void ThemGioHang(Connection conn, GioHang gh) throws SQLException {
 		 String checkSQL = "select 1 FROM GioHang where IDNguoiMua = ? and MaSanPham = ? and MaKichCo = ? and MaMau = ?";
 		 String sql = "";
 		 PreparedStatement checkStmt = conn.prepareStatement(checkSQL);
-		 checkStmt.setInt(1, gh.getID()); 
-		 checkStmt.setInt(2, gh.getMaSP()); 
-		 checkStmt.setInt(3, gh.getMaKichThuoc()); 
-		 checkStmt.setInt(4, gh.getMaMau()); 
+		 checkStmt.setInt(1, AccountDAO.getID()); 
+		 checkStmt.setInt(2, gh.getSanPham().getMaSP()); 
+		 checkStmt.setInt(3, gh.getSanPham().getKichCo().get(0).getMaKichCo()); 
+		 checkStmt.setInt(4, gh.getSanPham().getMauSac().get(0).getMaMau()); 
       
 		 ResultSet rs = checkStmt.executeQuery();
          if (rs.next()) {
@@ -30,10 +34,10 @@ public class GioHangDAO {
         	 sql = "{call proc_ThemGioHang(?, ?, ?, ?, ?)}";
          }
          CallableStatement stmt = conn.prepareCall(sql) ;
-         stmt.setInt(1, gh.getID()); 
-         stmt.setInt(2, gh.getMaSP()); 
-         stmt.setInt(3, gh.getMaKichThuoc());   
-         stmt.setInt(4, gh.getMaMau()); 
+         stmt.setInt(1, AccountDAO.getID()); 
+         stmt.setInt(2, gh.getSanPham().getMaSP()); 
+         stmt.setInt(3, gh.getSanPham().getKichCo().get(0).getMaKichCo()); 
+         stmt.setInt(4, gh.getSanPham().getMauSac().get(0).getMaMau()); 
          stmt.setInt(5, gh.getSoLuongGH());   
     
          stmt.executeUpdate();
@@ -57,18 +61,22 @@ public class GioHangDAO {
 		
 		while (rs.next()) {			
 			int giaHienTai = (int)(rs.getFloat("GiaHienTai"));
-			GioHang gh = new GioHang(
+			
+			KichCo size = new KichCo(rs.getInt("MaKichCo"), rs.getString("TenKichCo"));
+			MauSac color = new MauSac(rs.getInt("MaMau"), rs.getString("TenMau"));
+			HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham();
+			hinhAnhSP.setDuongDanHinh(rs.getString("DuongDanHinh"));
+			SanPham sp = new SanPham(
 					rs.getInt("maSP"), 
-					rs.getString("TenSanPham"),
-					rs.getInt("MaKichCo"),
-					rs.getString("TenKichCo"), 
-					rs.getInt("MaMau"),
-					rs.getString("TenMau"), 
-					rs.getInt("SoLuongSP"),
-					rs.getInt("SoLuongGH"), 
+					rs.getString("TenSanPham"), 
 					rs.getInt("GiaBanDau"), 
-					giaHienTai,
-					rs.getString("DuongDanHinh"));
+					giaHienTai, 
+					rs.getInt("SoLuongSP"),
+					size,
+					color,
+					hinhAnhSP);
+		
+			GioHang gh = new GioHang(sp, rs.getInt("SoLuongGH"));
 			
 			listGH.add(gh);	
 		}

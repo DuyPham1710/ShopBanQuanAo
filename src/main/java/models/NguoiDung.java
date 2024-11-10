@@ -1,22 +1,26 @@
 package models;
 
 import java.sql.Date;
+import java.util.List;
 
 public class NguoiDung {
+	private Account account;
 	private String cccd; 
     private String hoTen;      
     private String gioiTinh;    
     private String sdt;          
     private Date ngaySinh;         
     private String email;
+    private List<DiaChiNhanHang> diaChiNhanHang;
     
-	public NguoiDung(String cccd, String hoTen, String gioiTinh, String sdt, Date ngaySinh, String email) {
+	public NguoiDung(String cccd, String hoTen, String gioiTinh, String sdt, Date ngaySinh, String email, List<DiaChiNhanHang> diaChiNhanHang) {
 		this.cccd = cccd;
 		this.hoTen = hoTen;
 		this.gioiTinh = gioiTinh;
 		this.sdt = sdt;
 		this.ngaySinh = ngaySinh;
 		this.email = email;
+		this.setDiaChiNhanHang(diaChiNhanHang);
 	}
 
 	public String getEmail() {
@@ -65,5 +69,21 @@ public class NguoiDung {
 
 	public void setCccd(String cccd) {
 		this.cccd = cccd;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public List<DiaChiNhanHang> getDiaChiNhanHang() {
+		return diaChiNhanHang;
+	}
+
+	public void setDiaChiNhanHang(List<DiaChiNhanHang> diaChiNhanHang) {
+		this.diaChiNhanHang = diaChiNhanHang;
 	}
 }

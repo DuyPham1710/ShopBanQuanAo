@@ -23,7 +23,6 @@ public class GioHangController extends HttpServlet {
        
     public GioHangController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,7 +50,7 @@ public class GioHangController extends HttpServlet {
 			
 			int totalTemp = 0;
 			for (int i=0; i<listGH.size(); i++) {
-				totalTemp += (listGH.get(i).getGiaHienTai() * listGH.get(i).getSoLuongGH());
+				totalTemp += (listGH.get(i).getSanPham().getGiaHienTai() * listGH.get(i).getSoLuongGH());
 			}
 			
 			request.setAttribute("ListGH", listGH);

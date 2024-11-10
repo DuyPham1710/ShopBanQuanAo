@@ -7,7 +7,7 @@ body {
 	position: fixed !important;
 	top: 0;
 	width: 100%;
-	z-index: 2000;
+	z-index: 1000;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 .mt {
@@ -131,5 +131,86 @@ body {
     width: 90%;
     margin-right: auto;
     margin-left: auto;
+}
+
+/* CSS cho hộp thông tin tài khoản */
+.account-info {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    top: 90%; 
+    right: 90px; 
+    width: 160px;
+    z-index: 1000;
+    opacity: 0;
   
+    /* Đổi tâm của tranform */
+    transform-origin: center top;  
+    animation: showNotify ease-in 0.25s;
+
+    /* khai báo cho trình duyệt tối ưu chuyển động */
+    will-change: opacity, transform;
+}
+
+@keyframes showNotify {
+  from {
+      opacity: 0;
+      transform: scale(0);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+/* Mũi tên chỉ về phía tài khoản */
+.account-info::after {
+    content: "";
+    border-width: 20px 28px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+    position: absolute;
+    top: -34px;
+    right: 52px;
+   
+}
+
+
+/* Hiển thị hộp khi hover vào cả icon tài khoản và hộp thông tin tài khoản */
+#account-icon:hover + #account-info,
+#account-info:hover {
+  display: block;
+  opacity: 1;
+  top: 60px; 
+}
+
+.account-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.account-info ul li {
+  padding: 8px 0;
+}
+
+.account-info ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.account-info ul li a:hover {
+  color: #007bff;
+}
+
+.account-info-item:hover {
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+#account-icon {
+    position: relative; 
+    z-index: 1050; 
 }

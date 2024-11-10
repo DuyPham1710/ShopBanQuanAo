@@ -2,6 +2,21 @@
   /*   function formatCurrency(value) {
         return value.toLocaleString('vi-VN'); // 'vi-VN' sẽ sử dụng dấu chấm cho hàng nghìn theo chuẩn Việt Nam
     } */
+	
+document.getElementById("selectAll").addEventListener("change", function () {
+    const checkboxes = document.querySelectorAll(".cart-item input[type='checkbox']");
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = this.checked;
+    });
+});	
+document.querySelector("form[action='./ThanhToanController']").addEventListener("submit", function (e) {
+    const selectedItems = document.querySelectorAll(".cart-item input[type='checkbox']:checked");
+    
+    if (selectedItems.length === 0) {
+        e.preventDefault(); // Ngừng gửi form
+        $('#emptyCartModal').modal('show'); // Hiển thị modal thông báo
+    }
+});
 function changeQuantity(value, maSP, maKichThuoc, maMau, soLuongSP, giaHienTai, giaBanDau) {
     // Lấy phần tử hiển thị số lượng và giá trị ẩn của sản phẩm tương ứng
     const quantityElement = document.getElementById("quantity-" + maSP + "-" + maKichThuoc + "-" + maMau);

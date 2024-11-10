@@ -13,6 +13,7 @@ public class Account {
 	private String username;
 	private String password;
 	private String position;
+	
 	public Account(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -29,5 +30,13 @@ public class Account {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
 }

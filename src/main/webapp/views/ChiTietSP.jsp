@@ -37,7 +37,20 @@
                     <a class="nav-link font-weight-bold" href="/project_web/views/home.jsp">TRANG CHỦ</a>
                     <a class="btn btn-primary font-weight-bold" href="SanPhamController">SẢN PHẨM</a>
                     <span class="nav-icon"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
-                    <span class="nav-icon"><a href="/project_web/TaiKhoanController"><i class="fas fa-user"></i></a></span>
+                     <span class="nav-icon" id="account-icon">
+                        <a href="/project_web/TaiKhoanController">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </span>
+
+                    <div class="account-info" id="account-info">
+                        <ul>
+                            <li class="account-info-item"><a href="/project_web/TaiKhoanController">Tài khoản của tôi</a></li>
+                            <li class="account-info-item"><a href="#">Đơn mua</a></li>
+                            <li class="account-info-item"><a href="/project_web/views/login.jsp">Đăng xuất</a></li>
+                        </ul>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,7 +68,7 @@
 				            </a>
 			            </li>
 			            <li class="breadcrumb-item active" id="product-item">
-						    <a href="SanPhamController">Sản phẩm / ${sp.tenSP}</a>
+						    <a href="SanPhamController">Sản phẩm / ${sp.danhMuc.tenDanhMuc} / ${sp.tenSP}</a>
 						</li>
 			        </ol>
 			    </nav>
@@ -66,7 +79,7 @@
             	  <input type="hidden" name="maSP" value="${sp.maSP}">	 
 		        <div class="product-container">
 		            <div class="product-image">
-		                <img src="${sp.duongDanHinh}" alt="${sp.tenSP}">
+		                <img src="${sp.hinhAnhSP.duongDanHinh}" alt="${sp.tenSP}">
 		            </div>
 		            
 		            <div class="product-details">
@@ -103,20 +116,29 @@
 		                        <div class="size">
 		                            <p>Size:</p>
 		                            <div class="button-group1">
-		                            	<c:forEach var="size" items="${ListSize}">			                    
-					                      <button type="button" class="button selected" onclick="setSize(this,'${size.maKichThuoc}')">${size.tenKichThuoc}</button>
+		                            	<c:forEach var="size" items="${sp.kichCo}">			                    
+					                      <button type="button" class="button selected" onclick="setSize(this,'${size.maKichCo}')">${size.tenKichCo}</button>
 						                </c:forEach>
 										<input type="hidden" name="size" id="hiddenSize" value="">
 		                            </div>
 		                            
 		                        </div>
+		                      <%--   <div class="size">
+		                            <p>Size:</p>
+		                            <div class="button-group1">
+								    <c:forEach var="size" items="${sp.kichCo}" varStatus="status">
+								        <input type="radio" id="size-${size.maKichCo}" name="size" value="${size.maKichCo}" class="radio-input" 
+								               ${status.first ? 'checked' : ''}>
+								        <label for="size-${size.maKichCo}" class="button">${size.tenKichCo}</label>
+								    </c:forEach>
+								</div> --%>
 		                     	<div class="vertical-divider"></div> <!-- Đường kẻ dọc -->
 		                        
 		                        <div class="color">
 		                            <p>Màu sắc:</p>
 		                            <div class="color-selector">
 		                            	<select class="form-select" name="tenmau">
-						                    <c:forEach var="color" items="${ListMau}">
+						                    <c:forEach var="color" items="${sp.mauSac}">
 						                       <option value="${color.maMau}">${color.tenMau}</option>
 						                    </c:forEach>
 						                </select>
@@ -153,7 +175,7 @@
 					     	<form action="./ChiTietSPController" method="post">
 					     		<div class="product-card hover-effect" onclick="this.closest('form').submit();">
 						            <div class="discount">-${sp.giamGia}%</div>
-						            <img src="${sp.duongDanHinh}" alt="${sp.tenSP}">
+						            <img src="${sp.hinhAnhSP.duongDanHinh}" alt="${sp.tenSP}">
 						            <div class="product-info">
 						                <h3>${sp.tenSP} <span class="hot">Hot</span></h3>
 						                <p class="price">${sp.giaHienTai}đ <span class="original-price">${sp.giaBanDau}đ</span></p>
