@@ -98,58 +98,48 @@
 		                    <hr class="divider">
 		                </div>  
 		                
-		                
-		                <div class="change-details">
-		                    <div class="details-group">
-		                        <div class="quantity">
-								    <p>Số lượng:</p>
-								    <div class="button-group">
-								        <div class="button" onclick="changeQuantity(-1, ${sp.soLuong})">-</div>
-								        <div class="button quantity-display" id="quantity">1</div>
-								        <input type="hidden" name="soLuong" id="hiddenQuantity" value="1">
-								        <div class="button" onclick="changeQuantity(1, ${sp.soLuong})">+</div>
-								    </div>	
-								</div>
-								
-								<div class="vertical-divider"></div> <!-- Đường kẻ dọc -->
-		                
-		                        <div class="size">
-		                            <p>Size:</p>
-		                            <div class="button-group1">
-		                            	<c:forEach var="size" items="${sp.kichCo}">			                    
-					                      <button type="button" class="button selected" onclick="setSize(this,'${size.maKichCo}')">${size.tenKichCo}</button>
-						                </c:forEach>
-										<input type="hidden" name="size" id="hiddenSize" value="">
-		                            </div>
-		                            
-		                        </div>
-		                      <%--   <div class="size">
-		                            <p>Size:</p>
-		                            <div class="button-group1">
-								    <c:forEach var="size" items="${sp.kichCo}" varStatus="status">
-								        <input type="radio" id="size-${size.maKichCo}" name="size" value="${size.maKichCo}" class="radio-input" 
-								               ${status.first ? 'checked' : ''}>
-								        <label for="size-${size.maKichCo}" class="button">${size.tenKichCo}</label>
-								    </c:forEach>
-								</div> --%>
-		                     	<div class="vertical-divider"></div> <!-- Đường kẻ dọc -->
-		                        
-		                        <div class="color">
-		                            <p>Màu sắc:</p>
-		                            <div class="color-selector">
-		                            	<select class="form-select" name="tenmau">
-						                    <c:forEach var="color" items="${sp.mauSac}">
-						                       <option value="${color.maMau}">${color.tenMau}</option>
-						                    </c:forEach>
-						                </select>
-		                            </div>
-		                        </div>
-		                    </div>
-		                </div>
-		                
-		                <div class="buttons">
-		                    <button class="buy-now">Mua Ngay</button>
-		                  <button class="add-to-cart" onclick="showSuccessToast();">Thêm vào giỏ hàng</button>
+		                	  <div class="change-details">
+			                    <div class="details-group">
+			                        <div class="quantity">
+									    <p>Số lượng:</p>
+									    <div class="button-group">
+									        <div class="button" onclick="changeQuantity(-1, ${sp.soLuong})">-</div>
+									        <div class="button quantity-display" id="quantity">1</div>
+									        <input type="hidden" name="soLuong" id="hiddenQuantity" value="1">
+									        <div class="button" onclick="changeQuantity(1, ${sp.soLuong})">+</div>
+									    </div>	
+									</div>
+									
+									<div class="vertical-divider"></div> <!-- Đường kẻ dọc --> 
+			                
+			                         <div class="size">
+			                            <p>Size:</p>
+			                            <div class="button-group1">
+									    <c:forEach var="size" items="${sp.kichCo}" varStatus="status">
+									        <input type="radio" id="size-${size.maKichCo}" name="size" value="${size.maKichCo}" class="radio-input" 
+									               ${status.first ? 'checked' : ''}>
+									        <label for="size-${size.maKichCo}" class="button">${size.tenKichCo}</label>
+									    </c:forEach>
+									</div> 
+									</div>
+			                     	<div class="vertical-divider"></div> <!-- Đường kẻ dọc -->
+			                        
+			                        <div class="color">
+			                            <p>Màu sắc:</p>
+			                            <div class="color-selector">
+			                            	<select class="form-select" name="tenmau">
+							                    <c:forEach var="color" items="${sp.mauSac}">
+							                       <option value="${color.maMau}">${color.tenMau}</option>
+							                    </c:forEach>
+							                </select>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+		             
+		        	      <div class="buttons">
+		                    <button class="buy-now" name="redirect" value="buyNow">Mua Ngay</button>
+		                  <button class="add-to-cart" name="redirect" value="addToCart" onclick="showSuccessToast();">Thêm vào giỏ hàng</button>
 		                </div>
 		            </div>
 		        </div>
@@ -193,7 +183,15 @@
 			</div>
         </div>
     </div>
-    
+   <!--  <script type="text/javascript">
+	    function redirectToCheckout() {
+	        const maSP = "${sp.maSP}";
+	        const size = document.querySelector('input[name="size"]:checked').value;
+	        const quantity = document.getElementById('hiddenQuantity').value;
+	        const color = document.querySelector('select[name="tenmau"]').value; // Lấy màu sắc đã chọn
+	        window.location.href = `thanhToanController?maSP=${maSP}&size=${size}&soLuong=${quantity}&color=${color}`;
+	    }	
+    </script> -->
     <jsp:include page="footer.jsp" />
     <!-- jQuery (Bootstrap's JavaScript plugins require jQuery) -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

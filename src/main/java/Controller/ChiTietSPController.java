@@ -98,6 +98,7 @@ public class ChiTietSPController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method = request.getParameter("method");
+	
 		if (method.equals("get")) {
 			doGet(request, response);
 		}
@@ -106,32 +107,39 @@ public class ChiTietSPController extends HttpServlet {
 				response.sendRedirect("/project_web/views/login.jsp");
 			}
 			else {
-				 int maSP = Integer.parseInt(request.getParameter("maSP"));
-				 int maKichThuoc = Integer.parseInt(request.getParameter("size"));
-				 int maMauSac = Integer.parseInt(request.getParameter("tenmau"));
-				 int soLuong = Integer.parseInt(request.getParameter("soLuong"));
-				 
-				 Connection conn = null;
-				 try {
-					 conn = new ConnectJDBC().getConnection();
-				 }
-				 catch (Exception e) {
-					 e.printStackTrace();
-					 response.getWriter().println("Error: " + e.getMessage());
-				 }
-				 
-				 SanPham sp = new SanPham(maSP, maKichThuoc, maMauSac);
-				 GioHang gh = new GioHang(sp, soLuong);
-				 try {
-					 GioHangDAO.ThemGioHang(conn, gh);
-					 Thread.sleep(2000);
+				String redirect = request.getParameter("redirect");
+				
+				if (redirect.equals("buyNow")) {
+					request.getRequestDispatcher("/ThanhToanController").forward(request, response);
+				}
+				else if (redirect.equals("addToCart")) {
+					int maSP = Integer.parseInt(request.getParameter("maSP"));
+					int maKichThuoc = Integer.parseInt(request.getParameter("size"));
+					int maMauSac = Integer.parseInt(request.getParameter("tenmau"));
+					int soLuong = Integer.parseInt(request.getParameter("soLuong"));
+					 Connection conn = null;
+					 try {
+						 conn = new ConnectJDBC().getConnection();
+					 }
+					 catch (Exception e) {
+						 e.printStackTrace();
+						 response.getWriter().println("Error: " + e.getMessage());
+					 }
 					 
-				 }
-				 catch (Exception e) {
-					 e.printStackTrace();
-					 response.getWriter().println("Error: " + e.getMessage());
-				 }
-				 doGet(request, response);
+					 SanPham sp = new SanPham(maSP, maKichThuoc, maMauSac);
+					 GioHang gh = new GioHang(sp, soLuong);
+					 try {
+						 GioHangDAO.ThemGioHang(conn, gh);
+						 Thread.sleep(2000);
+						 
+					 }
+					 catch (Exception e) {
+						 e.printStackTrace();
+						 response.getWriter().println("Error: " + e.getMessage());
+					 }
+					 doGet(request, response);
+				}
+				
 			}
 			
 		}

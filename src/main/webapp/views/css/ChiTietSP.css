@@ -83,16 +83,42 @@
 }
 
 .button-group1 {
-  width: 210px;
-  display: flex;
-  align-items: center;
+  display: inline-flex;
   border: 2px solid #888888;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: auto;              
-  max-width: 100%;
- /*  margin-right: 80px; */
+  height: 50px; /* Hoặc bất kỳ chiều cao nào bạn muốn */
+}
+
+.radio-input {
+  display: none; /* Hide the radio buttons */
+}
+
+.button {
+  padding: 0 16px; /* Chỉnh padding nếu cần để đảm bảo văn bản vừa vặn */
+  cursor: pointer;
+  text-align: center;
+  background-color: #ffffff;
+  transition: background-color 0.3s;
+  border-right: 1px solid #888888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Đảm bảo chiều cao bằng với .button-group1 */
+}
+
+.button:last-child {
+  border-right: none; /* Remove border from the last button */
+}
+
+.radio-input:checked + .button {
+  background-color: #000000; /* Color when selected */
+  color: #ffffff; /* Text color when selected */
+}
+
+
+.quantity {
+	/* margin-right: 80px;	 */
 }
 
 .quantity-display {

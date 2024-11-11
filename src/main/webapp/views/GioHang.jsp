@@ -149,6 +149,7 @@
                         </div>
                         <form action="./ThanhToanController" method="post">
                         	 <input type="hidden" name="totalTemp" value="${totalTemp}">
+                        	  <input type="hidden" name="redirect" value="cart">
                         	<button class="btn btn-dark btn-block mt-3">THANH TOÁN ĐƠN HÀNG</button>
                     	 </form>
                     </div>

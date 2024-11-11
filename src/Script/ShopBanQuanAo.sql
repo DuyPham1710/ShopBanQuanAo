@@ -299,3 +299,12 @@ BEGIN
 	where Q.maSP = MauSac.MaSanPham and MauSac.MaSanPham = KichCo.MaSanPham and Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau
 END;
 GO
+
+CREATE PROCEDURE proc_layThongTinSPThanhToan @maSP int, @maKichCo int, @maMau int
+AS
+BEGIN
+	select SanPham.MaSanPham as maSP, TenSanPham, GiaBanDau, SoLuong, GiaBanDau - GiaBanDau*(GiamGia/100.0) as GiaHienTai, MaHinhAnh, DuongDanHinh, MaKichCo, TenKichCo, MaMau, TenMau
+	from SanPham, HinhAnhSanPham, KichCo, MauSac
+	where SanPham.MaSanPham = HinhAnhSanPham.MaSanPham and KichCo.MaSanPham = SanPham.MaSanPham and MauSac.MaSanPham = SanPham.MaSanPham and KichCo.MaKichCo = @maKichCo and MauSac.MaMau = @maMau and SanPham.MaSanPham = @maSP
+END;
+GO

@@ -25,6 +25,36 @@ function setSize(button, size) {
     hiddenSize.value = size; // Cập nhật giá trị ẩn khi chọn size
 }
 
+/*function redirectToCheckout() {
+       const maSP = "${sp.maSP}";
+       const size = document.querySelector('input[name="size"]:checked').value;
+       const quantity = document.getElementById('hiddenQuantity').value;
+       const color = document.querySelector('select[name="tenmau"]').value; // Lấy màu sắc đã chọn
+       window.location.href = `thanhToanController?maSP=${maSP}&size=${size}&soLuong=${quantity}&color=${color}`;
+   }*/
+/*function addToCart_product(maSP) {  
+	const selectedSize = document.querySelector('input[name="size"]:checked').value;
+	var quantityInput = document.getElementById('hiddenQuantity').value;
+	const selectedColor = document.querySelector('select[name="tenmau"]').value;
+	
+	$.ajax({
+        type: "POST",
+        url: "/project_web/ChiTietSPController", // Đường dẫn của Servlet
+        data: { maSP: maSP ,
+        	_method: "post",
+        	method: "addtocart",
+        	size: selectedSize,
+        	soLuong: quantityInput,
+			tenmau: selectedColor},
+        success: function(response) {
+        	showSuccessToast(response.message);
+            $("#response").text(response.message);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error: " + error);
+        }
+    });
+}*/
 /*function addToCart() {
     const maSP = $('#maSP').val();
     const soLuong = $('#hiddenQuantity').val();

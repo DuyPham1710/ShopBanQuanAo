@@ -129,4 +129,32 @@ public class SanPhamDAO {
 		}
 		return listSP;
 	}
+	
+	public static SanPham layThongTinSPThanhToan(Connection conn, int maSP, int maKichCo, int maMau) throws SQLException {		
+		String sql = "{call proc_layThongTinSPThanhToan(?, ?, ?)}";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
+		ps.setInt(2, maKichCo);
+		ps.setInt(3, maMau);
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()) {
+			int giaHienTai = (int)(rs.getFloat("GiaHienTai"));
+			HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham(rs.getInt("MaHinhAnh"), rs.getString("DuongDanHinh"));
+			KichCo size = new KichCo(rs.getInt("MaKichCo"), rs.getString("TenKichCo"));
+			MauSac color = new MauSac(rs.getInt("MaMau"), rs.getString("TenMau"));
+			SanPham sp = new SanPham(
+					rs.getInt("maSP"), 
+					rs.getString("TenSanPham"), 
+					rs.getInt("GiaBanDau"), 
+					giaHienTai, 
+					rs.getInt("SoLuong"), 
+					size,
+					color,
+					hinhAnhSP);
+			return sp;
+		}
+		return null;
+	}
+
 }
+
