@@ -18,47 +18,66 @@ document.querySelector("form[action='./ThanhToanController']").addEventListener(
     }
 });
 function changeQuantity(value, maSP, maKichThuoc, maMau, soLuongSP, giaHienTai, giaBanDau) {
-    // Lấy phần tử hiển thị số lượng và giá trị ẩn của sản phẩm tương ứng
-    const quantityElement = document.getElementById("quantity-" + maSP + "-" + maKichThuoc + "-" + maMau);
-    const hiddenQuantity = document.getElementById("hiddenQuantity-" + maSP + "-" + maKichThuoc + "-" + maMau);
-    
-    // Chuyển đổi số lượng thành số nguyên
-    let quantity = parseInt(quantityElement.innerText);
-    
-    // Tăng hoặc giảm số lượng
-    quantity += value;
-    
-    // Đảm bảo số lượng không nhỏ hơn 1
-    if (quantity < 1) {
-        quantity = 1;
-    }
-    
-    if (quantity > soLuongSP) {
-        // Hiển thị toast khi số lượng vượt quá tồn kho
-       	showErrorToast();
-        quantity = soLuongSP; // Đặt lại số lượng về giá trị tối đa
-    }
-    // Cập nhật lại giá trị số lượng trên trang và giá trị ẩn
-    quantityElement.innerText = quantity;
-    hiddenQuantity.value = quantity;
-    
- // Cập nhật lại giá tiền hiện tại và giá ban đầu
-    const currentPriceElement = document.getElementById("currentPrice-" + maSP + "-" + maKichThuoc + "-" + maMau);
-    const originalPriceElement = document.getElementById("originalPrice-" + maSP + "-" + maKichThuoc + "-" + maMau);
+	// Lấy phần tử hiển thị số lượng và giá trị ẩn của sản phẩm tương ứng
+		        const quantityElement = document.getElementById("quantity-" + maSP + "-" + maKichThuoc + "-" + maMau);
+		        const hiddenQuantity = document.getElementById("hiddenQuantity-" + maSP + "-" + maKichThuoc + "-" + maMau);
+		        
+		        // Chuyển đổi số lượng thành số nguyên
+		        let quantity = parseInt(quantityElement.innerText);
+		        
+		        // Tăng hoặc giảm số lượng
+		        quantity += value;
+		        
+		        // Đảm bảo số lượng không nhỏ hơn 1
+		        if (quantity < 1) {
+		            quantity = 1;
+		        }
+		        
+		        if (quantity > soLuongSP) {
+					value=-(quantity-soLuongSP-1);
+		            // Hiển thị toast khi số lượng vượt quá tồn kho
+		           	showErrorToast();
+		            quantity = soLuongSP; // Đặt lại số lượng về giá trị tối đa
+					
+		        }
+		        // Cập nhật lại giá trị số lượng trên trang và giá trị ẩn
+		        quantityElement.innerText = quantity;
+		        hiddenQuantity.value = quantity;
+		        
+		     // Cập nhật lại giá tiền hiện tại và giá ban đầu
+		        const currentPriceElement = document.getElementById("currentPrice-" + maSP + "-" + maKichThuoc + "-" + maMau);
+		        const originalPriceElement = document.getElementById("originalPrice-" + maSP + "-" + maKichThuoc + "-" + maMau);
 
- // Cập nhật giá tiền dựa trên số lượng mới
-    const currentPrice = quantity * giaHienTai;
-    currentPriceElement.innerText = currentPrice + "đ";
-    originalPriceElement.innerText = (quantity * giaBanDau) + "đ";
+		     // Cập nhật giá tiền dựa trên số lượng mới
+		        const currentPrice = quantity * giaHienTai;
+		        currentPriceElement.innerText = currentPrice + "đ";
+		        originalPriceElement.innerText = (quantity * giaBanDau) + "đ";
 
-    // Cập nhật tổng tạm tính và tổng tiền
-    const allCurrentPrices = document.querySelectorAll(".price");
-    let totalTemp = 0;
-    allCurrentPrices.forEach((priceElement) => {
-        totalTemp += parseInt(priceElement.innerText.replace("đ", ""));
-    });
-    document.querySelector(".totalTemp").innerText = totalTemp + "đ";
-    document.querySelector(".total").innerText = (totalTemp + 30000) + "đ"; // Thêm phí vận chuyển
+		        // Cập nhật tổng tạm tính và tổng tiền
+		        const allCurrentPrices = document.querySelectorAll(".price");
+		        let totalTemp = 0;
+		        allCurrentPrices.forEach((priceElement) => {
+		            totalTemp += parseInt(priceElement.innerText.replace("đ", ""));
+		        });
+		        document.querySelector(".totalTemp").innerText = totalTemp + "đ";
+		        document.querySelector(".total").innerText = (totalTemp + 30000) + "đ"; // Thêm phí vận chuyển
+
+		        $.ajax({
+		            type: "POST",
+		            url: "/project_web/GioHangController",// Đường dẫn của Servlet
+		            data: { 
+		            	id: maSP ,
+		            	_method: "capNhatGioHang",
+		            	sizeoption: maKichThuoc,
+		    			coloroption: maMau,
+		            	quantity: value},
+		            success: function(response) {
+		            	
+		                $("#response").text(response.message);},
+		            error: function(xhr, status, error) {
+		                console.error("Error: " + error);
+		            }
+		        });
 }
 
 function showErrorToast() {

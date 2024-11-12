@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Account;
 import models.DiaChiNhanHang;
 import models.NguoiDung;
 
@@ -39,5 +40,27 @@ public class NguoiDungDAO {
 			return nguoiDung;
 		}
 		return null;
+	}
+	
+	public static NguoiDung ThongTinCaNhan(Connection conn) throws SQLException {
+		NguoiDung nguoi = null;
+		String sql = "select NguoiDung.*, username, pass from NguoiDung, Account where NguoiDung.ID = Account.ID and NguoiDung.ID = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, AccountDAO.getID());
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()) {
+			Account account = new Account(rs.getString("username"), rs.getString("pass"));
+			nguoi = new NguoiDung(
+					account,
+					rs.getString("CCCD"), 
+					rs.getString("HoTen"), 
+					rs.getString("GioiTinh"), 
+					rs.getString("SDT"), 
+					rs.getDate("NgaySinh"), 
+					rs.getString("email"));
+		
+			
+		}
+		return nguoi;
 	}
 }

@@ -112,29 +112,29 @@
 	                                <div class="col-md-9 " style="padding-right: 30px;" >
 	                                    <div class="form-group">
 	                                        <label for="username">Tên đăng nhập</label>
-	                                        <input type="text" id="username" class="form-control" value="12a1k54lam" readonly>
+	                                        <input type="text" id="username" class="form-control" value="${nguoiDung.account.username}" readonly>
 	                                    </div>
 	                                    <div class="form-group">
 	                                        <label for="name">Tên</label>
-	                                        <input type="text" id="name" class="form-control" placeholder="Nhập tên của bạn">
+	                                        <input type="text" id="name" class="form-control" placeholder="Nhập tên của bạn" value="${nguoiDung.hoTen}">
 	                                    </div>
 	                                    <div class="form-group">
 	                                        <div class="row">
 	                                            
 	                                            <div class="col-md-8">
 	                                                <label for="dob" class="d-block mr-2">Ngày sinh</label>
-	                                                <input type="date" id="dob" class="form-control d-inline-block" >
+	                                                <input type="date" id="dob" class="form-control d-inline-block" value="${nguoiDung.ngaySinh}">
 	                                            </div>
 	        
 	                                            <div class="col-md-4">
 	                                                <label class="d-block mr-3">Giới tính</label>
 	                                                <div class="d-flex align-items-center">
 	                                                    <div class="form-check form-check-inline">
-	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="male" value="male" checked>
+	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="male" value="male" ${nguoiDung.gioiTinh == 'Nam' ? 'checked' : ''}>
 	                                                        <label class="form-check-label" for="male">Nam</label>
 	                                                    </div>
 	                                                    <div class="form-check form-check-inline">
-	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="female" value="female">
+	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="female" value="female" ${nguoiDung.gioiTinh == 'Nữ' ? 'checked' : ''}>
 	                                                        <label class="form-check-label" for="female">Nữ</label>
 	                                                    </div>
 	                                                </div>
@@ -146,16 +146,16 @@
 	        
 	                                    <div class="form-group">
 	                                        <label for="email">Email</label>
-	                                        <input type="email" id="email" class="form-control" value="ak****@gmail.com">
+	                                        <input type="email" id="email" class="form-control" value="${nguoiDung.email}">
 	                                    </div>
 	                                    <div class="form-group">
 	                                        <label for="phone">Số điện thoại</label>
-	                                        <input type="text" id="phone" class="form-control" value="********64">
+	                                        <input type="text" id="phone" class="form-control" value="${nguoiDung.sdt}">
 	                                    </div>
 	        
 	                                    <div class="form-group">
 	                                        <label for="pass">Mật khẩu</label>
-	                                        <input type="password" id="pass" class="form-control" value="123456789">
+	                                        <input type="password" id="pass" class="form-control" value="${nguoiDung.account.password}">
 	                                    </div>
 	                                    <div class="text-center">
 	                                        <button type="submit" class="btn btn-primary">Lưu</button>

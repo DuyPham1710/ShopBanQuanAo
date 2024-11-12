@@ -13,6 +13,19 @@ public class NguoiDung {
     private String email;
     private List<DiaChiNhanHang> diaChiNhanHang;
     
+    public NguoiDung() {}
+    
+
+    public NguoiDung(Account account, String cccd, String hoTen, String gioiTinh, String sdt, Date ngaySinh, String email) {
+    	this.setAccount(account);
+    	this.setCccd(cccd);
+    	this.setHoTen(hoTen);
+    	this.setGioiTinh(gioiTinh);
+    	this.setSdt(sdt);
+    	this.setNgaySinh(ngaySinh);
+    	this.setEmail(email);
+    }
+    
 	public NguoiDung(String cccd, String hoTen, String gioiTinh, String sdt, Date ngaySinh, String email, List<DiaChiNhanHang> diaChiNhanHang) {
 		this.cccd = cccd;
 		this.hoTen = hoTen;

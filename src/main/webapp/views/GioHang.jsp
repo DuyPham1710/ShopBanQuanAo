@@ -119,7 +119,12 @@
 		                        <input type="hidden" name="maSP" value="${gh.sanPham.maSP}">	
 		                        <input type="hidden" name="maKichThuoc" value="${gh.sanPham.kichCo[0].maKichCo}">	
 		                        <input type="hidden" name="maMau" value="${gh.sanPham.mauSac[0].maMau}">	
-		                        <div class="cart-action" style="width: 5%;"><button class="btn btn-link text-danger"><i class="fas fa-trash-alt"></i></button></div>
+		                        <div class="cart-action" style="width: 5%;">
+		                        	<button class="btn btn-link text-danger">
+		                        		<i class="fas fa-trash-alt"></i>
+		                        		<input type="hidden" name="_method" value="DELETE">
+		                        	</button>
+		                        </div>
 		                    </div>
 	                    </form>
                     </c:forEach>
@@ -200,7 +205,7 @@
 		});
 	</script>
     <!-- Bootstrap JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
