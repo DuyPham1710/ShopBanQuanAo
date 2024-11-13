@@ -94,7 +94,30 @@ CREATE TABLE GioHang
 );
 GO
 
+CREATE TABLE HoaDon
+(
+	MaHoaDon INT PRIMARY KEY IDENTITY,
+    IDNguoiMua INT REFERENCES Account(ID),
+    NgayTao DATE DEFAULT GETDATE(),
+    TongTien INT,
+	diachi NVARCHAR(255),
+    TrangThai NVARCHAR(50) DEFAULT N'Chờ xác nhận'
+)
+GO
 
+CREATE TABLE ChiTietHoaDon
+(
+	MaChiTiet INT PRIMARY KEY IDENTITY,
+    MaHoaDon INT REFERENCES HoaDon(MaHoaDon),
+    MaSanPham INT REFERENCES SanPham(MaSanPham),
+    MaKichCo INT,
+    MaMau INT,
+    SoLuong INT,
+    GiaBan INT,
+    FOREIGN KEY (MaKichCo, MaSanPham) REFERENCES KichCo(MaKichCo, MaSanPham),
+    FOREIGN KEY (MaMau, MaSanPham) REFERENCES MauSac(MaMau, MaSanPham)
+)
+GO
 
 INSERT INTO Account (username, pass, position) VALUES 
 (N'admin', N'123', N'admin'),
@@ -306,5 +329,42 @@ BEGIN
 	select SanPham.MaSanPham as maSP, TenSanPham, GiaBanDau, SoLuong, GiaBanDau - GiaBanDau*(GiamGia/100.0) as GiaHienTai, MaHinhAnh, DuongDanHinh, MaKichCo, TenKichCo, MaMau, TenMau
 	from SanPham, HinhAnhSanPham, KichCo, MauSac
 	where SanPham.MaSanPham = HinhAnhSanPham.MaSanPham and KichCo.MaSanPham = SanPham.MaSanPham and MauSac.MaSanPham = SanPham.MaSanPham and KichCo.MaKichCo = @maKichCo and MauSac.MaMau = @maMau and SanPham.MaSanPham = @maSP
+END;
+GO
+
+-- Đặt hàng
+
+CREATE PROCEDURE proc_ThemHoaDon @IDNguoiMua INT, @TongTienHoaDon int, @diachi NVARCHAR(255), @MaHoaDon INT OUTPUT
+AS
+BEGIN
+	INSERT INTO HoaDon(IDNguoiMua, TongTien, diachi)
+	VALUES (@IDNguoiMua, @TongTienHoaDon, @diachi);
+
+	SET @MaHoaDon = SCOPE_IDENTITY();
+END;
+GO
+
+CREATE PROCEDURE proc_ThemChiTietHoaDon  @MaHoaDon INT, @TongTiennTungSP int, @SoLuongSPMua int, @MaSanPham INT, @MaKichCo INT, @MaMau INT
+AS
+BEGIN
+	INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, MaKichCo, MaMau, SoLuong, GiaBan)
+	VALUES (@MaHoaDon, @MaSanPham, @MaKichCo, @MaMau, @SoLuongSPMua, @TongTiennTungSP);
+
+	-- Cập nhật lại số lượng sản phẩm trong kho
+	UPDATE SanPham
+	SET SoLuong = SoLuong - @SoLuongSPMua
+	WHERE MaSanPham = @MaSanPham;
+
+	-- Nếu cần có xử lý khi số lượng kho không đủ
+	IF (SELECT SoLuong FROM SanPham WHERE MaSanPham = @MaSanPham) < 0
+	BEGIN
+		RAISERROR('Số lượng sản phẩm trong kho không đủ!', 16, 1);
+		ROLLBACK TRANSACTION;
+	END
+		-- Xóa sản phẩm đã thanh toán khỏi giỏ hàng
+    DELETE FROM GioHang
+    WHERE MaSanPham = @MaSanPham 
+        AND MaKichCo = @MaKichCo 
+        AND MaMau = @MaMau;
 END;
 GO

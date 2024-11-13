@@ -214,3 +214,7 @@ body {
     position: relative; 
     z-index: 1050; 
 }
+#contact-us {
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+    margin-top: 60px; /* Đảm bảo phần này không bị header che */
+}

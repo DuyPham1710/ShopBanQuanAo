@@ -110,6 +110,7 @@ public class ChiTietSPController extends HttpServlet {
 				String redirect = request.getParameter("redirect");
 				
 				if (redirect.equals("buyNow")) {
+					//response.sendRedirect("/project_web/ThanhToanController");
 					request.getRequestDispatcher("/ThanhToanController").forward(request, response);
 				}
 				else if (redirect.equals("addToCart")) {

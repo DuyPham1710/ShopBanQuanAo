@@ -68,13 +68,13 @@
                 <div class="banner">
                     <h2 class="font-weight-bold">Mang đến cho bạn trải nghiệm tuyệt vời nhất</h2>
                     <p>
-                        Davies là lựa chọn hàng đầu dành cho các tín đồ thời trang sành điệu. 
-                        Sứ mệnh của Davies là trao quyền cho thế hệ trẻ toàn thế giới tự do thể hiện 
+                        Rimberio là lựa chọn hàng đầu dành cho các tín đồ thời trang sành điệu. 
+                        Sứ mệnh của Rimberio là trao quyền cho thế hệ trẻ toàn thế giới tự do thể hiện 
                         phong cách thông qua thời trang, thương hiệu vượt qua ranh giới của thời trang 
                         thông thường bằng cách không ngừng sáng tạo các trang phục với các bộ sưu tập độc đáo.
                     </p>
                     <a href="/project_web/SanPhamController" class="btn btn-dark font-weight-bold"><i class="fas fa-shopping-cart"></i> MUA NGAY</a>
-                    <a href="#" class="btn btn-primary font-weight-bold">LIÊN HỆ VỚI CHÚNG TÔI</a>
+                    <a href="#contact-us" class="btn btn-primary font-weight-bold">LIÊN HỆ VỚI CHÚNG TÔI</a>
                 </div>
                 <div class="banner-image">
                     <img src="./images/home.png" alt="Banner Image" class="img-fluid rounded">
@@ -83,7 +83,25 @@
             
         </div>
     </div>
-	
+	<!-- Phần Liên Hệ -->
+	<div id="contact-us" class="container mt-5">
+	    <h3 class="font-weight-bold">Liên hệ với chúng tôi</h3>
+	    <form>
+	        <div class="form-group">
+	            <label for="name">Tên của bạn</label>
+	            <input type="text" class="form-control" id="name" placeholder="Nhập tên của bạn">
+	        </div>
+	        <div class="form-group">
+	            <label for="email">Email của bạn</label>
+	            <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn">
+	        </div>
+	        <div class="form-group">
+	            <label for="message">Tin nhắn</label>
+	            <textarea class="form-control" id="message" rows="3" placeholder="Nhập tin nhắn của bạn"></textarea>
+	        </div>
+	        <button type="submit" class="btn btn-primary">Gửi</button>
+	    </form>
+	</div>
     <jsp:include page="footer.jsp" />
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
