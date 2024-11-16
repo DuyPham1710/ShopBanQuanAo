@@ -344,7 +344,7 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE proc_ThemChiTietHoaDon  @MaHoaDon INT, @TongTiennTungSP int, @SoLuongSPMua int, @MaSanPham INT, @MaKichCo INT, @MaMau INT
+CREATE PROCEDURE proc_ThemChiTietHoaDon  @ID INT, @MaHoaDon INT, @TongTiennTungSP int, @SoLuongSPMua int, @MaSanPham INT, @MaKichCo INT, @MaMau INT
 AS
 BEGIN
 	INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, MaKichCo, MaMau, SoLuong, GiaBan)
@@ -365,6 +365,6 @@ BEGIN
     DELETE FROM GioHang
     WHERE MaSanPham = @MaSanPham 
         AND MaKichCo = @MaKichCo 
-        AND MaMau = @MaMau;
+        AND MaMau = @MaMau and IDNguoiMua = @ID;
 END;
 GO

@@ -21,15 +21,16 @@ public class ThanhToanDAO {
 	}
 	
 	public static void ThemChiTietHoaDon(Connection conn, GioHang gh, int maHoaDon) throws SQLException {
-		String sql = "{call proc_ThemChiTietHoaDon(?, ?, ?, ?, ?, ?)}";
+		String sql = "{call proc_ThemChiTietHoaDon(?, ?, ?, ?, ?, ?, ?)}";
         CallableStatement stmt = conn.prepareCall(sql) ;
      
-        stmt.setInt(1, maHoaDon);
-        stmt.setInt(2, (gh.getSoLuongGH() * gh.getSanPham().getGiaHienTai())); 
-        stmt.setInt(3, gh.getSoLuongGH());
-        stmt.setInt(4, gh.getSanPham().getMaSP());
-        stmt.setInt(5, gh.getSanPham().getKichCo().get(0).getMaKichCo()); 
-        stmt.setInt(6, gh.getSanPham().getMauSac().get(0).getMaMau()); 
+        stmt.setInt(1, AccountDAO.getID());
+        stmt.setInt(2, maHoaDon);
+        stmt.setInt(3, (gh.getSoLuongGH() * gh.getSanPham().getGiaHienTai())); 
+        stmt.setInt(4, gh.getSoLuongGH());
+        stmt.setInt(5, gh.getSanPham().getMaSP());
+        stmt.setInt(6, gh.getSanPham().getKichCo().get(0).getMaKichCo()); 
+        stmt.setInt(7, gh.getSanPham().getMauSac().get(0).getMaMau()); 
        
         stmt.executeUpdate();		
 	}
