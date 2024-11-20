@@ -137,3 +137,155 @@ h2 {
 .section-header .view-more:hover {
     text-decoration: underline; /* Gạch chân khi hover */
 }
+
+.container-filter {
+    width: 90%;
+    max-width: 1200px;
+    margin: 42px auto;
+    padding-top: 20px;
+}
+
+.filter-container {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 20px;
+    
+}
+
+.filter-title {
+    padding-right: 30px;
+    padding-left: 5px;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: text;
+    font-size: 16px;
+    border-right: #e7e7e7 solid 2px;
+}
+
+.filter-button i {
+    margin-right: 5px;
+}
+
+.filter_category {
+    position: relative;
+    display: flex;
+    width: 212px;
+    height: 40px;
+    border: #e7e7e7 solid 1px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.filter_category-title {
+    padding-left: 20px;
+}
+
+.icon-controls {
+    padding-right: 14px;
+    padding-bottom: 6px;
+}
+
+/* Dropdown nội dung */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Đặt ngay bên dưới div cha */
+    left: 0;
+    width: 100%; /* Chiều rộng bằng với div cha */
+    background-color: white;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.dropdown-content div {
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdown-content div:hover {
+    background-color: #f0f0f0; 
+}
+
+/* Hiển thị dropdown khi hover vào filter_category */
+.filter_category:hover .dropdown-content {
+    display: block; 
+}
+
+.filter_category:hover .size-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter_category:hover .color-options {
+    display: grid;
+}
+
+/* Màu sắc */
+.color-options {
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 10px;
+}
+
+.color-circle {
+    position: relative;
+    width: 10px;
+    height: 28px;
+    border-radius: 50%; /* Tạo hình tròn */
+    cursor: pointer;
+    border: 1px solid #e7e7e7;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Thêm hiệu ứng khi hover */
+}
+/* Khi hover vào màu */
+.color-circle:hover {
+    transform: scale(1.1); /* Phóng to khi hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ khi hover */
+
+}
+
+.color-circle .tick {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    color: white;
+    display: none; 
+}
+
+/* Hiển thị dấu tick khi màu được chọn */
+.color-circle.selected .tick {
+    display: inline-block;
+}
+
+/* Kích thước */
+.size-options {
+    display: none;
+    padding: 10px 0;
+}
+
+.size-option {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    border: 1px solid #e7e7e7;
+}
+
+.size-option.selected {
+    background-color: black;
+    color: white;
+}

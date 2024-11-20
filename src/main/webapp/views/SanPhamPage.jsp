@@ -46,7 +46,7 @@
                         <ul>
                             <li class="account-info-item"><a href="/project_web/TaiKhoanController">Tài khoản của tôi</a></li>
                             <li class="account-info-item"><a href="#">Đơn mua</a></li>
-                            <li class="account-info-item"><a href="/project_web/views/login.jsp">Đăng xuất</a></li>
+                            <li class="account-info-item"><a href="/project_web">Đăng xuất</a></li>
                         </ul>
                         
                     </div>
@@ -58,7 +58,7 @@
     <!-- Banner -->
     <div class="container1 mt">
         <div class="container1">
-            <div class="col-md-12">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
 			    <nav aria-label="breadcrumb">
 			        <ol class="breadcrumb">
 			            <li class="breadcrumb-item" id="home-item">
@@ -69,11 +69,117 @@
 			            <li class="breadcrumb-item active" id="product-item"> Sản phẩm</li>
 			        </ol>
 			    </nav>
+			    
+			    <select class="form-select mt-1" aria-label="Default select example" style="width: 30%;">
+                    <option selected>Sản phẩm nổi bật</option>
+                    <option value="1">Giá: Tăng dần</option>
+                    <option value="2">Giá: Giảm dần</option>
+                    <option value="3">Tên: A-Z</option>
+                    <option value="4">Tên: Z-A</option>
+                    <option value="5">Cũ nhất</option>
+                    <option value="6">Mới nhất</option>
+                    <option value="7">Bán chạy nhất</option>
+                    <option value="8">Tồn kho: giảm dần</option>
+                </select>
 			</div>
+			
+			<!-- Filter -->
+			<div class="container-filter">
+                <div class="filter-container">
+                    <div class="filter-button font-weight-bold">
+                        <i class="fas fa-filter"></i>
+                        <span class="filter-title">Bộ Lọc</span> 
+                    </div>
 
+                    <div class="filter_category">
+                        <div class="filter_category-title font-weight-bold">Danh mục</div>
+                        <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
+                        <div class="dropdown-content">
+                            <div>Danh mục 1</div>
+                            <div>Danh mục 2</div>
+                            <div>Danh mục 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter_category">
+                        <div class="filter_category-title font-weight-bold">Giá sản phẩm</div>
+                        <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
+                        <div class="dropdown-content">
+                            <div>Thấp đến Cao</div>
+                            <div>Cao đến Thấp</div>
+                        </div>
+                    </div>
+
+                    <div class="filter_category">
+                        <div class="filter_category-title font-weight-bold">màu sắc</div>
+                        <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
+                        <div class="dropdown-content color-options">
+                            <div class="color-circle" style="background-color: #ffb6c1;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #ffdf00;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #d3d3d3;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #00ff7f;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #8b4513;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #696969;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #000000;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #ff6347;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #9370db;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #ff4500;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #b0e0e6;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                            <div class="color-circle" style="background-color: #4682b4;" onclick="toggleColorSelect(this)">
+                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function toggleColorSelect(element) {
+                            // Kiểm tra nếu đã chọn màu rồi, nếu có thì bỏ chọn (ẩn dấu tick)
+                            if (element.classList.contains('selected')) {
+                                element.classList.remove('selected');
+                            } else {
+                                // Nếu chưa chọn màu, hiển thị dấu tick
+                                element.classList.add('selected');
+                            }
+                        }
+                        
+                    </script>
+                    <div class="filter_category">
+                        <div class="filter_category-title font-weight-bold">Kích thước</div>
+                        <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
+                        <div class="dropdown-content size-options">
+                            <div class="size-option">S</div>
+                            <div class="size-option">M</div>
+                            <div class="size-option selected">L</div>
+                            <div class="size-option">XL</div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+			
             <div class="container1">
 			    <div class="section-header">
-				    <h2>Được mua nhiều</h2>
+				    <h2>Tất cả sản phẩm</h2>
 				    <a href="#" class="view-more">Xem Thêm</a>
 				</div>
 			    <div class="product-grid">
