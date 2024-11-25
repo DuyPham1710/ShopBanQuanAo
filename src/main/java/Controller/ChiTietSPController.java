@@ -31,7 +31,7 @@ public class ChiTietSPController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (AccountDAO.getID() == 0) {
-			response.sendRedirect("/project_web/views/login.jsp");
+			response.sendRedirect("/project_web");
 		}
 		else {
 			int maSP = 0; 
@@ -104,7 +104,7 @@ public class ChiTietSPController extends HttpServlet {
 		}
 		else {
 			if (AccountDAO.getID() == 0) {
-				response.sendRedirect("/project_web/views/login.jsp");
+				response.sendRedirect("/project_web");
 			}
 			else {
 				String redirect = request.getParameter("redirect");

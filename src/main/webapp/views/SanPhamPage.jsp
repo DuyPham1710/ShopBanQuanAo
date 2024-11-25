@@ -69,18 +69,20 @@
 			            <li class="breadcrumb-item active" id="product-item"> Sản phẩm</li>
 			        </ol>
 			    </nav>
+			    <form action="SanPhamController" method="get">
+				    <select class="form-select mt-1" name="sortType" aria-label="Default select example" style="width: auto;" onchange="this.form.submit()">
+				        <option value="0" ${param.sortType == '0' || param.sortType == null ? 'selected' : ''}>Sản phẩm nổi bật</option>
+				        <option value="1" ${param.sortType == '1' ? 'selected' : ''}>Giá: Tăng dần</option>
+				        <option value="2" ${param.sortType == '2' ? 'selected' : ''}>Giá: Giảm dần</option>
+				        <option value="3" ${param.sortType == '3' ? 'selected' : ''}>Tên: A-Z</option>
+				        <option value="4" ${param.sortType == '4' ? 'selected' : ''}>Tên: Z-A</option>
+				        <option value="5" ${param.sortType == '5' ? 'selected' : ''}>Cũ nhất</option>
+				        <option value="6" ${param.sortType == '6' ? 'selected' : ''}>Mới nhất</option>
+				        <option value="7" ${param.sortType == '7' ? 'selected' : ''}>Bán chạy nhất</option>
+				        <option value="8" ${param.sortType == '8' ? 'selected' : ''}>Tồn kho: giảm dần</option>
+				    </select>
+				</form>
 			    
-			    <select class="form-select mt-1" aria-label="Default select example" style="width: 30%;">
-                    <option selected>Sản phẩm nổi bật</option>
-                    <option value="1">Giá: Tăng dần</option>
-                    <option value="2">Giá: Giảm dần</option>
-                    <option value="3">Tên: A-Z</option>
-                    <option value="4">Tên: Z-A</option>
-                    <option value="5">Cũ nhất</option>
-                    <option value="6">Mới nhất</option>
-                    <option value="7">Bán chạy nhất</option>
-                    <option value="8">Tồn kho: giảm dần</option>
-                </select>
 			</div>
 			
 			<!-- Filter -->
@@ -95,9 +97,16 @@
                         <div class="filter_category-title font-weight-bold">Danh mục</div>
                         <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
                         <div class="dropdown-content">
-                            <div>Danh mục 1</div>
-                            <div>Danh mục 2</div>
-                            <div>Danh mục 3</div>
+                        	 <form action="SanPhamController" method="get">
+					            <input type="hidden" name="maDanhMuc" value="0">
+					            <button type="submit" class="btn btn-link">Tất cả</button>
+					        </form>
+                        	 <c:forEach var="danhMuc" items="${ListDanhMuc}">
+                        	 	<form action="SanPhamController" method="get">
+						            <input type="hidden" name="maDanhMuc" value="${danhMuc.maDanhMuc}">
+						            <button type="submit" class="btn btn-link">${danhMuc.tenDanhMuc}</button>
+						        </form>
+                        	</c:forEach> 
                         </div>
                     </div>
                     
@@ -105,8 +114,30 @@
                         <div class="filter_category-title font-weight-bold">Giá sản phẩm</div>
                         <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
                         <div class="dropdown-content">
-                            <div>Thấp đến Cao</div>
-                            <div>Cao đến Thấp</div>
+                       	 	<form action="SanPhamController" method="post">
+	                       	 	<button type="submit" name="giaHienTai" value="-1" class="btn btn-link">
+					                <span class="price-range">Tất cả</span>
+					            </button>
+                       	 		<button type="submit" name="giaHienTai" value="0-300000" class="btn btn-link">
+					                <span class="price-range">Dưới 300,000₫</span>
+					            </button>
+					            
+					            <button type="submit" name="giaHienTai" value="300000-500000" class="btn btn-link">
+					                <span class="price-range">300,000₫ - 500,000₫</span>
+					            </button>
+					            
+					            <button type="submit" name="giaHienTai" value="500000-700000" class="btn btn-link">
+					                <span class="price-range">500,000₫ - 700,000₫</span>
+					            </button>
+					            
+					            <button type="submit" name="giaHienTai" value="700000-1000000" class="btn btn-link">
+					                <span class="price-range">700,000₫ - 1,000,000₫</span>
+					            </button>
+					            
+					            <button type="submit" name="giaHienTai" value="1000000+" class="btn btn-link">
+					                <span class="price-range">Trên 1,000,000₫</span>
+					            </button>
+					        </form>
                         </div>
                     </div>
 

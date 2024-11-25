@@ -74,7 +74,7 @@
             <button type="submit" class="btn">Register</button>
             
             <div class="login-link">
-                <p>Already have an account? <a href="login.jsp">Login</a></p>
+                <p>Already have an account? <a href="/project_web">Login</a></p>
             </div>
         </form>
     </div>

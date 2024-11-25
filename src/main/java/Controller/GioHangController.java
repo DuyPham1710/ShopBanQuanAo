@@ -28,7 +28,7 @@ public class GioHangController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (AccountDAO.getID() == 0) {
-			response.sendRedirect("/project_web/views/login.jsp");
+			response.sendRedirect("/project_web");
 		}
 		else {
 			Connection conn = null;

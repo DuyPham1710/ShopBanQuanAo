@@ -35,7 +35,7 @@ public class ThanhToanController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (AccountDAO.getID() == 0) {
-			response.sendRedirect("/project_web/views/login.jsp");
+			response.sendRedirect("/project_web");
 		}
 		else {
 			int totalTemp = 0; 
