@@ -25,8 +25,8 @@
                     <a class="navbar-brand" href="home.jsp">
                         <img src="./images/logo.jpg" alt="Logo">
                     </a>
-                     <form class="d-flex">
-		                <input class="form-control me-2" type="search" placeholder="Search Products" aria-label="Search">
+                     <form action="/project_web/SanPhamController" method="get" class="d-flex">
+		                <input class="form-control me-2" type="search" name="searchText" placeholder="Search Products" aria-label="Search">
 		                <button class="btn btn-outline-secondary" type="submit">
 		                    <i class="fas fa-search"></i>
 		                </button>
@@ -55,6 +55,29 @@
         </div>
     </nav>
 
+	<!-- Banner Carousel -->
+	<div id="carouselExampleFade" class="carousel slide carousel-fade Carousel-custom" data-ride="carousel" data-interval="4000">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="https://owen.cdn.vccloud.vn/media/codazon/slideshow/h/e/hero_1366x532_1.5x-100_bf_24.jpg" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="https://owen.cdn.vccloud.vn/media/codazon/slideshow/h/e/hero_1366x532_bf24_1.jpg" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="https://file.hstatic.net/200000144371/file/page0_174.jpg" class="d-block w-100" alt="...">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-target="#carouselExampleFade" data-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-target="#carouselExampleFade" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</button>
+	</div>
+	
     <!-- Banner -->
     <div class="container1 mt">
         <div class="container1">
@@ -84,6 +107,33 @@
             
         </div>
     </div>
+    
+    <div class="container-partner">
+		<h3>Đối tác tin cậy</h3>
+		<p>  Shop luôn tự hào khi được hợp tác cùng các đối tác uy tín và phục vụ khách hàng đáng tin cậy. Đối tác của shop bao gồm các nhà cung cấp nguyên liệu, xưởng sản xuất, và thương hiệu nổi tiếng, đảm bảo mỗi sản phẩm đều đạt chất lượng cao nhất.</p>
+		<div class="partner">
+			<div>
+				<img src="./images/img1.png" alt="">
+			</div>
+			<div>
+				<img src="./images/img2.png" alt="">
+			</div>
+			<div>
+				<img src="./images/img3.png" alt="">
+			</div>
+			<div>
+				<img src="./images/img4.png" alt="">
+			</div>
+			<div>
+				<img src="./images/img5.png" alt="">
+			</div>
+			<div>
+				<img src="./images/img6.png" alt="">
+			</div>
+		</div>
+		
+	</div>
+	
 	<!-- Phần Liên Hệ -->
     <div class="contact" id="contact">
         <div class="contact-online">

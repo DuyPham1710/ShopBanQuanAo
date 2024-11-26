@@ -256,11 +256,12 @@
 }
 
 .product-description {
-  gap: 30px;
+  display: flex;
   border-top: 2px solid #ddd;
   margin-top: 110px;
   margin-left: 40px;
-  height: 224px;
+  min-height: 224px;
+  height: auto;
   width: 1200px;
 }
 
@@ -277,9 +278,18 @@
 }
 
 .description {
+	flex: 1; 
 	padding-top: 50px;
+	padding-right: 90px;
 }
 
+.product-detail-label {
+  	display: inline-block;       /* Đảm bảo mỗi span chiếm một dòng riêng */
+  	min-width: 120px;            /* Đặt độ rộng tối thiểu cho mỗi span */
+  	margin-right: 10px;          /* Khoảng cách giữa các span */
+  	font-weight: bold; 
+}
+  
 .product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

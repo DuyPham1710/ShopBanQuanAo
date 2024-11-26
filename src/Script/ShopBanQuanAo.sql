@@ -50,8 +50,23 @@ CREATE TABLE SanPham (
     GiamGia int,
 	SoLuong INT DEFAULT 0,
     MaDanhMuc INT,
+	NgayTao date,
+	XuatXu nvarchar(50) NULL,
+	ChatLieu nvarchar(50) NULL,
+	DaBan INT DEFAULT 0,
     FOREIGN KEY (MaDanhMuc) REFERENCES DanhMucSanPham(MaDanhMuc),	
 );
+GO
+
+-- Bảng đánh giá
+CREATE TABLE DanhGia
+(
+	IDNguoiMua INT REFERENCES Account(ID),
+    MaSanPham INT REFERENCES SanPham(MaSanPham),
+	BinhLuan nvarchar(max) NULL,
+	SoSao int NULL,
+	PRIMARY KEY (IDNguoiMua, MaSanPham)
+)
 GO
 -- Bảng Kích cỡ
 CREATE TABLE KichCo (
@@ -154,7 +169,7 @@ INSERT INTO DanhMucSanPham (MaDanhMuc, TenDanhMuc) VALUES
 (10, N'Túi xách');
 GO
 
-INSERT INTO SanPham (MaSanPham, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, MaDanhMuc) VALUES 
+/*INSERT INTO SanPham (MaSanPham, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, MaDanhMuc) VALUES 
 (1, N'Áo thun nam trắng', N'Áo thun nam chất liệu cotton', 300000, 30, 100, 1),
 (2, N'Áo sơ mi nữ caro', N'Áo sơ mi nữ họa tiết caro', 400000, 20, 50, 2),
 (3, N'Quần jeans nam đen', N'Quần jeans nam phong cách trẻ trung', 600000, 40, 80, 3),
@@ -165,6 +180,20 @@ INSERT INTO SanPham (MaSanPham, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, M
 (8, N'Khăn choàng cổ', N'Khăn choàng cổ mùa đông', 300000, 15, 70, 8),
 (9, N'Giày sneaker', N'Giày sneaker cho mọi hoạt động', 600000, 50, 40, 9),
 (10, N'Túi xách da', N'Túi xách da cao cấp', 1200000, 60, 25, 10);
+GO*/
+
+INSERT INTO SanPham (MaSanPham, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, MaDanhMuc, NgayTao, XuatXu, ChatLieu) 
+VALUES 
+(1, N'Áo thun nam trắng', N'Áo thun nam chất liệu cotton', 300000, 30, 100, 1, '2024-01-01', N'Việt Nam', N'Cotton'),
+(2, N'Áo sơ mi nữ caro', N'Áo sơ mi nữ họa tiết caro', 400000, 20, 50, 2, '2024-01-05', N'Việt Nam', N'Polyester'),
+(3, N'Quần jeans nam đen', N'Quần jeans nam phong cách trẻ trung', 600000, 40, 80, 3, '2024-01-10', N'Mỹ', N'Denim'),
+(4, N'Quần short nữ', N'Quần short nữ mát mẻ cho mùa hè', 500000, 10, 60, 4, '2024-01-15', N'Trung Quốc', N'Vải thun'),
+(5, N'Đầm dạ hội', N'Đầm dạ hội thanh lịch', 1000000, 10, 20, 5, '2024-01-20', N'Pháp', N'Lụa'),
+(6, N'Váy xếp ly', N'Váy xếp ly phong cách Hàn Quốc', 700000, 30, 30, 6, '2024-01-25', N'Hàn Quốc', N'Polyester'),
+(7, N'Áo khoác hoodie', N'Áo khoác hoodie ấm áp', 600000, 25, 45, 7, '2024-01-30', N'Việt Nam', N'Vải nỉ'),
+(8, N'Khăn choàng cổ', N'Khăn choàng cổ mùa đông', 300000, 15, 70, 8, '2024-02-01', N'Ấn Độ', N'Len'),
+(9, N'Giày sneaker', N'Giày sneaker cho mọi hoạt động', 600000, 50, 40, 9, '2024-02-05', N'Italia', N'Da'),
+(10, N'Túi xách da', N'Túi xách da cao cấp', 1200000, 60, 25, 10, '2024-02-10', N'Pháp', N'Da thật');
 GO
 
 INSERT INTO KichCo (MaKichCo, MaSanPham, TenKichCo) VALUES 
@@ -367,4 +396,22 @@ BEGIN
         AND MaKichCo = @MaKichCo 
         AND MaMau = @MaMau and IDNguoiMua = @ID;
 END;
+GO
+
+create view V_thongTinSP
+as
+	select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, NgayTao, XuatXu, ChatLieu, DaBan, sp.MaDanhMuc as maDanhMuc, TenDanhMuc, MaHinhAnh, DuongDanHinh
+	from SanPham as sp, HinhAnhSanPham as img, DanhMucSanPham
+	where sp.MaSanPham = img.MaSanPham and sp.MaDanhMuc = DanhMucSanPham.MaDanhMuc
+GO
+
+CREATE FUNCTION fn_TimKiemSP (@SearchText NVARCHAR(100))
+RETURNS TABLE
+AS
+RETURN
+(
+    select *
+	from V_thongTinSP 
+	where CAST(maSP AS NVARCHAR(100)) LIKE '%' + @SearchText + '%' OR TenSanPham LIKE '%' + @SearchText + '%'
+);
 GO

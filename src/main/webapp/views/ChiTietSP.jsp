@@ -26,8 +26,8 @@
                     <a class="navbar-brand" href="/project_web/views/home.jsp">
                         <img src="./views/images/logo.jpg" alt="Logo">
                     </a>
-                     <form class="d-flex">
-		                <input class="form-control me-2" type="search" placeholder="Search Products" aria-label="Search">
+                     <form action="/project_web/SanPhamController" method="get" class="d-flex">
+		                <input class="form-control me-2" type="search" name="searchText" placeholder="Search Products" aria-label="Search">
 		                <button class="btn btn-outline-secondary" type="submit">
 		                    <i class="fas fa-search"></i>
 		                </button>
@@ -154,7 +154,18 @@
 				       ${sp.mota}
 				    </p>
             	</div>
-			    
+            	
+			    <div class="description">
+            		<h4>Chi tiết sản phẩm</h4>
+				    <p>
+				    	<span class="product-detail-label">Danh Mục</span>Rimberio > Sản phẩm > ${sp.danhMuc.tenDanhMuc}</br>
+                       <span class="product-detail-label">Kho</span>${sp.soLuong}</br>
+                       <span class="product-detail-label">Xuất xứ</span>${sp.xuatXu}</br>
+                       <span class="product-detail-label">Chất liệu</span>${sp.chatLieu}</br>
+                       <span class="product-detail-label">Đã bán</span>${sp.daBan}</br>
+                       <span class="product-detail-label">ngày tạo</span>${sp.ngayTao}</br>
+				    </p>
+            	</div>
 			</div>
 			
 			<div class="product-description">

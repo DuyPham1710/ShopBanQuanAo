@@ -25,8 +25,8 @@
                     <a class="navbar-brand" href="/project_web/views/home.jsp">
                         <img src="./views/images/logo.jpg" alt="Logo">
                     </a>
-                     <form class="d-flex">
-		                <input class="form-control me-2" type="search" placeholder="Search Products" aria-label="Search">
+                     <form action="/project_web/SanPhamController" method="get" class="d-flex">
+		                <input class="form-control me-2" type="search" name="searchText" placeholder="Search Products" aria-label="Search">
 		                <button class="btn btn-outline-secondary" type="submit">
 		                    <i class="fas fa-search"></i>
 		                </button>

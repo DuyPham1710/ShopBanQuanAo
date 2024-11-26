@@ -1,7 +1,10 @@
 package models;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 public class SanPham {
 	private int maSP;
@@ -11,6 +14,10 @@ public class SanPham {
 	private int giamGia;
 	private int giaHienTai;
 	private int soLuong;
+	private Date ngayTao;
+	private String xuatXu;
+	private String chatLieu;
+	private int daBan;
 	private DanhMucSanPham danhMuc;
 	private List<KichCo> kichCo;
 	private List<MauSac> mauSac;
@@ -19,13 +26,17 @@ public class SanPham {
 	
 	public SanPham() {}
 	
-	public SanPham(int maSP, String tenSP, String mota, int giaBanDau, int giamGia, int soLuong, DanhMucSanPham danhMuc, HinhAnhSanPham hinhAnhSP) {
+	public SanPham(int maSP, String tenSP, String mota, int giaBanDau, int giamGia, int soLuong, Date ngayTao, String xuatXu, String chatLieu, int daBan, DanhMucSanPham danhMuc, HinhAnhSanPham hinhAnhSP) {
 		this.maSP = maSP;
 		this.tenSP = tenSP;
 		this.mota = mota;
 		this.giaBanDau = giaBanDau;
 		this.giamGia = giamGia;
 		this.soLuong = soLuong;
+		this.ngayTao = ngayTao;
+		this.xuatXu = xuatXu;
+		this.chatLieu = chatLieu;
+		this.daBan = daBan;
 		this.danhMuc = danhMuc;
 		this.hinhAnhSP = hinhAnhSP;
 		this.giaHienTai = (int)(giaBanDau - (giaBanDau * ((float)giamGia/100)));
@@ -135,6 +146,38 @@ public class SanPham {
 
 	public void setDanhMuc(DanhMucSanPham danhMuc) {
 		this.danhMuc = danhMuc;
+	}
+
+	public int getDaBan() {
+		return daBan;
+	}
+
+	public void setDaBan(int daBan) {
+		this.daBan = daBan;
+	}
+
+	public String getChatLieu() {
+		return chatLieu;
+	}
+
+	public void setChatLieu(String chatLieu) {
+		this.chatLieu = chatLieu;
+	}
+
+	public String getXuatXu() {
+		return xuatXu;
+	}
+
+	public void setXuatXu(String xuatXu) {
+		this.xuatXu = xuatXu;
+	}
+
+	public Date getNgayTao() {
+		return ngayTao;
+	}
+
+	public void setNgayTao(Date ngayTao) {
+		this.ngayTao = ngayTao;
 	}
 	
 }

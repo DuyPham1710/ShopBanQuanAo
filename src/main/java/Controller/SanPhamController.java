@@ -22,6 +22,8 @@ import DBConnection.ConnectJDBC;
 public class SanPhamController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private int maDanhMuc = 0;
+    private String searchText = "";
+    
     public SanPhamController() {
         super();
     }
@@ -34,6 +36,13 @@ public class SanPhamController extends HttpServlet {
 		catch (Exception e) {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		if (request.getParameter("searchText") != null) {
+			searchText = request.getParameter("searchText");
+		}
+		else {
+			searchText = "";
 		}
 		
 		if (request.getParameter("maDanhMuc") == null) {
@@ -50,13 +59,14 @@ public class SanPhamController extends HttpServlet {
 		
 		List<SanPham> listSP = null;
 		try {
-			listSP = SanPhamDAO.DanhSachSP(conn, maDanhMuc, sortType);
+			listSP = SanPhamDAO.DanhSachSP(conn, maDanhMuc, sortType, searchText);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
+			
 		}
-		
+	
 		List<DanhMucSanPham> listDanhMuc = null;
 		try {
 			listDanhMuc = SanPhamDAO.DanhSachDanhMucSP(conn);
@@ -65,7 +75,7 @@ public class SanPhamController extends HttpServlet {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
-		
+	
 		request.setAttribute("ListSP", listSP);
 		request.setAttribute("ListDanhMuc", listDanhMuc);
 		
@@ -105,7 +115,7 @@ public class SanPhamController extends HttpServlet {
 	                break;
 	            default:
 	                // Không có điều kiện lọc giá
-	            	listSP = SanPhamDAO.DanhSachSP(conn, maDanhMuc, 0);
+	            	listSP = SanPhamDAO.DanhSachSP(conn, maDanhMuc, 0, searchText);
 	                break;
 				}
 			}

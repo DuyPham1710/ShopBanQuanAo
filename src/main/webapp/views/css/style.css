@@ -266,3 +266,44 @@ body {
     margin-top: 20px;
     margin-left: 0;
 }
+
+.Carousel-custom {
+  margin-top: 65px;
+  height: 100vh; /* Chiều cao bằng toàn màn hình */
+    max-height: 100vh;
+    overflow: hidden;
+}
+.Carousel-custom img{
+   object-fit: cover; /* Đảm bảo hình ảnh lấp đầy khu vực */
+    height: 100%; /* Chiều cao ảnh bằng 100% container */
+    width: 100%; /
+
+}
+
+.container-partner {
+  width: 73%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10rem;
+  text-align: center;
+}
+
+.container-partner h3 {
+  font-weight: bold; 
+  margin-bottom: 10px; 
+}
+
+.container-partner p {
+  margin-bottom: 40px;
+  color: #696969;
+}
+.partner {
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.partner img {
+  width: 80%;
+    height: 80%;
+}
