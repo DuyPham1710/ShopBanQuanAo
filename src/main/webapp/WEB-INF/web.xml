@@ -69,4 +69,14 @@
     <servlet-name>TaiKhoanController</servlet-name>
     <url-pattern>/TaiKhoanController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>QuanLySPController</display-name>
+    <servlet-name>QuanLySPController</servlet-name>
+    <servlet-class>Controller.QuanLySPController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QuanLySPController</servlet-name>
+    <url-pattern>/QuanLySPController</url-pattern>
+  </servlet-mapping>
 </web-app>
