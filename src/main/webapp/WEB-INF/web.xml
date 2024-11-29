@@ -69,4 +69,14 @@
     <servlet-name>TaiKhoanController</servlet-name>
     <url-pattern>/TaiKhoanController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DonHang</display-name>
+    <servlet-name>DonHang</servlet-name>
+    <servlet-class>Controller.DonHang</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DonHang</servlet-name>
+    <url-pattern>/DonHang</url-pattern>
+  </servlet-mapping>
 </web-app>

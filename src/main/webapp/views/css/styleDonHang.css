@@ -1,0 +1,183 @@
+@charset "UTF-8";
+/* Hiệu ứng hover 3D cho thẻ card */
+.order-card {
+    transition: /* transform 0.4s ease,  */box-shadow 0.4s ease;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Khi hover vào card */
+.order-card:hover {
+   /*  transform: translateY(-10px) scale(1.02); Tăng kích thước và di chuyển lên */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Tạo bóng mềm */
+}
+
+/* Thẻ card bên trong collapse *//* Card chung */
+.order-card {
+    border: 1px solid #eaeaea;
+    font-size: 14px;
+}
+
+/* Phần trạng thái */
+.progress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-bar {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 480px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.progress-bar li {
+    text-align: center;
+    position: relative;
+    flex: 1;
+}
+
+.progress-bar li span {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.progress-bar li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: #ccc;
+    border-radius: 50%;
+    z-index: 1;
+    border: 2px solid #fff;
+}
+
+.progress-bar li.active::before {
+    background-color: #28a745; /* Màu trạng thái hoàn thành */
+}
+
+.progress-bar li::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -50%;
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    z-index: 0;
+}
+
+.progress-bar li:first-child::after {
+    display: none;
+}
+
+.progress-bar li.active::after {
+    background-color: #28a745;
+}
+
+/* Hình ảnh sản phẩm */
+.product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+/* Phần tổng kết thanh toán */
+.payment-summary p {
+    margin: 0;
+}
+.order-card .collapse {
+    transition: max-height 0.4s ease-in-out;
+}
+
+/* Ảnh sản phẩm */
+.order-card img {
+    transition: transform 0.4s ease;
+}
+
+/* Khi hover vào ảnh */
+.order-card:hover img {
+    transform: scale(1.1); /* Phóng to ảnh nhẹ */
+}
+
+.order_detail_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.order_detail_header {
+    flex: 1;
+    height: 50px;
+    background-color: rgb(212, 211, 211);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #333;
+}
+
+.order_detail_header p {
+    margin: 0; /* Loại bỏ khoảng cách mặc định của p */
+}
+
+.toggle-details {
+    margin-top: 100px; /* Đẩy mũi tên xuống một chút */
+    background-color: #f5faff; /* Màu nền xanh nhạt */
+    color: #007bff;           /* Màu biểu tượng xanh đậm */
+    border: 2px solid #007bff; /* Viền xanh đậm */
+    border-radius: 50%;       /* Bo tròn nút */
+    width: 46px;              /* Chiều rộng nút */
+    height: 46px;             /* Chiều cao nút */
+    display: flex;            /* Canh giữa nội dung */
+    align-items: center;      /* Căn giữa theo trục dọc */
+    justify-content: center;  /* Căn giữa theo trục ngang */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi */
+}
+.toggle-details:hover {
+    border-color: #0056b3; /* Đổi màu viền khi hover */
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+.btn.toggle-details i {
+    font-size: 30px; /* Tăng kích thước icon */
+}
+
+.product-price {
+    color: rgb(211, 47, 47); /* Màu đỏ */
+    font-size: 18px; /* Kích thước chữ to hơn */
+    font-weight: bold; /* Làm chữ đậm */
+}
+
+/* Đảm bảo đơn giá trong phần mở rộng căn phải */
+.collapse .product-price {
+    margin-bottom: 50px;
+    text-align: right; /* Căn phải cho đơn giá trong phần mở rộng */
+}
+
+.order-card .card-body .d-flex {
+    margin-bottom: 10px;
+}
+/* Tùy chỉnh chiều rộng modal */
+.modal-dialog {
+    max-width: 80% !important;  /* Thay đổi phần trăm để modal rộng ra hơn */
+}
+
+.modal-content {
+    border-radius: 10px; /* Thêm góc bo tròn nếu muốn */
+}

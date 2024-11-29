@@ -45,7 +45,7 @@
                     <div class="account-info" id="account-info">
                         <ul>
                             <li class="account-info-item"><a href="/project_web/TaiKhoanController">Tài khoản của tôi</a></li>
-                            <li class="account-info-item"><a href="#">Đơn mua</a></li>
+                            <li class="account-info-item"><a href="/project_web/DonHang">Đơn mua</a></li>
                             <li class="account-info-item"><a href="/project_web">Đăng xuất</a></li>
                         </ul>
                         
@@ -80,11 +80,16 @@
 	                        <i class="fas fa-box me-2"></i> Đơn hàng
 	                    </a>
 	                    <div class="collapse" id="orderDropdown">
-	                        <a href="#" class="list-group-item ps-4">
-	                            <i class="fas fa-check me-2"></i> Đã giao
-	                        </a>
+	                    	<a href="/project_web/DonHang" class="list-group-item ps-4">
+                                <i class="fas fa-clock me-2"></i> Chờ xác nhận
+                            </a>
+	                        
 	                        <a href="#" class="list-group-item ps-4">
 	                            <i class="fas fa-truck me-2"></i> Đang giao
+	                        </a>
+	                        
+	                        <a href="#" class="list-group-item ps-4">
+	                            <i class="fas fa-check me-2"></i> Đã giao
 	                        </a>
 	                    </div>
 	                    <a href="#" class="list-group-item">

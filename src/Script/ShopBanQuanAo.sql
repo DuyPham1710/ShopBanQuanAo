@@ -415,3 +415,17 @@ RETURN
 	where CAST(maSP AS NVARCHAR(100)) LIKE '%' + @SearchText + '%' OR TenSanPham LIKE '%' + @SearchText + '%'
 );
 GO
+
+CREATE PROCEDURE proc_LoadThongTinDonHang (@IDNguoiMua INT)
+AS
+BEGIN
+	select Q.*, TenKichCo, TenMau
+	from KichCo, MauSac,
+	(select HoaDon.MaHoaDon as maHoaDon, HoaDon.NgayTao as ngayDat, TongTien, diachi, ChiTietHoaDon.SoLuong as SoLuongDaMua, TrangThai, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, GiaBanDau, SanPham.SoLuong as SoLuongSP, GiaBanDau - GiaBanDau*(GiamGia/100.0) as DonGia, GiaBan, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
+	from HoaDon inner join ChiTietHoaDon on HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon, SanPham, HinhAnhSanPham
+	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and IDNguoiMua = @IDNguoiMua
+	) Q
+	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP
+	ORDER BY Q.ngayDat
+END;
+GO
