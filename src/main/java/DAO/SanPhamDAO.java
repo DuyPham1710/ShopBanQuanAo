@@ -20,18 +20,11 @@ public class SanPhamDAO {
 			listSP = Search(conn, searchText);
 		}
 		else {
-			
 			String sql = "";
 			if (maDanhMuc == 0) {
-//				sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, sp.MaDanhMuc as maDanhMuc, TenDanhMuc, MaHinhAnh, DuongDanHinh "
-//						+ "from SanPham as sp, HinhAnhSanPham as img, DanhMucSanPham "
-//						+ "where sp.MaSanPham = img.MaSanPham and sp.MaDanhMuc = DanhMucSanPham.MaDanhMuc";
 				sql = "select * from V_thongTinSP";
 			}
 			else {
-//				sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, sp.MaDanhMuc as maDanhMuc, TenDanhMuc, MaHinhAnh, DuongDanHinh "
-//						+ "from SanPham as sp, HinhAnhSanPham as img, DanhMucSanPham "
-//						+ "where sp.MaSanPham = img.MaSanPham and sp.MaDanhMuc = DanhMucSanPham.MaDanhMuc and DanhMucSanPham.MaDanhMuc = " + maDanhMuc;
 				sql = "select * from V_thongTinSP where maDanhMuc = " + maDanhMuc;
 			}
 
@@ -128,10 +121,8 @@ public class SanPhamDAO {
 	
 	public static List<SanPham> filterByPrice(Connection conn, int min, int max) throws SQLException {
 		List<SanPham> listSP = new ArrayList<SanPham>();
-//		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, sp.MaDanhMuc as maDanhMuc, TenDanhMuc, MaHinhAnh, DuongDanHinh "
-//					+ "from SanPham as sp, HinhAnhSanPham as img, DanhMucSanPham "
-//					+ "where sp.MaSanPham = img.MaSanPham and sp.MaDanhMuc = DanhMucSanPham.MaDanhMuc and sp.GiaBanDau - (sp.GiaBanDau * sp.GiamGia/100) BETWEEN ? AND ?";
 		String sql = "select * from V_thongTinSP where GiaBanDau - (GiaBanDau * GiamGia/100) BETWEEN ? AND ?";
+		
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, min);
         ps.setInt(2, max);
@@ -175,9 +166,7 @@ public class SanPhamDAO {
 	
 	public static SanPham layThongTinSP(Connection conn, int maSP) throws SQLException {
 		String sql = "select * from V_thongTinSP where maSP = ?";
-//		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, sp.MaDanhMuc as maDanhMuc, TenDanhMuc, MaHinhAnh, DuongDanHinh "
-//				+ "from SanPham as sp, HinhAnhSanPham as img, DanhMucSanPham "
-//				+ "where sp.MaSanPham = img.MaSanPham and sp.MaDanhMuc = DanhMucSanPham.MaDanhMuc and sp.MaSanPham = ?";
+
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, maSP);
 		ResultSet rs = ps.executeQuery();
@@ -240,9 +229,7 @@ public class SanPhamDAO {
 	public static List<SanPham> DanhSachSPTuongTu(Connection conn, int maSP, int maDanhMuc) throws SQLException {
 		List<SanPham> listSP = new ArrayList<SanPham>();
 		String sql = "select * from V_thongTinSP where maDanhMuc = ? and maSP <> ?";
-//		String sql = "select sp.MaSanPham as maSP, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, sp.MaDanhMuc as maDanhMuc, TenDanhMuc, MaHinhAnh, DuongDanHinh "
-//				+ "from SanPham as sp, HinhAnhSanPham as img, DanhMucSanPham "
-//				+ "where sp.MaSanPham = img.MaSanPham and sp.MaDanhMuc = DanhMucSanPham.MaDanhMuc and sp.MaDanhMuc = ? and sp.MaSanPham <> ?";
+
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, maDanhMuc);
 		ps.setInt(2, maSP);

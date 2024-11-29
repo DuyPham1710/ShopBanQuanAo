@@ -35,6 +35,13 @@ public class NguoiDung {
 		this.email = email;
 		this.setDiaChiNhanHang(diaChiNhanHang);
 	}
+	
+	public NguoiDung(String hoTen, String sdt, String email, List<DiaChiNhanHang> diaChiNhanHang) {
+		this.hoTen = hoTen;
+		this.sdt = sdt;
+		this.email = email;
+		this.setDiaChiNhanHang(diaChiNhanHang);
+	}
 
 	public String getEmail() {
 		return email;
@@ -99,4 +106,5 @@ public class NguoiDung {
 	public void setDiaChiNhanHang(List<DiaChiNhanHang> diaChiNhanHang) {
 		this.diaChiNhanHang = diaChiNhanHang;
 	}
+	
 }

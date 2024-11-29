@@ -60,7 +60,7 @@ public class loginController extends HttpServlet {
 			}		
 		}
 		else {
-			response.sendRedirect("/project_web/views/login.jsp");
+			response.sendRedirect("/project_web");
         }
 	}
 
