@@ -32,7 +32,7 @@
             </li>
             <li class="nav-item">
               <i class="bi bi-box me-2"></i>
-              <a class="nav-link" href="QuanLySP.jsp" id="loadProducts">Products</a>
+              <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts">Products</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-people me-2"></i>

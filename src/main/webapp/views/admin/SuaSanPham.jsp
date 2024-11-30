@@ -1,0 +1,123 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<form id="productFormEdit">
+  <!-- Row 1: Tên sản phẩm -->
+  <div class="row mb-4">
+    <div class="col-md-7">
+      <div class="row mb-2">
+        <div class="col-md-11">
+          <label for="productNameEdit" class="form-label">Tên sản phẩm</label>
+          <input type="text" class="form-control" id="tensp" placeholder="Nhập tên sản phẩm" value="${ThongTinSP.tenSP}" required>
+        </div>
+        
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-4">
+          <label for="productPriceEdit" class="form-label">Giá sản phẩm</label>
+          <input type="number" class="form-control" id="giasanpham" placeholder="100000" value="${ThongTinSP.giaBanDau}" required>
+        </div>
+        <div class="col-md-3">
+          <label for="productDiscountEdit" class="form-label">Giảm giá</label>
+          <input type="number" class="form-control" id="giamgia" placeholder="100000" value="${ThongTinSP.giamGia}" required>
+        </div>
+        <div class="col-md-4">
+          <label for="productQuantityEdit" class="form-label">Số lượng</label>
+          <input type="number" class="form-control" id="soluong" placeholder="50" value="${ThongTinSP.soLuong}" required>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-11">
+          <label for="productCategoryEdit" class="form-label">Danh mục</label>
+          <select id="danhmuc" class="form-select" required>
+            <c:forEach var="danhMuc" items="${ListDanhMuc}">
+    			<option name="maDanhMuc" value="${danhMuc.maDanhMuc}" 
+	            <c:if test="${danhMuc.maDanhMuc == ThongTinSP.danhMuc.maDanhMuc}">
+	              selected
+	            </c:if>>
+      			${danhMuc.tenDanhMuc}
+			    </option>
+			  </c:forEach>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 form-group" style="border-left: 1px solid #ccc; height: 250px;">
+      <div class="product-image-container">
+        <img 
+          src="${ThongTinSP.hinhAnhSP.duongDanHinh}"
+          alt="${ThongTinSP.hinhAnhSP.moTaHinh }" 
+          class="product-image-preview Edit"
+          id="anh">
+        <button type="button" class="btn btn-outline-secondary" id="uploadProductImageButtonEdit">Chọn ảnh</button>
+        <input type="file" id="productImageInputEdit" class="d-none" accept="image/*">
+      </div>
+    </div>
+    
+  </div>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <label for="productOriginEdit" class="form-label">Xuất xứ</label>
+      <input type="text" class="form-control" id="xuatxu" placeholder="Việt Nam" value="${ThongTinSP.xuatXu}" required>
+    </div>
+    <div class="col-md-6">
+      <label for="productMaterialEdit" class="form-label">Chất liệu</label>
+      <input type="text" class="form-control" id="chatlieu" placeholder="Cotton" value="${ThongTinSP.chatLieu}" required>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label class="form-label">Size</label>
+      <div class="btn-group d-flex flex-wrap" role="group" aria-label="Size options">
+        <input type="checkbox" class="btn-check" id="sizeSEdit" value="S" autocomplete="off">
+        <label class="btn btn-outline-primary" for="sizeSEdit">S</label>
+  
+        <input type="checkbox" class="btn-check" id="sizeMEdit" value="M" autocomplete="off">
+        <label class="btn btn-outline-primary" for="sizeMEdit">M</label>
+  
+        <input type="checkbox" class="btn-check" id="sizeLEdit" value="L" autocomplete="off">
+        <label class="btn btn-outline-primary" for="sizeLEdit">L</label>
+  
+        <input type="checkbox" class="btn-check" id="sizeXLEdit" value="XL" autocomplete="off">
+        <label class="btn btn-outline-primary" for="sizeXLEdit">XL</label>
+  
+        <input type="checkbox" class="btn-check" id="sizeXXLEdit" value="XXL" autocomplete="off">
+        <label class="btn btn-outline-primary" for="sizeXXLEdit">XXL</label>
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+      <label class="form-label">Màu</label>
+      <div class="btn-group d-flex flex-wrap" role="group" aria-label="Color options">
+        <input type="checkbox" class="btn-check" id="colorRedEdit" value="Đỏ" autocomplete="off">
+        <label class="btn btn-outline-danger" for="colorRedEdit">Đỏ</label>
+  
+        <input type="checkbox" class="btn-check" id="colorBlueEdit" value="Xanh" autocomplete="off">
+        <label class="btn btn-outline-primary" for="colorBlueEdit">Xanh</label>
+  
+        <input type="checkbox" class="btn-check" id="colorYellowEdit" value="Vàng" autocomplete="off">
+        <label class="btn btn-outline-warning" for="colorYellowEdit">Vàng</label>
+  
+        <input type="checkbox" class="btn-check" id="colorWhiteEdit" value="Trắng" autocomplete="off">
+        <label class="btn btn-outline-secondary" for="colorWhiteEdit">Trắng</label>
+  
+        <input type="checkbox" class="btn-check Edit" id="colorBlackEdit" value="Đen" autocomplete="off">
+        <label class="btn btn-outline-dark Edit" for="colorBlackEdit">Đen</label>
+      </div>
+    </div>
+  </div>
+  <!-- Row 6: Mô tả -->
+   
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <label for="productDescriptionEdit" class="form-label">Mô tả sản phẩm</label>
+      <textarea id="mota" class="form-control" rows="4" placeholder="Đẹp" required>${ThongTinSP.mota}</textarea>
+    </div>
+  </div>
+
+  <!-- Nút lưu -->
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary Edit">Lưu</button>
+  </div>
+</form>
