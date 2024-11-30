@@ -61,8 +61,9 @@ public class DonHang extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.print("aaa");
 		int maHoaDon = Integer.parseInt(request.getParameter("id"));	
-
+	//	int maHoaDon = 6;
 		
 		Connection conn = null;
 		try {
@@ -95,7 +96,7 @@ public class DonHang extends HttpServlet {
 		request.setAttribute("nguoiDung", nguoiDung);
 		request.setAttribute("listChiTietHD", listChiTietHD);
 		RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietDonHang.jsp");
-		req.forward(request, response);
+		req.include(request, response);
 	//	response.getWriter().write("<div>Test Content</div>");
 	}
 
