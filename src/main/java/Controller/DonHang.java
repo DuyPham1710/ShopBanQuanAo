@@ -61,9 +61,9 @@ public class DonHang extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.print("aaa");
-		int maHoaDon = Integer.parseInt(request.getParameter("id"));	
-	//	int maHoaDon = 6;
+	//	System.out.print("aaa");
+		int maHoaDon = Integer.parseInt(request.getHeader("X-MaHoaDon"));
+	//	int maHoaDon = 9;
 		
 		Connection conn = null;
 		try {
@@ -84,20 +84,22 @@ public class DonHang extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
-		List<ChiTietHoaDon> listChiTietHD = null;
+		DonMua donMua = null;
 		try {
-			listChiTietHD = DonHangDAO.LoadThongTinMotDonHang(conn, maHoaDon);
+			donMua = DonHangDAO.LoadThongTinMotDonHang(conn, maHoaDon);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
-		System.out.print("QUa Được đây");
+		//DonMua donMua = new DonMua(maHoaDon, listChiTietHD);
+		
+	//	System.out.print("QUa Được đây");
 		request.setAttribute("nguoiDung", nguoiDung);
-		request.setAttribute("listChiTietHD", listChiTietHD);
+		request.setAttribute("donMua", donMua);
+		
 		RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietDonHang.jsp");
 		req.include(request, response);
-	//	response.getWriter().write("<div>Test Content</div>");
 	}
 
 }

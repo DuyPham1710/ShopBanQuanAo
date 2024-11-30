@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,7 +80,7 @@ public class DonHangDAO {
 	    return danhSachDonHang;
 	}
 	
-	public static List<ChiTietHoaDon> LoadThongTinMotDonHang(Connection conn, int maHoaDon) throws SQLException {
+	public static DonMua LoadThongTinMotDonHang(Connection conn, int maHoaDon) throws SQLException {
 		List<ChiTietHoaDon> listChiTietHD = new ArrayList<ChiTietHoaDon>();
 	    String sql = "{call proc_LoadThongTinMotDonHang(?, ?)}";
 
@@ -87,8 +88,11 @@ public class DonHangDAO {
 	    ps.setInt(1, AccountDAO.getID());
 	    ps.setInt(2, maHoaDon);
 	    ResultSet rs = ps.executeQuery();
-
+	    String trangThai = "";
+	    int tongTien = 0;
 	    while (rs.next()) {
+	    	trangThai = rs.getString("TrangThai");
+	    	tongTien = rs.getInt("TongTien");
 	        HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham(rs.getInt("MaHinhAnh"), rs.getString("DuongDanHinh"));
 	        KichCo size = new KichCo(rs.getInt("MaKichCo"), rs.getString("TenKichCo"));
 	        MauSac color = new MauSac(rs.getInt("MaMau"), rs.getString("TenMau"));
@@ -113,7 +117,8 @@ public class DonHangDAO {
 	        );      
 	        listChiTietHD.add(chiTietHD);
 	    }
-	    return listChiTietHD;
+	    DonMua donMua = new DonMua(maHoaDon, trangThai, tongTien, listChiTietHD);
+	    return donMua;
 	}
 //	public static void main(String[] args) {
 //		Connection conn = null;

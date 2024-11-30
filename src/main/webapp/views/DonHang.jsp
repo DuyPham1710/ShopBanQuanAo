@@ -209,130 +209,25 @@
 	        </div>
     </div>
     
-   <!-- Modal -->
+   <!-- Modal order Detail -->
 	 <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	      <div class="modal-content">
 	        <div class="modal-header">
 	          <h5 class="modal-title" id="orderDetailModalLabel">Chi Tiết Đơn Hàng</h5>
 	          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	          
 	        </div>
 	        <div class="modal-body">
-	          Nội dung chi tiết đơn hàng sẽ được chèn vào đây bằng JavaScript
+	       
 	          <div class="order-details-content">
-	            Nội dung sẽ được thêm vào từ JavaScript
+	           
 	          </div>
 	        </div>
 	      </div>
 	    </div>
 	  </div> 
-	  <!-- Modal -->
-<%-- <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Header Modal -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="orderDetailModalLabel">Chi tiết đơn hàng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            
-            <!-- Body Modal -->
-            <div class="modal-body">
-                <div class="order_detail_container">
-				    <div class="order_detail_header">
-				        <p>Đơn hàng: <span class="font-weight-bold" id="maHoaDon"></span></p>
-				    </div>
-				    <div class="order_detail_header">
-				        <p>Trạng thái: <span class="font-weight-bold"></span></p>
-				    </div>
-				</div>
-                
-               <div class="container my-5">
-				    <div class="row">
-				        <!-- Thông tin đơn hàng -->
-				        <div class="col-md-6">
-				            <h3 class="font-weight-bold mb-3">Thông tin chi tiết</h3>
-				            <form>
-				                <div class="mb-3 row">
-				                    <label for="full-name" class="col-sm-3 col-form-label">Họ và tên</label>
-				                    <div class="col-sm-9">
-				                        <input type="text" class="form-control" id="full-name" placeholder="duy" value="${nguoiDung.hoTen}">
-				                    </div>
-				                </div>
-				               
-				                <div class="mb-3 row">
-				                    <label for="phone-number" class="col-sm-3 col-form-label">Số điện thoại</label>
-				                    <div class="col-sm-9">
-				                        <input type="text" class="form-control" id="phone-number" placeholder="0794821201" value="${nguoiDung.hoTen}">
-				                    </div>
-				                </div>
-				                <div class="mb-3 row">
-				                    <label for="Email" class="col-sm-3 col-form-label">Email</label>
-				                    <div class="col-sm-9">
-				                        <input type="Email" class="form-control" id="Email" placeholder="duy@gmail.com" value="${nguoiDung.email}">
-				                    </div>
-				                </div>
-				                <div class="mb-3 row">
-				                    <label for="street-address" class="col-sm-3 col-form-label">Địa chỉ nhận hàng</label>
-				                    <div class="col-sm-9">
-				                        <input type="text" class="form-control" id="street-address" placeholder="123 Main St, Hanoi" value="${nguoiDung.diaChiNhanHang[0].tenDiaChi}">
-				                    </div>
-				                </div>
-				                
-				                <div class="mb-3">
-				                    <label class="col-form-label font-weight-bold">Phương thức thanh toán</label>
-				                </div>
-				                <div class="form-check">
-				                    <input class="form-check-input" type="checkbox" value="" id="pay-later" checked>
-				                    <label class="form-check-label" for="pay-later">Thanh toán khi nhận hàng</label>
-				                </div>
-				                <div class="form-check">
-				                    <input class="form-check-input" type="checkbox" value="" id="online-payment">
-				                    <label class="form-check-label" for="online-payment">Online payment</label>
-				                </div>
-				            </form>
-				
-				            
-				        </div>
-				
-				        <!-- Thông tin đơn hàng -->
-				        <div class="col-md-6">
-				            <h3 class="font-weight-bold mb-3">Đơn hàng của bạn</h3>
-							<c:forEach var="ChiTietHD" items="${listChiTietHD}">
-								<div class="d-flex align-items-center mb-3 border-bottom pb-3">
-					                <img src="${ChiTietHD.sp.hinhAnhSP.duongDanHinh}" alt="${ChiTietHD.sp.tenSP}" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
-					                <div class="ms-3 flex-grow-1">
-					                    <h6 class="mb-1">${ChiTietHD.sp.tenSP}</h6>
-					                    <p class="mb-1 text-muted">Size: ${ChiTietHD.sp.kichCo[0].tenKichCo}, Màu: ${ChiTietHD.sp.mauSac[0].tenMau}</p>
-					                    <p class="mb-0 text-muted">x${ChiTietHD.soLuongDaMua}</p>
-					                </div>
-					                <!-- Đơn giá sản phẩm -->
-					                <div class="ms-auto">
-					                    <p class="mb-1 text-end" style="font-size: 15px; margin-right: 20px;">
-					                        <span style="display: block; text-align: center;">Đơn giá</span> 
-					                        <strong>${ChiTietHD.donGia} VND</strong>
-					                    </p>
-					                </div>
-					            </div>
-							</c:forEach>
-				            
-				
-				            <!-- Tổng tiền -->
-				            <div class="d-flex justify-content-between mt-3 pt-3 border-top product-price">
-				                <h5 class="font-weight-bold">Tổng tiền</h5>
-				                <h5 class="font-weight-bold"><strong>1.500.000 VND</strong></h5>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-            
-            <!-- Footer Modal -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div> --%>
+	
   	
   	
   	<!-- Modal Đánh giá -->
@@ -425,7 +320,8 @@
 	        fetch(`/project_web/DonHang`, {
 	            method: "POST",
 	            headers: {
-	                "Content-Type": "application/x-www-form-urlencoded",
+	            	"Content-Type": "application/json",
+	                "X-MaHoaDon": maHoaDon,
 	            },
 	            body: `id=${maHoaDon}`,
 	        })
@@ -443,41 +339,21 @@
 	            alert("Không thể tải chi tiết đơn hàng!");
 	        });
 	    }
+	    
+	    const modalElement = document.getElementById('orderDetailModal');
+
+		 // Lắng nghe sự kiện khi modal bị ẩn
+		 modalElement.addEventListener('hidden.bs.modal', function () {
+		     // Xóa backdrop nếu còn tồn tại
+		     const backdrop = document.querySelector('.modal-backdrop');
+		     if (backdrop) {
+		         backdrop.remove();
+		     }
+		     // Khôi phục scrollbar
+		     document.body.style.overflow = '';
+		 });
     </script>
-    <!--  <script>
-        document.querySelectorAll('.btn-warning').forEach(button => {
-            button.addEventListener('click', function() {
-                // Lấy thông tin đơn hàng
-                const orderId = this.closest('.order-card').querySelector('h5').textContent.trim().replace('Đơn Hàng #', '');
-                const orderDate = this.closest('.order-card').querySelector('small.text-muted').textContent.trim();
-                const totalAmount = this.closest('.order-card').querySelector('.ms-auto p strong').textContent.trim();
-
-                fetch('views/ChiTietDonHang.jsp')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Không thể tải nội dung chi tiết đơn hàng.');
-                        }
-                        return response.text(); // Trả về nội dung HTML dưới dạng text
-                    })
-                    .then(html => {
-                        // Chèn nội dung HTML vào modal
-                        document.querySelector('#orderDetailModal .modal-body').innerHTML = html;
-
-                        // Thay thế các giá trị động (nếu cần)
-                        document.querySelector('.order_detail_container .order_detail_header p span').textContent = orderId;
-
-                        // Hiển thị modal
-                        const orderDetailModal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
-                        orderDetailModal.show();
-                    })
-                    .catch(error => {
-                        console.error('Lỗi:', error);
-                        alert('Đã xảy ra lỗi khi tải chi tiết đơn hàng.');
-                    });
-            });
-        });
-
-    </script>  -->
+   
     
     <script>
 	    function showRatingModal(maHoaDon) {
@@ -512,45 +388,6 @@
 	        });
 	    }
 	</script>
-	<!-- <script>
-		function loadOrderDetails(maHoaDon) {
-		    $.ajax({
-		        type: "POST",
-		        url: "/project_web/DonHang", // Đường dẫn của Servlet
-		        data: { id: maHoaDon },
-		        success: function(response) {
-		            console.log(response); // Log the response to verify
-		            $('#orderDetailModal .modal-body .order-details-content').html(response);
-		            $('#orderDetailModal').modal('show');
-		        },
-		        error: function(xhr, status, error) {
-		            console.error("Error: " + error);
-		            alert('Đã xảy ra lỗi khi tải chi tiết đơn hàng.');
-		        }
-		    });
-		}
-
-		    // Gửi mã đơn hàng dưới dạng JSON
-		   /*  $.ajax({
-		        url: '/project_web/DonHang',  // URL servlet để xử lý
-		        type: 'POST',
-		        contentType: 'application/json',
-		        data: JSON.stringify({ id: maHoaDon }), // Gửi data dưới dạng JSON
-		        success: function(response) {
-		            // Chèn nội dung chi tiết đơn hàng vào modal
-		            $('#orderDetailModal .modal-body .order-details-content').html(response);
-		            
-		            // Hiển thị modal
-		            $('#orderDetailModal').modal('show');
-		        },
-		        error: function(xhr, status, error) {
-		            console.error('Lỗi:', error);
-		            alert('Đã xảy ra lỗi khi tải chi tiết đơn hàng.');
-		        }
-		    }); */
-		}
-
-	</script> -->
-	 
+	
 </body>
 </html>

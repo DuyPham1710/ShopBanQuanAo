@@ -24,6 +24,14 @@ public class DonMua {
 		this.setChiTietHD(chiTietHoaDon);
 	}
 	
+	public DonMua(int maHoaDon, String trangThai, int tongTien, List<ChiTietHoaDon> chiTietHoaDon) {
+		this.setMaHoaDon(maHoaDon);
+		this.setTrangThai(trangThai);
+		this.setTongTien(tongTien);
+		chiTietHD = new ArrayList<ChiTietHoaDon>();
+		this.setChiTietHD(chiTietHoaDon);
+	}
+	
 	public Date getNgayDat() {
 		return ngayDat;
 	}
