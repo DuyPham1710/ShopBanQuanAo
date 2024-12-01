@@ -89,4 +89,14 @@
     <servlet-name>QuanLySPController</servlet-name>
     <url-pattern>/QuanLySPController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HoaDonController</display-name>
+    <servlet-name>HoaDonController</servlet-name>
+    <servlet-class>Controller.HoaDonController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HoaDonController</servlet-name>
+    <url-pattern>/HoaDonController</url-pattern>
+  </servlet-mapping>
 </web-app>
