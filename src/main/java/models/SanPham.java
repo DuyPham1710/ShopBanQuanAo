@@ -66,7 +66,11 @@ public class SanPham {
 		color.setMaMau(maMauSac);
 		this.mauSac.add(color);
 	}
-	
+	public SanPham(int maSP, String tenSP, int daBan) {
+		this.maSP=maSP;
+		this.tenSP=tenSP;
+		this.daBan=daBan;
+	}
 	
 	public int getSoLuong() {
 		return soLuong;

@@ -1,0 +1,423 @@
+@charset "UTF-8";
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar {
+    
+    position: fixed;
+    top: 0; /* Đặt khoảng cách từ trên cùng */
+    min-height: 100vh;
+    padding: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo-text {
+    font-size: 1.5rem;
+    color: #6a5acd;
+  }
+
+  .nav-link {
+    color: #333;
+    font-weight: 500;
+    padding: 15px;
+    margin-left: 10%;
+    font-size: 1.2rem;
+  }
+  
+  .bi{
+    font-size: 1.5rem;
+    margin-left: 10%;
+  }
+
+  .nav-item:hover {
+    background-color: #ce9b53;
+    color: #fff;
+    border-radius: 8px;
+  }
+
+  .nav-link:hover {
+    color: #fff;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    height: 5rem;
+  }
+
+  .content{
+    background-color: #f0e7d6;
+    padding-bottom: 3rem;
+  }
+
+  .profile img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+  .logo img {
+    height: 60px; /* Giữ kích thước hình ảnh giống nhau */
+    width: auto; /* Tự động điều chỉnh chiều rộng */
+    margin-bottom: 1rem;
+}
+/* Table Styles */
+.table {
+  font-size: 0.9rem;
+}
+
+.table th {
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #b02a37;
+}
+
+/* Scrollable Table */
+.table-responsive {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+.list-group-item span {
+  font-weight: bold;
+  color: #007bff; /* Màu xanh Bootstrap */
+}
+
+.card {
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background-color: #fefefe;
+}
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+
+/* Tùy chỉnh chiều rộng của modal */
+.modal-lg {
+    max-width: 60%; /* Chiều ngang modal bằng 80% màn hình */
+  }
+  
+  .modal-content {
+    border-radius: 10px; /* Bo góc modal */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+    background-color: #f9f9f9; /* Nền sáng */
+  }
+  
+  /* Tiêu đề modal */
+  .modal-header {
+    color: #050505; /* Màu chữ trắng */
+    border-bottom: none;
+    border-radius: 10px 10px 0 0; /* Bo góc phía trên */
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  /* Nút đóng */
+  .modal-header .btn-close {
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+  
+  /* Nút đóng hover */
+  .modal-header .btn-close:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* Nút hover */
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  /* Input và Textarea */
+  input.form-control, select.form-select, textarea.form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+  }
+  
+  /* Focus style */
+  input.form-control:focus, select.form-select:focus, textarea.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Hình ảnh xem trước */
+  .product-image-preview {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 5px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Nút chọn ảnh */
+  .btn-outline-secondary {
+    margin-top: 10px;
+    border-color: #007bff;
+    color: #007bff;
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Button group style */
+  .btn-group .btn {
+    margin: 5px;
+    border-radius: 5px;
+  }
+  
+  /* Giao diện checkbox */
+  .btn-check + label {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Đường viền hover cho checkbox */
+  .btn-check + label:hover {
+    border-color: #007bff;
+    color: #007bff;
+  }
+  
+  /* Textarea style */
+  textarea.form-control {
+    resize: none; /* Tắt khả năng thay đổi kích thước */
+  }
+  
+  /* Căn giữa nút lưu */
+  .text-center {
+    margin-top: 20px;
+  }
+  
+  /* Căn giữa nút chọn ảnh */
+.product-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Chiều cao của container */
+  }
+  
+  .product-image-preview {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px; /* Khoảng cách giữa ảnh và nút */
+  }
+  
+  #uploadProductImageButton {
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .modal-body{
+    margin: 20px;
+  }
+  
+.container-filter {
+    width: 90%;
+    max-width: 1200px;
+    margin: 42px auto;
+    padding-top: 20px;
+}
+
+.filter-container {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 20px;
+    
+}
+
+.filter-title {
+    padding-right: 30px;
+    padding-left: 5px;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: text;
+    font-size: 16px;
+    border-right: #e7e7e7 solid 2px;
+}
+
+.filter-button i {
+    margin-right: 5px;
+}
+
+.filter_category {
+    position: relative;
+    display: flex;
+    width: 212px;
+    height: 40px;
+    border: #e7e7e7 solid 1px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.filter_category-title {
+    padding-left: 20px;
+}
+
+.icon-controls {
+    padding-right: 14px;
+    padding-bottom: 6px;
+}
+
+/* Dropdown nội dung */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Đặt ngay bên dưới div cha */
+    left: 0;
+    width: 100%; /* Chiều rộng bằng với div cha */
+    background-color: white;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.dropdown-content button {
+    padding: 10px 30px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    color: #888888;
+}
+
+.dropdown-content button:hover {
+    background-color: #f0f0f0; 
+    text-decoration: none;
+    color: #888888;
+}
+
+.dropdown-content div {
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdown-content div:hover {
+    background-color: #f0f0f0; 
+}
+/* Hiển thị dropdown khi hover vào filter_category */
+.filter_category:hover .dropdown-content {
+    display: block; 
+}
+
+.filter_category:hover .size-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter_category:hover .color-options {
+    display: grid;
+}
+
+/* Màu sắc */
+.color-options {
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 10px;
+}
+
+.color-circle {
+    position: relative;
+    width: 10px;
+    height: 28px;
+    border-radius: 50%; /* Tạo hình tròn */
+    cursor: pointer;
+    border: 1px solid #e7e7e7;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Thêm hiệu ứng khi hover */
+}
+/* Khi hover vào màu */
+.color-circle:hover {
+    transform: scale(1.1); /* Phóng to khi hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ khi hover */
+
+}
+
+.color-circle .tick {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    color: white;
+    display: none; 
+}
+
+/* Hiển thị dấu tick khi màu được chọn */
+.color-circle.selected .tick {
+    display: inline-block;
+}
+
+/* Kích thước */
+.size-options {
+    display: none;
+    padding: 10px 0;
+}
+
+.size-option {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    border: 1px solid #e7e7e7;
+}
+
+.size-option.selected {
+    background-color: black;
+    color: white;
+}
+
+
+  
+  

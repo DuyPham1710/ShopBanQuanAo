@@ -1,0 +1,110 @@
+@charset "UTF-8";
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar {
+    min-height: 100vh;
+    padding: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo-text {
+    font-size: 1.5rem;
+    color: #6a5acd;
+  }
+
+  .nav-link {
+    color: #333;
+    font-weight: 500;
+    padding: 15px;
+    margin-left: 10%;
+    font-size: 1.2rem;
+  }
+  
+  .bi{
+    font-size: 1.5rem;
+    margin-left: 10%;
+  }
+
+  .nav-item:hover {
+    background-color: #ce9b53;
+    color: #fff;
+    border-radius: 8px;
+  }
+
+  .nav-link:hover {
+    color: #fff;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .chart-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .card {
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #fefefe;
+  }
+  
+  .input-group input {
+    border-radius: 20px;
+  }
+  
+.logo img {
+    height: 60px; /* Giữ kích thước hình ảnh giống nhau */
+    width: auto; /* Tự động điều chỉnh chiều rộng */
+    margin-bottom: 1rem;
+}
+
+.notifications {
+  position: relative;
+  margin-right: 20px;
+  font-size: 20px;
+  color: #555;
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #ff4d4f;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.profile img{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.content{
+  background-color: #f0e7d6;
+}
+
+.rounded-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rounded-table th,
+.rounded-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: center;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+}

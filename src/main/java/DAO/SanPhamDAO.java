@@ -340,6 +340,34 @@ public class SanPhamDAO {
 		}
 		return null;
 	}
-
+	
+	public static List<SanPham> DanhSachBanChay(Connection conn, int nam) throws SQLException {
+		List<SanPham> listSP = new ArrayList<SanPham>();
+		String sql = "SELECT * FROM fn_LietKeSanPhamBanChay(?)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, nam);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {	
+			SanPham sp = new SanPham(
+					rs.getInt("MaSanPham"), 
+					rs.getString("TenSanPham"), 
+					rs.getInt("TongSoLuongBan"));
+			listSP.add(sp);	
+		}
+		return listSP;
+	}
+	
+	public static List<Integer> ThongKeBanDuocTrongNam(Connection conn, int nam) throws SQLException {
+		List<Integer> banDuoc = new ArrayList<>();
+		String sql = "SELECT *FROM fn_ThongKeTongSoLuongSanPhamTheoThang(?)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, nam);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {	
+			int bd = rs.getInt("TongSoLuongBan");
+			banDuoc.add(bd);	
+		}
+		return banDuoc;
+	}
 }
 
