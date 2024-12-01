@@ -117,4 +117,39 @@ public class NguoiDungDAO {
 		}
 		return nguoiMua;
 	}
+	public static void suaThongTin(Connection conn, NguoiDung nguoiDung) throws SQLException {
+		String sql = "{call proc_suaThongTin(?, ?, ?, ?, ?, ?, ?, ?)}";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, nguoiDung.getAccount().getUsername());
+		ps.setString(2, nguoiDung.getAccount().getPassword());
+		ps.setString(3, nguoiDung.getHoTen());
+		ps.setDate(4, nguoiDung.getNgaySinh());
+		ps.setString(5, nguoiDung.getGioiTinh());
+		ps.setString(6, nguoiDung.getSdt());
+		ps.setString(7, nguoiDung.getEmail());
+		ps.setInt(8, AccountDAO.getID());
+		ps.executeUpdate();
+	}
+	
+	public static NguoiDung LayThongTinNguoiDung_DonHang(Connection conn, int maHoaDon) throws SQLException {
+		String sql = "{call proc_ThongTinNguoiDung_HoaDon(?, ?)}";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(2, maHoaDon);
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()) {		
+			List<DiaChiNhanHang> diaChiNhanHang = new ArrayList<DiaChiNhanHang>();
+			DiaChiNhanHang diaChi = new DiaChiNhanHang(1, rs.getString("DiaChi"));
+			diaChiNhanHang.add(diaChi);
+		
+			NguoiDung nguoiDung = new NguoiDung(				
+					rs.getString("HoTen"), 					
+					rs.getString("SDT"), 	
+					rs.getString("email"),
+					diaChiNhanHang);
+		
+			return nguoiDung;
+		}
+		return null;
+	}
 }

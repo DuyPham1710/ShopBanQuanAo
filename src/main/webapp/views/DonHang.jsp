@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
    
-    <title>Hồ Sơ Của Tôi</title>
+    <title>Đơn hàng Của Tôi</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -80,19 +80,24 @@
 	                    <a href="#orderDropdown" class="list-group-item" data-bs-toggle="collapse" aria-expanded="false" aria-controls="orderDropdown">
 	                        <i class="fas fa-box me-2"></i> Đơn hàng
 	                    </a>
-	                    <div class="collapse" id="orderDropdown">
-		                    <a href="#" class="list-group-item ps-4">
-                                <i class="fas fa-clock me-2"></i> Chờ xác nhận
-                            </a>
-	                       
-	                        <a href="#" class="list-group-item ps-4">
-	                            <i class="fas fa-truck me-2"></i> Đang giao
-	                        </a>
-                            
-                             <a href="#" class="list-group-item ps-4">
-	                            <i class="fas fa-check me-2"></i> Đã giao
-	                        </a>
-	                    </div>
+	                     <form id="orderForm" action="DonHang" method="GET">
+						    <!-- Hidden input to store the status -->
+						    <input type="hidden" name="trangThai" id="trangThai">
+						
+						    <div class="collapse" id="orderDropdown">
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Chờ xác nhận')">
+						            <i class="fas fa-clock me-2"></i> Chờ xác nhận
+						        </a>
+						
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đang giao')">
+						            <i class="fas fa-truck me-2"></i> Đang giao
+						        </a>
+						
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đã giao')">
+						            <i class="fas fa-check me-2"></i> Đã giao
+						        </a>
+						    </div>
+						</form>
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-bell me-2"></i> Thông báo
 	                    </a>
@@ -110,173 +115,160 @@
                     <div class="container mt-4">
                         <h3 class="font-weight-bold mb-3 text-center" style="font-size: 24px; color: #343a40; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Đơn Hàng</h3>
                         <p class="mb-3 text-center" style="font-size: 16px; color: #6c757d; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Kiểm tra và theo dõi trạng thái đơn hàng của bạn</p>                        
-                    
-                        <!-- Danh sách đơn hàng -->
-                        <div class="card mb-3 order-card">
-                            <div class="card-body">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="font-weight-bold mb-3" style="background-color: #f1f1f1; padding: 8px 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); color: #343a40; font-size: 16px; border: 1px solid #ced4da;">
-                                        <i class="fas fa-box"></i> Đơn Hàng #12345
-                                    </h5>
-                                    <small class="text-muted">Ngày đặt: 2024-11-25</small>
-                                </div>
-                    
-                                <div class="d-flex align-items-center">
-                                    <!-- Hình ảnh sản phẩm đầu tiên -->
-                                    <img src="https://quanjeandep.com/images/thumbs/quan-jean-nam-dang-slim-fit-mau-den-tuyen-10930.jpeg" alt="Sản phẩm" class="rounded" style="width: 80px; height: 80px; object-fit: cover; margin-right: 20px;">
-            
-                                    <!-- Thông tin đơn hàng -->
-                                    <div class="ms-3 flex-grow-1">
-                                        <h4>Áo khoác hoodie</h4>
-                                        <p class="mb-1">Size: S, Màu: Xám</p>
-                                        <small class="text-muted">x1</small>
-                                        <p class="mb-1">Trạng thái: <span class="badge bg-warning text-dark"><i class="fas fa-clock me-2"></i>Đang chờ xác nhận</span></p>
-                                        <small class="text-muted">Giao đến: 123 Đường ABC, Quận 1, TP.HCM</small>
-                                        <p class="mb-1 text-muted">Còn: 3 sản phẩm khác</p>
-                                        
-                                    </div>
-                                    <!-- Đơn giá - cho qua bên phải -->
-                                    <div class="ms-auto">
-                                        <p class="mb-1 text-end product-price"><strong>1.000.000 VND</strong></p>
-                                    </div>
-                                    <!-- Nút "Chi tiết" -->
-                                    <button class="toggle-details" type="button" data-bs-toggle="collapse" data-bs-target="#orderDetails1" aria-expanded="false" aria-controls="orderDetails1">
-                                        <i class="fa-solid fa-chevron-left"></i>
-                                    </button>
-                                </div>
-                                 <!-- Thành tiền và Nút "Xem Chi Tiết" bên phải -->
-                                <div class="ms-auto text-end" style="border-top: 1px solid #ccc; padding: 10px; margin-top: 30px;">
-                                    <p class="mb-1 text-end product-price">Tổng tiền: <strong>2.500.000 VND</strong></p>
-                                    <a href="javascript:void(0);" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails('orderDetails1')">
-                                        <span class="font-weight-bold">Xem Chi Tiết</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Danh sách sản phẩm mở rộng -->
-                            <div class="collapse" id="orderDetails1">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <img src="https://quanjeandep.com/images/thumbs/quan-jean-nam-dang-slim-fit-mau-den-tuyen-10930.jpeg" alt="Sản phẩm" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
-                                        <div class="ms-3 flex-grow-1"> <!-- Thêm flex-grow-1 để chiếm không gian còn lại -->
-                                            <h6 class="mb-1">áo thể thao</h6>
-                                            <p class="mb-1 text-muted">Size: S, Màu: Xám</p>
-                                            <p class="mb-0 text-muted">x2</p>
-                                        </div>
-                                        <!-- Đơn giá sản phẩm -->
-                                        <div class="ms-auto">
-                                            <p class="mb-1 text-end product-price" style="font-size: 15px; margin-right: 20px;">
-                                                <span style="display: block; text-align: center;">Đơn giá</span> 
-                                                <strong>500.000 VND</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <img src="https://cdn.kkfashion.vn/28393-large_default/ao-kieu-nu-co-so-mi-hoa-tiet-caro-asm16-18.jpg" alt="Sản phẩm" class="rounded" style="width: 60px; height: 60px; object-fit: cover">
-                                        <div class="ms-3 flex-grow-1">
-                                            <h6 class="mb-1">quần 3 lỗ</h6>
-                                            <p class="mb-1 text-muted">Size: S, Màu: Xám</p>
-                                            <p class="mb-0 text-muted">x1</p>
-                                            
-                                        </div>
-                                        <div class="ms-auto">
-                                            <p class="mb-1 text-end product-price" style="font-size: 15px; margin-right: 20px;">
-                                                <span style="display: block; text-align: center;">Đơn giá</span> 
-                                                <strong>500.000 VND</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <!-- Thêm các đơn hàng khác -->
-                        <div class="card mb-3 order-card">
-                            <div class="card-body">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="font-weight-bold mb-3" style="background-color: #f1f1f1; padding: 8px 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); color: #343a40; font-size: 16px; border: 1px solid #ced4da;">
-                                        <i class="fas fa-box"></i> Đơn Hàng #12345
-                                    </h5>
-                                    <small class="text-muted">Ngày đặt: 2024-11-25</small>
-                                </div>
-                    
-                                <div class="d-flex align-items-center">
-                                    <img src="https://maxi.vn/wp-content/uploads/2022/08/z3630250901829_582cbfc8a4ea5ddbb063bd8b2ec6903e-scaled.jpg" alt="Sản phẩm" class="rounded" style="width: 80px; height: 80px; object-fit: cover; margin-right: 20px;">
-                                    <div class="ms-3 flex-grow-1">
-                                        <h5 class="mb-1">Đầm dạ hội</h5>
-                                        <p class="mb-1">Size: S, Màu: Xám</p>
-                                        <small class="text-muted">x1</small>
-                                        <p class="mb-1">Trạng thái: <span class="badge bg-warning text-dark"><i class="fas fa-clock me-2"></i>Đang chờ xác nhận</span></p>
-                                        <small class="text-muted">Giao đến: 123 Đường ABC, Quận 1, TP.HCM</small>
-                                        <p class="mb-1 text-muted">Còn lại: 2 sản phẩm khác</p>
-                                        
-                                    </div>
-                                    <button class="toggle-details" type="button" data-bs-toggle="collapse" data-bs-target="#orderDetails2" aria-expanded="false" aria-controls="orderDetails1">
-                                        <i class="fa-solid fa-chevron-left"></i>
-                                    </button>
-                                    
-                                </div>
-                                <div class="ms-auto text-end" style="border-top: 1px solid #ccc; padding: 10px; margin-top: 30px;">
-                                    <!-- Thêm thông tin còn lại cho đơn hàng -->
-                                    <p class="mb-1">Tổng tiền: <strong>1.500.000 VND</strong></p>
-                                    <a href="javascript:void(0);" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails('orderDetails1')">
-                                        Xem Chi Tiết
-                                    </a>
-                                </div>
-                                
-                            </div>
-                            <div class="collapse" id="orderDetails2">
-                                <div class="card-body">
-                                    <!-- Các sản phẩm trong đơn hàng -->
-                                    <div class="d-flex align-items-center mb-3">
-                                        <img src="https://cdn.vortexs.io/api/images/57594672-cf3f-4d37-8678-4cd0ceefb19d/1920/w/giay-mlb-chunky-liner-basic-la-white-navy-3asxclb3n-07nyd.jpeg" alt="Sản phẩm" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
-                                        <div class="ms-3">
-                                            <h6 class="mb-1">áo len</h6>
-                                            <p class="mb-1 text-muted">Size: S, Màu: Xám</p>
-                                            <p class="mb-0 text-muted">x3</p>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
-                    
-                    
-                    
+                    	<c:forEach var="donMua" items="${DanhSachDonHang}">
+	                        <div class="card mb-3 order-card">
+	                            <div class="card-body">
+	                                <div class="d-flex w-100 justify-content-between">
+	                                    <h5 class="font-weight-bold mb-3" style="background-color: #f1f1f1; padding: 8px 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); color: #343a40; font-size: 16px; border: 1px solid #ced4da;">
+	                                        <i class="fas fa-box"></i> Đơn Hàng: #${donMua.maHoaDon}
+	                                    </h5>
+	                                    <small class="text-muted">Ngày đặt: ${donMua.ngayDat}</small>
+	                                </div>
+	                    
+	                                <div class="d-flex align-items-center">
+	                                    <img src="${donMua.chiTietHD[0].sp.hinhAnhSP.duongDanHinh}" alt="${donMua.chiTietHD[0].sp.tenSP}" class="rounded" style="width: 80px; height: 80px; object-fit: cover; margin-right: 20px;">
+	                                    <div class="ms-3 flex-grow-1">
+	                                        <h4>${donMua.chiTietHD[0].sp.tenSP}</h4>
+	                                        <p class="mb-1">Size: ${donMua.chiTietHD[0].sp.kichCo[0].tenKichCo}, Màu: ${donMua.chiTietHD[0].sp.mauSac[0].tenMau}</p>
+	                                        <small class="text-muted">x${donMua.chiTietHD[0].soLuongDaMua}</small>
+	                                      <%--   <p class="mb-1">Trạng thái: <span class="badge bg-warning text-dark"><i class="fas fa-clock me-2"></i>${donMua.trangThai}</span></p> --%>
+	                                        <p class="mb-1">Trạng thái: 
+											    <span class="badge 
+											        <c:choose>
+											            <c:when test="${donMua.trangThai == 'Chờ xác nhận'}">bg-warning text-dark</c:when>
+											            <c:when test="${donMua.trangThai == 'Đang giao'}">bg-info text-dark</c:when>
+											            <c:when test="${donMua.trangThai == 'Đã giao'}">bg-success text-white</c:when>
+											            <c:otherwise>bg-secondary text-light</c:otherwise>
+											        </c:choose>">
+											        <i class="fas 
+											            <c:choose>
+											                <c:when test="${donMua.trangThai == 'Chờ xác nhận'}">fa-clock</c:when>
+											                <c:when test="${donMua.trangThai == 'Đang giao'}">fa-truck</c:when>
+											                <c:when test="${donMua.trangThai == 'Đã giao'}">fa-check</c:when>
+											                <c:otherwise>fa-question-circle</c:otherwise>
+											            </c:choose> me-2"></i>
+											        ${donMua.trangThai}
+											    </span>
+											</p>
+	                                        <small class="text-muted">Giao đến: ${donMua.diaChiNhanHang}</small>
+	                                        <p class="mb-1 text-muted">Còn: ${donMua.chiTietHD.size()-1} sản phẩm khác</p>
+	                                        
+	                                    </div>
+	                                    
+	                                    <div class="ms-auto">
+	                                        <p class="mb-1 text-end product-price"><strong>${donMua.chiTietHD[0].donGia} VND</strong></p>
+	                                    </div>
+	                                    
+	                                    <button class="toggle-details" type="button" data-bs-toggle="collapse" data-bs-target="#orderDetails${donMua.maHoaDon}" aria-expanded="false" aria-controls="orderDetails${donMua.maHoaDon}">
+	                                        <i class="fa-solid fa-chevron-left"></i>
+	                                    </button>
+	                                </div>
+	                              
+	                            </div>
+	                            <!-- Danh sách sản phẩm mở rộng -->
+	                            <div class="collapse" id="orderDetails${donMua.maHoaDon}">
+	                                <div class="card-body">
+	                                	<c:forEach var="ChiTietHD" items="${donMua.chiTietHD}" begin="1">
+		                                    <div class="d-flex align-items-center mb-3">
+		                                        <img src="${ChiTietHD.sp.hinhAnhSP.duongDanHinh}" alt="${ChiTietHD.sp.tenSP}" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
+		                                        <div class="ms-3 flex-grow-1"> 
+		                                            <h6 class="mb-1">${ChiTietHD.sp.tenSP}</h6>
+		                                            <p class="mb-1 text-muted">Size: ${ChiTietHD.sp.kichCo[0].tenKichCo}, Màu: ${ChiTietHD.sp.mauSac[0].tenMau}</p>
+		                                            <p class="mb-0 text-muted">x${ChiTietHD.soLuongDaMua}</p>
+		                                        </div>
+		                                        
+		                                        <div class="ms-auto">
+		                                            <p class="mb-1 text-end product-price" style="font-size: 15px; margin-right: 20px;">
+		                                                <span style="display: block; text-align: center;">Đơn giá</span> 
+		                                                <strong>${ChiTietHD.donGia} VND</strong>
+		                                            </p>
+		                                        </div>
+		                                    </div>
+	                                  
+	                                    </c:forEach>
+	                                </div>
+	                               	
+	                            </div>
+	                            
+	                             <div class="text-end" style="width: 90%; border-top: 1px solid #ccc; padding: 10px; margin: 10px auto;">
+	                                 <p class="mb-1 text-end product-price">Tổng tiền: <strong>${donMua.tongTien} VND</strong></p>
+	                                 <a href="javascript:void(0);" class="btn btn-warning btn-sm text-end" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails(${donMua.maHoaDon})">
+	                                     <span class="font-weight-bold">Xem Chi Tiết</span>
+	                                 </a>
+	                             </div>
+	                             <!-- Nút Đánh giá -->
+					            <div class="position-absolute bottom-0 start-0 mb-3 ms-3 d-none 
+					                <c:if test="${donMua.trangThai == 'Đã giao'}">d-block</c:if>" >
+					                <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="showRatingModal(${donMua.maHoaDon})">
+					                    <i class="fas fa-star me-2"></i> Đánh giá
+					                </a>
+					            </div>
+	                        </div>
+                    	</c:forEach>	
 	            </div>
 	        </div>
     </div>
     
-   <!-- Modal -->
-	<div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+   <!-- Modal order Detail -->
+	 <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	      <div class="modal-content">
 	        <div class="modal-header">
 	          <h5 class="modal-title" id="orderDetailModalLabel">Chi Tiết Đơn Hàng</h5>
 	          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	          
 	        </div>
 	        <div class="modal-body">
-	          <!-- Nội dung chi tiết đơn hàng sẽ được chèn vào đây bằng JavaScript -->
+	       
 	          <div class="order-details-content">
-	            <!-- Nội dung sẽ được thêm vào từ JavaScript -->
+	           
 	          </div>
 	        </div>
 	      </div>
 	    </div>
-	  </div>
-  
+	  </div> 
+	
+  	
+  	
+  	<!-- Modal Đánh giá -->
+<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ratingModalLabel">Đánh giá đơn hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="rating">Đánh giá:</label>
+                    <select id="rating" class="form-select">
+                        <option value="1">1 sao</option>
+                        <option value="2">2 sao</option>
+                        <option value="3">3 sao</option>
+                        <option value="4">4 sao</option>
+                        <option value="5">5 sao</option>
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="comment">Nhận xét:</label>
+                    <textarea id="comment" class="form-control" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="submitRating()">Gửi Đánh Giá</button>
+            </div>
+        </div>
+    </div>
+</div>
     
     <jsp:include page="footer.jsp" />
     <!-- Bootstrap JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+   
+   	 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -294,7 +286,13 @@
                 reader.readAsDataURL(file);
             }
         });
+        
+        function setTrangThai(trangThai) {
+	        document.getElementById('trangThai').value = trangThai;
+	        document.getElementById('orderForm').submit(); // Submit form khi nhấn vào thẻ a
+	    }
     </script>
+    
     <script>
         document.querySelectorAll('.toggle-details').forEach((button) => {
             const collapseTargetId = button.getAttribute('data-bs-target'); // Lấy ID của collapse
@@ -316,39 +314,80 @@
         
     </script>
     <script>
-        document.querySelectorAll('.btn-warning').forEach(button => {
-            button.addEventListener('click', function() {
-                // Lấy thông tin đơn hàng
-                const orderId = this.closest('.order-card').querySelector('h5').textContent.trim().replace('Đơn Hàng #', '');
-                const orderDate = this.closest('.order-card').querySelector('small.text-muted').textContent.trim();
-                const totalAmount = this.closest('.order-card').querySelector('.ms-auto p strong').textContent.trim();
+	    function loadOrderDetails(maHoaDon) {
+	    	console.log(maHoaDon);
+	        // Gửi mã đơn hàng đến Controller
+	        fetch(`/project_web/DonHang`, {
+	            method: "POST",
+	            headers: {
+	            	"Content-Type": "application/json",
+	                "X-MaHoaDon": maHoaDon,
+	            },
+	            body: `id=${maHoaDon}`,
+	        })
+	        .then(response => response.text())
+	        .then(data => {
+	            // Chèn dữ liệu trả về từ Controller vào Modal
+	            document.querySelector('#orderDetailModal .modal-body').innerHTML = data;
+	            
+	            // Hiển thị Modal
+	            const modal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
+	            modal.show();
+	        })
+	        .catch(error => {
+	            console.error("Error:", error);
+	            alert("Không thể tải chi tiết đơn hàng!");
+	        });
+	    }
+	    
+	    const modalElement = document.getElementById('orderDetailModal');
 
-                // Gửi yêu cầu để tải file orderdetail.html
-                fetch('views/ChiTietDonHang.jsp')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Không thể tải nội dung chi tiết đơn hàng.');
-                        }
-                        return response.text(); // Trả về nội dung HTML dưới dạng text
-                    })
-                    .then(html => {
-                        // Chèn nội dung HTML vào modal
-                        document.querySelector('#orderDetailModal .modal-body').innerHTML = html;
-
-                        // Thay thế các giá trị động (nếu cần)
-                        document.querySelector('.order_detail_container .order_detail_header p span').textContent = orderId;
-
-                        // Hiển thị modal
-                        const orderDetailModal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
-                        orderDetailModal.show();
-                    })
-                    .catch(error => {
-                        console.error('Lỗi:', error);
-                        alert('Đã xảy ra lỗi khi tải chi tiết đơn hàng.');
-                    });
-            });
-        });
-
+		 // Lắng nghe sự kiện khi modal bị ẩn
+		 modalElement.addEventListener('hidden.bs.modal', function () {
+		     // Xóa backdrop nếu còn tồn tại
+		     const backdrop = document.querySelector('.modal-backdrop');
+		     if (backdrop) {
+		         backdrop.remove();
+		     }
+		     // Khôi phục scrollbar
+		     document.body.style.overflow = '';
+		 });
     </script>
+   
+    
+    <script>
+	    function showRatingModal(maHoaDon) {
+	        // Đặt maHoaDon vào một thẻ hidden hoặc biến global để gửi sau khi người dùng gửi đánh giá
+	        // Ví dụ: Lưu mã đơn hàng vào modal để sử dụng khi gửi đánh giá
+	        document.getElementById('ratingModalLabel').innerText = 'Đánh giá Đơn Hàng #' + maHoaDon;
+	        $('#ratingModal').modal('show'); // Mở modal
+	    }
+	
+	    function submitRating() {
+	        var maHoaDon = document.getElementById('ratingModalLabel').innerText.split('#')[1]; // Lấy mã đơn hàng từ modal
+	        var rating = document.getElementById('rating').value; // Lấy giá trị đánh giá
+	        var comment = document.getElementById('comment').value; // Lấy nhận xét
+	
+	        // Thực hiện gửi đánh giá tới server, có thể là AJAX hoặc form submit
+	        // AJAX example:
+	        $.ajax({
+	            url: '/submitRating', // API gửi đánh giá
+	            method: 'POST',
+	            data: {
+	                maHoaDon: maHoaDon,
+	                rating: rating,
+	                comment: comment
+	            },
+	            success: function(response) {
+	                alert("Cảm ơn bạn đã đánh giá!");
+	                $('#ratingModal').modal('hide'); // Đóng modal sau khi gửi đánh giá
+	            },
+	            error: function(error) {
+	                alert("Đã có lỗi xảy ra, vui lòng thử lại.");
+	            }
+	        });
+	    }
+	</script>
+	
 </body>
 </html>

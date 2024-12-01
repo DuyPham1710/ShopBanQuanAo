@@ -416,7 +416,7 @@ RETURN
 );
 GO
 
-CREATE PROCEDURE proc_LoadThongTinDonHang (@IDNguoiMua INT)
+CREATE PROCEDURE proc_LoadThongTinDonHang (@IDNguoiMua INT, @TrangThai NVARCHAR(50))
 AS
 BEGIN
 	select Q.*, TenKichCo, TenMau
@@ -425,7 +425,53 @@ BEGIN
 	from HoaDon inner join ChiTietHoaDon on HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon, SanPham, HinhAnhSanPham
 	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and IDNguoiMua = @IDNguoiMua
 	) Q
-	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP
-	ORDER BY Q.ngayDat
+	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP and TrangThai = @TrangThai
+	ORDER BY Q.ngayDat DESC
+END;
+GO
+
+-- Đang lỗi 2 hàm proc_ThongTinNguoiDung_HoaDon and proc_LoadThongTinMotDonHang
+CREATE procedure proc_ThongTinNguoiDung_HoaDon (@ID INT, @maHD INT)
+AS
+BEGIN
+
+    select HoTen, SDT, email, DiaChi
+	from NguoiDung, HoaDon
+	where NguoiDung.ID = HoaDon.IDNguoiMua and HoaDon.IDNguoiMua = @ID and MaHoaDon = @maHD
+END;
+GO
+
+CREATE PROCEDURE proc_LoadThongTinMotDonHang (@IDNguoiMua INT, @maHD INT)
+AS
+BEGIN
+	select Q.*, TenKichCo, TenMau
+	from KichCo, MauSac,
+	(select HoaDon.MaHoaDon as maHoaDon, HoaDon.NgayTao as ngayDat, TongTien, diachi, ChiTietHoaDon.SoLuong as SoLuongDaMua, TrangThai, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, GiaBanDau, SanPham.SoLuong as SoLuongSP, GiaBanDau - GiaBanDau*(GiamGia/100.0) as DonGia, GiaBan, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
+	from HoaDon inner join ChiTietHoaDon on HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon, SanPham, HinhAnhSanPham
+	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and IDNguoiMua = @IDNguoiMua
+	) Q
+	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP and maHoaDon = @maHD
+END;
+GO
+
+CREATE PROCEDURE proc_suaThongTin
+	@username nvarchar(50),
+    @pass nvarchar(50),
+    @Hoten nvarchar(50),
+    @NgaySinh date,
+    @Gioitinh nvarchar(50),
+    @SDT varchar(12),
+    @email varchar(50),
+	@IDNguoiDung INT
+AS
+BEGIN
+    UPDATE NguoiDung
+	SET Hoten = @Hoten, GioiTinh = @GioiTinh, NgaySinh = @NgaySinh,
+		SDT = @SDT, email = @Email
+	WHERE ID = @IDNguoiDung;
+
+	UPDATE Account
+	SET pass = @pass
+	where ID = @IDNguoiDung;
 END;
 GO
