@@ -54,7 +54,7 @@ function drawMonthlySalesChart(canvasId, labels, data) {
 
     // Cấu hình và vẽ biểu đồ
     new Chart(ctx, {
-        type: 'bar', // Loại biểu đồ: cột
+        type: 'line', // Loại biểu đồ: cột
         data: {
             labels: labels,
             datasets: [{
@@ -103,4 +103,25 @@ function loadSanPham(maSP) {
         console.error("Error:", error);
         alert("Không thể tải !");
     });
+}
+
+
+function showImageInput() {
+  const inputContainer = document.getElementById('customImageInputContainer');
+  if (inputContainer) {
+    inputContainer.style.display = 'block';  // Hiển thị ô nhập liệu
+  }
+}
+
+function confirmImageUpload() {
+  const imagePathInput = document.getElementById('customImagePath');
+  const imagePreview = document.getElementById('anh');
+  if (imagePathInput.value) {
+    // Cập nhật ảnh hiển thị
+    imagePreview.src = imagePathInput.value;
+    // Ẩn ô nhập liệu sau khi hoàn thành
+    document.getElementById('customImageInputContainer').style.display = 'none';
+  } else {
+    alert('Vui lòng nhập đường dẫn ảnh!');
+  }
 }

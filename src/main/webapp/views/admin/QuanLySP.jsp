@@ -40,7 +40,7 @@
             </li>
             <li class="nav-item">
               <i class="bi bi-people me-2"></i>
-              <a class="nav-link" href="QuanLyKhachHang.jsp">Customers</a>
+              <a class="nav-link" href="/project_web/qlKhachHangController">Customers</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-box-arrow-right me-2"></i>
@@ -124,9 +124,9 @@
               <div class="col-md-5 mb-4">
                 <h5>Top 5 sản phẩm bán chạy</h5>
                 <ul class="list-group" id="topProducts">
-                	<c:forEach var="sp" items="${listBanChay}" >
+                	<c:forEach var="sp" items="${ListBanChay}" >
 	                  <li class="list-group-item d-flex justify-content-between align-items-center">
-	                    ${sp.tenSP} <span>${sp.banDuoc} sản phẩm</span>
+	                    ${sp.tenSP} <span>${sp.daBan} sản phẩm</span>
 	                  </li>
                   </c:forEach>
                 </ul>
@@ -171,8 +171,6 @@
 		                      <button class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#editProductModal" onclick="loadSanPham(${sp.maSP})">Sửa</button>
 		                      <button class="btn btn-danger btn-sm">Xóa</button>
 		                    </td>
-		                    <input type="hidden" name="method" value="get">
-					        <input type="hidden" name="maSP" value="${sp.maSP}">
 				        </tr>
                     </c:forEach>
                   
@@ -180,6 +178,7 @@
               </table>
             </div>
           </div>
+          
         </div>
         </main>
         </div>
@@ -232,7 +231,7 @@
 	                          src="https://via.placeholder.com/200x150.png?text=Chưa+chọn+hình" 
 	                          alt="Product Image Preview" 
 	                          class="product-image-preview">
-	                        <button type="button" class="btn btn-outline-secondary" id="uploadProductImageButton">Chọn ảnh</button>
+	                        <button type="button" class="btn btn-outline-secondary" id="uploadProductImageButtonadd">Chọn ảnh</button>
 	                        <input type="file" id="productImageInput" class="d-none" accept="image/*">
 	                      </div>
 	                    </div>

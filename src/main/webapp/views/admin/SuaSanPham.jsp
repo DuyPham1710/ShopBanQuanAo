@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<form id="productFormEdit">
+<form id="productFormEdit" action="qlSanPhamController" _method="suaSabPham" method="POST">
   <!-- Row 1: Tên sản phẩm -->
-  <div class="row mb-4">
+  <div class="row mb-5">
     <div class="col-md-7">
       <div class="row mb-2">
         <div class="col-md-11">
@@ -50,8 +50,21 @@
           alt="${ThongTinSP.hinhAnhSP.moTaHinh }" 
           class="product-image-preview Edit"
           id="anh">
-        <button type="button" class="btn btn-outline-secondary" id="uploadProductImageButtonEdit">Chọn ảnh</button>
-        <input type="file" id="productImageInputEdit" class="d-none" accept="image/*">
+          <button type="button" class="btn btn-outline-secondary" id="uploadProductImageButtonEdit" onclick="showImageInput()">Chọn ảnh</button>
+		  <input type="file" id="productImageInputEdit" class="d-none" accept="image/*">
+			  <div id="customImageInputContainer" class="container mt-3 p-3 border rounded bg-light" style="display: none;">
+				  <div class="row g-2 align-items-center">
+				    <div class="col">
+				      <input type="text" id="customImagePath" class="form-control" placeholder="Nhập URL ảnh..." />
+				    </div>
+				    <div class="col-auto">
+				      <button type="button" id="confirmImage" class="btn btn-primary" onclick="confirmImageUpload()">Xác nhận</button>
+				    </div>
+				  </div>
+				</div>
+
+
+		</div>
       </div>
     </div>
     
@@ -121,3 +134,4 @@
     <button type="submit" class="btn btn-primary Edit">Lưu</button>
   </div>
 </form>
+
