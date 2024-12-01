@@ -145,55 +145,57 @@
                         <div class="filter_category-title font-weight-bold">màu sắc</div>
                         <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
                         <div class="dropdown-content color-options">
-                            <div class="color-circle" style="background-color: #ffb6c1;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #ffdf00;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #d3d3d3;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #00ff7f;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #8b4513;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #696969;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #000000;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #ff6347;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #9370db;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #ff4500;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #b0e0e6;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
-                            <div class="color-circle" style="background-color: #4682b4;" onclick="toggleColorSelect(this)">
-                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-                            </div>
+                          <c:forEach var="item" items="${listMauHex}">
+						        <div class="color-circle" style="background-color: ${item};" data-color="${item}" onclick="toggleColor(this)">
+						            <span class="tick">&#10003;</span>
+						        </div>
+						    </c:forEach>
+
                         </div>
                     </div>
                     <script>
-                        function toggleColorSelect(element) {
-                            // Kiểm tra nếu đã chọn màu rồi, nếu có thì bỏ chọn (ẩn dấu tick)
-                            if (element.classList.contains('selected')) {
-                                element.classList.remove('selected');
-                            } else {
-                                // Nếu chưa chọn màu, hiển thị dấu tick
-                                element.classList.add('selected');
-                            }
-                        }
-                        
+	                    const selectedColors = new Set();
+	
+	                    function toggleColor(element) {
+	                        const color = element.getAttribute("data-color");
+	
+	                        if (selectedColors.has(color)) {
+	                            selectedColors.delete(color); // Bỏ chọn nếu đã chọn trước đó
+	                            element.classList.remove("selected");
+	                        } else {
+	                            selectedColors.add(color); // Thêm màu vào danh sách chọn
+	                            element.classList.add("selected");
+	                        }
+	
+	                        fetchProductsByColors();
+	                    }
+	                    function fetchProductsByColors() {
+	                        const colorsArray = Array.from(selectedColors);
+	                        const colorsParam = colorsArray.join(',');
+
+	                        fetch(`/project_web/SanPhamController`, {
+	                            method: "POST",
+	                            headers: {
+	                                "Content-Type": "application/json",
+	                                "X-colorsParam": colorsParam,
+	                                "_method": "LocMau",
+	                            },
+	                            body: `colors=${colorsParam}`,
+	                        })
+	                        .then((response) => response.text())  
+	                        .then((data) => {
+	                            renderProducts(data);  
+	                        })
+	                        .catch(error => {
+	                            console.error("Error:", error);
+	                            alert("Không thể tải sản phẩm!");
+	                        });
+	                    }
+
+	                    function renderProducts(data) {
+	                        const container = document.getElementById("product-grid");
+	                        container.innerHTML = data;  
+	                    }
                     </script>
                     <div class="filter_category">
                         <div class="filter_category-title font-weight-bold">Kích thước</div>
@@ -213,7 +215,7 @@
 				    <h2>Tất cả sản phẩm</h2>
 				    <a href="#" class="view-more">Xem Thêm</a>
 				</div>
-			    <div class="product-grid">
+			    <div id="product-grid" class="product-grid">
 				     <c:forEach var="sp" items="${ListSP}">
 				     	<form action="./ChiTietSPController" method="post">
 				     		<div class="product-card hover-effect" onclick="this.closest('form').submit();">

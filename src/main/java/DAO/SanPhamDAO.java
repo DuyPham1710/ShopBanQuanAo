@@ -119,6 +119,63 @@ public class SanPhamDAO {
 		return listSP;
 	}
 	
+	public static List<String> DanhSachMaMauHex(Connection conn) throws SQLException {
+		List<String> listMauHex = new ArrayList<String>();
+		String sql = "select distinct MaMauDangHex from MauSac";
+		
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {	
+			listMauHex.add(rs.getString("MaMauDangHex"));	
+		}
+		return listMauHex;
+	}
+	
+	public static List<SanPham> LocSPTheoMau(Connection conn, List<String> selectedColors) throws SQLException {
+		List<SanPham> listSP = new ArrayList<SanPham>();
+		String sql = "select Distinct V_thongTinSP.* from V_thongTinSP, MauSac "
+				+ "where V_thongTinSP.maSP = MauSac.MaSanPham ";
+		
+	    if (selectedColors != null && !selectedColors.isEmpty()) {
+	        StringBuilder colorsCondition = new StringBuilder(" and MaMauDangHex IN (");
+
+	        for (int i = 0; i < selectedColors.size(); i++) {
+	            colorsCondition.append("'").append(selectedColors.get(i)).append("'");
+	            if (i < selectedColors.size() - 1) {
+	                colorsCondition.append(", ");
+	            }
+	        }
+
+	        colorsCondition.append(") order by maSP");
+
+	        sql += colorsCondition.toString();
+	    }
+	    PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+	    while (rs.next()) {	
+			int giaBanDau = (int)(rs.getFloat("GiaBanDau"));
+			HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham(rs.getInt("MaHinhAnh"), rs.getString("DuongDanHinh"));
+			DanhMucSanPham danhMuc = new DanhMucSanPham(rs.getInt("maDanhMuc"), rs.getString("TenDanhMuc"));
+			SanPham sp = new SanPham(
+					rs.getInt("maSP"), 
+					rs.getString("TenSanPham"), 
+					rs.getString("MoTa"), 
+					giaBanDau,
+					rs.getInt("GiamGia"), 
+					rs.getInt("SoLuong"),
+					rs.getDate("NgayTao"),
+					rs.getString("XuatXu"),
+					rs.getString("ChatLieu"),
+					rs.getInt("DaBan"), 
+					danhMuc,
+					hinhAnhSP);
+			
+			listSP.add(sp);	
+		}
+		return listSP;
+	}
+	
 	public static List<SanPham> filterByPrice(Connection conn, int min, int max) throws SQLException {
 		List<SanPham> listSP = new ArrayList<SanPham>();
 		String sql = "select * from V_thongTinSP where GiaBanDau - (GiaBanDau * GiamGia/100) BETWEEN ? AND ?";

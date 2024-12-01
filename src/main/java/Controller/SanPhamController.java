@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import DAO.SanPhamDAO;
@@ -75,15 +76,29 @@ public class SanPhamController extends HttpServlet {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
-	
+		
+		List<String> listMauHex = null;
+		try {
+			listMauHex = SanPhamDAO.DanhSachMaMauHex(conn);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
 		request.setAttribute("ListSP", listSP);
 		request.setAttribute("ListDanhMuc", listDanhMuc);
+		request.setAttribute("listMauHex", listMauHex);
 		
 		RequestDispatcher req = request.getRequestDispatcher("/views/SanPhamPage.jsp");
 		req.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		if ("LocMau".equals(request.getHeader("_method"))) {
+		    doPut(request, response);
+		    return;
+		}
 		String giaHienTai = request.getParameter("giaHienTai");
 	    List<SanPham> listSP = null;
 	    
@@ -148,12 +163,50 @@ public class SanPhamController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
+		List<String> listMauHex = null;
+		try {
+			listMauHex = SanPhamDAO.DanhSachMaMauHex(conn);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
 		request.setAttribute("ListSP", listSP);
 		request.setAttribute("ListDanhMuc", listDanhMuc);
+		request.setAttribute("listMauHex", listMauHex);
 		
 		RequestDispatcher req = request.getRequestDispatcher("/views/SanPhamPage.jsp");
 		req.forward(request, response);
 		
 	}
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+        String colorsParam = request.getHeader("X-colorsParam");
+        List<String> selectedColors = Arrays.asList(colorsParam.split(","));
 
+		Connection conn = null;
+		try {
+			conn = new ConnectJDBC().getConnection();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		List<SanPham> listSPLocTheoMau = null;
+		try {
+			listSPLocTheoMau = SanPhamDAO.LocSPTheoMau(conn, selectedColors);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+			
+		}
+	
+		request.setAttribute("ListSP", listSPLocTheoMau);
+		
+	    RequestDispatcher req = request.getRequestDispatcher("/views/SanPham.jsp");
+	    req.include(request, response);
+
+	}
 }

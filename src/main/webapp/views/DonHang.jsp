@@ -197,9 +197,9 @@
 	                                 </a>
 	                             </div>
 	                             <!-- Nút Đánh giá -->
-					            <div class="position-absolute bottom-0 start-0 mb-3 ms-3 d-none 
-					                <c:if test="${donMua.trangThai == 'Đã giao'}">d-block</c:if>" >
-					                <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="showRatingModal(${donMua.maHoaDon})">
+					            <div class="position-absolute bottom-0 start-0 mb-3 ms-3 d-block 
+					                <c:if test="${donMua.trangThai != 'Đã giao'}">d-none</c:if>" >
+					                <a href="javascript:void(0);" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="showRatingModal(${donMua.maHoaDon})">
 					                    <i class="fas fa-star me-2"></i> Đánh giá
 					                </a>
 					            </div>
@@ -229,38 +229,47 @@
 	  </div> 
 	
   	
-  	
-  	<!-- Modal Đánh giá -->
-<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ratingModalLabel">Đánh giá đơn hàng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="rating">Đánh giá:</label>
-                    <select id="rating" class="form-select">
-                        <option value="1">1 sao</option>
-                        <option value="2">2 sao</option>
-                        <option value="3">3 sao</option>
-                        <option value="4">4 sao</option>
-                        <option value="5">5 sao</option>
-                    </select>
+<!-- Modal Đánh giá -->
+	<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
+        <div class="modal-dialog custom-modal-width">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ratingModalLabel">Đánh Giá Sản Phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="form-group mt-3">
-                    <label for="comment">Nhận xét:</label>
-                    <textarea id="comment" class="form-control" rows="4"></textarea>
+                <div class="modal-body">
+                    <form id="ratingForm">
+                        <!-- Rating Section -->
+                        <div class="mb-3 text-center">
+                            <label class="form-label">Chọn Số Sao:</label>
+                            <div class="rating">
+                                <input type="radio" id="star5" name="rating" value="5">
+                                <label for="star5">&#9733;</label>
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4">&#9733;</label>
+                                <input type="radio" id="star3" name="rating" value="3">
+                                <label for="star3">&#9733;</label>
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2">&#9733;</label>
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1">&#9733;</label>
+                            </div>
+                        </div>
+                        <!-- Comment Section -->
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Bình Luận:</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Nhập bình luận của bạn..."></textarea>
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">Gửi Đánh Giá</button>
+                        </div>
+                    </form>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="submitRating()">Gửi Đánh Giá</button>
             </div>
         </div>
     </div>
-</div>
+
     
     <jsp:include page="footer.jsp" />
     <!-- Bootstrap JS, Popper.js, and jQuery -->
@@ -315,7 +324,6 @@
     </script>
     <script>
 	    function loadOrderDetails(maHoaDon) {
-	    	console.log(maHoaDon);
 	        // Gửi mã đơn hàng đến Controller
 	        fetch(`/project_web/DonHang`, {
 	            method: "POST",
@@ -355,39 +363,48 @@
     </script>
    
     
-    <script>
-	    function showRatingModal(maHoaDon) {
-	        // Đặt maHoaDon vào một thẻ hidden hoặc biến global để gửi sau khi người dùng gửi đánh giá
-	        // Ví dụ: Lưu mã đơn hàng vào modal để sử dụng khi gửi đánh giá
-	        document.getElementById('ratingModalLabel').innerText = 'Đánh giá Đơn Hàng #' + maHoaDon;
-	        $('#ratingModal').modal('show'); // Mở modal
-	    }
-	
-	    function submitRating() {
-	        var maHoaDon = document.getElementById('ratingModalLabel').innerText.split('#')[1]; // Lấy mã đơn hàng từ modal
-	        var rating = document.getElementById('rating').value; // Lấy giá trị đánh giá
-	        var comment = document.getElementById('comment').value; // Lấy nhận xét
-	
-	        // Thực hiện gửi đánh giá tới server, có thể là AJAX hoặc form submit
-	        // AJAX example:
-	        $.ajax({
-	            url: '/submitRating', // API gửi đánh giá
-	            method: 'POST',
-	            data: {
-	                maHoaDon: maHoaDon,
-	                rating: rating,
-	                comment: comment
-	            },
-	            success: function(response) {
-	                alert("Cảm ơn bạn đã đánh giá!");
-	                $('#ratingModal').modal('hide'); // Đóng modal sau khi gửi đánh giá
-	            },
-	            error: function(error) {
-	                alert("Đã có lỗi xảy ra, vui lòng thử lại.");
-	            }
-	        });
-	    }
-	</script>
+   <!--  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".rating-stars i");
+
+        let selectedRating = 0; // Đánh giá được chọn
+
+        stars.forEach((star, index) => {
+            // Khi di chuột qua sao
+            star.addEventListener("mouseover", () => {
+                highlightStars(index + 1);
+            });
+
+            // Khi rời chuột khỏi sao
+            star.addEventListener("mouseout", () => {
+                highlightStars(selectedRating);
+            });
+
+            // Khi click vào sao
+            star.addEventListener("click", () => {
+                selectedRating = index + 1;
+                highlightStars(selectedRating);
+                console.log("Đánh giá:", selectedRating); // Kiểm tra giá trị sao đã chọn
+            });
+        });
+
+        // Tô màu các sao từ trái đến chỉ số cho trước
+        function highlightStars(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add("hovered");
+                } else {
+                    star.classList.remove("hovered");
+                }
+            });
+        }
+    });
+    function showRatingModal(maHoaDon) {
+        console.log("Mã hóa đơn:", maHoaDon); // In mã hóa đơn nếu cần
+        const modal = new bootstrap.Modal(document.getElementById('ratingModal'));
+        modal.show();
+    }
+	</script> -->
 	
 </body>
 </html>

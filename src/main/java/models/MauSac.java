@@ -3,6 +3,7 @@ package models;
 public class MauSac {
 	private int maMau;
 	private String tenMau;
+	private String maMauHex;
 	
 	public MauSac() {}
 	
@@ -22,5 +23,13 @@ public class MauSac {
 	}
 	public void setMaMau(int maMau) {
 		this.maMau = maMau;
+	}
+
+	public String getMaMauHex() {
+		return maMauHex;
+	}
+
+	public void setMaMauHex(String maMauHex) {
+		this.maMauHex = maMauHex;
 	}
 }
