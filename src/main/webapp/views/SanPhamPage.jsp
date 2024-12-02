@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="filter_category">
-                        <div class="filter_category-title font-weight-bold">màu sắc</div>
+                        <div class="filter_category-title font-weight-bold">Màu sắc</div>
                         <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
                         <div class="dropdown-content color-options">
                           <c:forEach var="item" items="${listMauHex}">
@@ -153,60 +153,17 @@
 
                         </div>
                     </div>
-                    <script>
-	                    const selectedColors = new Set();
-	
-	                    function toggleColor(element) {
-	                        const color = element.getAttribute("data-color");
-	
-	                        if (selectedColors.has(color)) {
-	                            selectedColors.delete(color); // Bỏ chọn nếu đã chọn trước đó
-	                            element.classList.remove("selected");
-	                        } else {
-	                            selectedColors.add(color); // Thêm màu vào danh sách chọn
-	                            element.classList.add("selected");
-	                        }
-	
-	                        fetchProductsByColors();
-	                    }
-	                    function fetchProductsByColors() {
-	                        const colorsArray = Array.from(selectedColors);
-	                        const colorsParam = colorsArray.join(',');
-
-	                        fetch(`/project_web/SanPhamController`, {
-	                            method: "POST",
-	                            headers: {
-	                                "Content-Type": "application/json",
-	                                "X-colorsParam": colorsParam,
-	                                "_method": "LocMau",
-	                            },
-	                            body: `colors=${colorsParam}`,
-	                        })
-	                        .then((response) => response.text())  
-	                        .then((data) => {
-	                            renderProducts(data);  
-	                        })
-	                        .catch(error => {
-	                            console.error("Error:", error);
-	                            alert("Không thể tải sản phẩm!");
-	                        });
-	                    }
-
-	                    function renderProducts(data) {
-	                        const container = document.getElementById("product-grid");
-	                        container.innerHTML = data;  
-	                    }
-                    </script>
+                 
                     <div class="filter_category">
-                        <div class="filter_category-title font-weight-bold">Kích thước</div>
-                        <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
-                        <div class="dropdown-content size-options">
-                            <div class="size-option">S</div>
-                            <div class="size-option">M</div>
-                            <div class="size-option selected">L</div>
-                            <div class="size-option">XL</div>
-                        </div>
-                    </div>
+					    <div class="filter_category-title font-weight-bold">Kích thước</div>
+					    <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
+					    <div class="dropdown-content size-options">
+					        <c:forEach var="item" items="${listAllSize}">
+					            <div class="size-option" data-size="${item}" onclick="toggleSizeSelection(this)">${item}</div>
+					        </c:forEach>
+					    </div>
+					</div>
+					
                 </div> 
             </div>
 			
@@ -244,5 +201,90 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        const selectedColors = new Set();
+        const selectedSizes = new Set();
+        
+        function toggleColor(element) {
+            const color = element.getAttribute("data-color");
+
+            if (selectedColors.has(color)) {
+                selectedColors.delete(color); // Bỏ chọn nếu đã chọn trước đó
+                element.classList.remove("selected");
+            } else {
+                selectedColors.add(color); // Thêm màu vào danh sách chọn
+                element.classList.add("selected");
+            }
+
+            fetchProductsByColors();
+        }
+        
+        function fetchProductsByColors() {
+            const colorsArray = Array.from(selectedColors);
+            const colorsParam = colorsArray.join(',');
+
+            fetch(`/project_web/SanPhamController`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-colorsParam": colorsParam,
+                    "_method": "LocMau",
+                },
+                body: `colors=${colorsParam}`,
+            })
+            .then((response) => response.text())  
+            .then((data) => {
+                renderProducts(data);  
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Không thể tải sản phẩm!");
+            });
+        }
+
+       
+        
+		function toggleSizeSelection(element) {
+		    const size = element.getAttribute("data-size");
+
+		    if (selectedSizes.has(size)) {
+		        selectedSizes.delete(size); 
+		        element.classList.remove("selected");
+		    } else {
+		        selectedSizes.add(size); 
+		        element.classList.add("selected");
+		    }
+
+		    fetchProductsBySizes();
+		}
+
+		function fetchProductsBySizes() {
+		    const sizesArray = Array.from(selectedSizes);
+		    const sizesParam = sizesArray.join(',');
+
+		    fetch(`/project_web/SanPhamController`, {
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/json",
+		            "X-sizesParam": sizesParam,
+		            "_method": "LocSize",
+		        },
+		        body: `sizes=${sizesParam}`,
+		    })
+		    .then((response) => response.text())
+		    .then((data) => {
+		        renderProducts(data); 
+		    })
+		    .catch(error => {
+		        console.error("Error:", error);
+		        alert("Không thể tải sản phẩm!");
+		    });
+		}	
+		
+	 	function renderProducts(data) {
+            const container = document.getElementById("product-grid");
+            container.innerHTML = data;  
+        }
+   </script>
 </body>
 </html>

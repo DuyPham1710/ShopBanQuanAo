@@ -14,6 +14,14 @@ import models.MauSac;
 import models.SanPham;
 
 public class SanPhamDAO {
+	public static List<String> selectedColors = new ArrayList<>();
+	public static List<String> selectedSizes = new ArrayList<>();
+
+	public static void resetFilters() {
+		selectedColors = new ArrayList<>();  
+	    selectedSizes = new ArrayList<>();  
+	}
+    
 	public static List<SanPham> DanhSachSP(Connection conn, int maDanhMuc, int sortType, String searchText) throws SQLException {
 		List<SanPham> listSP = new ArrayList<SanPham>();
 		if (searchText != "") {
@@ -29,6 +37,9 @@ public class SanPhamDAO {
 			}
 
 		    switch (sortType) {
+		    	case 0:
+		    	
+		    		break;
 		        case 1:
 		            sql += " ORDER BY GiaBanDau - (GiaBanDau * GiamGia/100) ASC"; // Giá: Tăng dần
 		            break;
@@ -132,49 +143,171 @@ public class SanPhamDAO {
 		return listMauHex;
 	}
 	
-	public static List<SanPham> LocSPTheoMau(Connection conn, List<String> selectedColors) throws SQLException {
-		List<SanPham> listSP = new ArrayList<SanPham>();
-		String sql = "select Distinct V_thongTinSP.* from V_thongTinSP, MauSac "
-				+ "where V_thongTinSP.maSP = MauSac.MaSanPham ";
+	public static List<String> ListAllSize(Connection conn) throws SQLException {
+		List<String> listAllSize = new ArrayList<String>();
+		String sql = "select distinct TenKichCo from KichCo";
 		
-	    if (selectedColors != null && !selectedColors.isEmpty()) {
-	        StringBuilder colorsCondition = new StringBuilder(" and MaMauDangHex IN (");
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {	
+			listAllSize.add(rs.getString("TenKichCo"));	
+		}
+		return listAllSize;
+	}
+	public static List<SanPham> LocSPTheoMauVaSize(Connection conn) throws SQLException {
+	    List<SanPham> listSP = new ArrayList<>();
+	    String sql = "select Distinct V_thongTinSP.* from V_thongTinSP, KichCo, MauSac "
+	               + "where V_thongTinSP.maSP = KichCo.MaSanPham and V_thongTinSP.maSP = MauSac.MaSanPham";
 
+	    StringBuilder condition = new StringBuilder();
+
+	    // Thêm điều kiện lọc màu
+	    if (selectedColors != null && !selectedColors.isEmpty() && !selectedColors.get(0).equals("")) {
+	        condition.append(" and MaMauDangHex IN (");
 	        for (int i = 0; i < selectedColors.size(); i++) {
-	            colorsCondition.append("'").append(selectedColors.get(i)).append("'");
+	            condition.append("'").append(selectedColors.get(i)).append("'");
 	            if (i < selectedColors.size() - 1) {
-	                colorsCondition.append(", ");
+	                condition.append(", ");
 	            }
 	        }
-
-	        colorsCondition.append(") order by maSP");
-
-	        sql += colorsCondition.toString();
+	        condition.append(")");
 	    }
+
+	    // Thêm điều kiện lọc kích thước
+	    if (selectedSizes != null && !selectedSizes.isEmpty() && !selectedSizes.get(0).equals("")) {
+	        condition.append(" and TenKichCo IN (");
+	        for (int i = 0; i < selectedSizes.size(); i++) {
+	            condition.append("'").append(selectedSizes.get(i)).append("'");
+	            if (i < selectedSizes.size() - 1) {
+	                condition.append(", ");
+	            }
+	        }
+	        condition.append(")");
+	    }
+
+	    // Thêm điều kiện sắp xếp
+	    condition.append(" order by maSP");
+
+	    sql += condition.toString();
+
 	    PreparedStatement ps = conn.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-	    while (rs.next()) {	
-			int giaBanDau = (int)(rs.getFloat("GiaBanDau"));
-			HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham(rs.getInt("MaHinhAnh"), rs.getString("DuongDanHinh"));
-			DanhMucSanPham danhMuc = new DanhMucSanPham(rs.getInt("maDanhMuc"), rs.getString("TenDanhMuc"));
-			SanPham sp = new SanPham(
-					rs.getInt("maSP"), 
-					rs.getString("TenSanPham"), 
-					rs.getString("MoTa"), 
-					giaBanDau,
-					rs.getInt("GiamGia"), 
-					rs.getInt("SoLuong"),
-					rs.getDate("NgayTao"),
-					rs.getString("XuatXu"),
-					rs.getString("ChatLieu"),
-					rs.getInt("DaBan"), 
-					danhMuc,
-					hinhAnhSP);
-			
-			listSP.add(sp);	
-		}
-		return listSP;
+	    ResultSet rs = ps.executeQuery();
+
+	    while (rs.next()) {
+	        int giaBanDau = (int) (rs.getFloat("GiaBanDau"));
+	        HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham(rs.getInt("MaHinhAnh"), rs.getString("DuongDanHinh"));
+	        DanhMucSanPham danhMuc = new DanhMucSanPham(rs.getInt("maDanhMuc"), rs.getString("TenDanhMuc"));
+	        SanPham sp = new SanPham(
+	                rs.getInt("maSP"),
+	                rs.getString("TenSanPham"),
+	                rs.getString("MoTa"),
+	                giaBanDau,
+	                rs.getInt("GiamGia"),
+	                rs.getInt("SoLuong"),
+	                rs.getDate("NgayTao"),
+	                rs.getString("XuatXu"),
+	                rs.getString("ChatLieu"),
+	                rs.getInt("DaBan"),
+	                danhMuc,
+	                hinhAnhSP);
+
+	        listSP.add(sp);
+	    }
+	 //   System.out.println(sql);
+	  
+	    return listSP;
 	}
+
+//	public static List<SanPham> LocSPTheoMau(Connection conn, List<String> selectedColors) throws SQLException {
+//		List<SanPham> listSP = new ArrayList<SanPham>();
+//		String sql = "select Distinct V_thongTinSP.* from V_thongTinSP, MauSac "
+//				+ "where V_thongTinSP.maSP = MauSac.MaSanPham ";
+//
+//	    if (selectedColors != null && !selectedColors.isEmpty() && !selectedColors.get(0).equals("")) {
+//	        StringBuilder colorsCondition = new StringBuilder(" and MaMauDangHex IN (");
+//
+//	        for (int i = 0; i < selectedColors.size(); i++) {
+//	            colorsCondition.append("'").append(selectedColors.get(i)).append("'");
+//	            if (i < selectedColors.size() - 1) {
+//	                colorsCondition.append(", ");
+//	            }
+//	        }
+//
+//	        colorsCondition.append(") order by maSP");
+//
+//	        sql += colorsCondition.toString();
+//	    }
+//	    PreparedStatement ps = conn.prepareStatement(sql);
+//		ResultSet rs = ps.executeQuery();
+//	    while (rs.next()) {	
+//			int giaBanDau = (int)(rs.getFloat("GiaBanDau"));
+//			HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham(rs.getInt("MaHinhAnh"), rs.getString("DuongDanHinh"));
+//			DanhMucSanPham danhMuc = new DanhMucSanPham(rs.getInt("maDanhMuc"), rs.getString("TenDanhMuc"));
+//			SanPham sp = new SanPham(
+//					rs.getInt("maSP"), 
+//					rs.getString("TenSanPham"), 
+//					rs.getString("MoTa"), 
+//					giaBanDau,
+//					rs.getInt("GiamGia"), 
+//					rs.getInt("SoLuong"),
+//					rs.getDate("NgayTao"),
+//					rs.getString("XuatXu"),
+//					rs.getString("ChatLieu"),
+//					rs.getInt("DaBan"), 
+//					danhMuc,
+//					hinhAnhSP);
+//			
+//			listSP.add(sp);	
+//		}
+//	  
+//		return listSP;
+//	}
+//	
+//	public static List<SanPham> LocSPTheoSize(Connection conn, List<String> selectedColors) throws SQLException {
+//		List<SanPham> listSP = new ArrayList<SanPham>();
+//		String sql = "select Distinct V_thongTinSP.* from V_thongTinSP, KichCo "
+//				+ "where V_thongTinSP.maSP = KichCo.MaSanPham ";
+//
+//	    if (selectedColors != null && !selectedColors.isEmpty() && !selectedColors.get(0).equals("")) {
+//	        StringBuilder colorsCondition = new StringBuilder(" and TenKichCo IN (");
+//
+//	        for (int i = 0; i < selectedColors.size(); i++) {
+//	            colorsCondition.append("'").append(selectedColors.get(i)).append("'");
+//	            if (i < selectedColors.size() - 1) {
+//	                colorsCondition.append(", ");
+//	            }
+//	        }
+//
+//	        colorsCondition.append(") order by maSP");
+//
+//	        sql += colorsCondition.toString();
+//	    }
+//	    PreparedStatement ps = conn.prepareStatement(sql);
+//		ResultSet rs = ps.executeQuery();
+//	    while (rs.next()) {	
+//			int giaBanDau = (int)(rs.getFloat("GiaBanDau"));
+//			HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham(rs.getInt("MaHinhAnh"), rs.getString("DuongDanHinh"));
+//			DanhMucSanPham danhMuc = new DanhMucSanPham(rs.getInt("maDanhMuc"), rs.getString("TenDanhMuc"));
+//			SanPham sp = new SanPham(
+//					rs.getInt("maSP"), 
+//					rs.getString("TenSanPham"), 
+//					rs.getString("MoTa"), 
+//					giaBanDau,
+//					rs.getInt("GiamGia"), 
+//					rs.getInt("SoLuong"),
+//					rs.getDate("NgayTao"),
+//					rs.getString("XuatXu"),
+//					rs.getString("ChatLieu"),
+//					rs.getInt("DaBan"), 
+//					danhMuc,
+//					hinhAnhSP);
+//			
+//			listSP.add(sp);	
+//		}
+//	  
+//		return listSP;
+//	}
 	
 	public static List<SanPham> filterByPrice(Connection conn, int min, int max) throws SQLException {
 		List<SanPham> listSP = new ArrayList<SanPham>();
