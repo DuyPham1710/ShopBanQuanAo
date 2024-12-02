@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>Checkout Form</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
    <!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <!-- Google Fonts -->
@@ -91,13 +93,17 @@
 	                	
 	                    <select class="detail" id="addressSelect" onchange="checkOtherOption()">
 	                    	<c:forEach var="diaChi" items="${nguoiDung.diaChiNhanHang}">
-		                		<option value="${diaChi.tenDiaChi}" ${diaChi.tenDiaChi eq nguoiDung.diaChiNhanHang[0].tenDiaChi ? 'selected' : ''}>${diaChi.tenDiaChi}</option>
+		                		<option value="${diaChi.tenDiaChi}" ${diaChi.tenDiaChi == nguoiDung.diaChiNhanHang[0].tenDiaChi ? 'selected' : ''}>${diaChi.tenDiaChi}</option>
 		                	</c:forEach>
-	                    	 <option></option>
+	                    	<!--  <option></option> -->
 	                       <option value="other">Khác (Nhập địa chỉ mới)</option>
-	                    </select>
-	                    
-	                    <input type="text" id="otherAddress" placeholder="Nhập địa chỉ mới" style="display:none; margin-top: 10px;">
+	                    </select> 
+	                   
+        <!-- Button mở Modal -->
+      <!--   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addressModal">
+            Chọn địa chỉ mới
+        </button> -->
+	                    <input type="text" id="otherAddress" placeholder="Nhập địa chỉ mới" style="display:none; margin-top: 10px;"> 
 	                </div>
 	                
 	                
@@ -179,7 +185,7 @@
 		            </div>
 		                   
 	            	<input type="hidden" name="tongTienHoaDon" value="${totalTemp + 30000}">
-	            	<input type="hidden" name="selectedAddress" id="selectedAddress">
+	            	<input type="hidden" name="selectedAddress" id="selectedAddress" value="${nguoiDung.diaChiNhanHang[0].tenDiaChi}">
 	            	<c:if test="${fn:length(ListGH) == 1}">
 	            		<input type="hidden" name=redirect value="1_San_Pham">
 	            		<input type="hidden" name="maSP" value="${ListGH[0].sanPham.maSP}">
@@ -190,31 +196,163 @@
 	            	<c:if test="${fn:length(ListGH) > 1}">
  						<input type="hidden" name="redirect" value="Nhieu_Hon_1_San_Pham">	  
 					</c:if>
-	            	<%-- <c:forEach var="gh" items="${ListGH}">
-	            		
-	            	</c:forEach> --%>
 	            
 	            <button class="paypal-button" id="payButton">PayPal</button>
 	        </form>
+	        
 	    </div>
 	</div>
+
+	
+	 <!-- Modal -->
+   <!--  <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addressModalLabel">Chọn Địa Chỉ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addressForm">
+                        <div class="mb-3">
+                            <label for="province" class="form-label">Tỉnh/Thành phố</label>
+                            <select class="form-select" id="province" required>
+                                <option value="">Chọn tỉnh/thành phố</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="district" class="form-label">Quận/Huyện</label>
+                            <select class="form-select" id="district" disabled required>
+                                <option value="">Chọn quận/huyện</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ward" class="form-label">Phường/Xã</label>
+                            <select class="form-select" id="ward" disabled required>
+                                <option value="">Chọn phường/xã</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="saveAddress">Lưu Địa Chỉ</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    
 	
     <script>
-        function checkOtherOption() {
-            const addressSelect = document.getElementById('addressSelect');
-            const otherAddressInput = document.getElementById('otherAddress');
-            const selectedAddressInput = document.getElementById('selectedAddress'); // input hidden
-            
-            if (addressSelect.value === 'other') {
-                otherAddressInput.style.display = 'block'; // Hiện trường nhập
-                otherAddressInput.focus(); // Đặt con trỏ vào trường nhập
-                selectedAddressInput.value = otherAddressInput.value; // Cập nhật khi người dùng nhập
-            } else {
-                otherAddressInput.style.display = 'none'; // Ẩn trường nhập
-                otherAddressInput.value = ''; // Xóa giá trị nếu không chọn 'Khác'
-                selectedAddressInput.value = addressSelect.value; // Lưu địa chỉ đã chọn vào input hidden
-            }
-        }
+  /*   document.addEventListener("DOMContentLoaded", () => {
+    	  const provinceSelect = document.getElementById("province");
+    	  const districtSelect = document.getElementById("district");
+    	  const wardSelect = document.getElementById("ward");
+
+    	  // Hàm tải dữ liệu tỉnh/thành phố
+    	  async function loadProvinces() {
+    	      try {
+    	          const response = await fetch("https://provinces.open-api.vn/api/p/");
+    	          const provinces = await response.json();
+    	          provinces.forEach(province => {
+    	              const option = document.createElement("option");
+    	              option.value = province.code; // Mã tỉnh
+    	              option.textContent = province.name; // Tên tỉnh
+    	              provinceSelect.appendChild(option);
+    	          });
+    	      } catch (error) {
+    	          console.error("Lỗi khi tải tỉnh/thành phố:", error);
+    	      }
+    	  }
+
+    	  // Hàm tải dữ liệu huyện/quận theo mã tỉnh
+    	  async function loadDistricts(provinceCode) {
+    	      try {
+    	          const response = await fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`);
+    	          const provinceData = await response.json();
+    	          const districts = provinceData.districts || [];
+    	          districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
+    	          wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+    	          wardSelect.disabled = true;
+    	          districts.forEach(district => {
+    	              const option = document.createElement("option");
+    	              option.value = district.code; // Mã huyện
+    	              option.textContent = district.name; // Tên huyện
+    	              districtSelect.appendChild(option);
+    	          });
+    	          districtSelect.disabled = false;
+    	      } catch (error) {
+    	          console.error("Lỗi khi tải quận/huyện:", error);
+    	      }
+    	  }
+
+    	  // Hàm tải dữ liệu xã/phường theo mã huyện
+    	  async function loadWards(districtCode) {
+    	      try {
+    	          const response = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
+    	          const districtData = await response.json();
+    	          const wards = districtData.wards || [];
+    	          wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+    	          wards.forEach(ward => {
+    	              const option = document.createElement("option");
+    	              option.value = ward.code; // Mã xã
+    	              option.textContent = ward.name; // Tên xã
+    	              wardSelect.appendChild(option);
+    	          });
+    	          wardSelect.disabled = false;
+    	      } catch (error) {
+    	          console.error("Lỗi khi tải phường/xã:", error);
+    	      }
+    	  }
+
+    	  // Event: Khi chọn tỉnh/thành phố
+    	  provinceSelect.addEventListener("change", () => {
+    	      const provinceCode = provinceSelect.value;
+    	      if (provinceCode) {
+    	          loadDistricts(provinceCode);
+    	      } else {
+    	          districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
+    	          wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+    	          districtSelect.disabled = true;
+    	          wardSelect.disabled = true;
+    	      }
+    	  });
+
+    	  // Event: Khi chọn quận/huyện
+    	  districtSelect.addEventListener("change", () => {
+    	      const districtCode = districtSelect.value;
+    	      if (districtCode) {
+    	          loadWards(districtCode);
+    	      } else {
+    	          wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+    	          wardSelect.disabled = true;
+    	      }
+    	  });
+
+    	  // Tải danh sách tỉnh/thành phố khi tải trang
+    	  loadProvinces();
+    	});
+ */
+
+
+	    function checkOtherOption() {
+	        const addressSelect = document.getElementById('addressSelect');
+	        const otherAddressInput = document.getElementById('otherAddress');
+	        const selectedAddressInput = document.getElementById('selectedAddress');
+	        
+	        if (addressSelect.value === 'other') {
+	            otherAddressInput.style.display = 'block'; // Hiện trường nhập
+	            otherAddressInput.focus(); // Đặt con trỏ vào trường nhập
+	            otherAddressInput.oninput = () => {
+	                selectedAddressInput.value = otherAddressInput.value; // Đồng bộ khi nhập
+	            };
+	        } else {
+	            otherAddressInput.style.display = 'none'; // Ẩn trường nhập
+	            otherAddressInput.value = ''; // Xóa giá trị
+	            selectedAddressInput.value = addressSelect.value; // Lưu địa chỉ đã chọn
+	        }
+	    }
 
         function selectPaymentOption(button, method) {
             // Xóa lớp 'selected' và ẩn tick của tất cả các nút
@@ -240,5 +378,7 @@
         </script>
     </div>
 	 <jsp:include page="footer.jsp" />
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -173,7 +173,15 @@ public class ThanhToanController extends HttpServlet {
     				response.getWriter().println("Error: " + e.getMessage());
 				}
 			}
-			response.sendRedirect("/project_web/views/home.jsp");
+		//	response.sendRedirect("/project_web/Donhang");
+		
+//			RequestDispatcher req = request.getRequestDispatcher("/views/ThanhToan.jsp");
+//			req.forward(request, response);
+			// request.setAttribute("paymentSuccess", "true");
+
+		        // Chuyển tiếp tới trang ThanhToan.jsp
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/CheckOut.jsp");
+		        dispatcher.forward(request, response);
 		}
 		
 	}
