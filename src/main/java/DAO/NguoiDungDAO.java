@@ -64,10 +64,10 @@ public class NguoiDungDAO {
 		return nguoi;
 	}
 	
-	public static NguoiDung LayThongTinNguoiDung_DonHang(Connection conn, int maHoaDon) throws SQLException {
+	public static NguoiDung LayThongTinNguoiDung_DonHangChoAD(Connection conn, int maHoaDon, int idNguoiMua) throws SQLException {
 		String sql = "{call proc_ThongTinNguoiDung_HoaDon(?, ?)}";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(1, idNguoiMua);
 		ps.setInt(2, maHoaDon);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {		

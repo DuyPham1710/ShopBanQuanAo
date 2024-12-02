@@ -181,3 +181,37 @@
 .modal-content {
     border-radius: 10px; /* Thêm góc bo tròn nếu muốn */
 }
+
+/* Đánh giá */
+.rating {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    direction: rtl; /* Đảo ngược hướng sao */
+}
+
+.rating input {
+    display: none; /* Ẩn input radio */
+}
+
+.rating label {
+    font-size: 2rem;
+    color: #ddd; /* Màu mặc định */
+    cursor: pointer;
+}
+
+/* Tô màu sao khi hover và khi chọn */
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #f39c12; /* Màu vàng khi hover hoặc sao đã chọn */
+}
+
+/* Giữ màu cho sao đã chọn */
+.rating input:checked + label,
+.rating input:checked + label ~ label {
+    color: #f39c12;
+}
+.custom-modal-width {
+      max-width: 555px !important;
+}

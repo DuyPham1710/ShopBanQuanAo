@@ -55,12 +55,12 @@ public class DonHangDAO {
 		return DanhSachDonHang;
 	}
 	
-	public static DonMua LoadThongTinMotDonHang(Connection conn, int maHoaDon) throws SQLException {
+	public static DonMua LoadThongTinMotDonHangChoAD(Connection conn, int maHoaDon, int idNguoiMua) throws SQLException {
 		List<ChiTietHoaDon> listChiTietHD = new ArrayList<ChiTietHoaDon>();
 	    String sql = "{call proc_LoadThongTinMotDonHang(?, ?)}";
 
 	    PreparedStatement ps = conn.prepareStatement(sql);
-	    ps.setInt(1, AccountDAO.getID());
+	    ps.setInt(1, idNguoiMua);
 	    ps.setInt(2, maHoaDon);
 	    ResultSet rs = ps.executeQuery();
 	    String trangThai = "";
@@ -90,8 +90,10 @@ public class DonHangDAO {
 	                rs.getInt("DonGia"),
 	                rs.getInt("GiaBan")
 	        );      
+	        
 	        listChiTietHD.add(chiTietHD);
 	    }
+	    System.out.print(listChiTietHD.size());
 	    DonMua donMua = new DonMua(maHoaDon, trangThai, tongTien, listChiTietHD);
 	    return donMua;
 	}

@@ -52,44 +52,7 @@ public class DonHang extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//int maHoaDon = Integer.parseInt(request.getHeader("X-MaHoaDon"));
-		int maHoaDon = 1;
-			
-			Connection conn = null;
-			try {
-				conn = new ConnectJDBC().getConnection();
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			
-			}
-			
-			NguoiDung nguoiDung = null;
-			try {
-				nguoiDung = NguoiDungDAO.LayThongTinNguoiDung_DonHang(conn, maHoaDon);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-			
-			DonMua donMua = null;
-			try {
-				donMua = DonHangDAO.LoadThongTinMotDonHang(conn, maHoaDon);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-			//DonMua donMua = new DonMua(maHoaDon, listChiTietHD);
-			
-			System.out.print(donMua.getGiaBan());
-			request.setAttribute("nguoiDung", nguoiDung);
-			request.setAttribute("donMua", donMua);
-			
-			RequestDispatcher req = request.getRequestDispatcher("/views/admin/ChiTietDonHang.jsp");
-			req.include(request, response);
+		
 	}
 
 }
