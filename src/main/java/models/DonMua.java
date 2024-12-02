@@ -1,6 +1,8 @@
 package models;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DonMua {
 	private int maHoaDon;
@@ -11,6 +13,7 @@ public class DonMua {
 	private int tongTien;
 	private String diaChiNhanHang;
 	private Date ngayDat;
+	private List<ChiTietHoaDon> chiTietHD;
 	
 	public DonMua() {}
 	
@@ -25,6 +28,13 @@ public class DonMua {
 		this.setNgayDat(ngayDat);
 	}
 	
+	public DonMua(int maHoaDon, String trangThai, int tongTien, List<ChiTietHoaDon> chiTietHoaDon) {
+		this.setMaHoaDon(maHoaDon);
+		this.setTrangThai(trangThai);
+		this.setTongTien(tongTien);
+		chiTietHD = new ArrayList<ChiTietHoaDon>();
+		this.setChiTietHD(chiTietHoaDon);
+	}
 	public Date getNgayDat() {
 		return ngayDat;
 	}
@@ -76,4 +86,11 @@ public class DonMua {
 		this.tongTien = tongTien;
 	}
 	
+	public List<ChiTietHoaDon> getChiTietHD() {
+		return chiTietHD;
+	}
+
+	public void setChiTietHD(List<ChiTietHoaDon> chiTietHD) {
+		this.chiTietHD = chiTietHD;
+	}
 }
