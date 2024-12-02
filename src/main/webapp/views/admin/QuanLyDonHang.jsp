@@ -105,7 +105,7 @@
 							  <span 
 							    class="badge 
 							      <c:choose>
-							        <c:when test="${hoaDon.trangThai == 'Xác nhận'}">bg-success</c:when>
+							        <c:when test="${hoaDon.trangThai == 'Đã xác nhận'}">bg-success</c:when>
 							        <c:when test="${hoaDon.trangThai == 'Chờ xác nhận'}">bg-warning text-dark</c:when>
 							        <c:when test="${hoaDon.trangThai == 'Đã hủy'}">bg-danger</c:when>
 							      </c:choose>"
@@ -203,7 +203,7 @@ function xacNhanDonHang(maHoaDon) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ maHoaDon: maHoaDon, trangThai: 'Xác nhận'  }),
+        body: JSON.stringify({ maHoaDon: maHoaDon, trangThai: 'Đã xác nhận'  }),
     })
     .then(response => {
         if (response.ok) {

@@ -88,7 +88,7 @@
            
             <!-- Nút Xác nhận và Hủy-->
 			<div class="text-end mt-4">
-                <c:if test="${donMua.trangThai != 'Xác nhận'}">
+                <c:if test="${donMua.trangThai != 'Đã xác nhận'}">
                     <button class="btn btn-danger px-4" onclick="huyDonHang(${donMua.maHoaDon})">Hủy đơn hàng</button>
                     <button class="btn btn-primary px-4 ms-2" onclick="xacNhanDonHang(${donMua.maHoaDon})">Xác nhận đơn hàng</button>
                 </c:if>
