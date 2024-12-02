@@ -1,0 +1,180 @@
+@charset "UTF-8";
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar {
+    min-height: 100vh;
+    padding: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo-text {
+    font-size: 1.5rem;
+    color: #6a5acd;
+  }
+
+  .nav-link {
+    color: #333;
+    font-weight: 500;
+    padding: 15px;
+    margin-left: 10%;
+    font-size: 1.2rem;
+  }
+  
+  .bi{
+    font-size: 1.5rem;
+    margin-left: 10%;
+  }
+
+  .nav-item:hover {
+    background-color: #ce9b53;
+    color: #fff;
+    border-radius: 8px;
+  }
+
+  .nav-link:hover {
+    color: #fff;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .chart-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .card {
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #fefefe;
+  }
+  
+  .input-group input {
+    border-radius: 20px;
+  }
+  
+.logo img {
+    height: 60px; /* Giữ kích thước hình ảnh giống nhau */
+    width: auto; /* Tự động điều chỉnh chiều rộng */
+    margin-bottom: 1rem;
+}
+
+.notifications {
+  position: relative;
+  margin-right: 20px;
+  font-size: 20px;
+  color: #555;
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #ff4d4f;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.profile img{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.content{
+  background-color: #f0e7d6;
+}
+
+.rounded-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rounded-table th,
+.rounded-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: center;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+}
+
+.order_detail_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.order_detail_header {
+    flex: 1;
+    height: 50px;
+    background-color: rgb(212, 211, 211);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #333;
+}
+
+.order_detail_header p {
+    margin: 0; /* Loại bỏ khoảng cách mặc định của p */
+}
+
+.toggle-details {
+    margin-top: 100px; /* Đẩy mũi tên xuống một chút */
+    background-color: #f5faff; /* Màu nền xanh nhạt */
+    color: #007bff;           /* Màu biểu tượng xanh đậm */
+    border: 2px solid #007bff; /* Viền xanh đậm */
+    border-radius: 50%;       /* Bo tròn nút */
+    width: 46px;              /* Chiều rộng nút */
+    height: 46px;             /* Chiều cao nút */
+    display: flex;            /* Canh giữa nội dung */
+    align-items: center;      /* Căn giữa theo trục dọc */
+    justify-content: center;  /* Căn giữa theo trục ngang */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi */
+}
+.toggle-details:hover {
+    border-color: #0056b3; /* Đổi màu viền khi hover */
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+.btn.toggle-details i {
+    font-size: 30px; /* Tăng kích thước icon */
+}
+
+.product-price {
+    color: rgb(211, 47, 47); /* Màu đỏ */
+    font-size: 18px; /* Kích thước chữ to hơn */
+    font-weight: bold; /* Làm chữ đậm */
+}
+
+/* Đảm bảo đơn giá trong phần mở rộng căn phải */
+.collapse .product-price {
+    margin-bottom: 50px;
+    text-align: right; /* Căn phải cho đơn giá trong phần mở rộng */
+}
+
+.order-card .card-body .d-flex {
+    margin-bottom: 10px;
+}
+/* Tùy chỉnh chiều rộng modal */
+.modal-dialog {
+    max-width: 80% !important;  /* Thay đổi phần trăm để modal rộng ra hơn */
+}
+
+.modal-content {
+    border-radius: 10px; /* Thêm góc bo tròn nếu muốn */
+}
