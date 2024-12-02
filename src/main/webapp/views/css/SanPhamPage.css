@@ -226,19 +226,19 @@ h2 {
     cursor: pointer;
 }
 
-.dropdown-content div:hover {
+/* .dropdown-content div:hover {
     background-color: #f0f0f0; 
-}
+} */
 /* Hiển thị dropdown khi hover vào filter_category */
 .filter_category:hover .dropdown-content {
     display: block; 
 }
 
-.filter_category:hover .size-options {
+/* .filter_category:hover .size-options {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .filter_category:hover .color-options {
     display: grid;
@@ -286,11 +286,17 @@ h2 {
 /* Kích thước */
 .size-options {
     display: none;
-    padding: 10px 0;
+    flex-wrap: wrap; /* Cho phép nội dung tự xuống dòng */
+    max-height: 200px; /* Giới hạn chiều cao */
+    overflow-y: auto; /* Thêm thanh cuộn khi vượt quá chiều cao */
+    gap: 6px; /* Khoảng cách giữa các size */
+    padding: 10px;
+    border: 1px solid #e7e7e7;
+    justify-content: center; /* Canh trái các phần tử */
 }
 
 .size-option {
-    width: 40px;
+    width: calc(25% - 10px); /* Chiếm 1/4 chiều rộng trừ khoảng cách giữa các size */
     height: 40px;
     display: flex;
     align-items: center;
@@ -298,9 +304,19 @@ h2 {
     cursor: pointer;
     font-weight: bold;
     border: 1px solid #e7e7e7;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .size-option.selected {
-    background-color: black;
+    background-color: #111111;
     color: white;
+}
+
+.size-option:hover {
+    background-color: #111111;
+    color: white;
+}
+
+.filter_category:hover .size-options {
+    display: flex; /* Hiển thị danh sách size khi hover */
 }
