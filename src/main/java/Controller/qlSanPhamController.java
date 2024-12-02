@@ -98,6 +98,8 @@ public class qlSanPhamController extends HttpServlet {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
+		
+		
 		request.setAttribute("DaBan", sanPhamDaBan);
 		request.setAttribute("TonKho", sanPhamTonKho);
 		request.setAttribute("ListDanhMuc", listDanhMuc);
@@ -159,6 +161,17 @@ public class qlSanPhamController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
+		List<String> listMauHex = null;
+		try {
+			listMauHex = SanPhamDAO.DanhSachMaMauHex(conn);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		
+		request.setAttribute("listMauHex", listMauHex);
 		request.setAttribute("ListDanhMuc", listDanhMuc);
 		request.setAttribute("ThongTinSP", sp);
 		RequestDispatcher req = request.getRequestDispatcher("/views/admin/SuaSanPham.jsp");
