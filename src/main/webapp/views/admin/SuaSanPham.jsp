@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
 <form id="productFormEdit" action="qlSanPhamController" _method="suaSabPham" method="POST">
   <!-- Row 1: Tên sản phẩm -->
+  <input type="hidden" id="mauDaDuocChon" value="${ThongTinSP.maSP }" />
   <div class="row mb-5">
     <div class="col-md-7">
       <div class="row mb-2">
@@ -61,9 +61,7 @@
 				      <button type="button" id="confirmImage" class="btn btn-primary" onclick="confirmImageUpload()">Xác nhận</button>
 				    </div>
 				  </div>
-				</div>
-
-
+			</div>
 		</div>
       </div>
     </div>
@@ -82,34 +80,46 @@
   <div class="row mb-3">
     <div class="col-md-6">
       <label class="form-label">Size</label>
-      <div class="btn-group d-flex flex-wrap" role="group" aria-label="Size options">
-        <input type="checkbox" class="btn-check" id="sizeSEdit" value="S" autocomplete="off">
-        <label class="btn btn-outline-primary" for="sizeSEdit">S</label>
-  
-        <input type="checkbox" class="btn-check" id="sizeMEdit" value="M" autocomplete="off">
-        <label class="btn btn-outline-primary" for="sizeMEdit">M</label>
-  
-        <input type="checkbox" class="btn-check" id="sizeLEdit" value="L" autocomplete="off">
-        <label class="btn btn-outline-primary" for="sizeLEdit">L</label>
-  
-        <input type="checkbox" class="btn-check" id="sizeXLEdit" value="XL" autocomplete="off">
-        <label class="btn btn-outline-primary" for="sizeXLEdit">XL</label>
-  
-        <input type="checkbox" class="btn-check" id="sizeXXLEdit" value="XXL" autocomplete="off">
-        <label class="btn btn-outline-primary" for="sizeXXLEdit">XXL</label>
-      </div>
+      <div class="filter_category" style="width:100%;">
+		    <div class="filter_category-title">Danh sách size...</div>
+		    <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
+		    <div class="dropdown-content size-options">
+		        <c:forEach var="item" items="${listAllSize}">
+		            <div class="size-option" data-size="${item}" onclick="toggleSizeSelection(this)">${item}</div>
+		        </c:forEach>
+		    </div>
+		</div>
     </div>
   
     <div class="col-md-6">
+      <input type="hidden" id="mauDaDuocChon" value="<c:forEach var="mau" items="${listMauCuaSP}" varStatus="status">${mau}<c:if test="${!status.last}">,</c:if></c:forEach>" />
       <label class="form-label">Màu sắc</label>
       <div class="filter_category" style="width:100%; border-radius:5px;">
            <div class="filter_category-title">Danh sách màu...</div>
            <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
            <div class="dropdown-content color-options">
 	           <c:forEach var="item" items="${listMauHex}">
-			   		<div class="color-circle" style="background-color: ${item};" data-color="${item}" onclick="toggleColor(this)">
-				     	<span class="tick">&#10003;</span>
-				 	</div>
+				    <!-- Đặt mặc định isSelected là false -->
+				    <c:set var="isSelected" value="false" />
+				    <!-- Lặp qua listMauHex để kiểm tra -->
+				    <c:forEach var="selectedItem" items="${listMauCuaSP}">
+				        <c:if test="${item == selectedItem}">
+				            <c:set var="isSelected" value="true" />
+				        </c:if>
+				    </c:forEach>
+				    <!-- Hiển thị class 'selected' nếu isSelected là true -->
+				    <c:choose>
+				        <c:when test="${isSelected}">
+				            <div class="color-circle selected" style="background-color: ${item};" data-color="${item}" onclick="toggleColor(this)">
+				                <span class="tick">&#10003;</span>
+				            </div>
+				        </c:when>
+				        <c:otherwise>
+				            <div class="color-circle" style="background-color: ${item};" data-color="${item}" onclick="toggleColor(this)">
+				                <span class="tick">&#10003;</span>
+				            </div>
+				        </c:otherwise>
+				    </c:choose>
 				</c:forEach>
            </div>
        </div>
@@ -129,4 +139,6 @@
     <button type="submit" class="btn btn-primary Edit">Lưu</button>
   </div>
 </form>
+
+
 

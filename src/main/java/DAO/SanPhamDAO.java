@@ -502,5 +502,19 @@ public class SanPhamDAO {
 		}
 		return banDuoc;
 	}
+	
+	public static List<String> DanhSachMaMauCuaSP(Connection conn,int maSP) throws SQLException {
+		List<String> listMauHex = new ArrayList<String>();
+		String sql = "select MaMauDangHex from MauSac where MaSanPham = ?";
+		
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {	
+			listMauHex.add(rs.getString("MaMauDangHex"));	
+		}
+		return listMauHex;
+	}
 }
 

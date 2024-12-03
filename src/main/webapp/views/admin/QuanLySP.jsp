@@ -342,7 +342,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                	
               </div>
             </div>
           </div>
@@ -362,5 +361,6 @@
 	  	 const data = <%= request.getAttribute("ThongKeTungThang") %>;
 		drawMonthlySalesChart('monthlySalesChart', labels, data);
   	</script>
+  	
 </body>
 </html>

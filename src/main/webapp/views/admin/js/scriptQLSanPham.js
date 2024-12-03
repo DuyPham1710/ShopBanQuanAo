@@ -1,6 +1,7 @@
 /**
  * 
  */
+let selectedColors = new Set();
 function createChart(config) {
     const { canvasId, sold, inStock } = config;
     const ctxt = document.getElementById(canvasId).getContext('2d');
@@ -98,12 +99,22 @@ function loadSanPham(maSP) {
         // Hiển thị Modal
         const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
         modal.show();
+		const colorString = document.getElementById("mauDaDuocChon").value;
+		console.log(colorString);
+		selectedColors = new Set(
+		    colorString
+		        .split(",") // Tách chuỗi thành mảng dựa trên dấu phẩy
+		        .map(item => item.trim()) // Loại bỏ khoảng trắng đầu/cuối từng phần tử (nếu có)
+		        .filter(item => item !== "") // Đảm bảo không có chuỗi rỗng
+		);
+		console.log(selectedColors);
     })
     .catch(error => {
         console.error("Error:", error);
         alert("Không thể tải !");
     });
 }
+
 
 
 function showImageInput() {
@@ -127,7 +138,6 @@ function confirmImageUpload() {
 }
 
 
-const selectedColors = new Set();
 function toggleColor(element) {
     const color = element.getAttribute("data-color");
 

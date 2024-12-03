@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import DAO.SanPhamDAO;
@@ -128,6 +129,7 @@ public class qlSanPhamController extends HttpServlet {
 			doLoadSanPham(request, response);
 			
 		}
+
 		
 	}
 	
@@ -169,8 +171,16 @@ public class qlSanPhamController extends HttpServlet {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
+		List<String> listMauCuaSP=null;
+		try {
+			listMauCuaSP = SanPhamDAO.DanhSachMaMauCuaSP(conn,masp);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
 		
-		
+		request.setAttribute("listMauCuaSP", listMauCuaSP);
 		request.setAttribute("listMauHex", listMauHex);
 		request.setAttribute("ListDanhMuc", listDanhMuc);
 		request.setAttribute("ThongTinSP", sp);
@@ -178,4 +188,5 @@ public class qlSanPhamController extends HttpServlet {
 		req.include(request, response);
 		
 	}
+	
 }
