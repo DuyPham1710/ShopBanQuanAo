@@ -79,19 +79,26 @@
 	                    <a href="#orderDropdown" class="list-group-item" data-bs-toggle="collapse" aria-expanded="false" aria-controls="orderDropdown">
 	                        <i class="fas fa-box me-2"></i> Đơn hàng
 	                    </a>
-	                    <div class="collapse" id="orderDropdown">
-	                    	<a href="/project_web/DonHang" class="list-group-item ps-4">
-                                <i class="fas fa-clock me-2"></i> Chờ xác nhận
-                            </a>
-	                        
-	                        <a href="#" class="list-group-item ps-4">
-	                            <i class="fas fa-truck me-2"></i> Đang giao
-	                        </a>
-	                        
-	                        <a href="#" class="list-group-item ps-4">
-	                            <i class="fas fa-check me-2"></i> Đã giao
-	                        </a>
-	                    </div>
+	                   
+	                   <form id="orderForm" action="DonHang" method="GET">
+						    <!-- Hidden input to store the status -->
+						    <input type="hidden" name="trangThai" id="trangThai">
+						
+						    <div class="collapse" id="orderDropdown">
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Chờ xác nhận')">
+						            <i class="fas fa-clock me-2"></i> Chờ xác nhận
+						        </a>
+						
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đang giao')">
+						            <i class="fas fa-truck me-2"></i> Đang giao
+						        </a>
+						
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đã giao')">
+						            <i class="fas fa-check me-2"></i> Đã giao
+						        </a>
+						    </div>
+						</form>
+	                  
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-bell me-2"></i> Thông báo
 	                    </a>
@@ -112,23 +119,23 @@
 	                        <p class="text-muted">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
 	                    </div>
 	
-	                        <form >
+	                        <form action="TaiKhoanController" method="POST">
 	                            <div class="row">
 	                                <div class="col-md-9 " style="padding-right: 30px;" >
 	                                    <div class="form-group">
 	                                        <label for="username">Tên đăng nhập</label>
-	                                        <input type="text" id="username" class="form-control" value="${nguoiDung.account.username}" readonly>
+	                                        <input type="text" id="username" name="username" class="form-control" value="${nguoiDung.account.username}" readonly>
 	                                    </div>
 	                                    <div class="form-group">
 	                                        <label for="name">Tên</label>
-	                                        <input type="text" id="name" class="form-control" placeholder="Nhập tên của bạn" value="${nguoiDung.hoTen}">
+	                                        <input type="text" id="name" class="form-control" name="hoTen" placeholder="Nhập tên của bạn" value="${nguoiDung.hoTen}">
 	                                    </div>
 	                                    <div class="form-group">
 	                                        <div class="row">
 	                                            
 	                                            <div class="col-md-8">
 	                                                <label for="dob" class="d-block mr-2">Ngày sinh</label>
-	                                                <input type="date" id="dob" class="form-control d-inline-block" value="${nguoiDung.ngaySinh}">
+	                                                <input type="date" id="dob" name="ngaySinh" class="form-control d-inline-block" value="${nguoiDung.ngaySinh}">
 	                                            </div>
 	        
 	                                            <div class="col-md-4">
@@ -151,16 +158,16 @@
 	        
 	                                    <div class="form-group">
 	                                        <label for="email">Email</label>
-	                                        <input type="email" id="email" class="form-control" value="${nguoiDung.email}">
+	                                        <input type="email" id="email" name="email" class="form-control" value="${nguoiDung.email}">
 	                                    </div>
 	                                    <div class="form-group">
 	                                        <label for="phone">Số điện thoại</label>
-	                                        <input type="text" id="phone" class="form-control" value="${nguoiDung.sdt}">
+	                                        <input type="text" id="phone" name="sdt" class="form-control" value="${nguoiDung.sdt}">
 	                                    </div>
 	        
 	                                    <div class="form-group">
 	                                        <label for="pass">Mật khẩu</label>
-	                                        <input type="password" id="pass" class="form-control" value="${nguoiDung.account.password}">
+	                                        <input type="password" id="pass" name="password" class="form-control" value="${nguoiDung.account.password}">
 	                                    </div>
 	                                    <div class="text-center">
 	                                        <button type="submit" class="btn btn-primary">Lưu</button>
@@ -208,6 +215,12 @@
             }
         });
     </script>
-    
+    <script>
+	    // Hàm để cập nhật giá trị của input hidden và submit form
+	    function setTrangThai(trangThai) {
+	        document.getElementById('trangThai').value = trangThai;
+	        document.getElementById('orderForm').submit(); // Submit form khi nhấn vào thẻ a
+	    }
+	</script>
 </body>
 </html>

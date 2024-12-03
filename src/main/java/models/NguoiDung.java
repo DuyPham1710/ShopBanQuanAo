@@ -12,7 +12,8 @@ public class NguoiDung {
     private Date ngaySinh;         
     private String email;
     private List<DiaChiNhanHang> diaChiNhanHang;
-    
+    private int daMua;
+    private int tongTien;
     public NguoiDung() {}
     
 
@@ -24,6 +25,15 @@ public class NguoiDung {
     	this.setSdt(sdt);
     	this.setNgaySinh(ngaySinh);
     	this.setEmail(email);
+    }
+    
+    public NguoiDung( String hoTen, String gioiTinh, String sdt, String email,int daMua,int tongTien) {
+    	this.setHoTen(hoTen);
+    	this.setGioiTinh(gioiTinh);
+    	this.setSdt(sdt);
+    	this.setEmail(email);
+    	this.setDaMua(daMua);
+    	this.setTongTien(tongTien);
     }
     
 	public NguoiDung(String cccd, String hoTen, String gioiTinh, String sdt, Date ngaySinh, String email, List<DiaChiNhanHang> diaChiNhanHang) {
@@ -42,7 +52,7 @@ public class NguoiDung {
 		this.email = email;
 		this.setDiaChiNhanHang(diaChiNhanHang);
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -106,4 +116,22 @@ public class NguoiDung {
 	public void setDiaChiNhanHang(List<DiaChiNhanHang> diaChiNhanHang) {
 		this.diaChiNhanHang = diaChiNhanHang;
 	}
+
+	public int getDaMua() {
+		return daMua;
+	}
+
+	public void setDaMua(int daMua) {
+		this.daMua = daMua;
+	}
+
+	public int getTongTien() {
+		return tongTien;
+	}
+
+	public void setTongTien(int tongTien) {
+		this.tongTien = tongTien;
+	}
+
+	
 }

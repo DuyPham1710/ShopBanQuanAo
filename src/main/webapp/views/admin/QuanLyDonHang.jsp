@@ -105,14 +105,22 @@
 							  <span 
 							    class="badge 
 							      <c:choose>
-							        <c:when test="${hoaDon.trangThai == 'Đã xác nhận'}">bg-success</c:when>
+							        <c:when test="${hoaDon.trangThai == 'Đang giao'}">bg-success</c:when>
 							        <c:when test="${hoaDon.trangThai == 'Chờ xác nhận'}">bg-warning text-dark</c:when>
 							        <c:when test="${hoaDon.trangThai == 'Đã hủy'}">bg-danger</c:when>
-							      </c:choose>"
-							  >
+							        <c:when test="${hoaDon.trangThai == 'Đã giao'}">bg-primary</c:when>
+							      </c:choose>">
+							      <i class="fas 
+							        <c:choose>
+							          <c:when test="${hoaDon.trangThai == 'Chờ xác nhận'}">fa-clock</c:when>
+							          <c:when test="${hoaDon.trangThai == 'Đang giao'}">fa-truck</c:when>
+							          <c:when test="${hoaDon.trangThai == 'Đã giao'}">fa-check</c:when>
+							          <c:when test="${hoaDon.trangThai == 'Đã hủy'}">fa-times</c:when>
+							        </c:choose> me-2"></i>
 							    ${hoaDon.trangThai}
 							  </span>
 							</td>
+
                             <td>
 							  <a href="javascript:void(0);" class="btn btn-warning btn-sm text-end" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails(${hoaDon.maHD}, ${hoaDon.idNguoiDung})">
 	                          		<span class="font-weight-bold">Xem Chi Tiết</span>
@@ -203,7 +211,7 @@ function xacNhanDonHang(maHoaDon) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ maHoaDon: maHoaDon, trangThai: 'Đã xác nhận'  }),
+        body: JSON.stringify({ maHoaDon: maHoaDon, trangThai: 'Đang giao'  }),
     })
     .then(response => {
         if (response.ok) {
@@ -254,5 +262,39 @@ function xacNhanDonHang(maHoaDon) {
 	    });
 	}
   </script>
+  
+  <script>
+  function daGiao(maHoaDon) {
+    if (!confirm("Bạn có chắc chắn muốn xác nhận đơn hàng này đã giao?")) {
+        return;
+    }
+
+    fetch('/project_web/views/admin/HoaDonController', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ maHoaDon: maHoaDon, trangThai: 'Đã giao' }),
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Đơn hàng đã được cập nhật thành công!");
+            // Cập nhật lại trạng thái hiển thị
+            document.querySelector('.order_detail_header span').innerText = 'Đã giao';
+            // Tải lại trang hoặc chuyển hướng nếu cần
+            location.reload();
+        } else {
+            return response.text().then(text => {
+                throw new Error(text);
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Có lỗi xảy ra khi cập nhật đơn hàng: " + error.message);
+    });
+  }
+</script>
+  
 </body>
 </html>

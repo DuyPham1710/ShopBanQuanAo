@@ -41,4 +41,6 @@ public class ChiTietHoaDon {
 	public void setDonGia(int donGia) {
 		this.donGia = donGia;
 	}
+	
 }
+ 

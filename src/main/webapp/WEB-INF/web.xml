@@ -89,14 +89,25 @@
     <servlet-name>QuanLySPController</servlet-name>
     <url-pattern>/QuanLySPController</url-pattern>
   </servlet-mapping>
-  <servlet>
+
+   <servlet>
     <description></description>
-    <display-name>HoaDonController</display-name>
-    <servlet-name>HoaDonController</servlet-name>
-    <servlet-class>Controller.HoaDonController</servlet-class>
+    <display-name>qlKhachHangController</display-name>
+    <servlet-name>qlKhachHangController</servlet-name>
+    <servlet-class>Controller.qlKhachHangController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>HoaDonController</servlet-name>
-    <url-pattern>/HoaDonController</url-pattern>
+    <servlet-name>qlKhachHangController</servlet-name>
+    <url-pattern>/qlKhachHangController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProxyServlet</display-name>
+    <servlet-name>ProxyServlet</servlet-name>
+    <servlet-class>Controller.ProxyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProxyServlet</servlet-name>
+    <url-pattern>/ProxyServlet</url-pattern>
   </servlet-mapping>
 </web-app>

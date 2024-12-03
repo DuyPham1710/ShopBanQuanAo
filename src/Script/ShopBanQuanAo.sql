@@ -1,4 +1,7 @@
-﻿create database ShopBanAoQuan
+﻿DROP database IF Exists ShopBanAoQuan
+GO
+
+create database ShopBanAoQuan
 go
 use ShopBanAoQuan
 go
@@ -81,7 +84,8 @@ GO
 CREATE TABLE MauSac (
     MaMau INT,
 	MaSanPham int REFERENCES SanPham(MaSanPham),
-    TenMau NVARCHAR(50) NOT NULL
+    TenMau NVARCHAR(50) NOT NULL,
+	MaMauDangHex VARCHAR(20) NULL 
 	PRIMARY KEY (MaMau, MaSanPham)
 );
 GO
@@ -248,65 +252,67 @@ INSERT INTO KichCo (MaKichCo, MaSanPham, TenKichCo) VALUES
 (1, 10, N'Free Size');
 GO
 
-INSERT INTO MauSac (MaMau, MaSanPham, TenMau) VALUES 
+INSERT INTO MauSac (MaMau, MaSanPham, TenMau, MaMauDangHex) VALUES 
+-- Áo thun trắng
+(1, 1, N'Trắng', '#FFFFFF'),
+
 -- Áo sơ mi nữ caro
-(1, 2, N'Trắng'),
-(2, 2, N'Xanh'),
-(3, 2, N'Đen'),
+(1, 2, N'Trắng', '#FFFFFF'),
+(2, 2, N'Xanh', '#0000FF'),
+(3, 2, N'Đen', '#000000'),
 
 -- Quần jeans nam đen
-(1, 3, N'Đen'),
-(2, 3, N'Xám'),
+(1, 3, N'Đen', '#000000'),
+(2, 3, N'Xám', '#808080'),
 
 -- Quần short nữ
-(1, 4, N'Xanh'),
-(2, 4, N'Đỏ'),
-(3, 4, N'Xám'),
+(1, 4, N'Xanh', '#0000FF'),
+(2, 4, N'Đỏ', '#FF0000'),
+(3, 4, N'Xám', '#808080'),
 
 -- Đầm dạ hội
-(1, 5, N'Đỏ'),
-(2, 5, N'Tím'),
-(3, 5, N'Hồng'),
+(1, 5, N'Đỏ', '#FF0000'),
+(2, 5, N'Tím', '#800080'),
+(3, 5, N'Hồng', '#FFC0CB'),
 
 -- Váy xếp ly
-(1, 6, N'Hồng'),
-(2, 6, N'Xanh'),
-(3, 6, N'Vàng'),
+(1, 6, N'Hồng', '#FFC0CB'),
+(2, 6, N'Xanh', '#0000FF'),
+(3, 6, N'Vàng', '#FFFF00'),
 
 -- Áo khoác hoodie
-(1, 7, N'Xám'),
-(2, 7, N'Đen'),
-(3, 7, N'Xanh lá'),
+(1, 7, N'Xám', '#808080'),
+(2, 7, N'Đen', '#000000'),
+(3, 7, N'Xanh lá', '#008000'),
 
 -- Khăn choàng cổ
-(1, 8, N'Nâu'),
-(2, 8, N'Xám'),
-(3, 8, N'Xanh lá'),
+(1, 8, N'Nâu', '#A52A2A'),
+(2, 8, N'Xám', '#808080'),
+(3, 8, N'Xanh lá', '#008000'),
 
 -- Giày sneaker
-(1, 9, N'Trắng'),
-(2, 9, N'Xanh'),
-(3, 9, N'Đen'),
+(1, 9, N'Trắng', '#FFFFFF'),
+(2, 9, N'Xanh', '#0000FF'),
+(3, 9, N'Đen', '#000000'),
 
 -- Túi xách da
-(1, 10, N'Nâu'),
-(2, 10, N'Đen');
+(1, 10, N'Nâu', '#A52A2A'),
+(2, 10, N'Đen', '#000000');
 GO
 
 
 
 INSERT INTO HinhAnhSanPham (MaHinhAnh, MaSanPham, DuongDanHinh, MoTaHinh) VALUES 
-(1, 1, N'https://dbros.vn/wp-content/uploads/2023/08/ao-thun-trang-nam-T102.jpg', N'Hình 1 của Áo thun nam trắng'),
-(2, 1, N'https://cdn0375.cdn4s.com/media/ad1-t222n/z3247472567912_31a535fcadd237b49941a4610368c329.jpg', N'Hình 2 của Áo thun nam trắng'),
-(3, 2, N'https://cdn.kkfashion.vn/28393-large_default/ao-kieu-nu-co-so-mi-hoa-tiet-caro-asm16-18.jpg', N'Hình 1 của Áo sơ mi nữ caro'),
-(4, 3, N'https://quanjeandep.com/images/thumbs/quan-jean-nam-dang-slim-fit-mau-den-tuyen-10930.jpeg', N'Hình 1 của Quần jeans nam đen'),
-(5, 4, N'https://namandco.com/wp-content/uploads/2022/06/1-2-scaled.jpg', N'Hình 1 của Quần short nữ'),
-(6, 5, N'https://maxi.vn/wp-content/uploads/2022/08/z3630250901829_582cbfc8a4ea5ddbb063bd8b2ec6903e-scaled.jpg', N'Hình 1 của Đầm dạ hội'),
-(7, 6, N'https://cdn.becungshop.vn/images/500x500/chan-vay-xep-ly-nang-dong-cho-be-gai-p25311db1d3782-500x500.jpg', N'Hình 1 của Váy xếp ly'),
-(8, 7, N'https://product.hstatic.net/1000184601/product/men_den__15__669f0dc4501c4dc7ae42d74af851ca44_master.jpg', N'Hình 1 của Áo khoác hoodie'),
-(9, 8, N'https://zerdio.com.vn/wp-content/uploads/2023/10/Khan-Quang-Choang-Co-Nu-Woodonble-KN012.jpg', N'Hình 1 của Khăn choàng cổ'),
-(10, 9, N'https://cdn.vortexs.io/api/images/57594672-cf3f-4d37-8678-4cd0ceefb19d/1920/w/giay-mlb-chunky-liner-basic-la-white-navy-3asxclb3n-07nyd.jpeg', N'Hình 1 của Giày sneaker'),
-(11, 10, N'https://product.hstatic.net/1000397717/product/o1cn01cink2i2563qi0gpbo___2214434137476-0-cib_0007fb5a30ce416ca110bbf8c95fd828_master.jpg', N'Hình 1 túi xách da');
+(1, 1, N'https://cdn0375.cdn4s.com/media/ad1-t222n/z3247472567912_31a535fcadd237b49941a4610368c329.jpg', N'Hình 1 của Áo thun nam trắng'),
+(2, 2, N'https://cdn.kkfashion.vn/28393-large_default/ao-kieu-nu-co-so-mi-hoa-tiet-caro-asm16-18.jpg', N'Hình 1 của Áo sơ mi nữ caro'),
+(3, 3, N'https://quanjeandep.com/images/thumbs/quan-jean-nam-dang-slim-fit-mau-den-tuyen-10930.jpeg', N'Hình 1 của Quần jeans nam đen'),
+(4, 4, N'https://namandco.com/wp-content/uploads/2022/06/1-2-scaled.jpg', N'Hình 1 của Quần short nữ'),
+(5, 5, N'https://maxi.vn/wp-content/uploads/2022/08/z3630250901829_582cbfc8a4ea5ddbb063bd8b2ec6903e-scaled.jpg', N'Hình 1 của Đầm dạ hội'),
+(6, 6, N'https://cdn.becungshop.vn/images/500x500/chan-vay-xep-ly-nang-dong-cho-be-gai-p25311db1d3782-500x500.jpg', N'Hình 1 của Váy xếp ly'),
+(7, 7, N'https://product.hstatic.net/1000184601/product/men_den__15__669f0dc4501c4dc7ae42d74af851ca44_master.jpg', N'Hình 1 của Áo khoác hoodie'),
+(8, 8, N'https://zerdio.com.vn/wp-content/uploads/2023/10/Khan-Quang-Choang-Co-Nu-Woodonble-KN012.jpg', N'Hình 1 của Khăn choàng cổ'),
+(9, 9, N'https://cdn.vortexs.io/api/images/57594672-cf3f-4d37-8678-4cd0ceefb19d/1920/w/giay-mlb-chunky-liner-basic-la-white-navy-3asxclb3n-07nyd.jpeg', N'Hình 1 của Giày sneaker'),
+(10, 10, N'https://product.hstatic.net/1000397717/product/o1cn01cink2i2563qi0gpbo___2214434137476-0-cib_0007fb5a30ce416ca110bbf8c95fd828_master.jpg', N'Hình 1 túi xách da');
 GO
 
 
@@ -416,7 +422,7 @@ RETURN
 );
 GO
 
-CREATE PROCEDURE proc_LoadThongTinDonHang (@IDNguoiMua INT)
+CREATE PROCEDURE proc_LoadThongTinDonHang (@IDNguoiMua INT, @TrangThai NVARCHAR(50))
 AS
 BEGIN
 	select Q.*, TenKichCo, TenMau
@@ -425,7 +431,195 @@ BEGIN
 	from HoaDon inner join ChiTietHoaDon on HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon, SanPham, HinhAnhSanPham
 	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and IDNguoiMua = @IDNguoiMua
 	) Q
-	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP
-	ORDER BY Q.ngayDat
+	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP and TrangThai = @TrangThai
+	ORDER BY Q.ngayDat DESC
 END;
+GO
+
+-- Đang lỗi 2 hàm proc_ThongTinNguoiDung_HoaDon and proc_LoadThongTinMotDonHang
+CREATE procedure proc_ThongTinNguoiDung_HoaDon (@ID INT, @maHD INT)
+AS
+BEGIN
+
+    select HoTen, SDT, email, DiaChi
+	from NguoiDung, HoaDon
+	where NguoiDung.ID = HoaDon.IDNguoiMua and HoaDon.IDNguoiMua = @ID and MaHoaDon = @maHD
+END;
+GO
+
+CREATE PROCEDURE proc_LoadThongTinMotDonHang (@IDNguoiMua INT, @maHD INT)
+AS
+BEGIN
+	select Q.*, TenKichCo, TenMau
+	from KichCo, MauSac,
+	(select HoaDon.MaHoaDon as maHoaDon, HoaDon.NgayTao as ngayDat, TongTien, diachi, ChiTietHoaDon.SoLuong as SoLuongDaMua, TrangThai, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, GiaBanDau, SanPham.SoLuong as SoLuongSP, GiaBanDau - GiaBanDau*(GiamGia/100.0) as DonGia, GiaBan, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
+	from HoaDon inner join ChiTietHoaDon on HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon, SanPham, HinhAnhSanPham
+	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and IDNguoiMua = @IDNguoiMua
+	) Q
+	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP and maHoaDon = @maHD
+END;
+GO
+
+CREATE PROCEDURE proc_suaThongTin
+	@username nvarchar(50),
+    @pass nvarchar(50),
+    @Hoten nvarchar(50),
+    @NgaySinh date,
+    @Gioitinh nvarchar(50),
+    @SDT varchar(12),
+    @email varchar(50),
+	@IDNguoiDung INT
+AS
+BEGIN
+    UPDATE NguoiDung
+	SET Hoten = @Hoten, GioiTinh = @GioiTinh, NgaySinh = @NgaySinh,
+		SDT = @SDT, email = @Email
+	WHERE ID = @IDNguoiDung;
+
+	UPDATE Account
+	SET pass = @pass
+	where ID = @IDNguoiDung;
+END;
+GO
+
+-- Lam
+CREATE FUNCTION fn_ThongKeSanPham()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        SUM(DaBan) AS TongSanPhamDaBan,
+        SUM(SoLuong - DaBan) AS TongSanPhamTonKho
+    FROM SanPham
+);
+GO
+
+CREATE FUNCTION fn_LietKeSanPhamBanChay
+(
+    @year INT
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT TOP 5
+        SP.MaSanPham,
+        SP.TenSanPham,
+        SUM(CT.SoLuong) AS TongSoLuongBan
+    FROM
+        HoaDon HD
+    JOIN
+        ChiTietHoaDon CT ON HD.MaHoaDon = CT.MaHoaDon
+    JOIN
+        SanPham SP ON CT.MaSanPham = SP.MaSanPham
+    WHERE
+        YEAR(HD.NgayTao) = @year
+        AND HD.TrangThai = N'Đã giao'
+    GROUP BY
+        SP.MaSanPham, SP.TenSanPham
+    ORDER BY
+        TongSoLuongBan DESC
+)
+GO
+
+
+CREATE FUNCTION fn_ThongKeTongSoLuongSanPhamTheoThang
+(
+    @year INT
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    WITH Months AS (
+        SELECT 1 AS Thang
+        UNION ALL SELECT 2
+        UNION ALL SELECT 3
+        UNION ALL SELECT 4
+        UNION ALL SELECT 5
+        UNION ALL SELECT 6
+        UNION ALL SELECT 7
+        UNION ALL SELECT 8
+        UNION ALL SELECT 9
+        UNION ALL SELECT 10
+        UNION ALL SELECT 11
+        UNION ALL SELECT 12
+    )
+    SELECT
+        M.Thang,
+        COALESCE(SUM(CT.SoLuong), 0) AS TongSoLuongBan
+    FROM
+        Months M
+    LEFT JOIN
+        HoaDon H ON YEAR(H.NgayTao) = @year AND MONTH(H.NgayTao) = M.Thang AND H.TrangThai = N'Đã giao'
+    LEFT JOIN
+        ChiTietHoaDon CT ON H.MaHoaDon = CT.MaHoaDon
+    GROUP BY
+        M.Thang
+)
+GO
+
+CREATE FUNCTION fn_danhSachKhachHang
+(
+    @thang INT,
+    @nam INT
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        ND.Hoten AS TenKhachHang,
+		ND.Gioitinh,
+        ND.email,
+        ND.SDT,
+        COALESCE(COUNT(CT.MaSanPham), 0) AS SoSanPhamMua,
+        COALESCE(SUM(HD.TongTien), 0) AS TongSoTien
+    FROM 
+        NguoiDung ND
+    LEFT JOIN 
+        HoaDon HD ON ND.ID = HD.IDNguoiMua 
+                 AND HD.TrangThai = N'Đã giao'
+                 AND (@nam = 0 OR YEAR(HD.NgayTao) = @nam)
+                 AND (@thang = 0 OR MONTH(HD.NgayTao) = @thang)
+    LEFT JOIN 
+        ChiTietHoaDon CT ON HD.MaHoaDon = CT.MaHoaDon
+    GROUP BY 
+        ND.Hoten, ND.email, ND.SDT,ND.Gioitinh
+)
+GO
+
+CREATE FUNCTION fn_ThongKeSoNguoiMuaTheoThang
+(
+    @year INT
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    WITH Months AS (
+        SELECT 1 AS Thang
+        UNION ALL SELECT 2
+        UNION ALL SELECT 3
+        UNION ALL SELECT 4
+        UNION ALL SELECT 5
+        UNION ALL SELECT 6
+        UNION ALL SELECT 7
+        UNION ALL SELECT 8
+        UNION ALL SELECT 9
+        UNION ALL SELECT 10
+        UNION ALL SELECT 11
+        UNION ALL SELECT 12
+    )
+    SELECT
+        M.Thang,
+        COALESCE(COUNT(DISTINCT H.IDNguoiMua), 0) AS SoNguoiMua
+    FROM
+        Months M
+    LEFT JOIN
+        HoaDon H ON YEAR(H.NgayTao) = @year AND MONTH(H.NgayTao) = M.Thang AND H.TrangThai = N'Đã giao'
+    GROUP BY
+        M.Thang
+)
 GO

@@ -45,7 +45,7 @@
                     <div class="account-info" id="account-info">
                         <ul>
                             <li class="account-info-item"><a href="/project_web/TaiKhoanController">Tài khoản của tôi</a></li>
-                            <li class="account-info-item"><a href="#">Đơn mua</a></li>
+                            <li class="account-info-item"><a href="/project_web/DonHang">Đơn mua</a></li>
                             <li class="account-info-item"><a href="/project_web">Đăng xuất</a></li>
                         </ul>
                         
@@ -79,7 +79,7 @@
 	</div>
 	
     <!-- Banner -->
-    <div class="container1 mt">
+    <div class="container1">
         <div class="container1">
             <div class="col-md-12">
                 <nav aria-label="breadcrumb">
