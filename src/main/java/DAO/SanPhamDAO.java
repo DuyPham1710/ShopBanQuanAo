@@ -516,5 +516,133 @@ public class SanPhamDAO {
 		}
 		return listMauHex;
 	}
+	public static List<String> DanhSachSizeCuaSP(Connection conn,int maSP) throws SQLException {
+		List<String> listSizeSP = new ArrayList<String>();
+		String sql = "select TenKichCo from KichCo where MaSanPham = ?";
+		
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {	
+			listSizeSP.add(rs.getString("TenKichCo"));	
+		}
+		return listSizeSP;
+	}
+	
+	public static void SuaMau(Connection conn,int maSP, List<String> listMau) throws SQLException {
+		String sql = "DELETE FROM MauSac WHERE MaSanPham = ?;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
+		for (int i = 0; i < listMau.size(); i++) {
+			String sql1 = "INSERT INTO MauSac (MaMauSac, MaSanPham, TenMau, MaMauDangHex) VALUES (?, ?, ?, ?)";
+			PreparedStatement ps1 = conn.prepareStatement(sql1);
+			ps1.setInt(1, i+1);
+			ps1.setInt(2, maSP);
+			ps1.setString(3, listMau.get(i));
+			ps1.setString(4, listMau.get(i));
+        }
+	}
+	
+	public static void SuaSize(Connection conn,int maSP, List<String> listSize) throws SQLException {
+		String sql = "DELETE FROM KichCo WHERE MaSanPham = ?;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
+		
+		for (int i = 0; i < listSize.size(); i++) {
+			String sql1 = "INSERT INTO MauSac (MaKichCo, MaSanPham, TenKichCo) VALUES (?, ?, ?)";
+			PreparedStatement ps1 = conn.prepareStatement(sql1);
+			ps1.setInt(1, i+1);
+			ps1.setInt(2, maSP);
+			ps1.setString(3, listSize.get(i));
+        }
+	}
+	
+	public static void SuaSanPham(Connection conn, SanPham sp) throws SQLException {
+		String sql = "UPDATE SanPham Set TenSanPham = ?, MoTa = ?, GiaBanDau = ?, GiamGia = ?, SoLuong = ?, MaDanhMuc = ?, XuatXu = ?, ChatLieu = ? WHERE MaSanPham = ?;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setNString(1, sp.getTenSP());
+		ps.setNString(2, sp.getMota());
+		ps.setInt(3, sp.getGiaBanDau());
+		ps.setInt(4, sp.getGiamGia());
+		ps.setInt(5, sp.getSoLuong());
+		ps.setInt(6, sp.getDanhMuc().getMaDanhMuc());
+		ps.setNString(7, sp.getXuatXu());
+		ps.setNString(8, sp.getChatLieu());
+		ps.setInt(9, sp.getMaSP());
+		ps.executeUpdate();
+	    
+		System.out.print(sp.getGiaBanDau());
+	}
+	
+	public static void SuaHinhAnh(Connection conn, SanPham sp) throws SQLException {
+		String sql = "UPDATE HinhAnhSanPham "
+				+ " Set DuongDanHinh = ?,"
+				+ " MoTaHinh = N'Hình của sản phẩm'"
+				+ "WHERE MaSanPham = ?;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, sp.getHinhAnhSP().getDuongDanHinh());
+		ps.setInt(2, sp.getMaSP());
+		ps.executeUpdate();
+	}
+	public static int MaSPTiepTheo(Connection conn) throws SQLException{
+		String sql = "SELECT ISNULL(MAX(MaSanPham), 0) + 1 AS NextMaSanPham FROM SanPham";
+		try (PreparedStatement ps = conn.prepareStatement(sql);
+		     ResultSet rs = ps.executeQuery()) {
+		    if (rs.next()) {
+		        return rs.getInt("NextMaSanPham");
+		    }
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		}
+		return 1;
+	}
+	public static void ThemSanPham(Connection conn, SanPham sp) throws SQLException {
+		String sql = "INSERT INTO SanPham "
+				+ "(MaSanPham, TenSanPham, MoTa, GiaBanDau, GiamGia, SoLuong, MaDanhMuc, NgayTao, XuatXu, ChatLieu, DaBan) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, sp.getMaSP());
+		ps.setString(2, sp.getTenSP());
+		ps.setString(3, sp.getMota());
+		ps.setInt(4, sp.getGiaBanDau());
+		ps.setInt(5, sp.getGiamGia());
+		ps.setInt(6, sp.getSoLuong());
+		ps.setInt(7, sp.getDanhMuc().getMaDanhMuc());
+		ps.setDate(8, sp.getNgayTao());
+		ps.setString(9, sp.getXuatXu());
+		ps.setString(10, sp.getChatLieu());
+		ps.executeUpdate();
+	}
+	public static void ThemSize(Connection conn, int maSP,List<String> listSize) throws SQLException {
+		for (int i = 0; i < listSize.size(); i++) {
+			String sql = "INSERT INTO MauSac (MaKichCo, MaSanPham, TenKichCo) VALUES (?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, i+1);
+			ps.setInt(2, maSP);
+			ps.setString(3, listSize.get(i));
+			ps.executeUpdate();
+        }
+	}
+	public static void ThemMau(Connection conn, int maSP,List<String> listMau) throws SQLException {
+		for (int i = 0; i < listMau.size(); i++) {
+			String sql = "INSERT INTO MauSac (MaMauSac, MaSanPham, TenMau, MaMauDangHex) VALUES (?, ?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, i+1);
+			ps.setInt(2, maSP);
+			ps.setString(3, listMau.get(i));
+			ps.setString(4, listMau.get(i));
+			ps.executeUpdate();
+        }
+	}
+	public static void ThemHinh(Connection conn, SanPham sp) throws SQLException {
+		String sql = "INSERT INTO HinhAnhSanPham(MaHinhAnh, MaSanPham, DuongDanHinh, MoTaHinh) "
+				+ " VALUES (?, ?, ?, N'Hình ảnh sản phẩm')";		
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, sp.getMaSP());
+		ps.setInt(2, sp.getMaSP());
+		ps.setString(3, sp.getHinhAnhSP().getDuongDanHinh());
+		ps.executeUpdate();
+	}
 }
 
