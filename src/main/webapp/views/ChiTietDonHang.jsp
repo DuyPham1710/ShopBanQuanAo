@@ -19,26 +19,26 @@
                 <div class="mb-3 row">
                     <label for="full-name" class="col-sm-3 col-form-label">Họ và tên</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="full-name" placeholder="duy" value="${nguoiDung.hoTen}">
+                        <input type="text" class="form-control" id="full-name" placeholder="duy" value="${nguoiDung.hoTen}" readonly="readonly">
                     </div>
                 </div>
                
                 <div class="mb-3 row">
                     <label for="phone-number" class="col-sm-3 col-form-label">Số điện thoại</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="phone-number" placeholder="0794821201" value="${nguoiDung.sdt}">
+                        <input type="text" class="form-control" id="phone-number" placeholder="0794821201" value="${nguoiDung.sdt}" readonly="readonly">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="Email" class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="Email" class="form-control" id="Email" placeholder="duy@gmail.com" value="${nguoiDung.email}">
+                        <input type="Email" class="form-control" id="Email" placeholder="duy@gmail.com" value="${nguoiDung.email}" readonly="readonly">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="street-address" class="col-sm-3 col-form-label">Địa chỉ nhận hàng</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="street-address" placeholder="123 Main St, Hanoi" value="${nguoiDung.diaChiNhanHang[0].tenDiaChi}">
+                        <input type="text" class="form-control" id="street-address" placeholder="123 Main St, Hanoi" value="${nguoiDung.diaChiNhanHang[0].tenDiaChi}" readonly="readonly">
                     </div>
                 </div>
                 
@@ -46,7 +46,7 @@
                     <label class="col-form-label font-weight-bold">Phương thức thanh toán</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="pay-later" checked>
+                    <input class="form-check-input" type="checkbox" value="" id="pay-later" checked >
                     <label class="form-check-label" for="pay-later">Thanh toán khi nhận hàng</label>
                 </div>
                 <div class="form-check">
