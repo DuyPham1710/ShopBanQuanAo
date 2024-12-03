@@ -79,7 +79,7 @@
 	</div>
 	
     <!-- Banner -->
-    <div class="container1 mt">
+    <div class="container1">
         <div class="container1">
             <div class="col-md-12">
                 <nav aria-label="breadcrumb">
