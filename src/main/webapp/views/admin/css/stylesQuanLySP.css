@@ -360,7 +360,7 @@ body {
 /* Màu sắc */
 .color-options {
     display: none;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 6px;
     padding: 10px;
 }
@@ -387,7 +387,8 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 16px;
-    color: white;
+    color: gray; /* Màu mặc định cho tick */
+    mix-blend-mode: difference; /* Tự động tạo màu tương phản */
     display: none; 
 }
 

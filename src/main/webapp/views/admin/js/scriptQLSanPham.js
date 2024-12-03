@@ -125,3 +125,18 @@ function confirmImageUpload() {
     alert('Vui lòng nhập đường dẫn ảnh!');
   }
 }
+
+
+const selectedColors = new Set();
+function toggleColor(element) {
+    const color = element.getAttribute("data-color");
+
+    if (selectedColors.has(color)) {
+        selectedColors.delete(color); // Bỏ chọn nếu đã chọn trước đó
+        element.classList.remove("selected");
+    } else {
+        selectedColors.add(color); // Thêm màu vào danh sách chọn
+        element.classList.add("selected");
+    }
+
+}

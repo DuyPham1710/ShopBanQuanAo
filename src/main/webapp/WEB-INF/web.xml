@@ -89,7 +89,16 @@
     <servlet-name>QuanLySPController</servlet-name>
     <url-pattern>/QuanLySPController</url-pattern>
   </servlet-mapping>
-
+	  <servlet>
+    <description></description>
+    <display-name>qlSanPhamController</display-name>
+    <servlet-name>qlSanPhamController</servlet-name>
+    <servlet-class>Controller.qlSanPhamController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>qlSanPhamController</servlet-name>
+    <url-pattern>/qlSanPhamController</url-pattern>
+  </servlet-mapping>
    <servlet>
     <description></description>
     <display-name>qlKhachHangController</display-name>

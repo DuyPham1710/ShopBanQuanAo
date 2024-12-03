@@ -101,23 +101,18 @@
     </div>
   
     <div class="col-md-6">
-      <label class="form-label">Màu</label>
-      <div class="btn-group d-flex flex-wrap" role="group" aria-label="Color options">
-        <input type="checkbox" class="btn-check" id="colorRedEdit" value="Đỏ" autocomplete="off">
-        <label class="btn btn-outline-danger" for="colorRedEdit">Đỏ</label>
-  
-        <input type="checkbox" class="btn-check" id="colorBlueEdit" value="Xanh" autocomplete="off">
-        <label class="btn btn-outline-primary" for="colorBlueEdit">Xanh</label>
-  
-        <input type="checkbox" class="btn-check" id="colorYellowEdit" value="Vàng" autocomplete="off">
-        <label class="btn btn-outline-warning" for="colorYellowEdit">Vàng</label>
-  
-        <input type="checkbox" class="btn-check" id="colorWhiteEdit" value="Trắng" autocomplete="off">
-        <label class="btn btn-outline-secondary" for="colorWhiteEdit">Trắng</label>
-  
-        <input type="checkbox" class="btn-check Edit" id="colorBlackEdit" value="Đen" autocomplete="off">
-        <label class="btn btn-outline-dark Edit" for="colorBlackEdit">Đen</label>
-      </div>
+      <label class="form-label">Màu sắc</label>
+      <div class="filter_category" style="width:100%; border-radius:5px;">
+           <div class="filter_category-title">Danh sách màu...</div>
+           <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
+           <div class="dropdown-content color-options">
+	           <c:forEach var="item" items="${listMauHex}">
+			   		<div class="color-circle" style="background-color: ${item};" data-color="${item}" onclick="toggleColor(this)">
+				     	<span class="tick">&#10003;</span>
+				 	</div>
+				</c:forEach>
+           </div>
+       </div>
     </div>
   </div>
   <!-- Row 6: Mô tả -->

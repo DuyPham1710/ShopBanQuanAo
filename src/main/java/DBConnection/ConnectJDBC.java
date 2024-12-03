@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConnectJDBC {
-//	private final String serverName = "MSI";
 	private final String serverName = "LAPTOP-EC6KMGRU";
 	private final String dbName = "ShopBanAoQuan";
 	private final String portNumber = "1433";
