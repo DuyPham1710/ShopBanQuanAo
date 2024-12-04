@@ -29,7 +29,7 @@
             <li class="nav-item">
               <!-- Icon giỏ hàng -->
               <i class="bi bi-bag-check me-2"></i>
-              <a class="nav-link" href="#">Order</a>
+              <a class="nav-link" href="HoaDonController">Order</a>
             </li>
           
             <li class="nav-item">

@@ -19,26 +19,26 @@
                 <div class="mb-3 row">
                     <label for="full-name" class="col-sm-3 col-form-label">Họ và tên</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="full-name" placeholder="duy" value="${nguoiDung.hoTen}" readonly="readonly">
+                        <input type="text" class="form-control" id="full-name" placeholder="duy" value="${nguoiDung.hoTen}">
                     </div>
                 </div>
                
                 <div class="mb-3 row">
                     <label for="phone-number" class="col-sm-3 col-form-label">Số điện thoại</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="phone-number" placeholder="0794821201" value="${nguoiDung.sdt}" readonly="readonly">
+                        <input type="text" class="form-control" id="phone-number" placeholder="0794821201" value="${nguoiDung.sdt}">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="Email" class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="Email" class="form-control" id="Email" placeholder="duy@gmail.com" value="${nguoiDung.email}" readonly="readonly">
+                        <input type="Email" class="form-control" id="Email" placeholder="duy@gmail.com" value="${nguoiDung.email}">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="street-address" class="col-sm-3 col-form-label">Địa chỉ nhận hàng</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="street-address" placeholder="123 Main St, Hanoi" value="${nguoiDung.diaChiNhanHang[0].tenDiaChi}" readonly="readonly">
+                        <input type="text" class="form-control" id="street-address" placeholder="123 Main St, Hanoi" value="${nguoiDung.diaChiNhanHang[0].tenDiaChi}">
                     </div>
                 </div>
                 
@@ -46,7 +46,7 @@
                     <label class="col-form-label font-weight-bold">Phương thức thanh toán</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="pay-later" checked >
+                    <input class="form-check-input" type="checkbox" value="" id="pay-later" checked>
                     <label class="form-check-label" for="pay-later">Thanh toán khi nhận hàng</label>
                 </div>
                 <div class="form-check">
@@ -85,6 +85,20 @@
                 <h5 class="font-weight-bold">Tổng tiền</h5>
                 <h5 class="font-weight-bold"><strong>${donMua.tongTien} VND</strong></h5>
             </div>
+           
+            <!-- Nút Xác nhận và Hủy-->
+			<div class="text-end mt-4">
+			    <c:if test="${donMua.trangThai != 'Đang giao' and donMua.trangThai != 'Đã giao' and donMua.trangThai != 'Đã hủy'}">
+			        <button class="btn btn-danger px-4" onclick="huyDonHang(${donMua.maHoaDon})">Hủy đơn hàng</button>
+			        <button class="btn btn-primary px-4 ms-2" onclick="xacNhanDonHang(${donMua.maHoaDon})">Xác nhận đơn hàng</button>
+			    </c:if>
+			    <c:if test="${donMua.trangThai == 'Đang giao'}">
+			        <button class="btn btn-success px-4 ms-2" onclick="daGiao(${donMua.maHoaDon})">Đã giao</button>
+			    </c:if>
+			</div>
+
+
         </div>
     </div>
 </div>
+

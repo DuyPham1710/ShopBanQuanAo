@@ -96,6 +96,9 @@
 						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đã giao')">
 						            <i class="fas fa-check me-2"></i> Đã giao
 						        </a>
+						         <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đã hủy')">
+						            <i class="fas fa-times-circle me-2"></i> Đã hủy
+						        </a>
 						    </div>
 						</form>
 	                    <a href="#" class="list-group-item">
@@ -131,13 +134,13 @@
 	                                        <h4>${donMua.chiTietHD[0].sp.tenSP}</h4>
 	                                        <p class="mb-1">Size: ${donMua.chiTietHD[0].sp.kichCo[0].tenKichCo}, Màu: ${donMua.chiTietHD[0].sp.mauSac[0].tenMau}</p>
 	                                        <small class="text-muted">x${donMua.chiTietHD[0].soLuongDaMua}</small>
-	                                      <%--   <p class="mb-1">Trạng thái: <span class="badge bg-warning text-dark"><i class="fas fa-clock me-2"></i>${donMua.trangThai}</span></p> --%>
 	                                        <p class="mb-1">Trạng thái: 
 											    <span class="badge 
 											        <c:choose>
 											            <c:when test="${donMua.trangThai == 'Chờ xác nhận'}">bg-warning text-dark</c:when>
 											            <c:when test="${donMua.trangThai == 'Đang giao'}">bg-info text-dark</c:when>
 											            <c:when test="${donMua.trangThai == 'Đã giao'}">bg-success text-white</c:when>
+											            <c:when test="${donMua.trangThai == 'Đã hủy'}">bg-danger text-white</c:when>
 											            <c:otherwise>bg-secondary text-light</c:otherwise>
 											        </c:choose>">
 											        <i class="fas 
@@ -145,6 +148,7 @@
 											                <c:when test="${donMua.trangThai == 'Chờ xác nhận'}">fa-clock</c:when>
 											                <c:when test="${donMua.trangThai == 'Đang giao'}">fa-truck</c:when>
 											                <c:when test="${donMua.trangThai == 'Đã giao'}">fa-check</c:when>
+											                <c:when test="${donMua.trangThai == 'Đã hủy'}">fa-times-circle</c:when>
 											                <c:otherwise>fa-question-circle</c:otherwise>
 											            </c:choose> me-2"></i>
 											        ${donMua.trangThai}
@@ -159,6 +163,26 @@
 	                                        <p class="mb-1 text-end product-price"><strong>${donMua.chiTietHD[0].donGia} VND</strong></p>
 	                                    </div>
 	                                    
+	                                     <!-- Nút Đánh giá -->
+	                                      <c:if test="${donMua.trangThai == 'Đã giao'}">
+	                                         <button class="btn btn-success btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="openReviewModal()">
+											    <i class="fas fa-star"></i> Đánh giá
+											</button>
+	                                      </c:if>
+							         
+										
+	                                    <!-- Nút Mua lại -->
+	                                    <form action="./ChiTietSPController" method="post">
+	                                         <c:if test="${donMua.trangThai == 'Đã giao' || donMua.trangThai == 'Đã hủy'}">
+		                                    	<input type="hidden" name="method" value="get">
+						        				<input type="hidden" name="maSP" value="${donMua.chiTietHD[0].sp.maSP}">	
+		                                       <button class="btn btn-custom btn-sm d-flex align-items-center gap-2" style="margin-right: -45px;">
+												    <i class="fas fa-shopping-cart"></i> Mua lại
+												</button>
+		                                     </c:if>
+	                                    </form>
+	                               
+
 	                                    <button class="toggle-details" type="button" data-bs-toggle="collapse" data-bs-target="#orderDetails${donMua.maHoaDon}" aria-expanded="false" aria-controls="orderDetails${donMua.maHoaDon}">
 	                                        <i class="fa-solid fa-chevron-left"></i>
 	                                    </button>
@@ -183,6 +207,24 @@
 		                                                <strong>${ChiTietHD.donGia} VND</strong>
 		                                            </p>
 		                                        </div>
+		                                        
+		                                         <!-- Nút Đánh giá -->
+		                                        <c:if test="${donMua.trangThai == 'Đã giao'}">
+		                                        	<button class="btn btn-success btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="openReviewModal()">
+													    <i class="fas fa-star"></i> Đánh giá
+													</button>
+		                                        </c:if>
+		                                    
+		                                         <!-- Nút Mua lại -->
+		                                         <form action="./ChiTietSPController" method="post">
+			                                         <c:if test="${donMua.trangThai == 'Đã giao' || donMua.trangThai == 'Đã hủy'}">
+			                                         	  <input type="hidden" name="method" value="get">
+						      							  <input type="hidden" name="maSP" value="${ChiTietHD.sp.maSP}">	
+			                                         	  <button class="btn btn-custom btn-sm d-flex align-items-center gap-2">
+															    <i class="fas fa-shopping-cart"></i> Mua lại
+														  </button>
+			                                         </c:if>
+									          	</form>
 		                                    </div>
 	                                  
 	                                    </c:forEach>
@@ -196,13 +238,25 @@
 	                                     <span class="font-weight-bold">Xem Chi Tiết</span>
 	                                 </a>
 	                             </div>
-	                             <!-- Nút Đánh giá -->
-					            <div class="position-absolute bottom-0 start-0 mb-3 ms-3 d-block 
-					                <c:if test="${donMua.trangThai != 'Đã giao'}">d-none</c:if>" >
-					                <a href="javascript:void(0);" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="showRatingModal(${donMua.maHoaDon})">
-					                    <i class="fas fa-star me-2"></i> Đánh giá
-					                </a>
-					            </div>
+	                           <div class="position-absolute bottom-0 start-0 mb-3 ms-3 d-block">
+								    <!-- Chỉ hiển thị nút Hủy đơn hàng khi trạng thái là 'Chờ xác nhận' -->
+								    <c:if test="${donMua.trangThai == 'Chờ xác nhận'}">
+								        <button class="btn btn-danger btn-cancel d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#confirmCancelModal" onclick="Huy(${donMua.maHoaDon})">
+								            <i class="fas fa-times-circle"></i> <!-- Icon Font Awesome -->
+								            Hủy đơn hàng
+								        </button>
+								    </c:if>
+								</div>
+	                             
+	                             <div class="position-absolute bottom-0 start-0 mb-3 ms-3 d-block">
+								    <!-- Chỉ hiển thị nút Hủy đơn hàng khi trạng thái là 'Chờ xác nhận' -->
+								    <c:if test="${donMua.trangThai == 'Đang giao'}">
+								        <button class="btn btn-received btn-sm d-flex align-items-center gap-2" onclick="confirmReceived(${donMua.maHoaDon})">
+										    <i class="fas fa-check-circle"></i> Đã nhận được hàng
+										</button>
+								    </c:if>
+								</div>
+								
 	                        </div>
                     	</c:forEach>	
 	            </div>
@@ -228,7 +282,84 @@
 	    </div>
 	  </div> 
 	
-  	
+  	<!-- Modal xác nhận hủy -->
+    <div class="modal fade" id="confirmCancelModal" tabindex="-1" aria-labelledby="confirmCancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog custom-modal-width">
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmCancelModalLabel">Xác nhận hủy đơn hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center fw-bold">Bạn có chắc chắn muốn hủy đơn hàng này không?</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">
+                        Đóng
+                    </button>       
+                   		<input type="hidden" name="maHoaDon" id="input-maHoaDon">
+                   		 <button type="button" class="btn btn-danger btn-lg" id="data-maHoaDon" onclick="huyDonHang()">
+	                        Hủy đơn
+	                    </button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>   	
+	    function Huy(maHoaDon) {
+	    	 const InputMaHoaDon = document.getElementById('input-maHoaDon');
+	    	 InputMaHoaDon.value = maHoaDon;
+	    }
+	      
+    	function huyDonHang() {		
+    	    fetch('/project_web/views/admin/HoaDonController', {
+    	        method: 'PUT',
+    	        headers: {
+    	            'Content-Type': 'application/json',
+    	        },
+    	        body: JSON.stringify({ maHoaDon: document.getElementById('input-maHoaDon').value, trangThai: 'Đã hủy'  }),
+    	    })
+    	    .then(response => {
+    	        if (response.ok) {
+    	            // Tải lại trang hoặc chuyển hướng nếu cần
+    	            location.reload();
+    	        } else {
+    	            return response.text().then(text => {
+    	                throw new Error(text);
+    	            });
+    	        }
+    	    })
+    	    .catch(error => {
+    	        console.error("Error:", error);
+    	        alert("Có lỗi xảy ra khi xác nhận đơn hàng: " + error.message);
+    	    });
+    	}
+    	function confirmReceived(maHoaDon) {		
+    	    fetch('/project_web/views/admin/HoaDonController', {
+    	        method: 'PUT',
+    	        headers: {
+    	            'Content-Type': 'application/json',
+    	        },
+    	        body: JSON.stringify({ maHoaDon: maHoaDon, trangThai: 'Đã giao'  }),
+    	    })
+    	    .then(response => {
+    	        if (response.ok) {
+    	            // Tải lại trang hoặc chuyển hướng nếu cần
+    	            location.reload();
+    	        } else {
+    	            return response.text().then(text => {
+    	                throw new Error(text);
+    	            });
+    	        }
+    	    })
+    	    .catch(error => {
+    	        console.error("Error:", error);
+    	        alert("Có lỗi xảy ra khi xác nhận đơn hàng: " + error.message);
+    	    });
+    	}
+    	
+    </script>
 <!-- Modal Đánh giá -->
 	<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
         <div class="modal-dialog custom-modal-width">

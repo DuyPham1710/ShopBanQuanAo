@@ -162,4 +162,47 @@ public class DonHangDAO {
 //            System.out.println("=========================================");
 //        }
 //	}
+	
+	public static DonMua LoadThongTinMotDonHangChoAD(Connection conn, int maHoaDon, int idNguoiMua) throws SQLException {
+		List<ChiTietHoaDon> listChiTietHD = new ArrayList<ChiTietHoaDon>();
+	    String sql = "{call proc_LoadThongTinMotDonHang(?, ?)}";
+
+	    PreparedStatement ps = conn.prepareStatement(sql);
+	    ps.setInt(1, idNguoiMua);
+	    ps.setInt(2, maHoaDon);
+	    ResultSet rs = ps.executeQuery();
+	    String trangThai = "";
+	    int tongTien = 0;
+	    while (rs.next()) {
+	    	trangThai = rs.getString("TrangThai");
+	    	tongTien = rs.getInt("TongTien");
+	        HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham(rs.getInt("MaHinhAnh"), rs.getString("DuongDanHinh"));
+	        KichCo size = new KichCo(rs.getInt("MaKichCo"), rs.getString("TenKichCo"));
+	        MauSac color = new MauSac(rs.getInt("MaMau"), rs.getString("TenMau"));
+	        int donGia = (int) (rs.getFloat("DonGia"));
+
+	        SanPham sp = new SanPham(
+	                rs.getInt("maSP"),
+	                rs.getString("TenSanPham"),
+	                rs.getInt("GiaBanDau"),
+	                donGia,
+	                rs.getInt("SoLuongSP"),
+	                size,
+	                color,
+	                hinhAnhSP
+	        );
+
+	        ChiTietHoaDon chiTietHD = new ChiTietHoaDon(
+	                sp,
+	                rs.getInt("SoLuongDaMua"),
+	                rs.getInt("DonGia"),
+	                rs.getInt("GiaBan")
+	        );      
+	        
+	        listChiTietHD.add(chiTietHD);
+	    }
+	    System.out.print(listChiTietHD.size());
+	    DonMua donMua = new DonMua(maHoaDon, trangThai, tongTien, listChiTietHD);
+	    return donMua;
+	}
 }
