@@ -29,7 +29,7 @@ import DBConnection.ConnectJDBC;
 /**
  * Servlet implementation class HoaDonController
  */
-@WebServlet("/views/admin/HoaDonController")
+@WebServlet("/HoaDonController")
 public class HoaDonController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -25,28 +25,33 @@
     <div class="row">
     
       <!-- Sidebar -->
-      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="position-sticky">
           <div class="logo text-center">
-            <img src="/project_web/views/images/logo.jpg" class="rounded" alt="Logo" id="logo">
+            <img src="./views/images/logo.jpg" class="rounded" alt="Logo" id="logo">
           </div>
           <ul class="nav flex-column">
             <li class="nav-item">
               <i class="bi bi-house me-2"></i>
-              <a class="nav-link" href="TrangChuAD.jsp">Trang chủ</a>
+              <a class="nav-link" href="/project_web/TrangChuADController">Trang chủ</a>
             </li>
             <li class="nav-item">
+              <!-- Icon giỏ hàng -->
               <i class="bi bi-bag-check me-2"></i>
-              <a class="nav-link" href="HoaDonController">Order</a>
+              <a class="nav-link" href="/project_web/HoaDonController">Order</a>
             </li>
+          
             <li class="nav-item">
               <i class="bi bi-box me-2"></i>
               <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts">Products</a>
-              
             </li>
             <li class="nav-item">
               <i class="bi bi-people me-2"></i>
               <a class="nav-link" href="/project_web/qlKhachHangController">Customers</a>
+            </li>
+            <li class="nav-item">
+              <i class="bi bi-chat-left-text me-2"></i>
+              <a class="nav-link" href="#">Messages</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-box-arrow-right me-2"></i>

@@ -26,19 +26,21 @@
           <ul class="nav flex-column">
             <li class="nav-item">
               <i class="bi bi-house me-2"></i>
-              <a class="nav-link" href="TrangChuAD.jsp">Trang chủ</a>
+              <a class="nav-link" href="/project_web/TrangChuADController">Trang chủ</a>
             </li>
             <li class="nav-item">
+              <!-- Icon giỏ hàng -->
               <i class="bi bi-bag-check me-2"></i>
-              <a class="nav-link" href="HoaDonController">Order</a>
+              <a class="nav-link" href="/project_web/HoaDonController">Order</a>
             </li>
+          
             <li class="nav-item">
               <i class="bi bi-box me-2"></i>
               <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts">Products</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-people me-2"></i>
-              <a class="nav-link" href="QuanLyKhachHang.jsp">Customers</a>
+              <a class="nav-link" href="/project_web/qlKhachHangController">Customers</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-chat-left-text me-2"></i>
@@ -51,7 +53,6 @@
           </ul>
         </div>
       </nav>
-
       <!-- Main Content -->
       <main class="content col-md-10 ms-sm-auto px-md-4">
         <header class="d-flex justify-content-between align-items-center py-3">

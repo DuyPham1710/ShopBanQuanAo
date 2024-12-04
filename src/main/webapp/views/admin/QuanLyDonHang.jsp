@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="./css/stylesDonHang.css">
+  <link rel="stylesheet" href="./views/admin/css/stylesDonHang.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -19,24 +19,26 @@
       <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="position-sticky">
           <div class="logo text-center">
-            <img src="../images/logo.jpg" class="rounded" alt="Logo" id="logo">
+            <img src="./views/images/logo.jpg" class="rounded" alt="Logo" id="logo">
           </div>
           <ul class="nav flex-column">
             <li class="nav-item">
               <i class="bi bi-house me-2"></i>
-              <a class="nav-link" href="TrangChuAD.jsp">Trang chủ</a>
+              <a class="nav-link" href="/project_web/TrangChuADController">Trang chủ</a>
             </li>
             <li class="nav-item">
+              <!-- Icon giỏ hàng -->
               <i class="bi bi-bag-check me-2"></i>
-              <a class="nav-link" href="HoaDonController">Order</a>
+              <a class="nav-link" href="/project_web/HoaDonController">Order</a>
             </li>
+          
             <li class="nav-item">
               <i class="bi bi-box me-2"></i>
-              <a class="nav-link" href="QuanLySP.jsp" id="loadProducts">Products</a>
+              <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts">Products</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-people me-2"></i>
-              <a class="nav-link" href="QuanLyKhachHang.jsp">Customers</a>
+              <a class="nav-link" href="/project_web/qlKhachHangController">Customers</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-chat-left-text me-2"></i>
@@ -163,7 +165,7 @@
   function loadOrderDetails(maHoaDon, idNguoiMua) {
   	console.log(maHoaDon);
       // Gửi mã đơn hàng đến Controller
-      fetch(`/project_web/views/admin/HoaDonController`, {
+      fetch(`/project_web/HoaDonController`, {
           method: "POST",
           headers: {
           	"Content-Type": "application/json",
@@ -206,7 +208,7 @@ function xacNhanDonHang(maHoaDon) {
         return;
     }
 
-    fetch('/project_web/views/admin/HoaDonController', {
+    fetch('/project_web/HoaDonController', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -236,7 +238,7 @@ function xacNhanDonHang(maHoaDon) {
 	        return;
 	    }
 
-	    fetch('/project_web/views/admin/HoaDonController', {
+	    fetch('/project_web/HoaDonController', {
 	        method: 'PUT',
 	        headers: {
 	            'Content-Type': 'application/json',
@@ -269,7 +271,7 @@ function xacNhanDonHang(maHoaDon) {
         return;
     }
 
-    fetch('/project_web/views/admin/HoaDonController', {
+    fetch('/project_web/HoaDonController', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

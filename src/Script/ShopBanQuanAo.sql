@@ -623,3 +623,32 @@ RETURN
         M.Thang
 )
 GO
+
+CREATE FUNCTION dbo.TongDoanhThuDaLuu()
+RETURNS INT
+AS
+BEGIN
+    -- Biến để lưu kết quả
+    DECLARE @TongDoanhThu INT;
+
+    -- Tính tổng doanh thu
+    SELECT @TongDoanhThu = SUM(TongTien)
+    FROM HoaDon
+    WHERE TrangThai = N'Đã lưu';
+
+    -- Trả về kết quả
+    RETURN ISNULL(@TongDoanhThu, 0);
+END;
+GO
+
+CREATE FUNCTION dbo.SoDonHangTheoTrangThai()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        DaGiao = SUM(CASE WHEN TrangThai = N'Đã giao' THEN 1 ELSE 0 END),
+        DangGiao = SUM(CASE WHEN TrangThai = N'Đang giao' THEN 1 ELSE 0 END)
+    FROM HoaDon
+);
+GO

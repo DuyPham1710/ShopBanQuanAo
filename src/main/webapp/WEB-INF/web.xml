@@ -89,7 +89,7 @@
     <servlet-name>QuanLySPController</servlet-name>
     <url-pattern>/QuanLySPController</url-pattern>
   </servlet-mapping>
-	  <servlet>
+  <servlet>
     <description></description>
     <display-name>qlSanPhamController</display-name>
     <servlet-name>qlSanPhamController</servlet-name>
@@ -99,7 +99,7 @@
     <servlet-name>qlSanPhamController</servlet-name>
     <url-pattern>/qlSanPhamController</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>qlKhachHangController</display-name>
     <servlet-name>qlKhachHangController</servlet-name>
@@ -118,5 +118,15 @@
   <servlet-mapping>
     <servlet-name>ProxyServlet</servlet-name>
     <url-pattern>/ProxyServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TrangChuADController</display-name>
+    <servlet-name>TrangChuADController</servlet-name>
+    <servlet-class>Controller.TrangChuADController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TrangChuADController</servlet-name>
+    <url-pattern>/TrangChuADController</url-pattern>
   </servlet-mapping>
 </web-app>
