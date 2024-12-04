@@ -102,7 +102,7 @@
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-bell me-2"></i> Thông báo
 	                    </a>
-	                    <a href="#" class="list-group-item">
+	                    <a href="./views/ChinhSach.jsp" class="list-group-item">
 	                        <i class="fas fa-file-alt me-2"></i> Chính sách
 	                    </a>
 	                    <a href="#" class="list-group-item">
