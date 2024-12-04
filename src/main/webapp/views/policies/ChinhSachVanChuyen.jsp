@@ -5,16 +5,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-   
-    <title>Hồ Sơ Của Tôi</title>
+    <title>Chính sách vận chuyển</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome CSS -->
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./views/css/style.css">
     <link rel="stylesheet" href="./views/css/styleTaiKhoan.css">
+    <link rel="stylesheet" href="./views/css/styleChinhSach.css">
 </head>
 <body>
 	<!-- Navbar -->
@@ -96,26 +97,9 @@
 						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đã giao')">
 						            <i class="fas fa-check me-2"></i> Đã giao
 						        </a>
-						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đã hủy')">
-						            <i class="fas fa-times-circle me-2"></i> Đã hủy
-						        </a>
 						    </div>
 						</form>
-	                  	<!-- Đánh giá -->
-				        <a href="#ratingDropdown" class="list-group-item" data-bs-toggle="collapse" aria-expanded="false" aria-controls="ratingDropdown">
-				            <i class="fas fa-star me-2"></i> Đánh giá
-				        </a>
-				        <form id="ratingForm" action="DanhGiaController" method="GET"> 
-				            <input type="hidden" name="trangThai" id="ratingTrangThai">
-				            <div class="collapse" id="ratingDropdown">
-				                <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setRatingTrangThai('Chưa đánh giá')">
-				                    <i class="fas fa-edit me-2"></i> Chưa đánh giá
-				                </a>
-				                <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setRatingTrangThai('Đã đánh giá')">
-				                    <i class="fas fa-check-circle me-2"></i> Đã đánh giá
-				                </a>
-				            </div>
-				        </form>
+	                  
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-bell me-2"></i> Thông báo
 	                    </a>
@@ -139,7 +123,7 @@
 						             Đổi trả
 						        </a>
 						    </div>
-						   </form>
+						</form>
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-headset me-2"></i> Chăm sóc khách hàng
 	                    </a>
@@ -147,84 +131,44 @@
 	            </div>
 	            
 	            <!-- Main Profile Form -->
-	            <div class="col-md-9 bg-white py-4 px-5">
-	                <div class="profile-form">
-	                    <div style="border-bottom: 1px solid #ccc;margin-bottom: 10px;">
-	                        <h4 class="font-weight-bold">Hồ Sơ Của Tôi</h4>
-	                        <p class="text-muted">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
-	                    </div>
-	
-	                        <form action="TaiKhoanController" method="POST">
-	                            <div class="row">
-	                                <div class="col-md-9 " style="padding-right: 30px;" >
-	                                    <div class="form-group">
-	                                        <label for="username">Tên đăng nhập</label>
-	                                        <input type="text" id="username" name="username" class="form-control" value="${nguoiDung.account.username}" readonly>
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="name">Tên</label>
-	                                        <input type="text" id="name" class="form-control" name="hoTen" placeholder="Nhập tên của bạn" value="${nguoiDung.hoTen}">
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <div class="row">
-	                                            
-	                                            <div class="col-md-8">
-	                                                <label for="dob" class="d-block mr-2">Ngày sinh</label>
-	                                                <input type="date" id="dob" name="ngaySinh" class="form-control d-inline-block" value="${nguoiDung.ngaySinh}">
-	                                            </div>
-	        
-	                                            <div class="col-md-4">
-	                                                <label class="d-block mr-3">Giới tính</label>
-	                                                <div class="d-flex align-items-center">
-	                                                    <div class="form-check form-check-inline">
-	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="male" value="male" ${nguoiDung.gioiTinh == 'Nam' ? 'checked' : ''}>
-	                                                        <label class="form-check-label" for="male">Nam</label>
-	                                                    </div>
-	                                                    <div class="form-check form-check-inline">
-	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="female" value="female" ${nguoiDung.gioiTinh == 'Nữ' ? 'checked' : ''}>
-	                                                        <label class="form-check-label" for="female">Nữ</label>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-	                                            
-	                                        </div>
-	                                        
-	                                    </div>
-	        
-	                                    <div class="form-group">
-	                                        <label for="email">Email</label>
-	                                        <input type="email" id="email" name="email" class="form-control" value="${nguoiDung.email}">
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="phone">Số điện thoại</label>
-	                                        <input type="text" id="phone" name="sdt" class="form-control" value="${nguoiDung.sdt}">
-	                                    </div>
-	        
-	                                    <div class="form-group">
-	                                        <label for="pass">Mật khẩu</label>
-	                                        <input type="password" id="pass" name="password" class="form-control" value="${nguoiDung.account.password}">
-	                                    </div>
-	                                    <div class="text-center">
-	                                        <button type="submit" class="btn btn-primary">Lưu</button>
-	                                    </div>
-	                                </div>
-	                                <div class="col-md-3 form-group" style="border-left: 1px solid #ccc; height: 220px;">
-	                                    <label for="profilePic">Ảnh đại diện</label><br>
-	                                    <img src="https://www.vlance.vn/uploads/portfolio/view/c4a875224357fa0f1dce59defcb7a42b3d6d2cab1.jpg" alt="Profile Picture" class="profile-pic avatar mb-3">
-	                                    <button type="button" class="btn btn-outline-secondary" id="uploadButton">Chọn Ảnh</button>
-	                                    <input type="file" id="profilePic" class="d-none">
-	                                </div>
-	                            </div>
-	                            
-	                        </form>
-	
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
+	            <div class="col-md-9 bg-white px-5">
+				        <div class="container my-5">
+					        <h1 class="text-center mb-4 text-primary">Chính Sách Vận Chuyển</h1>
+						        
+				            <h2 class="title">1. Thời gian giao hàng:</h2>
+				            <p><strong>Đơn hàng nội và ngoại thành TP.HCM:</strong></p>
+				            <ul>
+				                <li>Thời gian giao hàng là <strong>1-2 ngày</strong> sau khi đặt hàng.</li>
+				                <li>Đơn hàng trước 11h30 trưa sẽ giao trong buổi chiều cùng ngày.</li>
+				                <li>Đơn hàng sau 11h30 sẽ giao trong buổi tối và sáng hôm sau.</li>
+				            </ul>
+				            <p><strong>Đơn hàng ở các tỉnh thành khác:</strong></p>
+				            <ul>
+				                <li>Thời gian là <strong>2-3 ngày</strong> đối với khu vực trung tâm tỉnh/thành phố.</li>
+				                <li>Thời gian là <strong>3-7 ngày</strong> đối với khu vực ngoại thành, huyện, xã, thị trấn.</li>
+				                <li>Thời gian không bao gồm thứ bảy, chủ nhật hoặc các ngày lễ Tết.</li>
+				            </ul>
+				            <p>
+				                Thời gian xử lý đơn hàng được tính từ khi nhận thanh toán hoàn tất. Đơn hàng sẽ được giao tối đa trong 2 lần. Nếu giao hàng không thành công cả 2 lần, đơn hàng sẽ bị hủy.
+				            </p>
+				            <p>
+				                Để kiểm tra tình trạng đơn hàng, vui lòng inbox fanpage hoặc gọi số hotline, cung cấp tên và số điện thoại để được hỗ trợ.
+				            </p>
+				
+				            <h2 class="title">2. Phí giao hàng:</h2>
+				            <p>Phí ship cố định là <strong>20,000đ</strong>, áp dụng cho mọi khu vực.</p>
+				            <p>Khi nhận hàng, quý khách vui lòng:</p>
+				            <ul>
+				                <li>Ký xác nhận với nhân viên giao hàng.</li>
+				                <li>Kiểm tra số lượng và loại hàng hóa.</li>
+				                <li>Giữ lại biên lai vận chuyển và hóa đơn mua hàng để đối chiếu.</li>
+				            </ul>
+                </div>
+            </div>
+        </div>
     </div>
     
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="../footer.jsp" />
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
@@ -234,6 +178,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('uploadButton').addEventListener('click', function() {
             document.getElementById('profilePic').click(); // Kích hoạt input file khi bấm nút
@@ -255,10 +200,6 @@
 	    function setTrangThai(trangThai) {
 	        document.getElementById('trangThai').value = trangThai;
 	        document.getElementById('orderForm').submit(); // Submit form khi nhấn vào thẻ a
-	    }
-	    function setRatingTrangThai(trangThai) {
-	        document.getElementById('ratingTrangThai').value = trangThai;
-	        document.getElementById('ratingForm').submit(); // Submit form khi nhấn vào thẻ a
 	    }
 	</script>
 	<script>

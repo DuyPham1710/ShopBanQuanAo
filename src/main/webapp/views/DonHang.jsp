@@ -121,9 +121,27 @@
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-bell me-2"></i> Thông báo
 	                    </a>
-	                    <a href="#" class="list-group-item">
+	                    <a href="#policiesDropdown" class="list-group-item" data-bs-toggle="collapse" aria-expanded="false" aria-controls="policiesDropdown">
 	                        <i class="fas fa-file-alt me-2"></i> Chính sách
 	                    </a>
+	                    
+	                    <form id="policiesForm" action="ChinhSachController" method="GET">
+						    <!-- Hidden input to store the status -->
+						    <input type="hidden" name="chinhSach" id="chinhSach">
+		                    <div class="collapse" id="policiesDropdown">
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setChinhSach('Bảo mật')">
+						             Bảo mật
+						        </a>
+						
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setChinhSach('Vận chuyển')">
+						             Vận chuyển
+						        </a>
+						
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setChinhSach('Đổi trả')">
+						             Đổi trả
+						        </a>
+						    </div>
+						</form>
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-headset me-2"></i> Chăm sóc khách hàng
 	                    </a>
@@ -623,5 +641,14 @@
 		     document.body.style.overflow = '';
 		 });
     </script>
+
+
+   	<script>
+		function setChinhSach(chinhSach) {
+			document.getElementById('chinhSach').value = chinhSach;
+	        document.getElementById('policiesForm').submit();
+		}
+	</script>
+    
 </body>
 </html>
