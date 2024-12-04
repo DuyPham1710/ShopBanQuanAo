@@ -5,16 +5,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-   
-    <title>Hồ Sơ Của Tôi</title>
+    <title>Chính sách đổi trả</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome CSS -->
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./views/css/style.css">
     <link rel="stylesheet" href="./views/css/styleTaiKhoan.css">
+    <link rel="stylesheet" href="./views/css/styleChinhSach.css">
 </head>
 <body>
 	<!-- Navbar -->
@@ -122,7 +123,7 @@
 						             Đổi trả
 						        </a>
 						    </div>
-						   </form>
+						</form>
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-headset me-2"></i> Chăm sóc khách hàng
 	                    </a>
@@ -130,84 +131,56 @@
 	            </div>
 	            
 	            <!-- Main Profile Form -->
-	            <div class="col-md-9 bg-white py-4 px-5">
-	                <div class="profile-form">
-	                    <div style="border-bottom: 1px solid #ccc;margin-bottom: 10px;">
-	                        <h4 class="font-weight-bold">Hồ Sơ Của Tôi</h4>
-	                        <p class="text-muted">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
-	                    </div>
-	
-	                        <form action="TaiKhoanController" method="POST">
-	                            <div class="row">
-	                                <div class="col-md-9 " style="padding-right: 30px;" >
-	                                    <div class="form-group">
-	                                        <label for="username">Tên đăng nhập</label>
-	                                        <input type="text" id="username" name="username" class="form-control" value="${nguoiDung.account.username}" readonly>
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="name">Tên</label>
-	                                        <input type="text" id="name" class="form-control" name="hoTen" placeholder="Nhập tên của bạn" value="${nguoiDung.hoTen}">
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <div class="row">
-	                                            
-	                                            <div class="col-md-8">
-	                                                <label for="dob" class="d-block mr-2">Ngày sinh</label>
-	                                                <input type="date" id="dob" name="ngaySinh" class="form-control d-inline-block" value="${nguoiDung.ngaySinh}">
-	                                            </div>
-	        
-	                                            <div class="col-md-4">
-	                                                <label class="d-block mr-3">Giới tính</label>
-	                                                <div class="d-flex align-items-center">
-	                                                    <div class="form-check form-check-inline">
-	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="male" value="male" ${nguoiDung.gioiTinh == 'Nam' ? 'checked' : ''}>
-	                                                        <label class="form-check-label" for="male">Nam</label>
-	                                                    </div>
-	                                                    <div class="form-check form-check-inline">
-	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="female" value="female" ${nguoiDung.gioiTinh == 'Nữ' ? 'checked' : ''}>
-	                                                        <label class="form-check-label" for="female">Nữ</label>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-	                                            
-	                                        </div>
-	                                        
-	                                    </div>
-	        
-	                                    <div class="form-group">
-	                                        <label for="email">Email</label>
-	                                        <input type="email" id="email" name="email" class="form-control" value="${nguoiDung.email}">
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="phone">Số điện thoại</label>
-	                                        <input type="text" id="phone" name="sdt" class="form-control" value="${nguoiDung.sdt}">
-	                                    </div>
-	        
-	                                    <div class="form-group">
-	                                        <label for="pass">Mật khẩu</label>
-	                                        <input type="password" id="pass" name="password" class="form-control" value="${nguoiDung.account.password}">
-	                                    </div>
-	                                    <div class="text-center">
-	                                        <button type="submit" class="btn btn-primary">Lưu</button>
-	                                    </div>
-	                                </div>
-	                                <div class="col-md-3 form-group" style="border-left: 1px solid #ccc; height: 220px;">
-	                                    <label for="profilePic">Ảnh đại diện</label><br>
-	                                    <img src="https://www.vlance.vn/uploads/portfolio/view/c4a875224357fa0f1dce59defcb7a42b3d6d2cab1.jpg" alt="Profile Picture" class="profile-pic avatar mb-3">
-	                                    <button type="button" class="btn btn-outline-secondary" id="uploadButton">Chọn Ảnh</button>
-	                                    <input type="file" id="profilePic" class="d-none">
-	                                </div>
-	                            </div>
-	                            
-	                        </form>
-	
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-    </div>
-    
-    <jsp:include page="footer.jsp" />
+	            <div class="col-md-9 bg-white px-5">
+			        <div class="container my-5">
+			        	<h1 class="text-center mb-4 text-primary">Chính Sách Đổi Trả</h1>
+			            <h2 class="title">I. Quy Định Đổi Hàng</h2>
+			            <p><strong>Chính sách áp dụng:</strong> Áp dụng <strong>01 lần đổi/01 đơn hàng</strong>.</p>
+			            <ul>
+			                <li>Sản phẩm nguyên giá được đổi sang sản phẩm nguyên giá khác còn hàng. Khách hàng thanh toán chênh lệch nếu giá trị sản phẩm đổi lớn hơn.</li>
+			                <li>Sản phẩm giảm giá đến 30% được đổi màu/size (nếu còn hàng) hoặc theo quy chế từng chương trình (nếu có) - Không hỗ trợ đổi sang sản phẩm khác.</li>
+			                <li>Sản phẩm không áp dụng đổi bao gồm: Phụ kiện, sản phẩm giảm giá từ 50% trở lên.</li>
+			                <li>Sản phẩm chỉ được đổi <strong>một lần duy nhất</strong>.</li>
+			            </ul>
+			            <p><strong>Điều kiện đổi sản phẩm:</strong></p>
+			            <ul>
+			                <li>Đổi hàng trong vòng <strong>07 ngày</strong> kể từ ngày khách nhận sản phẩm.</li>
+			                <li>Sản phẩm còn trong tình trạng ban đầu, nguyên tem và nhãn mác.</li>
+			                <li>Sản phẩm chưa qua giặt ủi, không bẩn hoặc hư hỏng.</li>
+			            </ul>
+			
+			            <h2 class="title">II. Quy Định Trả Hàng</h2>
+			            <p><strong>Chính sách áp dụng:</strong></p>
+			            <ul>
+			                <li>Khách hàng được trả sản phẩm trong trường hợp có lỗi từ nhà sản xuất và không có nhu cầu đổi sang sản phẩm khác.</li>
+			                <li>Lỗi do nhà sản xuất gồm: phai màu, lỗi chất liệu, v.v.</li>
+			                <li>Hoàn tiền qua tài khoản ngân hàng, cửa hàng chịu 100% phí vận chuyển trả hàng.</li>
+			                <li>Cửa hàng xử lý trong vòng <strong>10 ngày</strong> kể từ khi nhận sản phẩm lỗi.</li>
+			            </ul>
+			            <p><strong>Điều kiện trả sản phẩm:</strong></p>
+			            <ul>
+			                <li>Trả hàng trong vòng <strong>05 ngày</strong> kể từ ngày nhận sản phẩm.</li>
+			            </ul>
+			            <p><strong>Chính sách hoàn tiền:</strong></p>
+			            <ul>
+			                <li>Khách hàng thanh toán trước sẽ được hoàn tiền khi trả sản phẩm lỗi do sản xuất.</li>
+			                <li>Thời gian hoàn tiền: <strong>07-15 ngày</strong>, hoàn qua tài khoản ngân hàng của khách hàng.</li>
+			            </ul>
+			
+			            <h2 class="title">III. Thực Hiện Đổi/Trả Sản Phẩm</h2>
+			            <ol>
+			                <li>Liên hệ kênh bán hàng online đã đặt hàng để đăng ký đổi/trả hàng.</li>
+			                <li>Làm theo hướng dẫn của nhân viên tư vấn.</li>
+			                <li>Đóng gói sản phẩm, quà khuyến mại (nếu có), kèm theo hóa đơn GTGT nếu có.</li>
+			                <li>Gửi sản phẩm đến địa chỉ: <strong>Công ty TNHH Thời Trang H và A, đường Tạ Quang Bửu, Linh Trung, TP Thủ Đức, TPHCM</strong>.</li>
+			            </ol>
+			            <p class="contact-info">Số điện thoại liên hệ: 0971667308</p>
+                	</div>
+            	</div>
+        	</div>
+    	</div>
+	</div>
+    <jsp:include page="../footer.jsp" />
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
@@ -217,6 +190,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('uploadButton').addEventListener('click', function() {
             document.getElementById('profilePic').click(); // Kích hoạt input file khi bấm nút

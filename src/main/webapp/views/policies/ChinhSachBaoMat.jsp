@@ -5,16 +5,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-   
-    <title>Hồ Sơ Của Tôi</title>
+    <title>Chính sách bảo mật</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome CSS -->
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./views/css/style.css">
     <link rel="stylesheet" href="./views/css/styleTaiKhoan.css">
+    <link rel="stylesheet" href="./views/css/styleChinhSach.css">
 </head>
 <body>
 	<!-- Navbar -->
@@ -130,84 +131,75 @@
 	            </div>
 	            
 	            <!-- Main Profile Form -->
-	            <div class="col-md-9 bg-white py-4 px-5">
-	                <div class="profile-form">
-	                    <div style="border-bottom: 1px solid #ccc;margin-bottom: 10px;">
-	                        <h4 class="font-weight-bold">Hồ Sơ Của Tôi</h4>
-	                        <p class="text-muted">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
-	                    </div>
-	
-	                        <form action="TaiKhoanController" method="POST">
-	                            <div class="row">
-	                                <div class="col-md-9 " style="padding-right: 30px;" >
-	                                    <div class="form-group">
-	                                        <label for="username">Tên đăng nhập</label>
-	                                        <input type="text" id="username" name="username" class="form-control" value="${nguoiDung.account.username}" readonly>
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="name">Tên</label>
-	                                        <input type="text" id="name" class="form-control" name="hoTen" placeholder="Nhập tên của bạn" value="${nguoiDung.hoTen}">
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <div class="row">
-	                                            
-	                                            <div class="col-md-8">
-	                                                <label for="dob" class="d-block mr-2">Ngày sinh</label>
-	                                                <input type="date" id="dob" name="ngaySinh" class="form-control d-inline-block" value="${nguoiDung.ngaySinh}">
-	                                            </div>
-	        
-	                                            <div class="col-md-4">
-	                                                <label class="d-block mr-3">Giới tính</label>
-	                                                <div class="d-flex align-items-center">
-	                                                    <div class="form-check form-check-inline">
-	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="male" value="male" ${nguoiDung.gioiTinh == 'Nam' ? 'checked' : ''}>
-	                                                        <label class="form-check-label" for="male">Nam</label>
-	                                                    </div>
-	                                                    <div class="form-check form-check-inline">
-	                                                        <input class=" d-flex align-items-center form-check-input" type="radio" name="gender" id="female" value="female" ${nguoiDung.gioiTinh == 'Nữ' ? 'checked' : ''}>
-	                                                        <label class="form-check-label" for="female">Nữ</label>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-	                                            
-	                                        </div>
-	                                        
-	                                    </div>
-	        
-	                                    <div class="form-group">
-	                                        <label for="email">Email</label>
-	                                        <input type="email" id="email" name="email" class="form-control" value="${nguoiDung.email}">
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="phone">Số điện thoại</label>
-	                                        <input type="text" id="phone" name="sdt" class="form-control" value="${nguoiDung.sdt}">
-	                                    </div>
-	        
-	                                    <div class="form-group">
-	                                        <label for="pass">Mật khẩu</label>
-	                                        <input type="password" id="pass" name="password" class="form-control" value="${nguoiDung.account.password}">
-	                                    </div>
-	                                    <div class="text-center">
-	                                        <button type="submit" class="btn btn-primary">Lưu</button>
-	                                    </div>
-	                                </div>
-	                                <div class="col-md-3 form-group" style="border-left: 1px solid #ccc; height: 220px;">
-	                                    <label for="profilePic">Ảnh đại diện</label><br>
-	                                    <img src="https://www.vlance.vn/uploads/portfolio/view/c4a875224357fa0f1dce59defcb7a42b3d6d2cab1.jpg" alt="Profile Picture" class="profile-pic avatar mb-3">
-	                                    <button type="button" class="btn btn-outline-secondary" id="uploadButton">Chọn Ảnh</button>
-	                                    <input type="file" id="profilePic" class="d-none">
-	                                </div>
-	                            </div>
-	                            
-	                        </form>
-	
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
+	            <div class="col-md-9 bg-white px-5">
+				        <div class="container my-5">
+					        <h1 class="text-center mb-4 text-primary">Chính Sách Bảo Mật</h1>
+					
+					        <h2 class="title">CHÚNG TÔI THU NHẬP NHỮNG THÔNG TIN NÀO?</h2>
+					        <p>
+					            Chúng tôi thu thập thông tin từ bạn khi bạn đăng ký trên trang web của chúng tôi, đặt hàng, đăng ký nhận bản tin của chúng tôi hoặc điền vào một biểu mẫu.
+					        </p>
+					        <p>
+					            Khi đặt hàng hoặc đăng ký trên trang web của chúng tôi, bạn có thể được yêu cầu nhập của bạn: tên, địa chỉ email hoặc địa chỉ gửi thư. Bạn có thể truy cập trang web của chúng tôi nặc danh.
+					        </p>
+					
+					        <h2 class="title">CHÚNG TÔI SỬ DỤNG THÔNG TIN CỦA BẠN CHO NHỮNG MỤC ĐÍCH GÌ?</h2>
+					        <ul>
+					            <li>Để cá nhân hóa trải nghiệm của bạn.</li>
+					            <li>Để cải thiện trang web của chúng tôi.</li>
+					            <li>Để cải thiện dịch vụ khách hàng.</li>
+					            <li>Để xử lý các giao dịch.</li>
+					            <li>
+					                Thông tin của bạn, dù công khai hay ẩn danh, sẽ không được bán, trao đổi, chuyển nhượng hoặc cho bất kỳ công ty nào khác mà không có sự đồng ý của bạn.
+					            </li>
+					            <li>Để quản lý một cuộc thi, khuyến mãi, khảo sát, tính năng trang web khác.</li>
+					            <li>Để gửi email định kỳ.</li>
+					        </ul>
+					
+					        <h2 class="title">CHÚNG TÔI BẢO VỆ THÔNG TIN CỦA BẠN NHƯ THẾ NÀO?</h2>
+					        <p>
+					            Chúng tôi thực hiện một loạt các biện pháp an ninh để duy trì sự an toàn của thông tin cá nhân của bạn khi bạn đặt hàng hoặc nhập, gửi, hoặc truy cập thông tin cá nhân của bạn.
+					        </p>
+					        <p>
+					            Chúng tôi cung cấp việc sử dụng một máy chủ an toàn. Tất cả các thông tin nhạy cảm cung cấp được truyền qua Bảo mật (SSL) công nghệ Socket và sau đó mã hóa.
+					        </p>
+					
+					        <h2 class="title">CHÚNG TÔI SỬ DỤNG COOKIES?</h2>
+					        <p>
+					            Có. Chúng tôi sử dụng cookies để giúp chúng tôi nhớ và xử lý các mặt hàng trong giỏ hàng của bạn, hiểu và lưu các sở thích của bạn cho lần truy cập sau và theo dõi các quảng cáo.
+					        </p>
+					
+					        <h2 class="title">DO CHÚNG TÔI TIẾT LỘ BẤT CỨ THÔNG TIN CHO BÊN NGOÀI?</h2>
+					        <p>
+					            Chúng tôi không bán, thương mại, hoặc chuyển giao cho bên ngoài những thông tin cá nhân của bạn, ngoại trừ các bên đáng tin hỗ trợ hoạt động của chúng tôi.
+					        </p>
+					
+					        <h2 class="title">LIÊN KẾT CỦA BÊN THỨ BA</h2>
+					        <p>
+					            Chúng tôi có thể cung cấp sản phẩm của bên thứ ba trên trang web của chúng tôi. Tuy nhiên, chúng tôi không chịu trách nhiệm đối với nội dung và hoạt động của các trang web này.
+					        </p>
+					
+					        <h2 class="title">CHÍNH SÁCH CHỈ ÁP DỤNG WEBSITE TRỰC TUYẾN</h2>
+					        <p>
+					            Chính sách này chỉ áp dụng cho thông tin thu thập trực tuyến, không áp dụng cho thông tin thu thập ngoại tuyến.
+					        </p>
+					
+					        <h2 class="title">SỰ ĐỒNG Ý CỦA BẠN</h2>
+					        <p>
+					            Bằng cách sử dụng trang web của chúng tôi, bạn đồng ý với chính sách bảo mật của chúng tôi.
+					        </p>
+					
+					        <h2 class="title">THAY ĐỔI CHÍNH SÁCH MẬT CỦA CHÚNG TÔI</h2>
+					        <p>
+					            Nếu chúng tôi quyết định thay đổi chính sách bảo mật, chúng tôi sẽ đăng những thay đổi trên trang này.
+					        </p>
+					    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="../footer.jsp" />
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
@@ -217,6 +209,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('uploadButton').addEventListener('click', function() {
             document.getElementById('profilePic').click(); // Kích hoạt input file khi bấm nút

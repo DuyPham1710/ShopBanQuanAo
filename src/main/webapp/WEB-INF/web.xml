@@ -129,4 +129,14 @@
     <servlet-name>TrangChuADController</servlet-name>
     <url-pattern>/TrangChuADController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChinhSachController</display-name>
+    <servlet-name>ChinhSachController</servlet-name>
+    <servlet-class>Controller.ChinhSachController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChinhSachController</servlet-name>
+    <url-pattern>/ChinhSachController</url-pattern>
+  </servlet-mapping>
 </web-app>
