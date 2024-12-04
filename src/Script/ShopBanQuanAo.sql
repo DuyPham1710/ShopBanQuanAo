@@ -624,6 +624,19 @@ RETURN
 )
 GO
 
+-- procedure cập nhật đã bán
+CREATE PROCEDURE proc_capNhatSoLuongDaBan @maHoaDon INT
+AS
+BEGIN
+	UPDATE SanPham
+	SET DaBan = DaBan + ChiTietHoaDon.SoLuong
+	FROM SanPham
+	JOIN ChiTietHoaDon ON SanPham.MaSanPham = ChiTietHoaDon.MaSanPham
+	JOIN HoaDon ON HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon
+	WHERE HoaDon.MaHoaDon = @maHoaDon;
+END;
+GO
+
 CREATE FUNCTION dbo.TongDoanhThuDaLuu()
 RETURNS INT
 AS
