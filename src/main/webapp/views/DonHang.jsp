@@ -313,7 +313,7 @@
 	    }
 	      
     	function huyDonHang() {		
-    	    fetch('/project_web/views/admin/HoaDonController', {
+    	    fetch('/project_web/HoaDonController', {
     	        method: 'PUT',
     	        headers: {
     	            'Content-Type': 'application/json',
@@ -336,7 +336,7 @@
     	    });
     	}
     	function confirmReceived(maHoaDon) {		
-    	    fetch('/project_web/views/admin/HoaDonController', {
+    	    fetch('/project_web/HoaDonController', {
     	        method: 'PUT',
     	        headers: {
     	            'Content-Type': 'application/json',

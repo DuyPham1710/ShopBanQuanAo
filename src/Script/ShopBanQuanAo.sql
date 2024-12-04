@@ -637,7 +637,7 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION dbo.TongDoanhThuDaLuu()
+CREATE FUNCTION dbo.TongDoanhThu()
 RETURNS INT
 AS
 BEGIN
@@ -647,7 +647,7 @@ BEGIN
     -- Tính tổng doanh thu
     SELECT @TongDoanhThu = SUM(TongTien)
     FROM HoaDon
-    WHERE TrangThai = N'Đã lưu';
+    WHERE TrangThai = N'Đã giao';
 
     -- Trả về kết quả
     RETURN ISNULL(@TongDoanhThu, 0);
@@ -661,7 +661,8 @@ RETURN
 (
     SELECT
         DaGiao = SUM(CASE WHEN TrangThai = N'Đã giao' THEN 1 ELSE 0 END),
-        DangGiao = SUM(CASE WHEN TrangThai = N'Đang giao' THEN 1 ELSE 0 END)
+        DangGiao = SUM(CASE WHEN TrangThai = N'Đang giao' THEN 1 ELSE 0 END),
+        TongDonHang = COUNT(*)
     FROM HoaDon
 );
 GO

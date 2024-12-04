@@ -63,7 +63,7 @@
             <div class="card mb-4">
               <div class="card-body">
                 <h5 class="card-title">Tổng số đơn hàng</h5>
-                <h2 class="font-weight-bold">1,250</h2>
+                <h2 class="font-weight-bold">${TongDonHang}</h2>
               </div>
             </div>
           </div>

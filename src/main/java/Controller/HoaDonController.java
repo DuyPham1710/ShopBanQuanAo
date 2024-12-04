@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 import DAO.DonHangDAO;
@@ -63,8 +64,22 @@ public class HoaDonController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
+		int tongDonHang = 0;
+		try {
+			String sql = "SELECT * FROM dbo.SoDonHangTheoTrangThai()";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				tongDonHang = rs.getInt("TongDonHang");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
 
 		request.setAttribute("ListHD", listHD);
+		request.setAttribute("TongDonHang", tongDonHang);
 		RequestDispatcher req = request.getRequestDispatcher("/views/admin/QuanLyDonHang.jsp");
 		req.forward(request, response);
 	}
