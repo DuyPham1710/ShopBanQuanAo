@@ -197,14 +197,9 @@
                 <h5 class="modal-title" id="addProductModalLabel">Thêm sản phẩm</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form id="productForm">
 	              <div class="modal-body">
-
+					
 	              </div>
-	              <div class="text-center">
-                    <button type="button" class="btn btn-primary" onclick="kiemTraRongKhiAdd()">Thêm sản phẩm</button>
-                  </div>
-               </form>
             </div>
           </div>
         </div>
@@ -218,13 +213,10 @@
                 <h5 class="modal-title" id="addProductModalLabel">Sửa sản phẩm</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form id="productFormEdit" action="qlSanPhamController" _method="suaSanPham" method="POST">
+              
 	              <div class="modal-body">
 	              </div>
-	              <div class="text-center">
-	   				<button type="button" class="btn btn-primary Edit" onclick="kiemTraRongKhiEdit()">Lưu</button>
-	  			  </div>
-				</form>
+	              
             </div>
           </div>
         </div>

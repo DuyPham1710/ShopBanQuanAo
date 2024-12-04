@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
+<form id="productForm">
   <!-- Row 1: Tên sản phẩm -->
   <div class="row mb-5">
     <div class="col-md-7">
@@ -115,6 +115,9 @@
 
   <!-- Nút lưu -->
   
-
+	<div class="text-center">
+     <button type="button" class="btn btn-primary" onclick="kiemTraRongKhiAdd()">Thêm sản phẩm</button>
+   </div>
+</form>
 
 

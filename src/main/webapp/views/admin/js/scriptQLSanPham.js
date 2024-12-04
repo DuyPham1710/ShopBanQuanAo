@@ -210,7 +210,7 @@ function luuChinhSua(){
     })
     .catch(error => {
         console.error("Error:", error);
-        alert("Có lỗi xảy ra khi xác nhận đơn hàng: " + error.message);
+        alert("Có lỗi xảy ra khi sửa sản phẩm: " + error.message);
     });
 }
 function kiemTraRongKhiEdit() {
@@ -356,7 +356,7 @@ function themSanPham(){
     })
     .then(response => {
         if (response.ok) {
-            alert("Sửa thành công!");
+            alert("thêm thành công!");
             // Tải lại trang hoặc chuyển hướng nếu cần
             location.reload();
         } else {
@@ -367,7 +367,7 @@ function themSanPham(){
     })
     .catch(error => {
         console.error("Error:", error);
-        alert("Có lỗi xảy ra khi xác nhận đơn hàng: " + error.message);
+        alert("Có lỗi xảy ra khi thêm sản phẩm: " + error.message);
     });
 }
 
