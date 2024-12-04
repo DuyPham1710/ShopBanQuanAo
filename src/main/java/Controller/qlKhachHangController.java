@@ -28,6 +28,7 @@ public class qlKhachHangController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private int thang=0;
     private int nam=0;
+    
     LocalDate today = LocalDate.now();
 	private int nam1 = today.getYear();
     /**
@@ -95,7 +96,12 @@ public class qlKhachHangController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String method = request.getParameter("_method");
+		if ("thayDoiNam".equalsIgnoreCase(method)) {
+			 nam = Integer.parseInt(request.getParameter("year"));
+			doGet(request, response);
+		}
 	}
 
 }

@@ -86,8 +86,10 @@
             <h4>Thống kê khách hàng</h4>
             <!-- Input chọn năm -->
             <div class="d-flex align-items-center mb-4">
-              <label for="chartYear" class="me-2">Chọn năm:</label>
-              <input type="number" id="chartYear" class="form-control" style="width: auto;" value="2024">
+              	<form id="yearForm" method="post" _method="thayDoiNam" action="qlKhachHangController?_method=thayDoiNam">
+				    <label for="chartYear">Chọn năm:</label>
+				    <input type="number" id="chartYear" name="year" class="form-control" style="width: auto;" value="${Nam}" onchange="submitYearForm()">
+				</form>
             </div>
         
             <!-- Chia cột cho danh sách và biểu đồ -->
@@ -137,14 +139,9 @@
                 <option value="12">Tháng 12</option>
               </select>
               <label for="filterYear" class="me-2">Lọc theo năm:</label>
-              <select id="filterYear" class="form-select" style="width: auto;">
-                <option value="">Tất cả</option>
-                <option value="2023">2020</option>
-                <option value="2024">2021</option>
-                <option value="2024">2022</option>
-                <option value="2024">2023</option>
-                <option value="2024">2024</option>
-              </select>
+              <div class="d-flex align-items-center ">
+              	<input type="number" id="filterYear" class="form-control me-3" style="width: auto; heigh:60%" >
+            </div>
             </div>
             <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
               <table class="table table-striped table-hover" id="customerTable">
@@ -171,7 +168,7 @@
 	                    <td>${nd.daMua }</td>
 	                    <td>${nd.tongTien }</td>
 	                    <td>
-	                      <button class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#thongTinNguoiDung" ">Xem</button>
+	                      <button class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#thongTinNguoiDung" >Xem</button>
 	                    </td>
 	                </tr>
                   </c:forEach>
@@ -190,7 +187,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                	
+                	<!-- Thông tin khách hàng -->
+
+
               </div>
             </div>
           </div>

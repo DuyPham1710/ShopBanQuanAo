@@ -66,7 +66,7 @@
         <header class="d-flex justify-content-between align-items-center py-3">
           <h2>Quản lý Sản phẩm</h2>
           <div class="d-flex align-items-center">
-            <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addProductModal">Thêm sản phẩm</button>
+            <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addProductModal" onclick="loadThongTinAddSP()">Thêm sản phẩm</button>
             
             <div class="profile">
               <img src="https://cdn-icons-png.flaticon.com/512/1794/1794749.png" alt="Profile Picture" width="40" class="rounded-circle me-2">
@@ -194,161 +194,34 @@
         </main>
         </div>
 	</div>
-        <!-- Modal thêm sản phẩm -->
-        <form action="/qlSanPhamController" method="post" class="d-flex">
-	        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-	          <div class="modal-dialog modal-lg">
-	            <div class="modal-content">
-	              <div class="modal-header">
-	                <h5 class="modal-title" id="addProductModalLabel">Thêm sản phẩm</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	              </div>
+       <!-- Modal thêm sản phẩm -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Thêm sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
 	              <div class="modal-body">
-	                <form id="productForm">
-	                  <!-- Row 1: Tên sản phẩm -->
-	                  <div class="row mb-4">
-	                    <div class="col-md-7">
-	                      <div class="row mb-2">
-	                        <div class="col-md-11">
-	                          <label for="productName" class="form-label">Tên sản phẩm</label>
-	                          <input type="text" class="form-control" id="productName" placeholder="Nhập tên sản phẩm" required>
-	                        </div>
-	                        
-	                      </div>
-	                      <div class="row mb-2">
-	                        <div class="col-md-6">
-	                          <label for="productPrice" class="form-label">Giá sản phẩm</label>
-	                          <input type="number" class="form-control" id="productPrice" placeholder="Nhập giá sản phẩm" required>
-	                        </div>
-	                        <div class="col-md-5">
-	                          <label for="productQuantity" class="form-label">Số lượng</label>
-	                          <input type="number" class="form-control" id="productQuantity" placeholder="Nhập số lượng" required>
-	                        </div>
-	                      </div>
-	                      <div class="row mb-2">
-	                        <div class="col-md-11">
-		                        <label for="productCategory" class="form-label">Danh mục</label>
-	                            <select id="productCategory" class="form-select" required>
-	                              <c:forEach var="danhMuc" items="${ListDanhMuc}">
-	                                <option name="maDanhMuc" value="${danhMuc.maDanhMuc}">${danhMuc.tenDanhMuc}</option>
-	                              </c:forEach>
-	                            </select>
-		                    </div>
-                          </div>
-	                    </div>
-	                    <div class="col-md-5 form-group" style="border-left: 1px solid #ccc; height: 250px;">
-	                      <div class="product-image-container">
-	                        <img 
-	                          src="https://via.placeholder.com/200x150.png?text=Chưa+chọn+hình" 
-	                          alt="Product Image Preview" 
-	                          class="product-image-preview">
-	                        <button type="button" class="btn btn-outline-secondary" id="uploadProductImageButtonadd">Chọn ảnh</button>
-	                        <input type="file" id="productImageInput" class="d-none" accept="image/*">
-	                      </div>
-	                    </div>
-	                    
-	                  </div>
-	                  <div class="row mb-2">
-	                    <div class="col-md-6">
-	                      <label for="productOrigin" class="form-label">Xuất xứ</label>
-	                      <input type="text" class="form-control" id="productOrigin" placeholder="Nhập xuất xứ" required>
-	                    </div>
-	                    <div class="col-md-6">
-	                      <label for="productMaterial" class="form-label">Chất liệu</label>
-	                      <input type="text" class="form-control" id="productMaterial" placeholder="Nhập chất liệu" required>
-	                    </div>
-	                  </div>
-	                  <div class="row mb-3">
-	                    <div class="col-md-6">
-	                      <label for="productCategory" class="form-label">Kích thước</label>
-	                      <div class="filter_category" style="width:100%">
-	                        <div class="filter_category-title font-weight-bold">Kích thước</div>
-	                        <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
-	                        <div class="dropdown-content size-options">
-	                            <div class="size-option">S</div>
-	                            <div class="size-option">M</div>
-	                            <div class="size-option selected">L</div>
-	                            <div class="size-option">XL</div>
-	                        </div>
-	                      </div>
-	                    </div>
-	                  
-	                    <div class="col-md-6">
-	                      <label for="productCategory" class="form-label">Màu sắc</label>
-	                      <div class="filter_category" style="width:100%">
-		                        <div class="filter_category-title font-weight-bold">màu sắc</div>
-		                        <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
-		                        <div class="dropdown-content color-options">
-		                            <div class="color-circle" style="background-color: #ffb6c1;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #ffdf00;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #d3d3d3;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #00ff7f;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #8b4513;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #696969;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #000000;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #ff6347;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #9370db;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #ff4500;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #b0e0e6;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                            <div class="color-circle" style="background-color: #4682b4;" onclick="toggleColorSelect(this)">
-		                                <span class="tick">&#10003;</span> <!-- Dấu tick -->
-		                            </div>
-		                        </div>
-		                    </div>
-	                    </div>
-	                  </div>
-	                  <!-- Row 6: Mô tả -->
-	                  <div class="row mb-3">
-	                    <div class="col-md-12">
-	                      <label for="productDescription" class="form-label">Mô tả sản phẩm</label>
-	                      <textarea id="productDescription" class="form-control" rows="4" placeholder="Nhập mô tả chi tiết sản phẩm" required></textarea>
-	                    </div>
-	                  </div>
-	        
-	                  <!-- Nút lưu -->
-	                  <div class="text-center">
-	                    <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
-	                  </div>
-	                </form>
+					
 	              </div>
-	            </div>
-	          </div>
-	        </div>
-	    </form>
+            </div>
+          </div>
+        </div>
 
         <!--Modal sửa-->
         <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
+              	
                 <h5 class="modal-title" id="addProductModalLabel">Sửa sản phẩm</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body">
-                	
-              </div>
+              
+	              <div class="modal-body">
+	              </div>
+	              
             </div>
           </div>
         </div>
@@ -367,5 +240,6 @@
 	  	 const data = <%= request.getAttribute("ThongKeTungThang") %>;
 		drawMonthlySalesChart('monthlySalesChart', labels, data);
   	</script>
+  	
 </body>
 </html>

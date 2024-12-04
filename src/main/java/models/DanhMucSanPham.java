@@ -11,6 +11,10 @@ public class DanhMucSanPham {
 		this.setTenDanhMuc(tenDanhMuc);
 	}
 	
+	public DanhMucSanPham(int maDanhMuc) {
+		this.setMaDanhMuc(maDanhMuc);
+	}
+	
 	public String getTenDanhMuc() {
 		return tenDanhMuc;
 	}
