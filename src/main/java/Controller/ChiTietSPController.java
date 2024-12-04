@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.DanhGia;
 import models.GioHang;
 import models.KichCo;
 import models.MauSac;
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import DAO.AccountDAO;
+import DAO.DanhGiaDAO;
 import DAO.GioHangDAO;
 import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
@@ -87,7 +89,17 @@ public class ChiTietSPController extends HttpServlet {
 				response.getWriter().println("Error: " + e.getMessage());
 			}
 			
+			List<DanhGia> listDanhGia = null;
+			try {
+				listDanhGia = DanhGiaDAO.DanhSachDanhGia(conn);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
 			request.setAttribute("sp", sp);
+			request.setAttribute("listDanhGia", listDanhGia);
 			request.setAttribute("ListSPTuongTu", listSPTuongTu);
 			
 			RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietSP.jsp");

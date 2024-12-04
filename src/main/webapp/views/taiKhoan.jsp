@@ -96,9 +96,26 @@
 						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đã giao')">
 						            <i class="fas fa-check me-2"></i> Đã giao
 						        </a>
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setTrangThai('Đã hủy')">
+						            <i class="fas fa-times-circle me-2"></i> Đã hủy
+						        </a>
 						    </div>
 						</form>
-	                  
+	                  	<!-- Đánh giá -->
+				        <a href="#ratingDropdown" class="list-group-item" data-bs-toggle="collapse" aria-expanded="false" aria-controls="ratingDropdown">
+				            <i class="fas fa-star me-2"></i> Đánh giá
+				        </a>
+				        <form id="ratingForm" action="DanhGiaController" method="GET"> 
+				            <input type="hidden" name="trangThai" id="ratingTrangThai">
+				            <div class="collapse" id="ratingDropdown">
+				                <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setRatingTrangThai('Chưa đánh giá')">
+				                    <i class="fas fa-edit me-2"></i> Chưa đánh giá
+				                </a>
+				                <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setRatingTrangThai('Đã đánh giá')">
+				                    <i class="fas fa-check-circle me-2"></i> Đã đánh giá
+				                </a>
+				            </div>
+				        </form>
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-bell me-2"></i> Thông báo
 	                    </a>
@@ -220,6 +237,10 @@
 	    function setTrangThai(trangThai) {
 	        document.getElementById('trangThai').value = trangThai;
 	        document.getElementById('orderForm').submit(); // Submit form khi nhấn vào thẻ a
+	    }
+	    function setRatingTrangThai(trangThai) {
+	        document.getElementById('ratingTrangThai').value = trangThai;
+	        document.getElementById('ratingForm').submit(); // Submit form khi nhấn vào thẻ a
 	    }
 	</script>
 </body>

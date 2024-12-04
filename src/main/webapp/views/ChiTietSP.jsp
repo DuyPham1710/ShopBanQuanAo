@@ -169,26 +169,40 @@
 			</div>
 			
 			<div class="product-description">
-            	<div class="description">
+            	<div class="description width-custom">
             		<h4>Đánh giá sản phẩm</h4>
-					<div class="product-grid">
-					   <%--   <c:forEach var="sp" items="${ListSPTuongTu}">
-					     	<form action="./ChiTietSPController" method="post">
-					     		<div class="product-card hover-effect" onclick="this.closest('form').submit();">
-						            <div class="discount">-${sp.giamGia}%</div>
-						            <img src="${sp.hinhAnhSP.duongDanHinh}" alt="${sp.tenSP}">
-						            <div class="product-info">
-						                <h3>${sp.tenSP} <span class="hot">Hot</span></h3>
-						                <p class="price">${sp.giaHienTai}đ <span class="original-price">${sp.giaBanDau}đ</span></p>
-						                <h4 class="buy-now-similar">Mua Ngay</h4>
-						            </div>
-						        </div>
-						        <input type="hidden" name="method" value="get">
-						        <input type="hidden" name="maSP" value="${sp.maSP}">	           
-					     	</form>
-					    </c:forEach> --%>
-					        
-				    </div>
+					<div class="review">
+						<c:forEach var="dg" items="${listDanhGia}">
+							 <c:if test="${dg.trangThai == 'Đã đánh giá' && dg.sp.maSP == sp.maSP}">
+							 	 <div class="review-container">
+		                            <div class="review-header">
+		                                <div class="avatar">
+		                                    <img src="https://www.vlance.vn/uploads/portfolio/view/c4a875224357fa0f1dce59defcb7a42b3d6d2cab1.jpg" alt="User Avatar">
+		                                </div>
+		                                <div class="review-info">
+		                                    <div class="username">${dg.nguoiDung.hoTen}</div>
+		                                    <div class="stars">
+		                                        <c:forEach var="i" begin="1" end="${dg.soSao}">
+							                        <i class="fas fa-star"></i>
+							                    </c:forEach>
+							                    <!-- Loop to display empty stars for the remaining stars (if any) -->
+							                    <c:forEach var="i" begin="${dg.soSao + 1}" end="5">
+							                        <i class="far fa-star"></i>
+							                    </c:forEach>
+		                                    </div>
+		                                </div>
+		                                <div class="date">${dg.ngayDanhGia}</div>
+		                            </div>
+		                            <div class="review-body">
+		                                <p>${dg.binhLuan}</p>
+		                            </div>
+		                        </div>
+							 </c:if>
+							
+						</c:forEach>
+                       
+                        
+                    </div>
             	</div>
 			    
 			</div>
