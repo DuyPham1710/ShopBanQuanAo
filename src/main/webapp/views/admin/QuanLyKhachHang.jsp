@@ -26,12 +26,14 @@
           <ul class="nav flex-column">
             <li class="nav-item">
               <i class="bi bi-house me-2"></i>
-              <a class="nav-link" href="TrangChuAD.jsp">Trang chủ</a>
+              <a class="nav-link" href="/project_web/TrangChuADController">Trang chủ</a>
             </li>
             <li class="nav-item">
+              <!-- Icon giỏ hàng -->
               <i class="bi bi-bag-check me-2"></i>
-              <a class="nav-link" href="./views/admin/HoaDonController">Đơn Hàng</a>
+              <a class="nav-link" href="/project_web/HoaDonController"">Đơn Hàng</a>
             </li>
+          
             <li class="nav-item">
               <i class="bi bi-box me-2"></i>
               <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts">Sản phẩm</a>
@@ -47,7 +49,6 @@
           </ul>
         </div>
       </nav>
-
       <!-- Main Content -->
       <main class="content col-md-10 ms-sm-auto px-md-4">
         <header class="d-flex justify-content-between align-items-center py-3">

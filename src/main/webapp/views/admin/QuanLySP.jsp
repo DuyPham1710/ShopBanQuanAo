@@ -25,7 +25,7 @@
     <div class="row">
     
       <!-- Sidebar -->
-      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="position-sticky">
           <div class="logo text-center">
             <img src="./views/images/logo.jpg" class="rounded-5" alt="Logo" id="logo">
@@ -33,9 +33,10 @@
           <ul class="nav flex-column">
             <li class="nav-item">
               <i class="bi bi-house me-2"></i>
-              <a class="nav-link" href="TrangChuAD.jsp">Trang chủ</a>
+              <a class="nav-link" href="/project_web/TrangChuADController">Trang chủ</a>
             </li>
             <li class="nav-item">
+              <!-- Icon giỏ hàng -->
               <i class="bi bi-bag-check me-2"></i>
               <a class="nav-link" href="./views/admin/HoaDonController">Đơn Hàng</a>
             </li>
@@ -46,6 +47,10 @@
             <li class="nav-item">
               <i class="bi bi-people me-2"></i>
               <a class="nav-link" href="/project_web/qlKhachHangController">Khách hàng</a>
+            </li>
+            <li class="nav-item">
+              <i class="bi bi-chat-left-text me-2"></i>
+              <a class="nav-link" href="#">Messages</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-box-arrow-right me-2"></i>

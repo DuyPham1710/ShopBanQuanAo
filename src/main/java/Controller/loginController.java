@@ -53,7 +53,7 @@ public class loginController extends HttpServlet {
 		if (ID != 0) {
 		//	request.getRequestDispatcher("/views/home.jsp").forward(request, response);
 			if (ID == 1) {
-				response.sendRedirect("/project_web/views/admin/TrangChuAD.jsp");
+				response.sendRedirect("/project_web/TrangChuADController");
 			}
 			else {
 				response.sendRedirect("/project_web/views/home.jsp");

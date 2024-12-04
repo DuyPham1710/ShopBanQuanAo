@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="./css/stylesTrangChu.css">
+  <link rel="stylesheet" href="./views/admin/css/stylesTrangChu.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./views/admin/js/scriptTrangChuAD.js"></script>
 </head>
 <body>
   <div class="container-fluid">
@@ -19,12 +22,13 @@
       <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="position-sticky">
           <div class="logo text-center" style="margin-top:20px;">
-            <img src="../images/logo.jpg" class="rounded-5" alt="Logo" id="logo">
+            <img src="./views/images/logo.jpg" class="rounded-5" alt="Logo" id="logo">
+
           </div>
           <ul class="nav flex-column">
             <li class="nav-item" style="Background:#f0d4a0;border-radius: 8px;">
               <i class="bi bi-house me-2"></i>
-              <a class="nav-link" href="TrangChuAD.jsp">Trang chủ</a>
+              <a class="nav-link" href="/project_web/TrangChuADController">Trang chủ</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-bag-check me-2"></i>
@@ -76,7 +80,7 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 <h5 class="card-title">Tổng khách hàng</h5>
-                                <h2 class="font-weight-bold">40,689</h2>
+                                <h2 class="font-weight-bold">${SoKH}</h2>
                                 <div class="d-flex align-items-center text-success">
                                     <i class="fas fa-arrow-up"></i>
                                     <span>8.5% Up from yesterday</span>
@@ -89,8 +93,8 @@
                     <div class="col-md-4">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <h5 class="card-title">Tổng sản phẩm</h5>
-                                <h2 class="font-weight-bold">40,689</h2>
+                                <h5 class="card-title">Tổng sản phẩm đã bán</h5>
+                                <h2 class="font-weight-bold">${DaBan}</h2>
                             </div>
                         </div>
                     </div>
@@ -100,7 +104,7 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 <h5 class="card-title">Tổng doanh thu</h5>
-                                <h2 class="font-weight-bold">40,689$</h2>
+                                <h2 class="font-weight-bold">${TongDoanhThu} VNĐ</h2>
                                 <div class="d-flex align-items-center text-success">
                                     <i class="fas fa-arrow-up"></i>
                                     <span>8.5% Up from yesterday</span>
@@ -158,11 +162,15 @@
             </div>
         
             <!-- Cột bên phải - Chiếm 30% -->
-            <div class="col-md-3">
+            <div class="col-md-3" style = "height: 470px;">
                 <div class="card mb-4 h-100">
                     <div class="card-body">
                         <h1 class="chart-title">Thống kê đơn hàng</h1>
-                        <canvas id="visitorChart"></canvas>
+						<h1 id="daGiao" style="display: none;">${DaGiao}</h1>
+						<h1 id="dangGiao" style="display: none;">${DangGiao}</h1>
+						<div style="max-width: 100%; height: 400px; overflow: hidden; position: relative;">
+						    <canvas id="visitorChart"></canvas>
+						</div>
                     </div>
                 </div>
             </div>
@@ -180,44 +188,6 @@
   <!-- Bootstrap JS and dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    // Số lượng đơn hàng chưa giao và tổng số đơn hàng
-    const undeliveredOrders = 120; // Ví dụ: 120 đơn hàng chưa giao
-    const totalOrders = 300;       // Ví dụ: Tổng cộng 300 đơn hàng
-
-    // Tính số lượng đơn hàng đã giao
-    const deliveredOrders = totalOrders - undeliveredOrders;
-
-    // Tạo biểu đồ hình tròn
-    const ctx = document.getElementById('visitorChart').getContext('2d');
-    const visitorChart = new Chart(ctx, {
-        type: 'doughnut', // Biểu đồ hình tròn (doughnut hoặc pie)
-        data: {
-            labels: ['Chưa giao', 'Đã giao'],
-            datasets: [{
-                data: [undeliveredOrders, deliveredOrders],
-                backgroundColor: ['#FF6384', '#36A2EB'], // Màu sắc cho từng phần
-                hoverBackgroundColor: ['#FF6384', '#36A2EB']
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw + ' đơn hàng';
-                        }
-                    }
-                }
-            }
-        }
-    });
-</script>
-
 
 
 </body>

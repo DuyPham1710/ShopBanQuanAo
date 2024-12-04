@@ -1,5 +1,5 @@
-﻿DROP database IF Exists ShopBanAoQuan
-GO
+﻿--DROP database IF Exists ShopBanAoQuan
+--GO
 
 create database ShopBanAoQuan
 go
@@ -61,16 +61,6 @@ CREATE TABLE SanPham (
 );
 GO
 
--- Bảng đánh giá
-CREATE TABLE DanhGia
-(
-	IDNguoiMua INT REFERENCES Account(ID),
-    MaSanPham INT REFERENCES SanPham(MaSanPham),
-	BinhLuan nvarchar(max) NULL,
-	SoSao int NULL,
-	PRIMARY KEY (IDNguoiMua, MaSanPham)
-)
-GO
 -- Bảng Kích cỡ
 CREATE TABLE KichCo (
     MaKichCo INT,
@@ -135,6 +125,20 @@ CREATE TABLE ChiTietHoaDon
     GiaBan INT,
     FOREIGN KEY (MaKichCo, MaSanPham) REFERENCES KichCo(MaKichCo, MaSanPham),
     FOREIGN KEY (MaMau, MaSanPham) REFERENCES MauSac(MaMau, MaSanPham)
+)
+GO
+
+-- Bảng đánh giá
+CREATE TABLE DanhGia
+(
+	IDNguoiMua INT REFERENCES Account(ID),
+    MaSanPham INT REFERENCES SanPham(MaSanPham),
+	MaChiTiet INT REFERENCES ChiTietHoaDon(MaChiTiet),
+	BinhLuan nvarchar(max) NULL,
+	SoSao int NULL,
+	ngayDanhGia DATE,
+	TrangThaiDanhGia NVARCHAR(50) DEFAULT N'Chưa đánh giá'
+	PRIMARY KEY (IDNguoiMua, MaSanPham, MaChiTiet)
 )
 GO
 
@@ -344,26 +348,42 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE proc_DanhSachGioHang @IDNguoiMua int
+CREATE PROCEDURE proc_DanhSachGioHang 
+    @IDNguoiMua INT,
+    @MaSP INT,
+    @MaMau INT,
+    @MaKichCo INT
 AS
 BEGIN
-	select Q.*, TenMau, TenKichCo
-	from
-		(select SanPham.MaSanPham as maSP, TenSanPham, SanPham.SoLuong as SoLuongSP, GioHang.SoLuong as SoLuongGH, GiaBanDau, GiaBanDau - GiaBanDau*(GiamGia/100.0) as GiaHienTai, DuongDanHinh, MaKichCo, MaMau, IDNguoiMua
-		from SanPham, HinhAnhSanPham, GioHang
-		where SanPham.MaSanPham = HinhAnhSanPham.MaSanPham and SanPham.MaSanPham = GioHang.MaSanPham and GioHang.IDNguoiMua = @IDNguoiMua) Q,
-		MauSac, 
-		KichCo
-	where Q.maSP = MauSac.MaSanPham and MauSac.MaSanPham = KichCo.MaSanPham and Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau
-END;
-GO
-
-CREATE PROCEDURE proc_layThongTinSPThanhToan @maSP int, @maKichCo int, @maMau int
-AS
-BEGIN
-	select SanPham.MaSanPham as maSP, TenSanPham, GiaBanDau, SoLuong, GiaBanDau - GiaBanDau*(GiamGia/100.0) as GiaHienTai, MaHinhAnh, DuongDanHinh, MaKichCo, TenKichCo, MaMau, TenMau
-	from SanPham, HinhAnhSanPham, KichCo, MauSac
-	where SanPham.MaSanPham = HinhAnhSanPham.MaSanPham and KichCo.MaSanPham = SanPham.MaSanPham and MauSac.MaSanPham = SanPham.MaSanPham and KichCo.MaKichCo = @maKichCo and MauSac.MaMau = @maMau and SanPham.MaSanPham = @maSP
+    SELECT Q.*, TenMau, TenKichCo
+    FROM
+        (
+            SELECT 
+                SanPham.MaSanPham AS maSP, 
+                TenSanPham, 
+                SanPham.SoLuong AS SoLuongSP, 
+                GioHang.SoLuong AS SoLuongGH, 
+                GiaBanDau, 
+                GiaBanDau - GiaBanDau * (GiamGia / 100.0) AS GiaHienTai, 
+                DuongDanHinh, 
+                MaKichCo, 
+                MaMau, 
+                IDNguoiMua
+            FROM 
+                SanPham
+            INNER JOIN 
+                HinhAnhSanPham ON SanPham.MaSanPham = HinhAnhSanPham.MaSanPham
+            INNER JOIN 
+                GioHang ON SanPham.MaSanPham = GioHang.MaSanPham
+            WHERE 
+                GioHang.IDNguoiMua = @IDNguoiMua
+        ) Q
+    INNER JOIN 
+        MauSac ON Q.maSP = MauSac.MaSanPham AND Q.MaMau = MauSac.MaMau
+    INNER JOIN 
+        KichCo ON MauSac.MaSanPham = KichCo.MaSanPham AND Q.MaKichCo = KichCo.MaKichCo
+    WHERE 
+        (@MaSP=0 OR Q.maSP = @MaSP) AND (@MaSP=0 OR Q.MaMau = @MaMau) AND (@MaSP=0 OR Q.MaKichCo = @MaKichCo);
 END;
 GO
 
@@ -422,12 +442,13 @@ RETURN
 );
 GO
 
+-- sửa thêm mã chi tiết để làm đánh giá
 CREATE PROCEDURE proc_LoadThongTinDonHang (@IDNguoiMua INT, @TrangThai NVARCHAR(50))
 AS
 BEGIN
 	select Q.*, TenKichCo, TenMau
 	from KichCo, MauSac,
-	(select HoaDon.MaHoaDon as maHoaDon, HoaDon.NgayTao as ngayDat, TongTien, diachi, ChiTietHoaDon.SoLuong as SoLuongDaMua, TrangThai, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, GiaBanDau, SanPham.SoLuong as SoLuongSP, GiaBanDau - GiaBanDau*(GiamGia/100.0) as DonGia, GiaBan, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
+	(select ChiTietHoaDon.MaChiTiet as maChiTiet, HoaDon.MaHoaDon as maHoaDon, HoaDon.NgayTao as ngayDat, TongTien, diachi, ChiTietHoaDon.SoLuong as SoLuongDaMua, TrangThai, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, GiaBanDau, SanPham.SoLuong as SoLuongSP, GiaBanDau - GiaBanDau*(GiamGia/100.0) as DonGia, GiaBan, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
 	from HoaDon inner join ChiTietHoaDon on HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon, SanPham, HinhAnhSanPham
 	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and IDNguoiMua = @IDNguoiMua
 	) Q
@@ -436,7 +457,6 @@ BEGIN
 END;
 GO
 
--- Đang lỗi 2 hàm proc_ThongTinNguoiDung_HoaDon and proc_LoadThongTinMotDonHang
 CREATE procedure proc_ThongTinNguoiDung_HoaDon (@ID INT, @maHD INT)
 AS
 BEGIN
@@ -447,12 +467,13 @@ BEGIN
 END;
 GO
 
+-- sửa thêm mã chi tiết để làm đánh giá
 CREATE PROCEDURE proc_LoadThongTinMotDonHang (@IDNguoiMua INT, @maHD INT)
 AS
 BEGIN
 	select Q.*, TenKichCo, TenMau
 	from KichCo, MauSac,
-	(select HoaDon.MaHoaDon as maHoaDon, HoaDon.NgayTao as ngayDat, TongTien, diachi, ChiTietHoaDon.SoLuong as SoLuongDaMua, TrangThai, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, GiaBanDau, SanPham.SoLuong as SoLuongSP, GiaBanDau - GiaBanDau*(GiamGia/100.0) as DonGia, GiaBan, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
+	(select ChiTietHoaDon.MaChiTiet as maChiTiet, HoaDon.MaHoaDon as maHoaDon, HoaDon.NgayTao as ngayDat, TongTien, diachi, ChiTietHoaDon.SoLuong as SoLuongDaMua, TrangThai, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, GiaBanDau, SanPham.SoLuong as SoLuongSP, GiaBanDau - GiaBanDau*(GiamGia/100.0) as DonGia, GiaBan, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
 	from HoaDon inner join ChiTietHoaDon on HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon, SanPham, HinhAnhSanPham
 	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and IDNguoiMua = @IDNguoiMua
 	) Q
@@ -625,16 +646,129 @@ RETURN
 )
 GO
 
+CREATE OR ALTER FUNCTION fn_GetMaChiTiet
+(
+    @IDNguoiMua INT,
+    @maHoaDon INT 
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        MaChiTiet
+    FROM 
+        HoaDon H
+    JOIN 
+        ChiTietHoaDon CT ON H.MaHoaDon = CT.MaHoaDon
+    WHERE 
+        H.IDNguoiMua = @IDNguoiMua
+        AND H.MaHoaDon = @maHoaDon 
+)
+GO
+
 -- procedure cập nhật đã bán
-CREATE PROCEDURE proc_capNhatSoLuongDaBan @maHoaDon INT
+CREATE OR ALTER PROCEDURE proc_capNhatSoLuongDaBan
+    @IDNguoiMua INT,
+    @maHoaDon INT
 AS
 BEGIN
-	UPDATE SanPham
-	SET DaBan = DaBan + ChiTietHoaDon.SoLuong
-	FROM SanPham
-	JOIN ChiTietHoaDon ON SanPham.MaSanPham = ChiTietHoaDon.MaSanPham
-	JOIN HoaDon ON HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon
-	WHERE HoaDon.MaHoaDon = @maHoaDon;
+    -- Cập nhật số lượng đã bán
+    UPDATE SanPham
+    SET DaBan = DaBan + ChiTietHoaDon.SoLuong
+    FROM SanPham
+    JOIN ChiTietHoaDon ON SanPham.MaSanPham = ChiTietHoaDon.MaSanPham
+    WHERE ChiTietHoaDon.MaHoaDon = @maHoaDon;
+
+    -- Thêm đánh giá cho từng sản phẩm trong hóa đơn nếu trạng thái là "Đã giao"
+   
+    INSERT INTO DanhGia (IDNguoiMua, MaSanPham, MaChiTiet, BinhLuan, SoSao, ngayDanhGia)
+    SELECT 
+        @IDNguoiMua, 
+        CT.MaSanPham, 
+        CT.MaChiTiet, 
+        NULL AS BinhLuan, -- Để trống ban đầu, có thể cập nhật sau
+        NULL AS SoSao,     -- Để trống ban đầu, có thể cập nhật sau
+		GETDATE()
+    FROM 
+        ChiTietHoaDon CT
+    JOIN 
+        fn_GetMaChiTiet(@IDNguoiMua, @maHoaDon) fnCT ON CT.MaChiTiet = fnCT.MaChiTiet;
+END;
+GO
+
+CREATE FUNCTION dbo.TongDoanhThu()
+RETURNS INT
+AS
+BEGIN
+    -- Biến để lưu kết quả
+    DECLARE @TongDoanhThu INT;
+
+    -- Tính tổng doanh thu
+    SELECT @TongDoanhThu = SUM(TongTien)
+    FROM HoaDon
+    WHERE TrangThai = N'Đã giao';
+
+    -- Trả về kết quả
+    RETURN ISNULL(@TongDoanhThu, 0);
+END;
+GO
+
+CREATE FUNCTION dbo.SoDonHangTheoTrangThai()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        DaGiao = SUM(CASE WHEN TrangThai = N'Đã giao' THEN 1 ELSE 0 END),
+        DangGiao = SUM(CASE WHEN TrangThai = N'Đang giao' THEN 1 ELSE 0 END),
+        TongDonHang = COUNT(*)
+    FROM HoaDon
+);
+GO
+
+-- đánh giá sản phẩm
+CREATE OR ALTER PROCEDURE proc_ThemDanhGia
+    @IDNguoiMua INT,
+    @MaSanPham INT,
+    @MaChiTiet INT,
+    @BinhLuan NVARCHAR(MAX),
+    @SoSao INT,
+	@ngayDanhGia DATE
+AS
+BEGIN
+    -- Kiểm tra xem bản ghi đánh giá đã tồn tại chưa
+    IF EXISTS (SELECT 1 FROM DanhGia WHERE IDNguoiMua = @IDNguoiMua AND MaSanPham = @MaSanPham AND MaChiTiet = @MaChiTiet)
+    BEGIN
+        -- Nếu đã tồn tại, cập nhật đánh giá và bình luận
+        UPDATE DanhGia
+        SET BinhLuan = @BinhLuan,
+            SoSao = @SoSao,
+			ngayDanhGia = @ngayDanhGia,
+			TrangThaiDanhGia = N'Đã đánh giá'
+        WHERE IDNguoiMua = @IDNguoiMua AND MaSanPham = @MaSanPham AND MaChiTiet = @MaChiTiet;
+    END
+    ELSE
+    BEGIN
+        -- Nếu chưa tồn tại, thêm đánh giá mới
+        INSERT INTO DanhGia (IDNguoiMua, MaSanPham, MaChiTiet, BinhLuan, SoSao, ngayDanhGia)
+        VALUES (@IDNguoiMua, @MaSanPham, @MaChiTiet, @BinhLuan, @SoSao, GETDATE());
+    END
+END;
+GO
+
+-- Load thogn tin đã đánh giá
+CREATE OR ALTER PROCEDURE proc_LoadThongTinDanhGia (@IDNguoiMua INT, @TrangThai NVARCHAR(50))
+AS
+BEGIN
+	select Q.*, TenKichCo, TenMau
+	from KichCo, MauSac,
+	(select ChiTietHoaDon.MaChiTiet as maChiTiet, BinhLuan, SoSao, TrangThaiDanhGia, ngayDanhGia, HoTen, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
+	from DanhGia inner join ChiTietHoaDon on DanhGia.MaChiTiet = ChiTietHoaDon.MaChiTiet, SanPham, HinhAnhSanPham, NguoiDung
+	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and DanhGia.IDNguoiMua = NguoiDung.ID and IDNguoiMua = @IDNguoiMua
+	) Q
+	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP and TrangThaiDanhGia = @TrangThai
+	ORDER BY ngayDanhGia DESC
 END;
 GO
 

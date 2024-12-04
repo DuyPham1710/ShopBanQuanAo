@@ -13,6 +13,7 @@
     <!-- Font Awesome CSS -->
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 	<link rel="stylesheet" href="./views/css/style.css">
     <link rel="stylesheet" href="./views/css/styleTaiKhoan.css">
     <link rel="stylesheet" href="./views/css/styleDonHang.css">
@@ -108,12 +109,46 @@
 						        </a>
 						    </div>
 						</form>
+						<!-- Đánh giá -->
+				        <a href="#ratingDropdown" class="list-group-item" data-bs-toggle="collapse" aria-expanded="false" aria-controls="ratingDropdown">
+				            <i class="fas fa-star me-2"></i> Đánh giá
+				        </a>
+				        <form id="ratingForm" action="DanhGiaController" method="GET"> 
+				            <input type="hidden" name="trangThai" id="ratingTrangThai">
+				            <div class="collapse" id="ratingDropdown">
+				                <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setRatingTrangThai('Chưa đánh giá')">
+				                    <i class="fas fa-edit me-2"></i> Chưa đánh giá
+				                </a>
+				                <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setRatingTrangThai('Đã đánh giá')">
+				                    <i class="fas fa-check-circle me-2"></i> Đã đánh giá
+				                </a>
+				            </div>
+				        </form>
+						
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-bell me-2"></i> Thông báo
 	                    </a>
-	                    <a href="#" class="list-group-item">
+	                    <a href="#policiesDropdown" class="list-group-item" data-bs-toggle="collapse" aria-expanded="false" aria-controls="policiesDropdown">
 	                        <i class="fas fa-file-alt me-2"></i> Chính sách
 	                    </a>
+	                    
+	                    <form id="policiesForm" action="ChinhSachController" method="GET">
+						    <!-- Hidden input to store the status -->
+						    <input type="hidden" name="chinhSach" id="chinhSach">
+		                    <div class="collapse" id="policiesDropdown">
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setChinhSach('Bảo mật')">
+						             Bảo mật
+						        </a>
+						
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setChinhSach('Vận chuyển')">
+						             Vận chuyển
+						        </a>
+						
+						        <a href="javascript:void(0);" class="list-group-item ps-4" onclick="setChinhSach('Đổi trả')">
+						             Đổi trả
+						        </a>
+						    </div>
+						</form>
 	                    <a href="#" class="list-group-item">
 	                        <i class="fas fa-headset me-2"></i> Chăm sóc khách hàng
 	                    </a>
@@ -172,9 +207,29 @@
 	                                    
 	                                     <!-- Nút Đánh giá -->
 	                                      <c:if test="${donMua.trangThai == 'Đã giao'}">
-	                                         <button class="btn btn-success btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="openReviewModal()">
-											    <i class="fas fa-star"></i> Đánh giá
-											</button>
+	                                     	 <c:forEach var="dg" items="${listDanhGia}">
+	                                     	 	<c:if test="${dg.sp.maSP == donMua.chiTietHD[0].sp.maSP}">
+									                <c:if test="${dg.trangThai == 'Chưa đánh giá'}">
+									                    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" 
+									                            data-bs-toggle="modal" 
+									                            data-bs-target="#ratingModal" 
+									                            onclick="Evaluate(${donMua.chiTietHD[0].sp.maSP}, ${donMua.chiTietHD[0].maChiTiet})">
+									                        <i class="fas fa-star"></i> Đánh giá
+									                    </button>
+									                </c:if>
+
+									                <c:if test="${dg.trangThai == 'Đã đánh giá'}">
+									                    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" disabled>
+									                        <i class="fas fa-check-circle"></i> Đã đánh giá
+									                    </button>
+									                </c:if>
+										            
+	                                     	 	<%--    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="Evaluate(${donMua.chiTietHD[0].sp.maSP}, ${donMua.chiTietHD[0].maChiTiet})">
+													    <i class="fas fa-star"></i> ${dg.trangThai}
+													</button>  --%>
+	                                     	 	</c:if>
+	                                     	 </c:forEach>
+	                                       
 	                                      </c:if>
 							         
 										
@@ -216,12 +271,32 @@
 		                                        </div>
 		                                        
 		                                         <!-- Nút Đánh giá -->
-		                                        <c:if test="${donMua.trangThai == 'Đã giao'}">
-		                                        	<button class="btn btn-success btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="openReviewModal()">
+		                                      <c:if test="${donMua.trangThai == 'Đã giao'}">
+		                                     	 <c:forEach var="dg" items="${listDanhGia}">
+		                                     	 	<c:if test="${dg.sp.maSP == ChiTietHD.sp.maSP}">
+										                <c:if test="${dg.trangThai == 'Chưa đánh giá'}">
+										                    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" 
+										                            data-bs-toggle="modal" 
+										                            data-bs-target="#ratingModal" 
+										                            onclick="Evaluate(${ChiTietHD.sp.maSP}, ${ChiTietHD.maChiTiet})">
+										                        <i class="fas fa-star"></i> Đánh giá
+										                    </button>
+										                </c:if>
+	
+										                <c:if test="${dg.trangThai == 'Đã đánh giá'}">
+										                    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" disabled>
+										                        <i class="fas fa-check-circle"></i> Đã đánh giá
+										                    </button>
+										                </c:if>
+		                                     	 	</c:if>
+		                                     	 </c:forEach>
+		                                       
+		                                      </c:if>
+		                                     <%--     <c:if test="${donMua.trangThai == 'Đã giao'}">
+		                                        	<button class="btn btn-success btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="Evaluate(${ChiTietHD.sp.maSP}, ${ChiTietHD.maChiTiet})">
 													    <i class="fas fa-star"></i> Đánh giá
 													</button>
-		                                        </c:if>
-		                                    
+		                                        </c:if>   --%>
 		                                         <!-- Nút Mua lại -->
 		                                         <form action="./ChiTietSPController" method="post">
 			                                         <c:if test="${donMua.trangThai == 'Đã giao' || donMua.trangThai == 'Đã hủy'}">
@@ -320,7 +395,7 @@
 	    }
 	      
     	function huyDonHang() {		
-    	    fetch('/project_web/views/admin/HoaDonController', {
+    	    fetch('/project_web/HoaDonController', {
     	        method: 'PUT',
     	        headers: {
     	            'Content-Type': 'application/json',
@@ -343,7 +418,7 @@
     	    });
     	}
     	function confirmReceived(maHoaDon) {		
-    	    fetch('/project_web/views/admin/HoaDonController', {
+    	    fetch('/project_web/HoaDonController', {
     	        method: 'PUT',
     	        headers: {
     	            'Content-Type': 'application/json',
@@ -367,7 +442,8 @@
     	}
     	
     </script>
-<!-- Modal Đánh giá -->
+    
+	<!-- Modal Đánh giá -->
 	<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
         <div class="modal-dialog custom-modal-width">
             <div class="modal-content">
@@ -376,7 +452,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="ratingForm">
+                    <form action="DonHang" method="Post" id="ratingForm">
                         <!-- Rating Section -->
                         <div class="mb-3 text-center">
                             <label class="form-label">Chọn Số Sao:</label>
@@ -400,6 +476,9 @@
                         </div>
                         <!-- Submit Button -->
                         <div class="d-grid">
+                        	 <input type="hidden" name="method" value="Put">
+                        	<input type="hidden" name="maSP" id="maSPInput">
+                        	<input type="hidden" name="maChiTiet" id="maChiTietInput">
                             <button type="submit" class="btn btn-success">Gửi Đánh Giá</button>
                         </div>
                     </form>
@@ -407,7 +486,73 @@
             </div>
         </div>
     </div>
+    <!-- Modal Cảm ơn -->
+	<div class="modal fade" id="thankYouModal" tabindex="-1" aria-labelledby="thankYouModalLabel" aria-hidden="true">
+	    <div class="modal-dialog custom-modal-width">
+	        <div class="modal-content">
+	            <div class="modal-header bg-success text-white">
+	                <h5 class="modal-title" id="thankYouModalLabel">
+	                    <i class="bi bi-star-fill me-2"></i> Đánh Giá Thành Công
+	                </h5>
+	                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body text-center">
+	                <i class="bi bi-emoji-smile-fill text-warning" style="font-size: 3rem;"></i>
+	                <p class="mt-3">Cảm ơn bạn đã đánh giá sản phẩm của chúng tôi!</p>
+	            </div>
+	            <div class="modal-footer justify-content-center">
+	                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+	                    <i class="bi bi-x-circle me-1"></i> Đóng
+	                </button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<script>
+		function Evaluate(maSP, maChiTiet) {
+			const InputMaSP = document.getElementById('maSPInput');
+			const InputMaChiTiet = document.getElementById('maChiTietInput');
+			InputMaSP.value = maSP;
+			InputMaChiTiet.value = maChiTiet;
+		}
+		// Kiểm tra rỗng
+		document.getElementById('ratingForm').addEventListener('submit', function(event) {
+	        var rating = document.querySelector('input[name="rating"]:checked');
+	        var comment = document.getElementById('comment').value.trim();
+	        
+	        if (!rating) {
+	            alert("Vui lòng chọn số sao để đánh giá.");
+	            event.preventDefault(); // Ngừng việc gửi form
+	            return false;
+	        }
+	        
+	        if (comment === "") {
+	            alert("Vui lòng nhập bình luận.");
+	            event.preventDefault(); // Ngừng việc gửi form
+	            return false;
+	        }
+	        
+	        return true; // Gửi form nếu đã điền đủ
+	    });
+		window.onload = function () {
+	        const urlParams = new URLSearchParams(window.location.search);
+	        if (urlParams.get('ratingSuccess') === 'true') {
+	            // Hiển thị modal
+	            const modal = new bootstrap.Modal(document.getElementById('thankYouModal'));
+	            modal.show();
 
+	            // Reload trang khi modal đóng
+	            const closeModalBtn = document.getElementById('closeModalBtn');
+	            document.getElementById('thankYouModal').addEventListener('hidden.bs.modal', function () {
+	                window.location.href = 'DonHang?trangThai=Đã+giao'; // Xóa tham số ratingSuccess
+	            });
+
+	            closeModalBtn.addEventListener('click', function () {
+	                modal.hide();
+	            });
+	        }
+	    };
+	</script>
     
     <jsp:include page="footer.jsp" />
     <!-- Bootstrap JS, Popper.js, and jQuery -->
@@ -437,6 +582,10 @@
         function setTrangThai(trangThai) {
 	        document.getElementById('trangThai').value = trangThai;
 	        document.getElementById('orderForm').submit(); // Submit form khi nhấn vào thẻ a
+	    }
+        function setRatingTrangThai(trangThai) {
+	        document.getElementById('ratingTrangThai').value = trangThai;
+	        document.getElementById('ratingForm').submit(); // Submit form khi nhấn vào thẻ a
 	    }
     </script>
     
@@ -499,50 +648,14 @@
 		     document.body.style.overflow = '';
 		 });
     </script>
-   
+
+
+   	<script>
+		function setChinhSach(chinhSach) {
+			document.getElementById('chinhSach').value = chinhSach;
+	        document.getElementById('policiesForm').submit();
+		}
+	</script>
     
-   <!--  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const stars = document.querySelectorAll(".rating-stars i");
-
-        let selectedRating = 0; // Đánh giá được chọn
-
-        stars.forEach((star, index) => {
-            // Khi di chuột qua sao
-            star.addEventListener("mouseover", () => {
-                highlightStars(index + 1);
-            });
-
-            // Khi rời chuột khỏi sao
-            star.addEventListener("mouseout", () => {
-                highlightStars(selectedRating);
-            });
-
-            // Khi click vào sao
-            star.addEventListener("click", () => {
-                selectedRating = index + 1;
-                highlightStars(selectedRating);
-                console.log("Đánh giá:", selectedRating); // Kiểm tra giá trị sao đã chọn
-            });
-        });
-
-        // Tô màu các sao từ trái đến chỉ số cho trước
-        function highlightStars(rating) {
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.add("hovered");
-                } else {
-                    star.classList.remove("hovered");
-                }
-            });
-        }
-    });
-    function showRatingModal(maHoaDon) {
-        console.log("Mã hóa đơn:", maHoaDon); // In mã hóa đơn nếu cần
-        const modal = new bootstrap.Modal(document.getElementById('ratingModal'));
-        modal.show();
-    }
-	</script> -->
-	
 </body>
 </html>
