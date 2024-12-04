@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.tags.shaded.org.apache.xpath.axes.ChildTestIterator;
+
+import models.ChiTietHoaDon;
 import models.HoaDon;
 
 public class HoaDonDAO {
@@ -19,6 +22,34 @@ public class HoaDonDAO {
 		
 		while (rs.next()) {				
 			HoaDon hoaDon = new HoaDon(
+					rs.getInt("MaHoaDon"),
+					rs.getInt("IDNguoiMua"),
+					rs.getDate("NgayTao"),
+					rs.getInt("TongTien"),
+					rs.getString("diachi"),
+					rs.getString("TrangThai")
+					);
+			DanhSachHoaDon.add(hoaDon);	
+		}
+			
+		return DanhSachHoaDon;
+	}
+	
+	public static List<HoaDon> DanhSachHoaDonCuaKhach(Connection conn, int id, int thang, int nam) throws SQLException {
+		List<HoaDon> DanhSachHoaDon = new ArrayList<HoaDon>();
+		String sql = "select * from fn_GetHoaDonChiTiet(?, ?, ?)";
+		
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, id);
+		ps.setInt(2, thang);
+		ps.setInt(3, nam);
+		
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			ChiTietHoaDon chitiet = new ChiTietHoaDon();
+			chitiet.setSoLuongDaMua(rs.getInt("SoLuong"));
+			HoaDon hoaDon = new HoaDon(
+					chitiet,
 					rs.getInt("MaHoaDon"),
 					rs.getInt("IDNguoiMua"),
 					rs.getDate("NgayTao"),

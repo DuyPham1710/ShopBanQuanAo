@@ -31,3 +31,37 @@ function drawMonthlySalesChart(canvasId, labels, data) {
 function submitYearForm() {
     document.getElementById("yearForm").submit();
 }
+
+function locKhachHang(){
+	document.getElementById("locKhachHang").submit();
+}
+
+function loadNguoiDung(idNguoiDung){
+	fetch(`/project_web/qlKhachHangController?_method=loadThongTinKhachHang`, {
+	        method: "POST",
+	        headers: {
+	        	"Content-Type": "application/json",
+				"iDNguoiDung" : idNguoiDung,
+	        },
+			body: JSON.stringify({
+		    }),
+	    })
+	    .then(response => response.text())
+	    .then(data => {
+	        // Chèn dữ liệu trả về từ Controller vào Modal
+	        document.querySelector('#thongTinNguoiDung .modal-body').innerHTML = data;
+	        // Hiển thị Modal
+	        const modal = new bootstrap.Modal(document.getElementById('thongTinNguoiDung'));
+	        modal.show();
+	    })
+	    .catch(error => {
+	        console.error("Error:", error);
+	        alert("Không thể tải !");
+	    });
+}
+function DongModal(){
+	// Đóng modal khi bấm nút close
+	var modalElement = document.getElementById('thongTinNguoiDung');
+	  var modal = bootstrap.Modal.getInstance(modalElement); // Lấy instance của modal
+	  modal.hide(); // Ẩn modal
+}

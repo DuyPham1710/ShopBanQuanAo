@@ -19,6 +19,8 @@ public class Account {
 		this.password = password;
 	}
 	
+	
+	
 	public String getPassword() {
 		return password;
 	}

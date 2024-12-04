@@ -9,8 +9,19 @@ public class HoaDon {
 	private int tongTien;
 	private String diachi;
 	private String trangThai;
+	private ChiTietHoaDon chiTietHoaDon;
     public HoaDon(int maHD, int idNguoiDung, Date ngayTao, int tongTien, String diaChi, String trangThai) {
         this.maHD = maHD;
+        this.idNguoiDung = idNguoiDung;
+        this.ngayTao = ngayTao;
+        this.tongTien = tongTien;
+        this.diachi = diaChi;
+        this.trangThai = trangThai;
+    }
+    
+    public HoaDon(ChiTietHoaDon chiTietHoaDon,int maHD, int idNguoiDung, Date ngayTao, int tongTien, String diaChi, String trangThai) {
+        this.chiTietHoaDon = chiTietHoaDon;
+    	this.maHD = maHD;
         this.idNguoiDung = idNguoiDung;
         this.ngayTao = ngayTao;
         this.tongTien = tongTien;
@@ -47,11 +58,16 @@ public class HoaDon {
 	public void setIdNguoiDung(int idNguoiDung) {
 		this.idNguoiDung = idNguoiDung;
 	}
-	public int getmaHD() {
+	public int getMaHD() {
 		return maHD;
 	}
-	public void setmHD(int mHD) {
+	public void setMaHD(int mHD) {
 		this.maHD = maHD;
 	}
-	
+	public ChiTietHoaDon getChiTietHoaDon() {
+		return chiTietHoaDon;
+	}
+	public void setChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
+		this.chiTietHoaDon = chiTietHoaDon;
+	}
 }

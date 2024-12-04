@@ -1,5 +1,6 @@
 package DAO;
 
+import java.io.Console;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -74,6 +75,7 @@ public class NguoiDungDAO {
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			NguoiDung nguoi = new NguoiDung(
+					rs.getInt("ID"),
 					rs.getString("TenKhachHang"), 
 					rs.getString("GioiTinh"), 
 					rs.getString("SDT"), 
@@ -94,6 +96,7 @@ public class NguoiDungDAO {
 		
 		while (rs.next()) {
 			NguoiDung nguoi = new NguoiDung(
+					rs.getInt("ID"),
 					rs.getString("TenKhachHang"), 
 					rs.getString("GioiTinh"), 
 					rs.getString("SDT"), 
@@ -170,6 +173,39 @@ public class NguoiDungDAO {
 					rs.getString("email"),
 					diaChiNhanHang);
 		
+			return nguoiDung;
+		}
+		return null;
+	}
+	
+	public static NguoiDung ThongTinKhachHang(Connection conn, int iD, int thang, int nam) throws SQLException {
+		
+		String sql = "SELECT *FROM fn_danhSachKhachHang(?, ?) where ID = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, thang);
+		ps.setInt(2, nam);
+		ps.setInt(3, iD);
+		ResultSet rs = ps.executeQuery();
+		
+		if (rs.next()) {
+			sql = "select Madiachi, TenDiaChi from DiaChiNhanHang where DiaChiNhanHang.IDNguoiDung = ?";
+			PreparedStatement psDC = conn.prepareStatement(sql);
+			psDC.setInt(1, iD);
+			ResultSet rsDC = psDC.executeQuery();
+			
+			List<DiaChiNhanHang> diaChiNhanHang = new ArrayList<DiaChiNhanHang>();
+			while (rsDC.next()) {
+				DiaChiNhanHang diaChi = new DiaChiNhanHang(rsDC.getInt("Madiachi"), rsDC.getString("TenDiaChi"));
+				diaChiNhanHang.add(diaChi);
+			}
+			NguoiDung nguoiDung = new NguoiDung(
+					rs.getString("TenKhachHang"), 
+					rs.getString("GioiTinh"), 
+					rs.getString("SDT"),
+					rs.getString("email"),
+					rs.getInt("SoSanPhamMua"),
+					rs.getInt("TongSoTien"),
+					diaChiNhanHang);
 			return nguoiDung;
 		}
 		return null;

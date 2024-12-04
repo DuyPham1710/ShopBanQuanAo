@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.DanhMucSanPham;
+import models.HoaDon;
 import models.NguoiDung;
 import models.SanPham;
 
@@ -14,9 +15,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+import DAO.HoaDonDAO;
 import DAO.NguoiDungDAO;
 import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
@@ -72,6 +75,7 @@ public class qlKhachHangController extends HttpServlet {
 			
 		}
 		
+		
 		List<Integer> thongKeTungThang = null;
 		try {
 			thongKeTungThang = NguoiDungDAO.ThongKeKhachHangMua(conn, nam1);
@@ -81,7 +85,15 @@ public class qlKhachHangController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 			
 		}
-		
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("selectedMonth", thang);
+		request.setAttribute("selectedYear", nam);
+		request.setAttribute("NamThongKe", nam1);
 		request.setAttribute("ThongKeTungThang", thongKeTungThang);
 		request.setAttribute("ListND", listND);
 		request.setAttribute("ListNDMN", listNDMuaNhieu);
@@ -99,9 +111,74 @@ public class qlKhachHangController extends HttpServlet {
 		
 		String method = request.getParameter("_method");
 		if ("thayDoiNam".equalsIgnoreCase(method)) {
-			 nam = Integer.parseInt(request.getParameter("year"));
+			String tmp=request.getParameter("year");
+			if(tmp!="") {
+				nam1 = Integer.parseInt(tmp);
+				if(nam1<0) {
+					nam1=0;
+				}
+			}
+			else {
+				nam1=0;
+			}
+			 
 			doGet(request, response);
 		}
+		else if ("locKhachHang".equalsIgnoreCase(method)) {
+			 thang= Integer.parseInt(request.getParameter("filterMonth"));
+			 String tmp=request.getParameter("filterYear");
+			 if(tmp!="") {
+				 nam=Integer.parseInt(tmp);
+				 if(nam<0) {
+					 nam=0;
+				 }
+			 }
+			 else {
+				 nam=0;
+			 }
+			doGet(request, response);
+		}
+		else if ("loadThongTinKhachHang".equalsIgnoreCase(method)) {
+			doLoad(request, response);
+		}
+		
+	}
+	
+	protected void doLoad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		try {
+			conn = new ConnectJDBC().getConnection();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		int idNguoiDung = Integer.parseInt(request.getHeader("idNguoiDung"));
+		NguoiDung nd = null;
+		try {
+			nd = NguoiDungDAO.ThongTinKhachHang(conn, idNguoiDung,thang, nam);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+			
+		}
+		List<HoaDon> listHD = null;
+		try {
+			listHD = HoaDonDAO.DanhSachHoaDonCuaKhach(conn, idNguoiDung, thang, nam);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		request.setAttribute("ListHD", listHD);
+		request.setAttribute("IDNguoiDung", idNguoiDung);
+		request.setAttribute("ThongTinND", nd);
+		RequestDispatcher req = request.getRequestDispatcher("/views/admin/ThongTinKhachHang.jsp");
+		req.include(request, response);
 	}
 
 }

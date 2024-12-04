@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class NguoiDung {
+	private int id;
 	private Account account;
 	private String cccd; 
     private String hoTen;      
@@ -27,13 +28,24 @@ public class NguoiDung {
     	this.setEmail(email);
     }
     
-    public NguoiDung( String hoTen, String gioiTinh, String sdt, String email,int daMua,int tongTien) {
+    public NguoiDung( int id, String hoTen, String gioiTinh, String sdt, String email,int daMua,int tongTien) {
+    	this.setId(id);
     	this.setHoTen(hoTen);
     	this.setGioiTinh(gioiTinh);
     	this.setSdt(sdt);
     	this.setEmail(email);
     	this.setDaMua(daMua);
     	this.setTongTien(tongTien);
+    }
+    
+    public NguoiDung( String hoTen, String gioiTinh, String sdt, String email, int daMua,int tongTien, List<DiaChiNhanHang> diaChiNhanHang) {
+    	this.setHoTen(hoTen);
+    	this.setGioiTinh(gioiTinh);
+    	this.setSdt(sdt);
+    	this.setEmail(email);
+    	this.setDaMua(daMua);
+    	this.setTongTien(tongTien);
+    	this.setDiaChiNhanHang(diaChiNhanHang);
     }
     
 	public NguoiDung(String cccd, String hoTen, String gioiTinh, String sdt, Date ngaySinh, String email, List<DiaChiNhanHang> diaChiNhanHang) {
@@ -52,7 +64,14 @@ public class NguoiDung {
 		this.email = email;
 		this.setDiaChiNhanHang(diaChiNhanHang);
 	}
+	
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -124,7 +143,7 @@ public class NguoiDung {
 	public void setDaMua(int daMua) {
 		this.daMua = daMua;
 	}
-
+	
 	public int getTongTien() {
 		return tongTien;
 	}
@@ -132,6 +151,7 @@ public class NguoiDung {
 	public void setTongTien(int tongTien) {
 		this.tongTien = tongTien;
 	}
-
+	
+	
 	
 }

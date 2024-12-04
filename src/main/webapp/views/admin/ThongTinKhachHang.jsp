@@ -1,89 +1,125 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<div class="container my-5">
-  <div class="row">
-    <!-- Tên -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Họ và tên</label>
-      <input type="text" class="form-control" value="${customer.name}" disabled />
-    </div>
+<div class="col-md-12 bg-white py-4 px-5">
+    <div class="profile-info">
+ 	<div class="row">
+            <div class="col-md-9" style="padding-right: 30px;">
+                <div class="row">
+                    <!-- Họ và tên -->
+                    <div class="col-md-6 mb-3">
+                        <label for="hoTen" class="form-label">Họ và tên</label>
+                        <div class="form-control readonly">${ThongTinND.hoTen}</div>
+                    </div>
 
-    <!-- Email -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Email</label>
-      <input type="email" class="form-control" value="${customer.email}" disabled />
-    </div>
-  </div>
+                    <!-- Email -->
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <div class="form-control readonly">${ThongTinND.email}</div>
+                    </div>
+                </div>
 
-  <div class="row">
-    <!-- Số điện thoại -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Số điện thoại</label>
-      <input type="text" class="form-control" value="${customer.phone}" disabled />
-    </div>
+                <div class="row">
+                    <!-- Số điện thoại -->
+                    <div class="col-md-6 mb-3">
+                        <label for="sdt" class="form-label">Số điện thoại</label>
+                        <div class="form-control readonly">${ThongTinND.sdt}</div>
+                    </div>
 
-    <!-- Số sản phẩm đã mua -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Số sản phẩm đã mua</label>
-      <input type="number" class="form-control" value="${customer.totalProducts}" disabled />
-    </div>
-  </div>
+                    <!-- Số sản phẩm đã mua -->
+                    <div class="col-md-6 mb-3">
+                        <label for="daMua" class="form-label">Số sản phẩm đã mua</label>
+                        <div class="form-control readonly">${ThongTinND.daMua}</div>
+                    </div>
+                </div>
 
-  <div class="row">
-    <!-- Số tiền -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Tổng số tiền đã chi</label>
-      <input type="text" class="form-control" value="${customer.totalSpent}" disabled />
-    </div>
+                <div class="row">
+                    <!-- Tổng số tiền đã chi -->
+                    <div class="col-md-6 mb-3">
+                        <label for="tongTien" class="form-label">Tổng số tiền đã chi</label>
+                        <div class="form-control readonly">${ThongTinND.tongTien} VND</div>
+                    </div>
 
-    <!-- Giới tính -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Giới tính</label>
-      <input type="text" class="form-control" value="${customer.gender}" disabled />
-    </div>
-  </div>
+                    <!-- Giới tính -->
+                    <div class="col-md-6 mb-3">
+                        <label for="gioiTinh" class="form-label">Giới tính</label>
+                        <div class="form-control readonly">${ThongTinND.gioiTinh}</div>
+                    </div>
+                </div>
 
-  <div class="row">
-    <!-- Ngày sinh -->
-    <div class="col-md-6 mb-3">
-      <label class="form-label">Ngày sinh</label>
-      <input type="date" class="form-control" value="${customer.dob}" disabled />
+                <div class="row">
+                    <!-- Ngày sinh -->
+                    <div class="col-md-6 mb-3">
+                        <label for="ngaySinh" class="form-label">Ngày sinh</label>
+                        <div class="form-control readonly">${ThongTinND.ngaySinh}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <!-- Ảnh đại diện -->
+                <img src="https://www.vlance.vn/uploads/portfolio/view/c4a875224357fa0f1dce59defcb7a42b3d6d2cab1.jpg" alt="Profile Picture" class="profile-pic avatar mb-3" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+                
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
 
 
 
 <!-- Thông tin chi tiết các sản phẩm trong đơn hàng -->
-<div class="container my-5">
-  <h3 class="text-center mb-4">Chi tiết các sản phẩm trong đơn hàng</h3>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Ảnh</th>
-            <th>Tên sản phẩm</th>
-            <th>Số lượng</th>
-            <th>Màu sắc</th>
-            <th>Kích thước</th>
-            <th>Số tiền</th>
-            <th>Trạng thái</th>
-            <th>Đánh giá</th>
-          </tr>
-        </thead>
-        <tbody>
-          <c:forEach var="product" items="${order.products}">
-            <tr>
-              <td><img src="${product.image}" alt="${product.name}" width="50" /></td>
-              <td>${product.name}</td>
-              <td>${product.quantity}</td>
-              <td>${product.color}</td>
-              <td>${product.size}</td>
-              <td>${product.price}</td>
-              <td>${product.status}</td>
-              <td>${product.rating}</td>
-            </tr>
-          </c:forEach>
-        </tbody>
-      </table>
-</div>
+<div class="card mt-4">
+          <div class="card-body">
+            <h4>Danh sách đơn hàng</h4>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Ngày tạo</th>
+                    <th>Số sản phẩm</th>
+                    <th>Tổng tiền</th>
+                    <th>Địa chỉ</th>
+                    <th>Trạng thái</th>
+                    <th>Đánh giá (Nếu có)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <c:forEach var="hoaDon" items="${ListHD}">
+                        <tr>
+                            <td>${hoaDon.maHD}</td>
+                            <td>${hoaDon.ngayTao}</td>
+                            <td>${hoaDon.chiTietHoaDon.soLuongDaMua}</td>
+                            
+                            <td>${hoaDon.tongTien}</td>
+                            <td>${hoaDon.diachi}</td>
+                            <td>
+							  <span 
+							    class="badge 
+							      <c:choose>
+							        <c:when test="${hoaDon.trangThai == 'Đang giao'}">bg-success</c:when>
+							        <c:when test="${hoaDon.trangThai == 'Chờ xác nhận'}">bg-warning text-dark</c:when>
+							        <c:when test="${hoaDon.trangThai == 'Đã hủy'}">bg-danger</c:when>
+							        <c:when test="${hoaDon.trangThai == 'Đã giao'}">bg-primary</c:when>
+							      </c:choose>">
+							      <i class="fas 
+							        <c:choose>
+							          <c:when test="${hoaDon.trangThai == 'Chờ xác nhận'}">fa-clock</c:when>
+							          <c:when test="${hoaDon.trangThai == 'Đang giao'}">fa-truck</c:when>
+							          <c:when test="${hoaDon.trangThai == 'Đã giao'}">fa-check</c:when>
+							          <c:when test="${hoaDon.trangThai == 'Đã hủy'}">fa-times</c:when>
+							        </c:choose> me-2"></i>
+							    ${hoaDon.trangThai}
+							  </span>
+							</td>
+
+                            <td>
+							  
+							</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>

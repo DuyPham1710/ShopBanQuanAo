@@ -38,6 +38,7 @@ body {
 
   .nav-link:hover {
     color: #fff;
+    mix-blend-mode: difference;
   }
   .nav-item {
     display: flex;
@@ -203,3 +204,6 @@ body {
   font-weight: 600;
   color: #333;
 }
+
+/* Tắt hiệu ứng làm mờ của backdrop */
+

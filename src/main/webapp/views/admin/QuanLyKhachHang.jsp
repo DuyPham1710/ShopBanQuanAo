@@ -20,8 +20,8 @@
       <!-- Sidebar -->
       <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="position-sticky">
-          <div class="logo text-center">
-            <img src="./views/images/logo.jpg" class="rounded" alt="Logo" id="logo">
+          <div class="logo text-center" style="margin-top:20px;">
+            <img src="./views/images/logo.jpg" class="rounded-5" alt="Logo" id="logo">
           </div>
           <ul class="nav flex-column">
             <li class="nav-item">
@@ -30,23 +30,19 @@
             </li>
             <li class="nav-item">
               <i class="bi bi-bag-check me-2"></i>
-              <a class="nav-link" href="HoaDonController">Order</a>
+              <a class="nav-link" href="./views/admin/HoaDonController">Đơn Hàng</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-box me-2"></i>
-              <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts">Products</a>
+              <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts">Sản phẩm</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="Background:#f0d4a0;border-radius: 8px;">
               <i class="bi bi-people me-2"></i>
-              <a class="nav-link" href="QuanLyKhachHang.jsp">Customers</a>
-            </li>
-            <li class="nav-item">
-              <i class="bi bi-chat-left-text me-2"></i>
-              <a class="nav-link" href="#">Messages</a>
+              <a class="nav-link" href="/project_web/qlKhachHangController">Khách hàng</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-box-arrow-right me-2"></i>
-              <a class="nav-link" href="#">Sign Out</a>
+              <a class="nav-link" href="/project_web">Đăng xuất</a>
             </li>
           </ul>
         </div>
@@ -85,9 +81,10 @@
             <h4>Thống kê khách hàng</h4>
             <!-- Input chọn năm -->
             <div class="d-flex align-items-center mb-4">
-              	<form id="yearForm" method="post" _method="thayDoiNam" action="qlKhachHangController?_method=thayDoiNam">
+              	<form id="yearForm" method="post" action="qlKhachHangController">
+              		<input type="hidden" name ="_method" value="thayDoiNam"/>
 				    <label for="chartYear">Chọn năm:</label>
-				    <input type="number" id="chartYear" name="year" class="form-control" style="width: auto;" value="${Nam}" onchange="submitYearForm()">
+				    <input type="number" id="chartYear" name="year" class="form-control" style="width: auto;" value="${NamThongKe}" onchange="submitYearForm()">
 				</form>
             </div>
         
@@ -116,32 +113,28 @@
 
 
         <!-- Customer Table -->
-        <div class="card mt-4">
+        <div class="card mt-4" style="margin-bottom:3rem">
           <div class="card-body">
             <h4>Danh sách khách hàng</h4>
             <!-- Combobox lọc dữ liệu -->
-            <div class="d-flex align-items-center mb-3">
-              <label for="filterMonth" class="me-2">Lọc theo tháng:</label>
-              <select id="filterMonth" class="form-select me-3" style="width: auto;">
-                <option value="">Tất cả</option>
-                <option value="1">Tháng 1</option>
-                <option value="2">Tháng 2</option>
-                <option value="3">Tháng 3</option>
-                <option value="4">Tháng 4</option>
-                <option value="5">Tháng 5</option>
-                <option value="6">Tháng 6</option>
-                <option value="7">Tháng 7</option>
-                <option value="8">Tháng 8</option>
-                <option value="9">Tháng 9</option>
-                <option value="10">Tháng 10</option>
-                <option value="11">Tháng 11</option>
-                <option value="12">Tháng 12</option>
-              </select>
-              <label for="filterYear" class="me-2">Lọc theo năm:</label>
-              <div class="d-flex align-items-center ">
-              	<input type="number" id="filterYear" class="form-control me-3" style="width: auto; heigh:60%" >
-            </div>
-            </div>
+            <form id="locKhachHang" action="qlKhachHangController" method="POST">
+            	<input type="hidden" name ="_method" value="locKhachHang"/>
+	            <div class="d-flex align-items-center mb-3">
+	              <label for="filterMonth" class="me-2">Lọc theo tháng:</label>
+	              <select id="filterMonth" class="form-select me-3" style="width: auto;" name="filterMonth"  onchange = "locKhachHang()">
+					    <option value="0" ${selectedMonth == 0 ? "selected" : "" }>Tất cả</option>
+					    <c:forEach var="month" begin="1" end="12">
+					        <option value="${month}" ${month == selectedMonth ? "selected" : ""} >
+					            Tháng ${month}
+					        </option>
+					    </c:forEach>
+				  </select>
+	              <label for="filterYear" class="me-2">Lọc theo năm:(0 là tất cả các năm)</label>
+	              <div class="d-flex align-items-center ">
+	              	<input type="number" id="filterYear" name="filterYear" class="form-control me-3" value="${selectedYear}" style="width: auto; heigh:60%" onchange = "locKhachHang()" >
+	            </div>
+	            </div>
+	        </form>
             <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
               <table class="table table-striped table-hover" id="customerTable">
                 <thead>
@@ -167,7 +160,7 @@
 	                    <td>${nd.daMua }</td>
 	                    <td>${nd.tongTien }</td>
 	                    <td>
-	                      <button class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#thongTinNguoiDung" >Xem</button>
+	                      <button class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#thongTinNguoiDung" onclick="loadNguoiDung(${nd.id})">Xem</button>
 	                    </td>
 	                </tr>
                   </c:forEach>
@@ -183,7 +176,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="addProductModalLabel">Thông tin khách hàng</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" onclick="DongModal()"></button>
               </div>
               <div class="modal-body">
                 	<!-- Thông tin khách hàng -->
@@ -199,6 +192,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
   <script >
 	  	const labels = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", 
 	        "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];

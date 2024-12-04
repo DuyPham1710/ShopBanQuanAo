@@ -28,7 +28,7 @@
       <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="position-sticky">
           <div class="logo text-center">
-            <img src="/project_web/views/images/logo.jpg" class="rounded" alt="Logo" id="logo">
+            <img src="./views/images/logo.jpg" class="rounded-5" alt="Logo" id="logo">
           </div>
           <ul class="nav flex-column">
             <li class="nav-item">
@@ -37,20 +37,19 @@
             </li>
             <li class="nav-item">
               <i class="bi bi-bag-check me-2"></i>
-              <a class="nav-link" href="HoaDonController">Order</a>
+              <a class="nav-link" href="./views/admin/HoaDonController">Đơn Hàng</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="Background:#f0d4a0;border-radius: 8px;">
               <i class="bi bi-box me-2"></i>
-              <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts">Products</a>
-              
+              <a class="nav-link" href="/project_web/qlSanPhamController" id="loadProducts" >Sản phẩm</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-people me-2"></i>
-              <a class="nav-link" href="/project_web/qlKhachHangController">Customers</a>
+              <a class="nav-link" href="/project_web/qlKhachHangController">Khách hàng</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-box-arrow-right me-2"></i>
-              <a class="nav-link" href="#">Sign Out</a>
+              <a class="nav-link" href="/project_web">Đăng xuất</a>
             </li>
           </ul>
         </div>

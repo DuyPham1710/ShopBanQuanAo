@@ -2,8 +2,12 @@
 body {
     font-family: Arial, sans-serif;
   }
-  
+  main.content {
+    min-height: 100vh; /* Đảm bảo nội dung phủ hết chiều cao màn hình */
+	}
   .sidebar {
+    position: fixed;
+    top: 0; /* Đặt khoảng cách từ trên cùng */
     min-height: 100vh;
     padding: 0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
