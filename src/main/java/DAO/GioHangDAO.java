@@ -54,7 +54,7 @@ public class GioHangDAO {
 	}
 	public static List<GioHang> DanhSachGioHang(Connection conn) throws SQLException {
 		List<GioHang> listGH = new ArrayList<GioHang>();
-		String sql = "{call proc_DanhSachGioHang(?)}";
+		String sql = "{call proc_DanhSachGioHang(?,0,0,0)}";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1, AccountDAO.getID());
 		ResultSet rs = ps.executeQuery();
@@ -80,6 +80,40 @@ public class GioHangDAO {
 			
 			listGH.add(gh);	
 		}
+		return listGH;
+	}
+	public static List<GioHang> DanhSachGioHangThanhToan(Connection conn,String[] listMa) throws SQLException {
+		List<GioHang> listGH = new ArrayList<GioHang>();
+		
+		for(int i=0;i<listMa.length;i+=3) {
+			String sql = "{call proc_DanhSachGioHang(?,?,?,?)}";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, AccountDAO.getID());
+			ps.setInt(2,Integer.parseInt(listMa[i].trim()));
+			ps.setInt(3,Integer.parseInt(listMa[i+1].trim()));
+			ps.setInt(4,Integer.parseInt(listMa[i+2].trim()));
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {			
+				int giaHienTai = (int)(rs.getFloat("GiaHienTai"));
+				
+				KichCo size = new KichCo(rs.getInt("MaKichCo"), rs.getString("TenKichCo"));
+				MauSac color = new MauSac(rs.getInt("MaMau"), rs.getString("TenMau"));
+				HinhAnhSanPham hinhAnhSP = new HinhAnhSanPham();
+				hinhAnhSP.setDuongDanHinh(rs.getString("DuongDanHinh"));
+				SanPham sp = new SanPham(
+						rs.getInt("maSP"), 
+						rs.getString("TenSanPham"), 
+						rs.getInt("GiaBanDau"), 
+						giaHienTai, 
+						rs.getInt("SoLuongSP"),
+						size,
+						color,
+						hinhAnhSP);
+				GioHang gh = new GioHang(sp, rs.getInt("SoLuongGH"));
+				listGH.add(gh);	
+			}
+		}
+		
 		return listGH;
 	}
 }

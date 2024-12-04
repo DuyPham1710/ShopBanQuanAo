@@ -38,6 +38,8 @@ public class ThanhToanController extends HttpServlet {
 			response.sendRedirect("/project_web");
 		}
 		else {
+			
+			
 			int totalTemp = 0; 
             
         	Connection conn = null;
@@ -82,12 +84,15 @@ public class ThanhToanController extends HttpServlet {
 				totalTemp = soLuong * sp.getGiaHienTai();
 			}
 			else if (redirect.equals("cart")) {
+				
+				String cacSanPhamChon = request.getParameter("listSPCheck");
+				String[] listMa = cacSanPhamChon.split(",");
 				if (request.getParameter("totalTemp") != null) {
 	                totalTemp = Integer.parseInt(request.getParameter("totalTemp"));
 	            }
 	            if (totalTemp > 0) {
         			try {
-        				listGH = GioHangDAO.DanhSachGioHang(conn);
+        				listGH = GioHangDAO.DanhSachGioHangThanhToan(conn,listMa);
         			}
         			catch (Exception e) {
         				e.printStackTrace();

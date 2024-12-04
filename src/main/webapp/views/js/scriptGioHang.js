@@ -2,11 +2,12 @@
   /*   function formatCurrency(value) {
         return value.toLocaleString('vi-VN'); // 'vi-VN' sẽ sử dụng dấu chấm cho hàng nghìn theo chuẩn Việt Nam
     } */
-	
+
 document.getElementById("selectAll").addEventListener("change", function () {
     const checkboxes = document.querySelectorAll(".cart-item input[type='checkbox']");
     checkboxes.forEach(function (checkbox) {
         checkbox.checked = this.checked;
+		console.log("aa");
     });
 });	
 document.querySelector("form[action='./ThanhToanController']").addEventListener("submit", function (e) {
@@ -27,18 +28,19 @@ function changeQuantity(value, maSP, maKichThuoc, maMau, soLuongSP, giaHienTai, 
 		        
 		        // Tăng hoặc giảm số lượng
 		        quantity += value;
-		        
+				let value1 =value;
 		        // Đảm bảo số lượng không nhỏ hơn 1
 		        if (quantity < 1) {
 		            quantity = 1;
+					value1=0;
+					value=0;
 		        }
-		        
 		        if (quantity > soLuongSP) {
-					value=-(quantity-soLuongSP-1);
+					value=0;
 		            // Hiển thị toast khi số lượng vượt quá tồn kho
 		           	showErrorToast();
 		            quantity = soLuongSP; // Đặt lại số lượng về giá trị tối đa
-					
+					value1=0;
 		        }
 		        // Cập nhật lại giá trị số lượng trên trang và giá trị ẩn
 		        quantityElement.innerText = quantity;
@@ -52,15 +54,28 @@ function changeQuantity(value, maSP, maKichThuoc, maMau, soLuongSP, giaHienTai, 
 		        const currentPrice = quantity * giaHienTai;
 		        currentPriceElement.innerText = currentPrice + "đ";
 		        originalPriceElement.innerText = (quantity * giaBanDau) + "đ";
+				
+				let tmp = maSP+","+maKichThuoc+","+maMau;
+			  	if (listCheck.has(tmp)) {
+					// Cập nhật tổng tạm tính và tổng tiền
+					let tongTienElement = document.getElementById("tongTienTamTinh");
 
-		        // Cập nhật tổng tạm tính và tổng tiền
-		        const allCurrentPrices = document.querySelectorAll(".price");
-		        let totalTemp = 0;
-		        allCurrentPrices.forEach((priceElement) => {
-		            totalTemp += parseInt(priceElement.innerText.replace("đ", ""));
-		        });
-		        document.querySelector(".totalTemp").innerText = totalTemp + "đ";
-		        document.querySelector(".total").innerText = (totalTemp + 30000) + "đ"; // Thêm phí vận chuyển
+					if (tongTienElement) {
+					    // Lấy giá trị text của phần tử và loại bỏ chữ "đ" rồi chuyển thành số
+					    let tongGiaTamTinh = parseInt(tongTienElement.textContent.replace("đ", "").trim());
+					    console.log(tongGiaTamTinh); // Kiểm tra kết quả
+						tongGiaTamTinh += value1*giaHienTai;
+				        document.querySelector(".totalTemp").innerText = tongGiaTamTinh + "đ";
+				        document.querySelector(".total").innerText = (tongGiaTamTinh + 30000) + "đ"; // Thêm phí vận chuyển
+						document.getElementById("totalTempThanhToan").value = tongGiaTamTinh;
+					} else {
+					    console.log("Element with id 'tongTienTamTinh' not found.");
+					}
+
+					
+					
+			  	} 
+		        
 
 		        $.ajax({
 		            type: "POST",
@@ -134,4 +149,28 @@ function toast__Alert({ title = "", message = "", type = "info", duration = 3000
                   `;
       main.appendChild(toast);
     }
+  }
+  function capNhatDanhSachMua(checkBox, maSP, maKichCo,maMau){
+	let currentPriceElement = document.getElementById("currentPrice-" + maSP + "-" + maKichCo + "-" + maMau);
+	let tongTienElement = document.getElementById("tongTienTamTinh");
+    let tongGiaTamTinh = parseInt(tongTienElement.textContent.replace("đ", "").trim());
+	let tongGiaSanPham = parseInt(currentPriceElement.textContent.replace("đ", "").trim());
+	let tmp = maSP+","+maKichCo+","+maMau;
+	if (checkBox.checked) {
+		listCheck.add(tmp);
+		tongGiaTamTinh += tongGiaSanPham;
+	}
+	else{
+		listCheck.delete(tmp);
+		tongGiaTamTinh -= tongGiaSanPham;
+		document.getElementById('selectAll').checked = false;
+	}
+	document.querySelector(".totalTemp").innerText = tongGiaTamTinh + "đ";
+    document.querySelector(".total").innerText = (tongGiaTamTinh + 30000) + "đ"; // Thêm phí vận chuyển
+	let setArray = Array.from(listCheck);  // Chuyển Set thành mảng
+	let setString = setArray.join(",");  // Nối các phần tử thành chuỗi, phân cách bằng dấu phẩy
+	// Gán chuỗi vào giá trị của input
+	document.getElementById("listSPCheck").value = setString;
+	document.getElementById("totalTempThanhToan").value = tongGiaTamTinh;	
+	console.log(document.getElementById("totalTempThanhToan").value);
   }

@@ -3,6 +3,24 @@ body {
     position: relative;
     font-family: 'Roboto', sans-serif; /* Apply the custom font */
 }
+.notifications {
+  position: relative;
+  margin-right: 20px;
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 12px;
+}
 .navbar1 {
 	position: fixed !important;
 	top: 0;

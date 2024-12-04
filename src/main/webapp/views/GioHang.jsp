@@ -36,7 +36,14 @@
                 <div class="navbar-nav">
                     <a class="nav-link font-weight-bold" href="/project_web/views/home.jsp">TRANG CHỦ</a>
                     <a class="nav-link font-weight-bold" href="/project_web/SanPhamController">SẢN PHẨM</a>
-                    <span class="nav-icon-primary"><a href="/project_web/GioHangController"><i class="fas fa-shopping-bag"></i></a></span>
+                    <span class="nav-icon-primary">
+						<div class="notifications">
+						    <a href="/project_web/GioHangController">
+						        <i class="fas fa-shopping-bag"></i>
+						    </a>
+						    <span class="notification-badge">6</span>
+					    </div>
+					</span>
                      <span class="nav-icon" id="account-icon">
                         <a href="/project_web/TaiKhoanController">
                             <i class="fas fa-user"></i>
@@ -91,7 +98,7 @@
                     <c:forEach var="gh" items="${ListGH}">
                     	<form action="./GioHangController" method="post">
 	                    	<div class="cart-item d-flex align-items-center py-3">
-		                        <div class="cart-check" style="width: 5%;"><input type="checkbox"></div>
+		                        <div class="cart-check" style="width: 5%;"><input type="checkbox" data-maSP="${gh.sanPham.maSP}" data-maMau="${gh.sanPham.mauSac[0].maMau}" data-maSize="${gh.sanPham.kichCo[0].maKichCo}" onchange="capNhatDanhSachMua(this, ${gh.sanPham.maSP},${gh.sanPham.mauSac[0].maMau},${gh.sanPham.kichCo[0].maKichCo})"></div>
 		                        <div class="cart-product d-flex align-items-center" style="width: 45%;">
 		                            <img src="${gh.sanPham.hinhAnhSP.duongDanHinh}" alt="${gh.sanPham.tenSP}" class="img-thumbnail" style="width: 80px; height: auto;">
 		                            <div class="ml-3">
@@ -116,9 +123,9 @@
 		                            <p class="mb-0 price" id="currentPrice-${gh.sanPham.maSP}-${gh.sanPham.kichCo[0].maKichCo}-${gh.sanPham.mauSac[0].maMau}">${gh.sanPham.giaHienTai * gh.soLuongGH}đ</p>
 		                            <p class="mb-0 text-muted"><del id="originalPrice-${gh.sanPham.maSP}-${gh.sanPham.kichCo[0].maKichCo}-${gh.sanPham.mauSac[0].maMau}">${gh.sanPham.giaBanDau * gh.soLuongGH}đ</del></p>
 		                        </div>
-		                        <input type="hidden" name="maSP" value="${gh.sanPham.maSP}">	
-		                        <input type="hidden" name="maKichThuoc" value="${gh.sanPham.kichCo[0].maKichCo}">	
-		                        <input type="hidden" name="maMau" value="${gh.sanPham.mauSac[0].maMau}">	
+		                        <input type="hidden" name="maSP"  value="${gh.sanPham.maSP}">	
+		                        <input type="hidden" name="maKichThuoc"  value="${gh.sanPham.kichCo[0].maKichCo}">	
+		                        <input type="hidden" name="maMau"  value="${gh.sanPham.mauSac[0].maMau}">	
 		                        <div class="cart-action" style="width: 5%;">
 		                        	<button class="btn btn-link text-danger">
 		                        		<i class="fas fa-trash-alt"></i>
@@ -140,7 +147,7 @@
                         <h5 class="card-title font-weight-bold">Thông tin đơn hàng</h5>
                         <div class="d-flex justify-content-between">
                             <span>Tạm tính</span>
-                            <span class="totalTemp">${totalTemp}</span>
+                            <span class="totalTemp" id="tongTienTamTinh">0đ</span>
                            
                         </div>
                         <div class="d-flex justify-content-between">
@@ -150,11 +157,13 @@
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold text-danger">
                             <span>Tổng tiền</span>
-                            <span class="total">${totalTemp + 30000}đ</span>
+                            <span class="total" id="tongTienTrongGioHang">30000đ</span>
                         </div>
                         <form action="./ThanhToanController" method="post">
-                        	 <input type="hidden" name="totalTemp" value="${totalTemp}">
+                        	 <input type="hidden" id = "totalTempThanhToan" name="totalTemp" value="${totalTemp}">
                         	  <input type="hidden" name="redirect" value="cart">
+                        	  <input type="hidden" id="listSPCheck" name="listSPCheck" value="">
+                        	  
                         	<button class="btn btn-dark btn-block mt-3">THANH TOÁN ĐƠN HÀNG</button>
                     	 </form>
                     </div>
@@ -189,11 +198,42 @@
 	</div>
 	<script type="text/javascript">
 		//Handle select all checkboxes
+		let listCheck = new Set();
 		document.getElementById('selectAll').addEventListener('change', function() {
 		    const checkboxes = document.querySelectorAll(".cart-item input[type='checkbox']");
-		    checkboxes.forEach((checkbox) => {
+		    /* checkboxes.forEach((checkbox) => {
 		        checkbox.checked = this.checked;
-		    });
+		        const maSP = checkbox.getAttribute('data-maSP');
+	            const maMau = checkbox.getAttribute('data-maMau');
+	            const maSize = checkbox.getAttribute('data-maSize');
+	            let tmp = maSP+","+maSize+","+maMau;
+	            if(!listCheck.has(tmp)){
+	            	capNhatDanhSachMua(checkbox, maSP, maSize,maMau);
+	            } */
+	            
+	            if (this.checked) {
+	                // Nếu checkbox "Select All" được chọn
+	                checkboxes.forEach((checkbox) => {
+	                    checkbox.checked = true;
+	                    const maSP = checkbox.getAttribute('data-maSP');
+	                    const maMau = checkbox.getAttribute('data-maMau');
+	                    const maSize = checkbox.getAttribute('data-maSize');
+	                    let tmp = maSP + "," + maSize + "," + maMau;
+	                    
+	                    if (!listCheck.has(tmp)) {
+	                    	capNhatDanhSachMua(checkbox, maSP, maSize, maMau);
+	                    }
+	                });
+	            } else {
+	                checkboxes.forEach((checkbox) => {
+	                    checkbox.checked = false; // Bỏ tick tất cả các checkbox
+	                    const maSP = checkbox.getAttribute('data-maSP');
+	                    const maMau = checkbox.getAttribute('data-maMau');
+	                    const maSize = checkbox.getAttribute('data-maSize');
+	                    capNhatDanhSachMua(checkbox, maSP, maSize, maMau);
+	                });
+	            }
+		        
 		});
 		document.querySelector("form[action='./ThanhToanController']").addEventListener("submit", function (e) {
 		    const selectedItems = document.querySelectorAll(".cart-item input[type='checkbox']:checked");
