@@ -570,11 +570,12 @@ AS
 RETURN
 (
     SELECT 
+		ND.ID,
         ND.Hoten AS TenKhachHang,
 		ND.Gioitinh,
         ND.email,
         ND.SDT,
-        COALESCE(COUNT(CT.MaSanPham), 0) AS SoSanPhamMua,
+        COALESCE(SUM(CT.SoLuong), 0) AS SoSanPhamMua,
         COALESCE(SUM(HD.TongTien), 0) AS TongSoTien
     FROM 
         NguoiDung ND
@@ -586,7 +587,7 @@ RETURN
     LEFT JOIN 
         ChiTietHoaDon CT ON HD.MaHoaDon = CT.MaHoaDon
     GROUP BY 
-        ND.Hoten, ND.email, ND.SDT,ND.Gioitinh
+        ND.ID, ND.Hoten, ND.email, ND.SDT,ND.Gioitinh
 )
 GO
 
@@ -621,5 +622,52 @@ RETURN
         HoaDon H ON YEAR(H.NgayTao) = @year AND MONTH(H.NgayTao) = M.Thang AND H.TrangThai = N'Đã giao'
     GROUP BY
         M.Thang
+)
+GO
+
+-- procedure cập nhật đã bán
+CREATE PROCEDURE proc_capNhatSoLuongDaBan @maHoaDon INT
+AS
+BEGIN
+	UPDATE SanPham
+	SET DaBan = DaBan + ChiTietHoaDon.SoLuong
+	FROM SanPham
+	JOIN ChiTietHoaDon ON SanPham.MaSanPham = ChiTietHoaDon.MaSanPham
+	JOIN HoaDon ON HoaDon.MaHoaDon = ChiTietHoaDon.MaHoaDon
+	WHERE HoaDon.MaHoaDon = @maHoaDon;
+END;
+GO
+
+CREATE FUNCTION fn_GetHoaDonChiTiet
+(
+    @IDNguoiMua INT,
+    @Thang INT,
+    @Nam INT
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        H.MaHoaDon,
+        H.IDNguoiMua,
+        H.NgayTao,
+        H.TongTien,
+        H.diachi,
+        H.TrangThai,
+        CT.MaChiTiet,
+        CT.MaSanPham,
+        CT.MaKichCo,
+        CT.MaMau,
+        CT.SoLuong,
+        CT.GiaBan
+    FROM 
+        HoaDon H
+    JOIN 
+        ChiTietHoaDon CT ON H.MaHoaDon = CT.MaHoaDon
+    WHERE 
+        H.IDNguoiMua = @IDNguoiMua
+        AND MONTH(H.NgayTao) = @Thang
+        AND YEAR(H.NgayTao) = @Nam
 )
 GO

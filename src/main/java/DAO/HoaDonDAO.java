@@ -65,6 +65,12 @@ public class HoaDonDAO {
 	
     public static boolean capNhatTrangThai(Connection conn, int maHoaDon, String trangThai) throws SQLException {
         String sql = "UPDATE HoaDon SET TrangThai = ? WHERE MaHoaDon = ?";
+        if (trangThai.equals("Đã giao")) { 	
+        	String sqlUpdate = "{call proc_capNhatSoLuongDaBan(?)}";
+        	PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate);
+        	psUpdate.setInt(1, maHoaDon);
+        	psUpdate.executeUpdate();
+        }
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, trangThai);
             ps.setInt(2, maHoaDon);
