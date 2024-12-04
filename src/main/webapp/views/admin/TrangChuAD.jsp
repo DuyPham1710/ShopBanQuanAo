@@ -32,7 +32,7 @@
             </li>
             <li class="nav-item">
               <i class="bi bi-bag-check me-2"></i>
-              <a class="nav-link" href="./views/admin/HoaDonController">Đơn Hàng</a>
+              <a class="nav-link" href="/project_web/HoaDonController">Đơn Hàng</a>
             </li>
             <li class="nav-item">
               <i class="bi bi-box me-2"></i>
