@@ -118,3 +118,88 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
 }
+
+/* Thay đổi chiều rộng của modal */
+.modal-lg {
+  max-width: 70%;
+}
+
+/* Tăng độ rộng của các trường thông tin và căn chỉnh trong modal */
+.modal-body {
+  padding: 2rem;
+}
+
+/* Làm cho các input trường rộng hơn và dễ nhìn */
+/* .form-control {
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+} */
+
+/* Tạo khoảng cách giữa các hàng trong modal */
+.row.mb-3, .row.mb-5 {
+  margin-bottom: 1.5rem;
+}
+
+/* Thay đổi màu nền cho các ô input */
+.form-control:disabled {
+  background-color: #f1f1f1;
+}
+
+/* Cải thiện kiểu dáng của bảng */
+.table {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.table-bordered {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+
+.table th, .table td {
+  padding: 1rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Tăng kích thước nút "Xem chi tiết" */
+.btn-info {
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+  border-color: #117a8b;
+}
+
+/* Thêm style cho tiêu đề của modal */
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #ddd;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}

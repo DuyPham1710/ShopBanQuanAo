@@ -28,3 +28,6 @@ function drawMonthlySalesChart(canvasId, labels, data) {
         }
     });
 }
+function submitYearForm() {
+    document.getElementById("yearForm").submit();
+}
