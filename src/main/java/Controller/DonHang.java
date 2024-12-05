@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.ChiTietHoaDon;
+import models.DanhGia;
 import models.DonMua;
 import models.NguoiDung;
 import models.SanPham;
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import DAO.AccountDAO;
+import DAO.DanhGiaDAO;
 import DAO.DonHangDAO;
 import DAO.NguoiDungDAO;
 import DAO.SanPhamDAO;
@@ -53,6 +55,19 @@ public class DonHang extends HttpServlet {
 				
 			}
 			
+			
+			if ("Đã giao".equals(trangThai)) {
+				List<DanhGia> listDanhGia = null;
+				try {
+					listDanhGia = DanhGiaDAO.DanhSachDanhGia(conn);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					response.getWriter().println("Error: " + e.getMessage());
+					
+				}
+				request.setAttribute("listDanhGia", listDanhGia);
+			}
 			request.setAttribute("DanhSachDonHang", DanhSachDonHang);
 			RequestDispatcher req = request.getRequestDispatcher("/views/DonHang.jsp");
 			req.forward(request, response);
@@ -61,9 +76,12 @@ public class DonHang extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	//	System.out.print("aaa");
+		if (request.getParameter("method") != null && request.getParameter("method").equals("Put")) {
+			doPut(request, response);
+			return;
+		} 
+		
 		int maHoaDon = Integer.parseInt(request.getHeader("X-MaHoaDon"));
-	//	int maHoaDon = 9;
 		
 		Connection conn = null;
 		try {
@@ -92,9 +110,7 @@ public class DonHang extends HttpServlet {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
-		//DonMua donMua = new DonMua(maHoaDon, listChiTietHD);
-		
-	//	System.out.print("QUa Được đây");
+
 		request.setAttribute("nguoiDung", nguoiDung);
 		request.setAttribute("donMua", donMua);
 		
@@ -102,4 +118,46 @@ public class DonHang extends HttpServlet {
 		req.include(request, response);
 	}
 
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int maSP = 0;
+		if (request.getParameter("maSP") != null) {
+			maSP = Integer.parseInt(request.getParameter("maSP"));
+		}
+		
+		int maChiTiet = 0;
+		if (request.getParameter("maChiTiet") != null) {
+			maChiTiet = Integer.parseInt(request.getParameter("maChiTiet"));
+		}
+		
+		String comment = request.getParameter("comment");
+	    int rating = 0;
+	    if (request.getParameter("rating") != null) {
+	        rating = Integer.parseInt(request.getParameter("rating"));
+	    }
+	    boolean isSuccess = false; 
+	    
+		Connection conn = null;
+		try {
+			conn = new ConnectJDBC().getConnection();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+	//	System.out.println(maSP + " " + maChiTiet + " " + comment + " " + rating);
+		try {
+			isSuccess = DanhGiaDAO.danhGiaSanPham(conn, maSP, maChiTiet, comment, rating);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+	
+		if (isSuccess) {
+		    response.sendRedirect("DonHang?ratingSuccess=true");
+		} else {
+		    doGet(request, response);
+		}
+	}
+	
 }

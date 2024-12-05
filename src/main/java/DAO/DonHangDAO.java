@@ -26,6 +26,7 @@ public class DonHangDAO {
 
 	    PreparedStatement ps = conn.prepareStatement(sql);
 	    ps.setInt(1, AccountDAO.getID());
+	   // ps.setInt(1, 2);
 	    ps.setString(2, trangThai);
 	    ResultSet rs = ps.executeQuery();
 
@@ -49,6 +50,7 @@ public class DonHangDAO {
 	        );
 
 	        ChiTietHoaDon chiTietHD = new ChiTietHoaDon(
+	        		rs.getInt("maChiTiet"),
 	                sp,
 	                rs.getInt("SoLuongDaMua"),
 	                rs.getInt("DonGia"),
@@ -110,6 +112,7 @@ public class DonHangDAO {
 	        );
 
 	        ChiTietHoaDon chiTietHD = new ChiTietHoaDon(
+	        		rs.getInt("maChiTiet"),
 	                sp,
 	                rs.getInt("SoLuongDaMua"),
 	                rs.getInt("DonGia"),
@@ -121,6 +124,7 @@ public class DonHangDAO {
 	    return donMua;
 	}
 //	public static void main(String[] args) {
+//		// System.out.println("Mã hóa đơn: ");
 //		Connection conn = null;
 //		try {
 //			conn = new ConnectJDBC().getConnection();
@@ -130,7 +134,7 @@ public class DonHangDAO {
 //		}
 //		List<DonMua> DanhSachDonHang = null;
 //		try {
-//			DanhSachDonHang = DonHangDAO.DanhSachDonHang(conn);
+//			DanhSachDonHang = DonHangDAO.DanhSachDonHang(conn, "Đã giao");
 //		}
 //		catch (Exception e) {
 //			e.printStackTrace();
@@ -148,6 +152,7 @@ public class DonHangDAO {
 //            System.out.println("Chi tiết hóa đơn:");
 //            // Xuất thông tin chi tiết hóa đơn
 //            for (ChiTietHoaDon chiTiet : donMua.getChiTietHD()) {
+//            	 System.out.println("\tMã Chi tiết: " + chiTiet.getMaChiTiet());
 //                SanPham sp = chiTiet.getSp();
 //                System.out.println("\tMã sản phẩm: " + sp.getMaSP());
 //                System.out.println("\tTên sản phẩm: " + sp.getTenSP());
@@ -193,6 +198,7 @@ public class DonHangDAO {
 	        );
 
 	        ChiTietHoaDon chiTietHD = new ChiTietHoaDon(
+	        		rs.getInt("maChiTiet"),
 	                sp,
 	                rs.getInt("SoLuongDaMua"),
 	                rs.getInt("DonGia"),

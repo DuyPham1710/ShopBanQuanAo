@@ -87,7 +87,7 @@
 		            </div>
 		            <div class="modal-footer justify-content-center">
 		                <a href="/project_web/SanPhamController" class="btn btn-primary" id="continueShoppingButton">Mua Tiếp</a>
-		                <a href="/project_web/DonHang" class="btn btn-success" id="viewOrderButton">Xem Đơn Hàng</a>
+		                <a href="/project_web/DonHang?trangThai=Chờ+xác+nhận" class="btn btn-success" id="viewOrderButton">Xem Đơn Hàng</a>
 		            </div>
 		        </div>
 		    </div>

@@ -131,6 +131,17 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+
+    <display-name>DanhGiaController</display-name>
+    <servlet-name>DanhGiaController</servlet-name>
+    <servlet-class>Controller.DanhGiaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DanhGiaController</servlet-name>
+    <url-pattern>/DanhGiaController</url-pattern>
+  </servlet-mapping>
+ <servlet>
+   <description></description>
     <display-name>ChinhSachController</display-name>
     <servlet-name>ChinhSachController</servlet-name>
     <servlet-class>Controller.ChinhSachController</servlet-class>
@@ -138,5 +149,6 @@
   <servlet-mapping>
     <servlet-name>ChinhSachController</servlet-name>
     <url-pattern>/ChinhSachController</url-pattern>
+
   </servlet-mapping>
 </web-app>
