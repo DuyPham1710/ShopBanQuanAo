@@ -91,7 +91,7 @@
                         <tr>
                             <td><img src="${hoaDon.chiTietHoaDon.sp.hinhAnhSP.duongDanHinh}" alt="Hinh anh san pham" width="50"></td>
                             <td>${hoaDon.chiTietHoaDon.sp.tenSP}</td>
-                            <td>${hoaDon.chiTietHoaDon.sp.mauSac[0].tenMau}+","+ ${hoaDon.chiTietHoaDon.sp.kichCo[0].tenKichCo}</td>
+                            <td>${hoaDon.chiTietHoaDon.sp.mauSac[0].tenMau}, ${hoaDon.chiTietHoaDon.sp.kichCo[0].tenKichCo}</td>
                             <td>${hoaDon.chiTietHoaDon.soLuongDaMua}</td>
                             <td>${hoaDon.tongTien}VNĐ</td>
                             <td>${hoaDon.diachi}</td>

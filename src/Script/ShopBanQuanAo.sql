@@ -797,7 +797,7 @@ BEGIN
 END;
 GO
 
-CREATE FUNCTION fn_GetHoaDonChiTiet
+CREATE OR ALTER FUNCTION fn_GetHoaDonChiTiet
 (
     @IDNguoiMua INT,
     @Thang INT,
@@ -812,22 +812,40 @@ RETURN
         H.IDNguoiMua,
         H.NgayTao,
         H.TongTien,
-        H.diachi,
+        H.diachi AS DiaChiGiaoHang,
         H.TrangThai,
         CT.MaChiTiet,
         CT.MaSanPham,
+        SP.TenSanPham,
         CT.MaKichCo,
+        KC.TenKichCo AS KichCo,
         CT.MaMau,
+        MS.TenMau AS Mau,
         CT.SoLuong,
-        CT.GiaBan
+        CT.GiaBan,
+        HA.DuongDanHinh AS HinhAnh,
+        COALESCE(DG.BinhLuan, '') AS BinhLuan,
+        COALESCE(DG.SoSao, 0) AS SoSao,
+        DG.ngayDanhGia,
+        DG.TrangThaiDanhGia
     FROM 
         HoaDon H
     JOIN 
         ChiTietHoaDon CT ON H.MaHoaDon = CT.MaHoaDon
+    JOIN 
+        SanPham SP ON CT.MaSanPham = SP.MaSanPham
+    LEFT JOIN 
+        KichCo KC ON CT.MaKichCo = KC.MaKichCo AND CT.MaSanPham = KC.MaSanPham
+    LEFT JOIN 
+        MauSac MS ON CT.MaMau = MS.MaMau AND CT.MaSanPham = MS.MaSanPham
+    LEFT JOIN 
+        HinhAnhSanPham HA ON SP.MaSanPham = HA.MaSanPham
+    LEFT JOIN 
+        DanhGia DG ON DG.MaChiTiet = CT.MaChiTiet AND DG.IDNguoiMua = H.IDNguoiMua
     WHERE 
         H.IDNguoiMua = @IDNguoiMua
-        AND MONTH(H.NgayTao) = @Thang
-        AND YEAR(H.NgayTao) = @Nam
+        AND (@Thang = 0 OR MONTH(H.NgayTao) = @Thang)
+        AND (@Nam = 0 OR YEAR(H.NgayTao) = @Nam)
 )
 GO
 
@@ -882,4 +900,38 @@ BEGIN
         THROW;
     END CATCH
 END;
+GO
+
+CREATE FUNCTION fn_ThongKeDoanhThuTheoThang
+(
+    @year INT
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    WITH Months AS (
+        SELECT 1 AS Thang
+        UNION ALL SELECT 2
+        UNION ALL SELECT 3
+        UNION ALL SELECT 4
+        UNION ALL SELECT 5
+        UNION ALL SELECT 6
+        UNION ALL SELECT 7
+        UNION ALL SELECT 8
+        UNION ALL SELECT 9
+        UNION ALL SELECT 10
+        UNION ALL SELECT 11
+        UNION ALL SELECT 12
+    )
+    SELECT
+        M.Thang,
+        COALESCE(SUM(H.TongTien), 0) AS TongTien
+    FROM
+        Months M
+    LEFT JOIN
+        HoaDon H ON YEAR(H.NgayTao) = @year AND MONTH(H.NgayTao) = M.Thang AND H.TrangThai = N'Đã giao'
+    GROUP BY
+        M.Thang
+)
 GO
