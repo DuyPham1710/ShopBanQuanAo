@@ -210,5 +210,27 @@ public class NguoiDungDAO {
 		}
 		return null;
 	}
-
+	
+	public static void themDiaChiNhanHang(Connection conn, String diaChi) throws SQLException {
+		String sql = "{call proc_ThemDiaChiNhanHang(?, ?)}";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		
+		ps.setInt(1, AccountDAO.getID());
+		ps.setString(2, diaChi);
+		ps.executeUpdate();
+	}
+	public static void DangKy(Connection conn, NguoiDung nguoiDung, String diaChi) throws SQLException {
+		String sql = "{call proc_themTaiKhoan(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, nguoiDung.getAccount().getUsername());
+		ps.setString(2, nguoiDung.getAccount().getPassword());
+		ps.setString(3, nguoiDung.getHoTen());
+		ps.setDate(4, nguoiDung.getNgaySinh());
+		ps.setString(5, nguoiDung.getGioiTinh());
+		ps.setString(6, nguoiDung.getSdt());
+		ps.setString(7, nguoiDung.getEmail());
+		ps.setString(8, nguoiDung.getCccd());
+		ps.setString(9, diaChi);
+		ps.executeUpdate();
+	}
 }

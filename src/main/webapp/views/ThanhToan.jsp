@@ -102,7 +102,7 @@
 	                    	<c:forEach var="diaChi" items="${nguoiDung.diaChiNhanHang}">
 		                		<option value="${diaChi.tenDiaChi}" ${diaChi.tenDiaChi == nguoiDung.diaChiNhanHang[0].tenDiaChi ? 'selected' : ''}>${diaChi.tenDiaChi}</option>
 		                	</c:forEach>
-	                    	<!--  <option></option> -->
+	                    	<!--   <option></option>  -->
 	                       <option value="other">Khác (Nhập địa chỉ mới)</option>
 	                    </select> 
 	                   
@@ -161,7 +161,7 @@
 			                <img src="${gh.sanPham.hinhAnhSP.duongDanHinh}" alt="${gh.sanPham.tenSP}">
 			                <div class="product-info">
 			                    <h4>${gh.sanPham.tenSP}</h4>
-			                    <p class="brand">Golden Accessories</p>
+			                    <p class="brand">Rimberio</p>
 			                    <p class="details">Size: ${gh.sanPham.kichCo[0].tenKichCo}, Màu: ${gh.sanPham.mauSac[0].tenMau}</p>
 			                </div>
 			                <div class="product-quantity">

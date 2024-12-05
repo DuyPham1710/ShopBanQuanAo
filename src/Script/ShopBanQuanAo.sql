@@ -153,7 +153,9 @@ INSERT INTO DiaChiNhanHang (Madiachi, IDNguoiDung, TenDiaChi)
 VALUES 
 (1, 2, N'123 Đường Lê Lợi, Quận 1, TP. HCM'),
 (2, 2, N'456 Đường Hai Bà Trưng, Quận 3, TP. HCM'),
-(3, 2, N'789 Đường Nguyễn Huệ, Quận 1, TP. HCM');
+(3, 2, N'789 Đường Nguyễn Huệ, Quận 1, TP. HCM'),
+(4, 3, N'Đường Thống Nhất, Quận 1, TP. HCM'),
+(5, 4, N'Đường Phạm Văn Đồng, Quận Thủ Đức, TP. HCM');
 GO
 
 INSERT INTO NguoiDung (ID, CCCD, Hoten, Gioitinh, SDT, NgaySinh, email)
@@ -780,6 +782,21 @@ BEGIN
 END;
 GO
 
+-- Load Thông tin đã đánh giá của một sản phẩm
+CREATE OR ALTER PROCEDURE proc_LoadThongTinDanhGiaMotSP
+AS
+BEGIN
+	select Q.*, TenKichCo, TenMau
+	from KichCo, MauSac,
+	(select ChiTietHoaDon.MaChiTiet as maChiTiet, BinhLuan, SoSao, TrangThaiDanhGia, ngayDanhGia, HoTen, ChiTietHoaDon.MaSanPham as maSP, TenSanPham, MaHinhAnh, DuongDanHinh, MaMau, MaKichCo
+	from DanhGia inner join ChiTietHoaDon on DanhGia.MaChiTiet = ChiTietHoaDon.MaChiTiet, SanPham, HinhAnhSanPham, NguoiDung
+	where SanPham.MaSanPham = ChiTietHoaDon.MaSanPham and ChiTietHoaDon.MaSanPham = HinhAnhSanPham.MaSanPham and DanhGia.IDNguoiMua = NguoiDung.ID 
+	) Q
+	where Q.MaKichCo = KichCo.MaKichCo and Q.MaMau = MauSac.MaMau and KichCo.MaSanPham = Q.maSP and MauSac.MaSanPham = Q.maSP
+	ORDER BY ngayDanhGia DESC
+END;
+GO
+
 CREATE FUNCTION fn_GetHoaDonChiTiet
 (
     @IDNguoiMua INT,
@@ -812,4 +829,57 @@ RETURN
         AND MONTH(H.NgayTao) = @Thang
         AND YEAR(H.NgayTao) = @Nam
 )
+GO
+
+CREATE PROCEDURE proc_ThemDiaChiNhanHang @IDNguoiMua INT, @diachi NVARCHAR(255)
+AS
+BEGIN
+    DECLARE @newMaDiaChi INT;
+	SELECT @newMaDiaChi = ISNULL(MAX(MaDiaChi), 0) + 1 FROM DiaChiNhanHang;
+
+	INSERT INTO DiaChiNhanHang (Madiachi, IDNguoiDung, TenDiaChi)
+	VALUES (@newMaDiaChi, @IDNguoiMua, @diachi);
+END;
+GO
+
+CREATE OR ALTER PROCEDURE proc_themTaiKhoan
+    @username NVARCHAR(50),
+    @pass NVARCHAR(50),
+    @Hoten NVARCHAR(50),
+    @NgaySinh DATE,
+    @Gioitinh NVARCHAR(50),
+    @SDT VARCHAR(12),
+    @email VARCHAR(50),
+    @cccd VARCHAR(20),
+	@diachi NVARCHAR(255)
+AS
+BEGIN
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Thêm tài khoản vào bảng Account
+        INSERT INTO Account (username, pass, position)
+        VALUES (@username, @pass, 'user'); -- Gán mặc định position là 'user'
+
+        -- Lấy ID tự động tạo từ bảng Account
+        DECLARE @newID INT = SCOPE_IDENTITY();
+
+        -- Thêm thông tin người dùng vào bảng NguoiDung
+        INSERT INTO NguoiDung (ID, CCCD, Hoten, Gioitinh, SDT, NgaySinh, email)
+        VALUES (@newID, @cccd, @Hoten, @Gioitinh, @SDT, @NgaySinh, @email);
+
+		-- Gọi thủ tục proc_ThemDiaChiNhanHang để thêm địa chỉ
+        EXEC proc_ThemDiaChiNhanHang @IDNguoiMua = @newID, @diachi = @diachi;
+
+        -- Hoàn tất giao dịch
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Nếu có lỗi, hủy giao dịch
+        ROLLBACK TRANSACTION;
+
+        -- Hiển thị thông báo lỗi
+        THROW;
+    END CATCH
+END;
 GO

@@ -91,7 +91,7 @@
 		            
 		            <div class="product-details">
 		                <h1 class="summer-shirt">${sp.tenSP}</h1>
-		                <p>Thương hiệu: <a href="#">Golden Accessories</a></p>
+		                <p>Thương hiệu: <a href="#">Rimberio</a></p>
 		                <div class="box-container">
 		                    <hr class="divider">
 		                </div>                
@@ -197,6 +197,7 @@
 							                        <i class="far fa-star"></i>
 							                    </c:forEach>
 		                                    </div>
+		                                    <p style="margin-top: 0; color: #6c757d;">Size: ${dg.sp.kichCo[0].tenKichCo}, Màu: ${dg.sp.mauSac[0].tenMau}</p>
 		                                </div>
 		                                <div class="date">${dg.ngayDanhGia}</div>
 		                            </div>

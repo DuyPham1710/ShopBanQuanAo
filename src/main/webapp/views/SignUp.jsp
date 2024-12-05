@@ -14,24 +14,29 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="">
+        <form action="/project_web/SignUpController" method="post" onsubmit="return validatePassword(event)">
             <h1>Register</h1>
             
             <!-- Full Name Field -->
             <div class="input-box">
-                <input type="text" placeholder="Full Name" required>
+                <input type="text" name="fullName" placeholder="Full Name" required>
                 <i class='bx bxs-user-detail'></i>
             </div>
             
             <div class="input-box">
-                <input type="email" placeholder="Email" required>
+                <input type="text" name="cccd" placeholder="CCCD" required>
+                <i class='bx bxs-id-card'></i>
+            </div>
+            
+            <div class="input-box">
+                <input type="email" name="email" placeholder="Email" required>
                 <i class='bx bxs-envelope'></i>
             </div>
          
             <!-- Row for Date of Birth and Gender -->
             <div class="form-row">
                 <div class="col input-box">
-                    <input type="date" placeholder="Date of Birth" required>
+                    <input type="date" name="date" placeholder="Date of Birth" required>
                     <i class='bx bxs-calendar'></i>
                 </div>
                 <div class="col input-box gender">
@@ -46,28 +51,28 @@
             </div>
 
             <div class="input-box">
-                <input type="text" placeholder="Address" required>
+                <input type="text" name="address" placeholder="Address" required>
                 <i class='bx bxs-map'></i>
             </div>
 
             <!-- Row for Username and Phone Number -->
             <div class="form-row">
                 <div class="col input-box">
-                    <input type="text" placeholder="Username" required>
+                    <input type="text" name="username" placeholder="Username" required>
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="col input-box">
-                    <input type="tel" placeholder="Phone Number" required>
+                    <input type="tel" name="phoneNumber" placeholder="Phone Number" required>
                     <i class='bx bxs-phone'></i>
                 </div>
             </div>
 
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Confirm Password" required>
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
                 <i class='bx bxs-lock'></i>
             </div>
 
@@ -78,5 +83,19 @@
             </div>
         </form>
     </div>
+    <script>
+        function validatePassword(event) {
+            const password = document.querySelector('input[name="password"]').value;
+            const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+
+            if (password !== confirmPassword) {
+                event.preventDefault(); // Ngăn form gửi đi
+                alert("Passwords do not match! Please try again.");
+                document.querySelector('input[name="confirmPassword"]').focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

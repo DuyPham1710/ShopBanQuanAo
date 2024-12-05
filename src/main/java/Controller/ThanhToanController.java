@@ -134,6 +134,7 @@ public class ThanhToanController extends HttpServlet {
 			
 			try {
 				maHoaDon = ThanhToanDAO.ThemHoaDon(conn, tongTienHoaDon, diaChi);
+				NguoiDungDAO.themDiaChiNhanHang(conn, diaChi);
 			}
 			catch (Exception e) {
 				e.printStackTrace();

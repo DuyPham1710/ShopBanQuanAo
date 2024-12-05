@@ -91,7 +91,7 @@ public class ChiTietSPController extends HttpServlet {
 			
 			List<DanhGia> listDanhGia = null;
 			try {
-				listDanhGia = DanhGiaDAO.DanhSachDanhGia(conn);
+				listDanhGia = DanhGiaDAO.LoadDanhSachDanhGiaMotSP(conn);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
