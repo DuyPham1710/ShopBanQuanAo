@@ -250,11 +250,37 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 		String hinh = json.getString("linkAnhAdd");
 		String xuatXu = json.getString("xuatXuAdd");
 		String chatLieu = json.getString("chatLieuAdd");
-		
-		String strKichThuoc = json.getString("sizeDaDuocChonAdd");
+
+		String strKichThuoc;
+		String sizeThemVao = json.getString("sizeThemVao");
+		if(sizeThemVao == "") {
+			strKichThuoc = json.getString("sizeDaDuocChonAdd");
+		}
+		else {
+			if(json.getString("sizeDaDuocChonAdd")=="") {
+				strKichThuoc= sizeThemVao;
+			}
+			else {
+				strKichThuoc= json.getString("sizeDaDuocChonAdd")+","+sizeThemVao;
+			}
+		}
 		List<String> listSize = Arrays.asList(strKichThuoc.split(","));
 		
-		String strMau = json.getString("mauDaDuocChonAdd");
+		
+		String strMau;
+		String mauThemVao = json.getString("mauThemVao");
+		if(mauThemVao == "") {
+			strMau = json.getString("mauDaDuocChonAdd");
+		}
+		else {
+			if(json.getString("mauDaDuocChonAdd")=="") {
+				strMau= mauThemVao;
+			}
+			else {
+				strMau= json.getString("mauDaDuocChonAdd")+","+mauThemVao;
+			}
+		}
+		
 		List<String> listMau = Arrays.asList(strMau.split(","));
 		
 		String moTa = json.getString("moTaAdd");

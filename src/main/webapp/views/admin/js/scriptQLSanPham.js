@@ -352,6 +352,8 @@ function themSanPham(){
 	        xuatXuAdd: document.getElementById("xuatXuAdd").value,
 	        chatLieuAdd: document.getElementById("chatLieuAdd").value,
 	        moTaAdd: document.getElementById("moTaAdd").value,
+			sizeThemVao: document.getElementById("sizeThemVaoAdd").value.trim(),
+			mauThemVao: document.getElementById("mauThemVaoAdd").value.trim(),
 			 }),
     })
     .then(response => {
@@ -375,18 +377,20 @@ function themSanPham(){
 function kiemTraRongKhiAdd() {
 	const sizeString = Array.from(selectedSizes).join(",");
 	const colorString = Array.from(selectedColors).join(",");
-    const tenSP = document.getElementById("tenSPAdd").value.trim();
+    const tenSP = document.getElementById("tenSPAdd").value;
     const giaSP = document.getElementById("giaSanPhamAdd").value.trim();
     const giamGia = document.getElementById("giamGiaAdd").value.trim();
     const soLuong = document.getElementById("soLuongAdd").value.trim();
     const danhMuc = document.getElementById("danhmucAdd").value.trim();
     const linkAnh = document.getElementById("linkAnhAdd").value.trim();
-    const xuatXu = document.getElementById("xuatXuAdd").value.trim();
-    const chatLieu = document.getElementById("chatLieuAdd").value.trim();
-    const moTa = document.getElementById("moTaAdd").value.trim();
-
+    const xuatXu = document.getElementById("xuatXuAdd").value;
+    const chatLieu = document.getElementById("chatLieuAdd").value;
+    const moTa = document.getElementById("moTaAdd").value;
+	const sizeThemVao = document.getElementById("sizeThemVaoAdd").value.trim();
+	const mauThemVao = document.getElementById("mauThemVaoAdd").value.trim();
+	
     // Kiểm tra các giá trị
-    if (!tenSP || !giaSP || !giamGia || !soLuong || !danhMuc || !linkAnh || !xuatXu || !chatLieu || !moTa || !sizeString || !colorString) {
+    if ((!sizeString && !sizeThemVao) || (!mauThemVao && !colorString) || !tenSP || !giaSP || !giamGia || !soLuong || !danhMuc || !linkAnh || !xuatXu || !chatLieu || !moTa) {
         alert("Vui lòng điền đầy đủ thông tin vào tất cả các trường!");
         return;
 	}

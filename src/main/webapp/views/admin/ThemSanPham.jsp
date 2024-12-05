@@ -103,7 +103,19 @@
            </div>
        </div>
     </div>
+
   </div>
+  <div class="row mb-2">
+        <div class="col-md-6">
+          <label for="sizeThemVaoAdd" class="form-label">Thêm Size khác</label>
+          <input type="text" class="form-control" id="sizeThemVaoAdd" name="sizeThemVaoAdd" placeholder="Nhập tên size(cách nhau bằng dấu ',')">
+        </div>
+        
+        <div class="col-md-6">
+          <label for="mauThemVaoAdd" class="form-label">Thêm màu khác</label>
+          <input type="text" class="form-control" id="mauThemVaoAdd" name="mauThemVaoAdd" placeholder="Nhập # + Mã màu Hex (cách nhau bằng dấu ',')">
+        </div>
+      </div>
   <!-- Row 6: Mô tả -->
    
   <div class="row mb-3">
