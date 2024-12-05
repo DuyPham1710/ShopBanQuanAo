@@ -503,6 +503,19 @@ public class SanPhamDAO {
 		return banDuoc;
 	}
 	
+	public static List<Integer> ThongKeDoanhThuTrongNam(Connection conn, int nam) throws SQLException {
+		List<Integer> doanhthu = new ArrayList<>();
+		String sql = "SELECT *FROM fn_ThongKeDoanhThuTheoThang(?)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, nam);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {	
+			int bd = rs.getInt("TongTien");
+			doanhthu.add(bd);	
+		}
+		return doanhthu;
+	}
+	
 	public static List<String> DanhSachMaMauCuaSP(Connection conn,int maSP) throws SQLException {
 		List<String> listMauHex = new ArrayList<String>();
 		String sql = "select MaMauDangHex from MauSac where MaSanPham = ?";

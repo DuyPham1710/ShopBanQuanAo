@@ -235,6 +235,30 @@
 	        "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
 	  	 const data = <%= request.getAttribute("ThongKeTungThang") %>;
 		drawMonthlySalesChart('monthlySalesChart', labels, data);
+		
+		const modalElement = document.getElementById('addProductModal');
+		 // Lắng nghe sự kiện khi modal bị ẩn
+		 modalElement.addEventListener('hidden.bs.modal', function () {
+		     // Xóa backdrop nếu còn tồn tại
+		     const backdrop = document.querySelector('.modal-backdrop');
+		     if (backdrop) {
+		         backdrop.remove();
+		     }
+		     // Khôi phục scrollbar
+		     document.body.style.overflow = '';
+		 });
+		 
+		 const modalElement1 = document.getElementById('editProductModal');
+		 // Lắng nghe sự kiện khi modal bị ẩn
+		 modalElement1.addEventListener('hidden.bs.modal', function () {
+		     // Xóa backdrop nếu còn tồn tại
+		     const backdrop = document.querySelector('.modal-backdrop');
+		     if (backdrop) {
+		         backdrop.remove();
+		     }
+		     // Khôi phục scrollbar
+		     document.body.style.overflow = '';
+		 });
   	</script>
   	
 </body>

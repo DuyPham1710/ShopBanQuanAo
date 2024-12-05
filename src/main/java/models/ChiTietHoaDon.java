@@ -6,6 +6,7 @@ public class ChiTietHoaDon {
 	private int soLuongDaMua;
 	private int donGia;
 	private int giaBan;
+	private DanhGia danhGia;
 	
 	public ChiTietHoaDon() {}
 
@@ -15,6 +16,12 @@ public class ChiTietHoaDon {
 		this.setSoLuongDaMua(soLuongDaMua);
 		this.setDonGia(donGia);
 		this.setGiaBan(giaBan);
+	}
+	public DanhGia getDanhGia() {
+		return danhGia;
+	}
+	public void setDanhGia(DanhGia danhGia) {
+		this.danhGia=danhGia;
 	}
 	
 	public int getGiaBan() {

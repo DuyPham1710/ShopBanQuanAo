@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.List;
 
 import DAO.NguoiDungDAO;
+import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
 /**
@@ -22,7 +24,8 @@ import DBConnection.ConnectJDBC;
  */
 public class TrangChuADController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	LocalDate today = LocalDate.now();
+	private int year = today.getYear();   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -98,11 +101,22 @@ public class TrangChuADController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
+		List<Integer> ThongKeDoanhThu = null;
+		try {
+			ThongKeDoanhThu = SanPhamDAO.ThongKeDoanhThuTrongNam(conn,year);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		request.setAttribute("NamThongKe", year);
 		request.setAttribute("SoKH", listND.size());
 		request.setAttribute("DaBan", sanPhamDaBan);
 		request.setAttribute("TongDoanhThu", tongDoanhThu);
 		request.setAttribute("DaGiao", donDaGiao);
 		request.setAttribute("DangGiao", donDangGiao);
+		request.setAttribute("ThongKeTheoNam", ThongKeDoanhThu);
 		RequestDispatcher req = request.getRequestDispatcher("/views/admin/TrangChuAD.jsp");
 		req.forward(request, response);
 	}
@@ -112,6 +126,15 @@ public class TrangChuADController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if(request.getParameter("year")!="") {
+			year = Integer.parseInt(request.getParameter("year"));
+			if(year<0) {
+				year=0;
+			}
+		}
+		else {
+			year=0;
+		}
 		doGet(request, response);
 	}
 

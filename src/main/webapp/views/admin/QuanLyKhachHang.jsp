@@ -177,7 +177,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="addProductModalLabel">Thông tin khách hàng</h5>
-                <button type="button" class="btn-close" onclick="DongModal()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 	<!-- Thông tin khách hàng -->
@@ -201,6 +201,19 @@
 	        "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
 	  	 const data = <%= request.getAttribute("ThongKeTungThang") %>;
 		drawMonthlySalesChart('customerChart', labels, data);
+		
+		
+		const modalElement = document.getElementById('thongTinNguoiDung');
+		 // Lắng nghe sự kiện khi modal bị ẩn
+		 modalElement.addEventListener('hidden.bs.modal', function () {
+		     // Xóa backdrop nếu còn tồn tại
+		     const backdrop = document.querySelector('.modal-backdrop');
+		     if (backdrop) {
+		         backdrop.remove();
+		     }
+		     // Khôi phục scrollbar
+		     document.body.style.overflow = '';
+		 });
   	</script>
 </body>
 </html>

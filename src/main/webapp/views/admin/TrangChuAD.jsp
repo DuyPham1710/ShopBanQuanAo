@@ -115,50 +115,19 @@
                 </div>
                 
                 <!-- Bảng bo tròn góc nằm dưới -->
-                <div class="card mt-4">
+                <div class="card mt-4" style="margin-bottom:3rem">
                     <div class="card-body">
-                      <h1>Top Deals</h1>
-                        <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
-                            
-                            <table class="table table-bordered rounded-table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Tên khách hàng</th>
-                                        <th>Sản phẩm</th>
-                                        <th>Doanh thu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Nguyễn Văn A</td>
-                                        <td>Sản phẩm 1</td>
-                                        <td>1,000$</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Trần Thị B</td>
-                                        <td>Sản phẩm 2</td>
-                                        <td>1,500$</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Lê Văn C</td>
-                                        <td>Sản phẩm 3</td>
-                                        <td>2,000$</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Phạm Thị D</td>
-                                        <td>Sản phẩm 4</td>
-                                        <td>1,200$</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                    	<h4>Doanh thu của shop</h4>
+                      	<form id="yearForm" method="post" action="TrangChuADController">
+		              		<input type="hidden" name ="_method" value="thayDoiNam"/>
+						    <label for="chartYear">Chọn năm:</label>
+						    <input type="number" id="nam" name="year" class="form-control" style="width: auto;" value="${NamThongKe}" onchange="submitForm()">
+						</form>
+						<div class="mt-2">
+			                <canvas id="chartDoanhThu"></canvas>
+		                </div>
+                	</div>
+            	</div>
             </div>
         
             <!-- Cột bên phải - Chiếm 30% -->
@@ -175,11 +144,6 @@
                 </div>
             </div>
         </div>
-        
-
-        
-        
-        
         </div>
       </main>
     </div>
@@ -188,7 +152,43 @@
   <!-- Bootstrap JS and dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script >
+ 	const labels = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", 
+       "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+ 	 const data = <%= request.getAttribute("ThongKeTheoNam") %>;
+	drawMonthlySalesChart('chartDoanhThu', labels, data);
+	
+	function drawMonthlySalesChart(canvasId, labels, data) {
+	    // Lấy đối tượng canvas
+	    const ctx = document.getElementById(canvasId).getContext('2d');
 
+	    // Cấu hình và vẽ biểu đồ
+	    new Chart(ctx, {
+	        type: 'line', // Loại biểu đồ: cột
+	        data: {
+	            labels: labels,
+	            datasets: [{
+	                label: 'Doanh thu từng tháng',
+	                data: data,
+	                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+	                borderColor: 'rgba(54, 162, 235, 1)',
+	                borderWidth: 1
+	            }]
+	        },
+	        options: {
+	            responsive: true,
+	            scales: {
+	                y: {
+	                    beginAtZero: true // Bắt đầu trục Y từ 0
+	                }
+	            }
+	        }
+	    });
+	}
+	function submitForm() {
+	    document.getElementById("yearForm").submit();
+	}
+</script>
 
 </body>
 </html>

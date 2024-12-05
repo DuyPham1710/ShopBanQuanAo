@@ -42,6 +42,15 @@ public class SanPham {
 		this.giaHienTai = (int)(giaBanDau - (giaBanDau * ((float)giamGia/100)));
 	}
 	
+	public SanPham(String tenSP, HinhAnhSanPham hinhAnhSP, KichCo size, MauSac color) {
+		this.tenSP = tenSP;
+		this.kichCo = new ArrayList<>();
+	    this.mauSac = new ArrayList<>(); 
+		this.kichCo.add(size);	
+		this.mauSac.add(color);
+		this.hinhAnhSP = hinhAnhSP;
+	}
+	
 	public SanPham(int maSP, String tenSP, int giaBanDau, int giaHienTai, int soLuong, KichCo size, MauSac color, HinhAnhSanPham hinhAnhSP) {
 		this.setMaSP(maSP);
 		this.setTenSP(tenSP);
