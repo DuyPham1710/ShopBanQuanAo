@@ -13,7 +13,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <!-- Google Fonts -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="../views/css/style.css">
 
 </head>
 <body>
@@ -55,31 +55,53 @@
         </div>
     </nav>
 
+	<div class="marquee-title">
+        <h1><span class="hot-icon"></span>Siêu giảm giá 12/12 - Giảm đến 70%! Mua ngay để không bỏ lỡ!</h1>
+    </div>
+
 	<!-- Banner Carousel -->
-	<div id="carouselExampleFade" class="carousel slide carousel-fade Carousel-custom" data-ride="carousel" data-interval="4000">
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="https://owen.cdn.vccloud.vn/media/codazon/slideshow/h/e/hero_1366x532_1.5x-100_bf_24.jpg" class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img src="https://owen.cdn.vccloud.vn/media/codazon/slideshow/h/e/hero_1366x532_bf24_1.jpg" class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img src="https://file.hstatic.net/200000144371/file/page0_174.jpg" class="d-block w-100" alt="...">
-			</div>
-		</div>
-		<button class="carousel-control-prev" type="button" data-target="#carouselExampleFade" data-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button" data-target="#carouselExampleFade" data-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</button>
-	</div>
-	
+	<div class="container short-container">
+        <div class="row">
+            <!-- Cột bên trái -->
+            <div class="col-md-1 d-flex justify-content-center align-items-center">
+                <div class="bg-white text-center p-3">
+                    <button class="carousel-control-prev btn-previous" type="button" data-target="#carouselExampleFade" data-slide="prev">
+                        <span class="carousel-control-prev-icon tuongPhanMau" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Cột giữa (carousel) -->
+            <div class="col-md-10 img-custom-all">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade Carousel-custom" data-ride="carousel" data-interval="4000">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active img-custom">
+                            <img src="https://owen.cdn.vccloud.vn/media/codazon/slideshow/h/e/hero_1366x532_1.5x-100_bf_24.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item img-custom">
+                            <img src="https://owen.cdn.vccloud.vn/media/codazon/slideshow/h/e/hero_1366x532_bf24_1.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item img-custom">
+                            <img src="https://cdn0918.cdn4s1.com/media/blog-images/anh-thoi-trang-nam-dep/anh-thoi-trang-nam-dep-2.jpg" class="d-block w-100" alt="...">
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <!-- Cột bên phải -->
+            <div class="col-md-1 d-flex justify-content-center align-items-center">
+                <div class="bg-white text-center p-3 ">
+                    <button class="carousel-control-next btn-next" type="button" data-target="#carouselExampleFade" data-slide="next">
+                        <span class="carousel-control-next-icon tuongPhanMau" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Banner -->
-    <div class="container1">
+    <div class="container1" style="margin-top: 40px">
         <div class="container1">
             <div class="col-md-12">
                 <nav aria-label="breadcrumb">

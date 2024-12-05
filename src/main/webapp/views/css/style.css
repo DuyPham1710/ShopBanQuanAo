@@ -304,6 +304,108 @@ body {
 
 
 .partner img {
-  width: 80%;
+    width: 80%;
     height: 80%;
+}
+
+.short-container {
+    height: 500px; /* Chiều cao bạn muốn */
+    overflow: hidden; /* Đảm bảo nội dung không tràn */
+}
+
+.img-custom-all {
+    height: 500px;
+    margin-top: -50px;
+}
+.img-custom {
+	height: 450px;
+}
+
+.btn-next {
+
+    margin-right: 50px;
+}
+
+.btn-previous{
+
+    margin-left: 50px;
+}
+
+.btn-previous,
+.btn-next {
+	margin-top: 220% !important;
+    background-color: f2f2f2 !important; /* Màu xám trong suốt */
+    border: 1px solid rgba(48, 47, 47, 0.5) !important; 
+    border-radius: 50%; /* Tạo hình tròn */
+    width: 50px !important;
+    height: 50px !important;
+    transition: all 0.3s ease !important; /* Hiệu ứng khi hover */
+    margin-top: 200px;
+    mix-blend-mode: difference !important; 
+}
+
+.btn-previous:hover,
+.btn-next:hover {
+    background-color: rgba(128, 128, 128, 0.8); /* Đậm hơn khi hover */
+    transform: scale(1.2); /* To ra khi hover */
+}
+
+.marquee-title {
+    background: linear-gradient(90deg, #fd9fc3, #ff9bac, #ff98c0);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    margin-top: 60px;
+    height: 50px;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(180%);
+    }
+    50% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-180%);
+    }
+}
+.marquee-title h1 {
+    display: inline-block;
+    animation: slide 14s linear infinite;
+    margin-top: -8px;
+    font-size: 25px;
+}
+
+
+
+.hot-icon {
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    background: url('https://png.pngtree.com/png-clipart/20211128/original/pngtree-latest-trend-hot-sale-icon-vector-png-image_6952151.png') no-repeat center;
+    background-size: contain;
+    animation: sparkle 1.5s infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+.tuongPhanMau {
+    
 }
