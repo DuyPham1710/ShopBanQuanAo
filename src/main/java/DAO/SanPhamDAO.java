@@ -572,7 +572,7 @@ public class SanPhamDAO {
 		ps.setInt(9, sp.getMaSP());
 		ps.executeUpdate();
 	    
-		System.out.print(sp.getGiaBanDau());
+		
 	}
 	
 	public static void SuaHinhAnh(Connection conn, SanPham sp) throws SQLException {
@@ -616,7 +616,7 @@ public class SanPhamDAO {
 	}
 	public static void ThemSize(Connection conn, int maSP,List<String> listSize) throws SQLException {
 		for (int i = 0; i < listSize.size(); i++) {
-			String sql = "INSERT INTO MauSac (MaKichCo, MaSanPham, TenKichCo) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO KichCo (MaKichCo, MaSanPham, TenKichCo) VALUES (?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, i+1);
 			ps.setInt(2, maSP);
@@ -626,7 +626,8 @@ public class SanPhamDAO {
 	}
 	public static void ThemMau(Connection conn, int maSP,List<String> listMau) throws SQLException {
 		for (int i = 0; i < listMau.size(); i++) {
-			String sql = "INSERT INTO MauSac (MaMauSac, MaSanPham, TenMau, MaMauDangHex) VALUES (?, ?, ?, ?)";
+			System.out.println(listMau.get(i));
+			String sql = "INSERT INTO MauSac (MaMau, MaSanPham, TenMau, MaMauDangHex) VALUES (?, ?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, i+1);
 			ps.setInt(2, maSP);

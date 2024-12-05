@@ -76,10 +76,10 @@
                 <thead>
                   <tr>
                     <th>Mã đơn hàng</th>
-                    <th>Ngày tạo</th>
-                    <th>Số sản phẩm</th>
+                    <th>Số lượng</th>
                     <th>Tổng tiền</th>
                     <th>Địa chỉ</th>
+                    <th>Ngày tạo</th>
                     <th>Trạng thái</th>
                     <th>Đánh giá (Nếu có)</th>
                   </tr>
@@ -88,11 +88,10 @@
                   <c:forEach var="hoaDon" items="${ListHD}">
                         <tr>
                             <td>${hoaDon.maHD}</td>
-                            <td>${hoaDon.ngayTao}</td>
                             <td>${hoaDon.chiTietHoaDon.soLuongDaMua}</td>
-                            
-                            <td>${hoaDon.tongTien}</td>
+                            <td>${hoaDon.tongTien}VNĐ</td>
                             <td>${hoaDon.diachi}</td>
+                            <td>${hoaDon.ngayTao}</td>
                             <td>
 							  <span 
 							    class="badge 
