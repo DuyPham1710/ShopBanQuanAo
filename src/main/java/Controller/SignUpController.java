@@ -33,8 +33,7 @@ public class SignUpController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect("/project_web");
 	}
 
 	/**
@@ -86,7 +85,8 @@ public class SignUpController extends HttpServlet {
 		}
 //		request.setAttribute("success", "Đăng ký thành công!");
 //		request.getRequestDispatcher("/views/SignUp.jsp").forward(request, response);
-		response.sendRedirect("/project_web");
+	//	response.sendRedirect("/project_web");
+		response.sendRedirect("/project_web/views/SignUp.jsp?SignUpSuccess=true");
 	}
 
 }

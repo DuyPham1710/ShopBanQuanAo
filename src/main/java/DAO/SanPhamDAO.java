@@ -639,12 +639,21 @@ public class SanPhamDAO {
 	}
 	public static void ThemMau(Connection conn, int maSP,List<String> listMau) throws SQLException {
 		for (int i = 0; i < listMau.size(); i++) {
-			System.out.println(listMau.get(i));
+		//	System.out.println("a = " + listMau.get(i));
+			String sqlGetTenMau = "select distinct TenMau from MauSac Where MaMauDangHex = ?";// + listMau.get(i);
+			PreparedStatement psGetTenMau = conn.prepareStatement(sqlGetTenMau);
+			psGetTenMau.setString(1, listMau.get(i));
+			ResultSet rs = psGetTenMau.executeQuery();
+			String tenMau1 = listMau.get(i);
+			if (rs.next()) {	
+				tenMau1 = rs.getString("TenMau");	
+			}
+			//System.out.println("B = " + tenMau1);
 			String sql = "INSERT INTO MauSac (MaMau, MaSanPham, TenMau, MaMauDangHex) VALUES (?, ?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, i+1);
 			ps.setInt(2, maSP);
-			ps.setString(3, listMau.get(i));
+			ps.setString(3, tenMau1);
 			ps.setString(4, listMau.get(i));
 			ps.executeUpdate();
         }

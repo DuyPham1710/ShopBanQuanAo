@@ -11,6 +11,11 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/styleSignUp.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Thêm Animate.css cho hiệu ứng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Thêm Font Awesome cho biểu tượng -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="wrapper">
@@ -83,6 +88,30 @@
             </div>
         </form>
     </div>
+    
+    <div class="modal fade animate__animated animate__zoomIn" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animate__animated animate__fadeInUp">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Thông Báo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fas fa-check-circle fa-3x text-success"></i>
+                    <p style="margin-top: 20px;">Đăng ký thành công!</p>
+                    <!-- Biểu tượng thành công -->
+                    
+                </div>
+                <div class="modal-footer">
+                	<form action="SignUpController" method="GET">
+                	  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đăng nhập</button>
+                	</form>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script>
         function validatePassword(event) {
             const password = document.querySelector('input[name="password"]').value;
@@ -96,6 +125,25 @@
             }
             return true;
         }
+        window.onload = function () {
+	        const urlParams = new URLSearchParams(window.location.search);
+	        if (urlParams.get('SignUpSuccess') === 'true') {
+	            // Hiển thị modal
+	            const modal = new bootstrap.Modal(document.getElementById('successModal'));
+	            modal.show();
+
+	            // Reload trang khi modal đóng
+	            const closeModalBtn = document.getElementById('closeModalBtn');
+	            document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+	                window.location.href = '/project_web'; // Xóa tham số ratingSuccess
+	            });
+
+	            closeModalBtn.addEventListener('click', function () {
+	                modal.hide();
+	            });
+	        }
+	    };
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

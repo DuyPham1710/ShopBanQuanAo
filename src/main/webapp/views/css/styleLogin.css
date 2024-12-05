@@ -13,7 +13,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('https://img.freepik.com/free-photo/purchase-sale-discount-fashion-style_53876-15282.jpg?t=st=1733410399~exp=1733413999~hmac=40ac170f0cb7407a2b1421d88185dbf354829fce0c50991f6d6a3871f0b55b2d&w=1380') no-repeat;
+    background: url('../images/login_3.jpg') no-repeat;
     background-size: cover;
     background-position: center;
 }
