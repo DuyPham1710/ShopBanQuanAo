@@ -209,7 +209,7 @@
 	                                      <c:if test="${donMua.trangThai == 'Đã giao'}">
 	                                     	 <c:forEach var="dg" items="${listDanhGia}">
 	                                     	 	<c:if test="${dg.sp.maSP == donMua.chiTietHD[0].sp.maSP}">
-									                <c:if test="${dg.trangThai == 'Chưa đánh giá'}">
+									                <c:if test="${dg.chiTietHD.maChiTiet == donMua.chiTietHD[0].maChiTiet && dg.trangThai == 'Chưa đánh giá'}">
 									                    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" 
 									                            data-bs-toggle="modal" 
 									                            data-bs-target="#ratingModal" 
@@ -218,11 +218,11 @@
 									                    </button>
 									                </c:if>
 
-									                <c:if test="${dg.trangThai == 'Đã đánh giá'}">
+									                <c:if test="${dg.chiTietHD.maChiTiet == donMua.chiTietHD[0].maChiTiet &&  dg.trangThai == 'Đã đánh giá'}">
 									                    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" disabled>
 									                        <i class="fas fa-check-circle"></i> Đã đánh giá
 									                    </button>
-									                </c:if>
+									                </c:if> 
 										            
 	                                     	 	<%--    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#ratingModal" onclick="Evaluate(${donMua.chiTietHD[0].sp.maSP}, ${donMua.chiTietHD[0].maChiTiet})">
 													    <i class="fas fa-star"></i> ${dg.trangThai}
@@ -274,7 +274,7 @@
 		                                      <c:if test="${donMua.trangThai == 'Đã giao'}">
 		                                     	 <c:forEach var="dg" items="${listDanhGia}">
 		                                     	 	<c:if test="${dg.sp.maSP == ChiTietHD.sp.maSP}">
-										                <c:if test="${dg.trangThai == 'Chưa đánh giá'}">
+										                <c:if test="${dg.chiTietHD.maChiTiet == ChiTietHD.maChiTiet && dg.trangThai == 'Chưa đánh giá'}">
 										                    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" 
 										                            data-bs-toggle="modal" 
 										                            data-bs-target="#ratingModal" 
@@ -283,7 +283,7 @@
 										                    </button>
 										                </c:if>
 	
-										                <c:if test="${dg.trangThai == 'Đã đánh giá'}">
+										                <c:if test="${dg.chiTietHD.maChiTiet == ChiTietHD.maChiTiet && dg.trangThai == 'Đã đánh giá'}">
 										                    <button class="btn btn-success btn-sm d-flex align-items-center gap-2" disabled>
 										                        <i class="fas fa-check-circle"></i> Đã đánh giá
 										                    </button>
