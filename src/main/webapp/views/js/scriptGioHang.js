@@ -172,6 +172,5 @@ function toast__Alert({ title = "", message = "", type = "info", duration = 3000
 	// Gán chuỗi vào giá trị của input
 	document.getElementById("listSPCheck").value = setString;
 	document.getElementById("totalTempThanhToan").value = tongGiaTamTinh;	
-	console.log(tmp);
-	console.log(listCheck);
+
   }

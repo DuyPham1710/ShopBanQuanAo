@@ -98,7 +98,7 @@
                     <c:forEach var="gh" items="${ListGH}">
                     	<form action="./GioHangController" method="post">
 	                    	<div class="cart-item d-flex align-items-center py-3">
-		                        <div class="cart-check" style="width: 5%;"><input type="checkbox" data-maSP="${gh.sanPham.maSP}" data-maMau="${gh.sanPham.mauSac[0].maMau}" data-maSize="${gh.sanPham.kichCo[0].maKichCo}" onchange="capNhatDanhSachMua(this, ${gh.sanPham.maSP},${gh.sanPham.mauSac[0].maMau},${gh.sanPham.kichCo[0].maKichCo})"></div>
+		                        <div class="cart-check" style="width: 5%;"><input type="checkbox" data-maSP="${gh.sanPham.maSP}" data-maMau="${gh.sanPham.mauSac[0].maMau}" data-maSize="${gh.sanPham.kichCo[0].maKichCo}" onchange="capNhatDanhSachMua(this, ${gh.sanPham.maSP},${gh.sanPham.kichCo[0].maKichCo},${gh.sanPham.mauSac[0].maMau})"></div>
 		                        <div class="cart-product d-flex align-items-center" style="width: 45%;">
 		                            <img src="${gh.sanPham.hinhAnhSP.duongDanHinh}" alt="${gh.sanPham.tenSP}" class="img-thumbnail" style="width: 80px; height: auto;">
 		                            <div class="ml-3">
