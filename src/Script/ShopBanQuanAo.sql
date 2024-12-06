@@ -697,16 +697,35 @@ RETURN
 )
 GO
 
-CREATE PROCEDURE proc_ThemDiaChiNhanHang @IDNguoiMua INT, @diachi NVARCHAR(255)
+CREATE OR ALTER PROCEDURE proc_ThemDiaChiNhanHang 
+    @IDNguoiMua INT, 
+    @diachi NVARCHAR(255)
 AS
 BEGIN
-    DECLARE @newMaDiaChi INT;
-	SELECT @newMaDiaChi = ISNULL(MAX(MaDiaChi), 0) + 1 FROM DiaChiNhanHang;
+    -- Kiểm tra địa chỉ đã tồn tại
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM DiaChiNhanHang 
+        WHERE IDNguoiDung = @IDNguoiMua AND TenDiaChi = @diachi
+    )
+    BEGIN
+        -- Tìm giá trị MaDiaChi mới
+        DECLARE @newMaDiaChi INT;
+        SELECT @newMaDiaChi = ISNULL(MAX(MaDiaChi), 0) + 1 
+        FROM DiaChiNhanHang;
 
-	INSERT INTO DiaChiNhanHang (Madiachi, IDNguoiDung, TenDiaChi)
-	VALUES (@newMaDiaChi, @IDNguoiMua, @diachi);
+        -- Thêm địa chỉ mới
+        INSERT INTO DiaChiNhanHang (MaDiaChi, IDNguoiDung, TenDiaChi)
+        VALUES (@newMaDiaChi, @IDNguoiMua, @diachi);
+    END
+    ELSE
+    BEGIN
+        -- Thông báo địa chỉ đã tồn tại (tùy chọn)
+        PRINT 'Địa chỉ đã tồn tại.';
+    END
 END;
 GO
+
 
 CREATE OR ALTER PROCEDURE proc_themTaiKhoan
     @username NVARCHAR(50),
