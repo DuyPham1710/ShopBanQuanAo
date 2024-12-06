@@ -64,13 +64,17 @@ public class HoaDonController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
-		int tongDonHang = 0;
+		int tongDonHang = 0, choXacNhan = 0, dangGiao = 0, daGiao = 0, daHuy = 0;
 		try {
 			String sql = "SELECT * FROM dbo.SoDonHangTheoTrangThai()";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				tongDonHang = rs.getInt("TongDonHang");
+				choXacNhan = rs.getInt("ChoXacNhan");
+				dangGiao = rs.getInt("DangGiao");
+				daGiao = rs.getInt("DaGiao");
+				daHuy = rs.getInt("DaHuy");
 			}
 		}
 		catch (Exception e) {
@@ -80,6 +84,10 @@ public class HoaDonController extends HttpServlet {
 
 		request.setAttribute("ListHD", listHD);
 		request.setAttribute("TongDonHang", tongDonHang);
+		request.setAttribute("DonDangChoXacNhan", choXacNhan);
+		request.setAttribute("DonDangGiao", dangGiao);
+		request.setAttribute("DonDaGiao", daGiao);
+		request.setAttribute("DonDaHuy", daHuy);
 		RequestDispatcher req = request.getRequestDispatcher("/views/admin/QuanLyDonHang.jsp");
 		req.forward(request, response);
 	}
