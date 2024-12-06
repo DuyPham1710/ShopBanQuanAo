@@ -98,6 +98,18 @@ public class ChiTietSPController extends HttpServlet {
 				response.getWriter().println("Error: " + e.getMessage());
 			}
 			
+			int soSanPhamGioHang = 0;
+			
+			try {
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
+			
 			request.setAttribute("sp", sp);
 			request.setAttribute("listDanhGia", listDanhGia);
 			request.setAttribute("ListSPTuongTu", listSPTuongTu);

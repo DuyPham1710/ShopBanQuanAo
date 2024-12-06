@@ -15,6 +15,7 @@ import java.sql.Date;
 
 import DAO.AccountDAO;
 import DAO.NguoiDungDAO;
+import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
 public class TaiKhoanController extends HttpServlet {
@@ -47,6 +48,17 @@ public class TaiKhoanController extends HttpServlet {
 				response.getWriter().println("Error: " + e.getMessage());
 			}
 			
+			int soSanPhamGioHang = 0;
+			
+			try {
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
 			request.setAttribute("nguoiDung", nguoiDung);
 			
 			RequestDispatcher req = request.getRequestDispatcher("/views/taiKhoan.jsp");

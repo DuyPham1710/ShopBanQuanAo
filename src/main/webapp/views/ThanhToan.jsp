@@ -43,7 +43,7 @@
 						    <a href="/project_web/GioHangController">
 						        <i class="fas fa-shopping-bag"></i>
 						    </a>
-						    <span class="notification-badge">6</span>
+						    <span class="notification-badge">${soSanPhamGioHang }</span>
 					    </div>
 					</span>
                      <span class="nav-icon" id="account-icon">

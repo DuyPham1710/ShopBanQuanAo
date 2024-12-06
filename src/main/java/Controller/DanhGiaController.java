@@ -16,6 +16,7 @@ import java.util.List;
 import DAO.AccountDAO;
 import DAO.DanhGiaDAO;
 import DAO.DonHangDAO;
+import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
 /**
@@ -60,6 +61,17 @@ public class DanhGiaController extends HttpServlet {
 				
 			}
 			
+			int soSanPhamGioHang = 0;
+			
+			try {
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
 			request.setAttribute("listDanhGia", listDanhGia);
 			request.setAttribute("trangThaiDanhGia", trangThai);
 			RequestDispatcher req = request.getRequestDispatcher("/views/DaDanhGia.jsp");

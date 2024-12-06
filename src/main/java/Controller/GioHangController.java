@@ -53,6 +53,17 @@ public class GioHangController extends HttpServlet {
 			for (int i=0; i<listGH.size(); i++) {
 				totalTemp += (listGH.get(i).getSanPham().getGiaHienTai() * listGH.get(i).getSoLuongGH());
 			}
+			int soSanPhamGioHang = 0;
+			
+			try {
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
 			
 			request.setAttribute("ListGH", listGH);
 			request.setAttribute("totalTemp", totalTemp);

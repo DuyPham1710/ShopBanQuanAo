@@ -68,6 +68,17 @@ public class DonHang extends HttpServlet {
 				}
 				request.setAttribute("listDanhGia", listDanhGia);
 			}
+			int soSanPhamGioHang = 0;
+			
+			try {
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
 			request.setAttribute("DanhSachDonHang", DanhSachDonHang);
 			RequestDispatcher req = request.getRequestDispatcher("/views/DonHang.jsp");
 			req.forward(request, response);

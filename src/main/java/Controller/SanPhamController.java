@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
 
+import DAO.AccountDAO;
 import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
@@ -93,6 +94,17 @@ public class SanPhamController extends HttpServlet {
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
+		int soSanPhamGioHang = 0;
+		
+		try {
+			soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
 		request.setAttribute("ListSP", listSP);
 		request.setAttribute("ListDanhMuc", listDanhMuc);
 		request.setAttribute("listMauHex", listMauHex);

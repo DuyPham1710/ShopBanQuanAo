@@ -22,9 +22,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
+import DAO.AccountDAO;
 import DAO.DonHangDAO;
 import DAO.HoaDonDAO;
 import DAO.NguoiDungDAO;
+import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
 
 /**
@@ -81,7 +83,18 @@ public class HoaDonController extends HttpServlet {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
-
+		int soSanPhamGioHang = 0;
+		
+		try {
+			soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
+		
 		request.setAttribute("ListHD", listHD);
 		request.setAttribute("TongDonHang", tongDonHang);
 		request.setAttribute("DonDangChoXacNhan", choXacNhan);

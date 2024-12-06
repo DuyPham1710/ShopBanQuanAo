@@ -155,6 +155,17 @@ public class SanPhamDAO {
 		}
 		return listAllSize;
 	}
+	public static int DemSoSanPhamTrongGioHang(Connection conn, int id) throws SQLException{
+		int dem =0;
+		String sql = "SELECT COUNT(*) AS SoLan FROM GioHang WHERE IDNguoiMua = ?;";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) {
+			dem = rs.getInt("SoLan");
+		}
+		return dem;
+	}
 	public static List<SanPham> LocSPTheoMauVaSize(Connection conn) throws SQLException {
 	    List<SanPham> listSP = new ArrayList<>();
 	    String sql = "select Distinct V_thongTinSP.* from V_thongTinSP, KichCo, MauSac "
