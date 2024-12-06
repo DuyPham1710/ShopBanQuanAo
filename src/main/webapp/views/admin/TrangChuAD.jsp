@@ -54,14 +54,9 @@
       <main class="content col-md-10 ms-sm-auto px-md-4">
           <header class="d-flex justify-content-between align-items-center py-3">
             <h2>Welcome Admin</h2>
-            <div class="input-group w-25">
-              <input type="text" class="form-control" placeholder="Search here...">
-            </div>
+           
             <div class="d-flex align-items-center">
-              <div class="notifications">
-                <i class="fas fa-bell"></i>
-                <span class="notification-badge">6</span>
-              </div>
+          
               <div class="profile">
                 <img src="https://cdn-icons-png.flaticon.com/512/1794/1794749.png" alt="Profile Picture">
                 <span>Moni Roy</span>
@@ -83,7 +78,7 @@
                                 <h2 class="font-weight-bold">${SoKH}</h2>
                                 <div class="d-flex align-items-center text-success">
                                     <i class="fas fa-arrow-up"></i>
-                                    <span>8.5% Up from yesterday</span>
+                                    <span>20% Up from yesterday</span>
                                 </div>
                             </div>
                         </div>
