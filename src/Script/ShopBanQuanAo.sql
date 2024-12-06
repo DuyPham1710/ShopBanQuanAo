@@ -732,6 +732,8 @@ RETURN
     SELECT
         DaGiao = SUM(CASE WHEN TrangThai = N'Đã giao' THEN 1 ELSE 0 END),
         DangGiao = SUM(CASE WHEN TrangThai = N'Đang giao' THEN 1 ELSE 0 END),
+		ChoXacNhan = SUM(CASE WHEN TrangThai = N'Chờ xác nhận' THEN 1 ELSE 0 END),
+		DaHuy = SUM(CASE WHEN TrangThai = N'Đã hủy' THEN 1 ELSE 0 END),
         TongDonHang = COUNT(*)
     FROM HoaDon
 );

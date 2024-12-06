@@ -182,3 +182,7 @@ body {
 .modal-content {
     border-radius: 10px; /* Thêm góc bo tròn nếu muốn */
 }
+
+.img-status {
+	margin-right: 5px;
+}

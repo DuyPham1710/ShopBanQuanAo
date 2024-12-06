@@ -7,6 +7,7 @@ public class ConnectJDBC {
 //	private final String serverName = "LAPTOP-EC6KMGRU";
 //	private final String serverName = "MSI";
 	private final String serverName = "DESKTOP-8RK3BU5";
+
 	private final String dbName = "ShopBanAoQuan";
 	private final String portNumber = "1433";
 	private final String username = "sa";
