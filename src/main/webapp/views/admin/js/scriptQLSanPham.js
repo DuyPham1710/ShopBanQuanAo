@@ -3,6 +3,30 @@
  */
 let selectedColors = new Set();
 let selectedSizes = new Set();
+
+function toggleDanhMucInput() {
+  const select = document.getElementById('danhmucAdd');
+  const newDanhMucRow = document.getElementById('newDanhMucRow');
+  if (select.value === "0") {
+    newDanhMucRow.style.display = "block";
+  } else {
+    newDanhMucRow.style.display = "none";
+  }
+
+}
+
+
+function toggleDanhMucInputEdit() {
+  const select = document.getElementById('danhmucAdd');
+  const newDanhMucRow = document.getElementById('newDanhMucRowEdit');
+  if (select.value === "0") {
+    newDanhMucRow.style.display = "block";
+  } else {
+    newDanhMucRow.style.display = "none";
+  }
+
+}
+
 function createChart(config) {
     const { canvasId, sold, inStock } = config;
     const ctxt = document.getElementById(canvasId).getContext('2d');
@@ -195,6 +219,7 @@ function luuChinhSua(){
 	        xuatXuEdit: document.getElementById("xuatXuEdit").value,
 	        chatLieuEdit: document.getElementById("chatLieuEdit").value,
 	        moTaEdit: document.getElementById("moTaEdit").value,
+			danhMucThemVao: document.getElementById("newDanhMucInputEdit").value,
 			 }),
     })
     .then(response => {
@@ -225,9 +250,9 @@ function kiemTraRongKhiEdit() {
     const xuatXu = document.getElementById("xuatXuEdit").value.trim();
     const chatLieu = document.getElementById("chatLieuEdit").value.trim();
     const moTa = document.getElementById("moTaEdit").value.trim();
-
+	const danhMucMoi = document.getElementById("newDanhMucInputEdit").value;
     // Kiểm tra các giá trị
-    if (!tenSP || !giaSP || !giamGia || !soLuong || !danhMuc || !linkAnh || !xuatXu || !chatLieu || !moTa || !sizeString || !colorString) {
+    if (!tenSP || !giaSP || !giamGia || !soLuong || (danhMuc==="0" && !danhMucMoi) || !linkAnh || !xuatXu || !chatLieu || !moTa || !sizeString || !colorString) {
         alert("Vui lòng điền đầy đủ thông tin vào tất cả các trường!");
         return;
     }
@@ -329,7 +354,9 @@ function themSanPham(){
 	console.log(document.getElementById("xuatXuAdd").value);
 	console.log(document.getElementById("chatLieuAdd").value);
 	console.log(document.getElementById("moTaAdd").value);
+	console.log(document.getElementById("newDanhMucInput").value);
       
+	
     if (!confirm("Bạn có chắc chắn muốn thêm sản phẩm này?")) {
         return;
     }
@@ -354,6 +381,7 @@ function themSanPham(){
 	        moTaAdd: document.getElementById("moTaAdd").value,
 			sizeThemVao: document.getElementById("sizeThemVaoAdd").value.trim(),
 			mauThemVao: document.getElementById("mauThemVaoAdd").value.trim(),
+			danhMucThemVao: document.getElementById("newDanhMucInput").value,
 			 }),
     })
     .then(response => {
@@ -388,9 +416,11 @@ function kiemTraRongKhiAdd() {
     const moTa = document.getElementById("moTaAdd").value;
 	const sizeThemVao = document.getElementById("sizeThemVaoAdd").value.trim();
 	const mauThemVao = document.getElementById("mauThemVaoAdd").value.trim();
+	const danhMucThemVao = document.getElementById("newDanhMucInput").value;
+	
 	
     // Kiểm tra các giá trị
-    if ((!sizeString && !sizeThemVao) || (!mauThemVao && !colorString) || !tenSP || !giaSP || !giamGia || !soLuong || !danhMuc || !linkAnh || !xuatXu || !chatLieu || !moTa) {
+    if ((!sizeString && !sizeThemVao) || (!mauThemVao && !colorString) || !tenSP || !giaSP || !giamGia || !soLuong || (danhMuc==="0" && !danhMucThemVao) || !linkAnh || !xuatXu || !chatLieu || !moTa) {
         alert("Vui lòng điền đầy đủ thông tin vào tất cả các trường!");
         return;
 	}

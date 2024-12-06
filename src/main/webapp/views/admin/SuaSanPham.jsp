@@ -30,7 +30,7 @@
       <div class="row mb-2">
         <div class="col-md-11">
           <label for="productCategoryEdit" class="form-label">Danh mục</label>
-          <select id="danhmucEdit" class="form-select" required>
+          <select id="danhmucEdit" class="form-select" required onchange="toggleDanhMucInputEdit()">
 			    <c:forEach var="danhMuc" items="${ListDanhMuc}">
 			        <option value="${danhMuc.maDanhMuc}"
 			            <c:if test="${danhMuc.maDanhMuc == ThongTinSP.danhMuc.maDanhMuc}">
@@ -38,11 +38,21 @@
 			            </c:if>>
 			            ${danhMuc.tenDanhMuc}
 			        </option>
+			        
 			    </c:forEach>
+			    <option value="0">
+			        	Thêm danh mục mới
+			     </option>
 			</select>
 
         </div>
       </div>
+      <div class="row mb-2" id="newDanhMucRowEdit" style="display: none;">
+		  <div class="col-md-11">
+		    <label for="newDanhMucInput" id="labelDanhMuc" class="form-label" >Tên danh mục mới</label>
+		    <input type="text" id="newDanhMucInputEdit" class="form-control" placeholder="Nhập tên danh mục mới" value="">
+		  </div>
+		</div>
     </div>
     <div class="col-md-5 form-group" style="border-left: 1px solid #ccc; height: 250px;">
       <div class="product-image-container">

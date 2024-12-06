@@ -145,11 +145,43 @@ public class qlSanPhamController extends HttpServlet {
 		else if("themSanPham".equalsIgnoreCase(method)) {
 			doThemSanPham(request, response);
 		}
+		else if("xoaSanPham".equalsIgnoreCase(method)) {
+			doXoaSanPham(request,response);
+		}
 		
+	}
+	protected void doXoaSanPham(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int maSP = Integer.parseInt(request.getParameter("maSPCanXoa"));
+		Connection conn = null;
+		try {
+			conn = new ConnectJDBC().getConnection();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		try {
+			SanPhamDAO.XoaSanPham(conn,maSP);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		doGet(request,response);
 	}
 protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 
+		Connection conn = null;
+		try {
+			conn = new ConnectJDBC().getConnection();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
         // Đọc dữ liệu từ body
         StringBuilder jsonBuffer = new StringBuilder();
         String line;
@@ -158,6 +190,7 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
                 jsonBuffer.append(line);
             }
         }
+        
 
         // Chuyển JSON thành đối tượng
         JSONObject json = new JSONObject(jsonBuffer.toString());
@@ -177,21 +210,25 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 		String strMau = json.getString("mauDaDuocChonEdit");
 		List<String> listMau = Arrays.asList(strMau.split(","));
 		
+		String danhMucMoi = json.getString("danhMucThemVao");
+
+		int maDanhMucNew =danhMuc;
+		//them danh muc
+		if(danhMuc==0) {
+			try {
+				maDanhMucNew = SanPhamDAO.ThemDanhMucMoi(conn,danhMucMoi);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+		}
+		
 		String moTa = json.getString("moTaEdit");
 		HinhAnhSanPham ha= new HinhAnhSanPham(0, hinh);
-		DanhMucSanPham dm = new DanhMucSanPham(danhMuc);
+		DanhMucSanPham dm = new DanhMucSanPham(maDanhMucNew);
 		SanPham sp = new SanPham(masp, tenSP, moTa, giaBanDau, giamGia, soLuong,null,xuatXu,chatLieu, 0, dm, ha );
-		
-		
-		Connection conn = null;
-		try {
-			conn = new ConnectJDBC().getConnection();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
+
 //		try {
 //			SanPhamDAO.SuaMau(conn,masp,listMau);
 //			
@@ -230,6 +267,15 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 	
 	protected void doThemSanPham(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		Connection conn = null;
+		try {
+			conn = new ConnectJDBC().getConnection();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
 
         // Đọc dữ liệu từ body
         StringBuilder jsonBuffer = new StringBuilder();
@@ -250,7 +296,20 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 		String hinh = json.getString("linkAnhAdd");
 		String xuatXu = json.getString("xuatXuAdd");
 		String chatLieu = json.getString("chatLieuAdd");
+		String danhMucMoi = json.getString("danhMucThemVao");
 
+		int maDanhMucNew =danhMuc;
+		//them danh muc
+		if(danhMuc==0) {
+			try {
+				maDanhMucNew = SanPhamDAO.ThemDanhMucMoi(conn,danhMucMoi);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+		}
+		
 		String strKichThuoc;
 		String sizeThemVao = json.getString("sizeThemVao");
 		if(sizeThemVao == "") {
@@ -267,36 +326,46 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 		List<String> listSize = Arrays.asList(strKichThuoc.split(","));
 		
 		
-		String strMau;
+		String strMau = json.getString("mauDaDuocChonAdd");
+		List<String> listMauThemVao = null;
+		List<String> listMau = null;
 		String mauThemVao = json.getString("mauThemVao");
-		if(mauThemVao == "") {
-			strMau = json.getString("mauDaDuocChonAdd");
+		if(strMau != "") {
+			listMau = Arrays.asList(strMau.split(","));
 		}
-		else {
-			if(json.getString("mauDaDuocChonAdd")=="") {
-				strMau= mauThemVao;
+		if(mauThemVao!="") {
+			listMauThemVao = Arrays.asList(mauThemVao.split(","));
+		}
+		
+		int index = 0;
+		if(listMau != null) {
+			index= listMau.size();
+			try {
+				SanPhamDAO.ThemMau(conn,masp,listMau);
 			}
-			else {
-				strMau= json.getString("mauDaDuocChonAdd")+","+mauThemVao;
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+		}
+		if(listMauThemVao!= null) {
+			try {
+				SanPhamDAO.ThemMauMoi(conn,masp,listMauThemVao,index);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
 			}
 		}
 		
-		List<String> listMau = Arrays.asList(strMau.split(","));
 		
 		String moTa = json.getString("moTaAdd");
 		HinhAnhSanPham ha= new HinhAnhSanPham(masp, hinh);
-		DanhMucSanPham dm = new DanhMucSanPham(danhMuc);
+		DanhMucSanPham dm = new DanhMucSanPham(maDanhMucNew);
 
 		LocalDate day = LocalDate.now();
 		Date sqlDate = Date.valueOf(day);
-		Connection conn = null;
-		try {
-			conn = new ConnectJDBC().getConnection();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
+		
 		
 		try {
 			masp = SanPhamDAO.MaSPTiepTheo(conn);
@@ -323,13 +392,6 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
-		try {
-			SanPhamDAO.ThemMau(conn,masp,listMau);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
 		
 		try {
 			SanPhamDAO.ThemHinh(conn,sp);

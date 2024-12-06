@@ -174,10 +174,18 @@
 		                    <td>${sp.giaHienTai} VNĐ</td>
 		                    <td>${sp.soLuong}</td>
 		                    <td>${sp.daBan}</td>
-		                    <td>
-		                      <button class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#editProductModal" onclick="loadSanPham(${sp.maSP})">Sửa</button>
-		                      <button class="btn btn-danger btn-sm">Xóa</button>
-		                    </td>
+		                    <td style="text-align: center; vertical-align: middle;">
+							    <div class="d-flex align-items-center justify-content-center" style="gap: 5px;">
+							        <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editProductModal" onclick="loadSanPham(${sp.maSP})">
+							            Sửa
+							        </button>
+							        <form id="xoaSanPham" action="qlSanPhamController" method="POST" style="margin: 0; display: inline;">
+							            <input type="hidden" name="maSPCanXoa" value="${sp.maSP}" style="width: 0; height: 0; padding: 0; border: none;">
+							            <input type="hidden" name="_method" value="xoaSanPham" style="width: 0; height: 0; padding: 0; border: none;">
+							            <button class="btn btn-danger btn-sm">Xóa</button>
+							        </form>
+							    </div>
+							</td>
 				        </tr>
                     </c:forEach>
                   

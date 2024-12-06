@@ -27,17 +27,24 @@
         </div>
       </div>
       <div class="row mb-2">
-        <div class="col-md-11">
-          <label for="productCategoryAdd" class="form-label">Danh mục</label>
-          <select id="danhmucAdd" class="form-select" required>
-            <c:forEach var="danhMuc" items="${ListDanhMuc}">
-    			<option value="${danhMuc.maDanhMuc}">
-      				${danhMuc.tenDanhMuc}
-			    </option>
-			  </c:forEach>
-          </select>
-        </div>
-      </div>
+		  <div class="col-md-11">
+		    <label for="productCategoryAdd" class="form-label">Danh mục</label>
+		    <select id="danhmucAdd" class="form-select" required onchange="toggleDanhMucInput()">
+		      <c:forEach var="danhMuc" items="${ListDanhMuc}">
+		        <option value="${danhMuc.maDanhMuc}">
+		          ${danhMuc.tenDanhMuc}
+		        </option>
+		      </c:forEach>
+		      <option value="0">Thêm danh mục</option>
+		    </select>
+		  </div>
+		</div>
+		<div class="row mb-2" id="newDanhMucRow" style="display: none;">
+		  <div class="col-md-11">
+		    <label for="newDanhMucInput" id="labelDanhMuc" class="form-label" >Tên danh mục mới</label>
+		    <input type="text" id="newDanhMucInput" class="form-control" placeholder="Nhập tên danh mục mới" value="">
+		  </div>
+		</div>
     </div>
     <div class="col-md-5 form-group" style="border-left: 1px solid #ccc; height: 250px;">
       <div class="product-image-container">
@@ -113,7 +120,7 @@
         
         <div class="col-md-6">
           <label for="mauThemVaoAdd" class="form-label">Thêm màu khác</label>
-          <input type="text" class="form-control" id="mauThemVaoAdd" name="mauThemVaoAdd" placeholder="Nhập # + Mã màu Hex (cách nhau bằng dấu ',')">
+          <input type="text" class="form-control" id="mauThemVaoAdd" name="mauThemVaoAdd" placeholder="Nhập #Mã màu Hex-tên màu (cách nhau bằng dấu ',')">
         </div>
       </div>
   <!-- Row 6: Mô tả -->

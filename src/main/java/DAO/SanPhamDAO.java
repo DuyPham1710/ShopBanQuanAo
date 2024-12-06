@@ -637,6 +637,23 @@ public class SanPhamDAO {
 			ps.executeUpdate();
         }
 	}
+	
+	public static int ThemDanhMucMoi(Connection conn, String tenDanhMuc) throws SQLException  {
+		String sql = "SELECT MAX(MaDanhMuc) AS MaxMaDanhMuc FROM DanhMucSanPham";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) {
+			int index = rs.getInt("MaxMaDanhMuc")+1;
+			sql = "INSERT INTO DanhMucSanPham (MaDanhMuc, TenDanhMuc) VALUES (?, ?);";
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			ps1.setInt(1, index);
+			ps1.setString(2, tenDanhMuc);
+			ps1.executeUpdate();
+			return index;
+		}
+		return 0;
+	}
+	
 	public static void ThemMau(Connection conn, int maSP,List<String> listMau) throws SQLException {
 		for (int i = 0; i < listMau.size(); i++) {
 		//	System.out.println("a = " + listMau.get(i));
@@ -658,6 +675,20 @@ public class SanPhamDAO {
 			ps.executeUpdate();
         }
 	}
+	public static void ThemMauMoi(Connection conn, int maSP,List<String> listMau,int index) throws SQLException {
+		for (int i = 0; i < listMau.size(); i++) {
+			
+			String[] parts = listMau.get(i).split("-");
+			//System.out.println("B = " + tenMau1);
+			String sql = "INSERT INTO MauSac (MaMau, MaSanPham, TenMau, MaMauDangHex) VALUES (?, ?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, index+i+1);
+			ps.setInt(2, maSP);
+			ps.setString(3, parts[1]);
+			ps.setString(4, parts[0]);
+			ps.executeUpdate();
+        }
+	}
 	public static void ThemHinh(Connection conn, SanPham sp) throws SQLException {
 		String sql = "INSERT INTO HinhAnhSanPham(MaHinhAnh, MaSanPham, DuongDanHinh, MoTaHinh) "
 				+ " VALUES (?, ?, ?, N'Hình ảnh sản phẩm')";		
@@ -666,6 +697,33 @@ public class SanPhamDAO {
 		ps.setInt(2, sp.getMaSP());
 		ps.setString(3, sp.getHinhAnhSP().getDuongDanHinh());
 		ps.executeUpdate();
+	}
+	public static void XoaSanPham(Connection conn, int maSP) throws SQLException {
+		String sql = "Delete from GioHang Where MaSanPham =?";		
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, maSP);
+		ps.executeUpdate();
+		
+		String sql1 = "Delete from MauSac Where MaSanPham =?";		
+		PreparedStatement ps1 = conn.prepareStatement(sql1);
+		ps1.setInt(1, maSP);
+		ps1.executeUpdate();
+		
+		String sql2 = "Delete from KichCo Where MaSanPham =?";		
+		PreparedStatement ps2 = conn.prepareStatement(sql2);
+		ps2.setInt(1, maSP);
+		ps2.executeUpdate();
+		
+		String sql3 = "Delete from HinhAnhSanPham Where MaSanPham =?";		
+		PreparedStatement ps3 = conn.prepareStatement(sql3);
+		ps3.setInt(1, maSP);
+		ps3.executeUpdate();
+		
+		String sql4 = "Delete from SanPham Where MaSanPham =?";		
+		PreparedStatement ps4 = conn.prepareStatement(sql4);
+		ps4.setInt(1, maSP);
+		ps4.executeUpdate();
+		
 	}
 }
 
