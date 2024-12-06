@@ -201,7 +201,8 @@
 		                <input type="hidden" name="soLuong1SP" value="${ListGH[0].soLuongGH}">
 	            	</c:if>
 	            	<c:if test="${fn:length(ListGH) > 1}">
- 						<input type="hidden" name="redirect" value="Nhieu_Hon_1_San_Pham">	  
+ 						<input type="hidden" name="redirect" value="Nhieu_Hon_1_San_Pham">	
+ 						<input type="hidden" name="CacSanPhamDuocChon" value="${CacSanPhamDuocChon }">	  
 					</c:if>
 	            
 	            <button class="paypal-button" id="payButton">PayPal</button>

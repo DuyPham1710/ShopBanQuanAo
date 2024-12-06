@@ -62,7 +62,7 @@ public class ThanhToanController extends HttpServlet {
 			
 			String redirect = request.getParameter("redirect");
 			List<GioHang> listGH = null;
-			
+			String CacSanPhamDuocChon="";
 			if (redirect.equals("buyNow")) {
 				int maSP = Integer.parseInt(request.getParameter("maSP"));
 				int maKichThuoc = Integer.parseInt(request.getParameter("size"));
@@ -86,6 +86,7 @@ public class ThanhToanController extends HttpServlet {
 			else if (redirect.equals("cart")) {
 				
 				String cacSanPhamChon = request.getParameter("listSPCheck");
+				CacSanPhamDuocChon = cacSanPhamChon;
 				String[] listMa = cacSanPhamChon.split(",");
 				if (request.getParameter("totalTemp") != null) {
 	                totalTemp = Integer.parseInt(request.getParameter("totalTemp"));
@@ -107,7 +108,7 @@ public class ThanhToanController extends HttpServlet {
 			request.setAttribute("ListGH", listGH);
 			request.setAttribute("totalTemp", totalTemp);
 			request.setAttribute("nguoiDung", nguoiDung);
-			
+			request.setAttribute("CacSanPhamDuocChon", CacSanPhamDuocChon);
 			RequestDispatcher req = request.getRequestDispatcher("/views/ThanhToan.jsp");
 			req.forward(request, response);
         }
@@ -122,6 +123,8 @@ public class ThanhToanController extends HttpServlet {
 		else{
 			int tongTienHoaDon = Integer.parseInt(request.getParameter("tongTienHoaDon"));
 			String diaChi = request.getParameter("selectedAddress");
+			
+			
 			int maHoaDon = 0;
 			Connection conn = null;
 			try {
@@ -161,8 +164,10 @@ public class ThanhToanController extends HttpServlet {
 				}
 			}
 			else if (redirect.equals("Nhieu_Hon_1_San_Pham")) {
+				String CacSanPhamDuocChon = request.getParameter("CacSanPhamDuocChon");
+				String[] listMa = CacSanPhamDuocChon.split(",");
 				try {
-    				listGH = GioHangDAO.DanhSachGioHang(conn);
+    				listGH = GioHangDAO.DanhSachGioHangThanhToan(conn,listMa);
     			}
     			catch (Exception e) {
     				e.printStackTrace();
