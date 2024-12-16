@@ -182,7 +182,7 @@
 							        <form id="xoaSanPham" action="qlSanPhamController" method="POST" style="margin: 0; display: inline;">
 							            <input type="hidden" name="maSPCanXoa" value="${sp.maSP}" style="width: 0; height: 0; padding: 0; border: none;">
 							            <input type="hidden" name="_method" value="xoaSanPham" style="width: 0; height: 0; padding: 0; border: none;">
-							            <button class="btn btn-danger btn-sm">Xóa</button>
+							            <button class="btn btn-danger btn-sm" onclick="return confirmDelete()">Xóa</button>
 							        </form>
 							    </div>
 							</td>
@@ -267,6 +267,10 @@
 		     // Khôi phục scrollbar
 		     document.body.style.overflow = '';
 		 });
+		 
+		 function confirmDelete() {
+			    return confirm("Bạn chắc chắn muốn xóa sản phẩm này ?");
+			}
   	</script>
   	
 </body>

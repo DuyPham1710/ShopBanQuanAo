@@ -27,7 +27,7 @@
                         <img src="./views/images/logo.jpg" alt="Logo">
                     </a>
                     <form action="/project_web/SanPhamController" method="get" class="d-flex">
-		                <input class="form-control me-2 mr-2" type="search" name="searchText" placeholder="Search Products" aria-label="Search">
+		                <input class="form-control me-2 mr-2" type="search" name="searchText" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
 		                <button class="btn btn-outline-secondary" type="submit">
 		                    <i class="fas fa-search"></i>
 		                </button>
@@ -127,7 +127,7 @@
 		                        <input type="hidden" name="maKichThuoc"  value="${gh.sanPham.kichCo[0].maKichCo}">	
 		                        <input type="hidden" name="maMau"  value="${gh.sanPham.mauSac[0].maMau}">	
 		                        <div class="cart-action" style="width: 5%;">
-		                        	<button class="btn btn-link text-danger">
+		                        	<button class="btn btn-link text-danger" onclick="return confirmDelete()">
 		                        		<i class="fas fa-trash-alt"></i>
 		                        		<input type="hidden" name="_method" value="DELETE">
 		                        	</button>
@@ -243,6 +243,10 @@
 		        $('#emptyCartModal').modal('show'); // Hiển thị modal thông báo
 		    }
 		});
+		
+		function confirmDelete() {
+		    return confirm("Bạn chắc chắn xóa?");
+		}
 	</script>
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

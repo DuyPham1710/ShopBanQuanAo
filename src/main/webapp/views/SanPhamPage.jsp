@@ -26,7 +26,7 @@
                         <img src="./views/images/logo.jpg" alt="Logo">
                     </a>
                      <form action="/project_web/SanPhamController" method="get" class="d-flex">
-		                <input class="form-control me-2" type="search" name="searchText" placeholder="Search Products" aria-label="Search">
+		                <input class="form-control me-2" type="search" name="searchText" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
 		                <button class="btn btn-outline-secondary" type="submit">
 		                    <i class="fas fa-search"></i>
 		                </button>
