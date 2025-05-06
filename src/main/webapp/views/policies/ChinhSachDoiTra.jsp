@@ -146,7 +146,7 @@
 			            <ul>
 			                <li>Đổi hàng trong vòng <strong>07 ngày</strong> kể từ ngày khách nhận sản phẩm.</li>
 			                <li>Sản phẩm còn trong tình trạng ban đầu, nguyên tem và nhãn mác.</li>
-			                <li>Sản phẩm chưa qua giặt ủi, không bẩn hoặc hư hỏng.</li>
+			                <li>Sản phẩm chưa qua giặt ủi, không bẩn hoặc hư hỏng</li>
 			            </ul>
 			
 			            <h2 class="title">II. Quy Định Trả Hàng</h2>
