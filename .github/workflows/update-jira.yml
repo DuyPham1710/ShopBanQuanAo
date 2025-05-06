@@ -9,10 +9,17 @@ jobs:
   update-jira:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Extract Jira Issue Key
         id: extract
         run: |
-          echo "JIRA_KEY=$(git log -1 --pretty=%B | grep -o '[A-Z]\+-[0-9]\+')" >> $GITHUB_OUTPUT
+          ISSUE_KEY=$(git log -1 --pretty=%B | grep -o '[A-Z]\+-[0-9]\+' || true)
+          echo "jira_key=$ISSUE_KEY" >> $GITHUB_OUTPUT
+
+      - name: Debug Jira Key
+        run: echo "Found Jira Key: ${{ steps.extract.outputs.jira_key }}"
 
       - name: Login to Jira
         uses: atlassian/gajira-login@v3
@@ -22,7 +29,8 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
       - name: Transition Jira issue to Done
+        if: steps.extract.outputs.jira_key != ''
         uses: atlassian/gajira-transition@v3
         with:
-          issue: ${{ steps.extract.outputs.JIRA_KEY }}
+          issue: ${{ steps.extract.outputs.jira_key }}
           transition: Done
