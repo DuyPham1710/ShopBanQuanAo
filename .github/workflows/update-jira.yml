@@ -6,7 +6,7 @@ on:
 
 jobs:
   update-jira:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'develop'
     runs-on: ubuntu-latest
     steps:
       - name: Extract Jira Issue Key
