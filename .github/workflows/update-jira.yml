@@ -12,7 +12,7 @@ jobs:
       - name: Extract Jira Issue Key
         id: extract
         run: |
-          echo "JIRA_KEY=$(echo '${{ github.event.pull_request.title }}' | grep -o '[A-Z]\+-[0-9]\+')" >> $GITHUB_OUTPUT
+          echo "JIRA_KEY=$(git log -1 --pretty=%B | grep -o '[A-Z]\+-[0-9]\+')" >> $GITHUB_OUTPUT
 
       - name: Login to Jira
         uses: atlassian/gajira-login@v3
