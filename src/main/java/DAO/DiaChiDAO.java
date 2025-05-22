@@ -9,11 +9,11 @@ import java.util.List;
 
 
 public class DiaChiDAO {
-	public static List<String> LayDanhSachDiaChi(Connection conn) throws SQLException {
+	public static List<String> LayDanhSachDiaChi(Connection conn,int userId) throws SQLException {
 		List<String> listDC = new ArrayList<String>();
 		String sql = "select TenDiaChi from DiaChiNhanHang where DiaChiNhanHang.IDNguoiDung = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			listDC.add(rs.getString("TenDiaChi"));

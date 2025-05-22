@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Account;
 import models.NguoiDung;
 
@@ -26,7 +27,8 @@ public class TaiKhoanController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (AccountDAO.getID() == 0) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
 			response.sendRedirect("/project_web");
 		}
 		else {
@@ -41,7 +43,7 @@ public class TaiKhoanController extends HttpServlet {
 			
 			NguoiDung nguoiDung = null;
 			try {
-				nguoiDung = NguoiDungDAO.ThongTinCaNhan(conn);
+				nguoiDung = NguoiDungDAO.ThongTinCaNhan(conn, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -51,7 +53,7 @@ public class TaiKhoanController extends HttpServlet {
 			int soSanPhamGioHang = 0;
 			
 			try {
-				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -68,47 +70,53 @@ public class TaiKhoanController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String hoTen = request.getParameter("hoTen");
-		String ngaySinhStr = request.getParameter("ngaySinh"); 
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
+			response.sendRedirect("/project_web");
+		}
+		else {
+			String username = request.getParameter("username");
+			String hoTen = request.getParameter("hoTen");
+			String ngaySinhStr = request.getParameter("ngaySinh"); 
 
-	    Date ngaySinh = null;
-		try {
-			ngaySinh = java.sql.Date.valueOf(ngaySinhStr);
-		} catch (IllegalArgumentException  e) {
-			e.printStackTrace();
-		};
-	  
-		String gioiTinh = request.getParameter("gender");
-		if ("male".equals(gioiTinh)) {
-		    gioiTinh = "Nam";
-		} else if ("female".equals(gioiTinh)) {
-		    gioiTinh = "Nữ";
+		    Date ngaySinh = null;
+			try {
+				ngaySinh = java.sql.Date.valueOf(ngaySinhStr);
+			} catch (IllegalArgumentException  e) {
+				e.printStackTrace();
+			};
+		  
+			String gioiTinh = request.getParameter("gender");
+			if ("male".equals(gioiTinh)) {
+			    gioiTinh = "Nam";
+			} else if ("female".equals(gioiTinh)) {
+			    gioiTinh = "Nữ";
+			}
+			String email = request.getParameter("email");
+			String sdt = request.getParameter("sdt");
+			String password = request.getParameter("password");
+			
+			Connection conn = null;
+			try {
+				conn = new ConnectJDBC().getConnection();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			
+			}
+			
+			Account account = new Account(username, password);
+			NguoiDung nguoiDung = new NguoiDung(account, "", hoTen, gioiTinh, sdt, ngaySinh, email);
+			
+			try {
+				NguoiDungDAO.suaThongTin(conn, nguoiDung, (int)session.getAttribute("userId"));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			doGet(request, response);
 		}
-		String email = request.getParameter("email");
-		String sdt = request.getParameter("sdt");
-		String password = request.getParameter("password");
-		
-		Connection conn = null;
-		try {
-			conn = new ConnectJDBC().getConnection();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		
-		}
-		
-		Account account = new Account(username, password);
-		NguoiDung nguoiDung = new NguoiDung(account, "", hoTen, gioiTinh, sdt, ngaySinh, email);
-		
-		try {
-			NguoiDungDAO.suaThongTin(conn, nguoiDung);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		doGet(request, response);
 	}
 }

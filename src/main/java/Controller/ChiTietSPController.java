@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.DanhGia;
 import models.GioHang;
 import models.KichCo;
@@ -32,7 +33,8 @@ public class ChiTietSPController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (AccountDAO.getID() == 0) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
 			response.sendRedirect("/project_web");
 		}
 		else {
@@ -101,7 +103,7 @@ public class ChiTietSPController extends HttpServlet {
 			int soSanPhamGioHang = 0;
 			
 			try {
-				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -122,12 +124,12 @@ public class ChiTietSPController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method = request.getParameter("method");
-	
+		HttpSession session = request.getSession();
 		if (method.equals("get")) {
 			doGet(request, response);
 		}
 		else {
-			if (AccountDAO.getID() == 0) {
+			if (session.getAttribute("userId") == null) {
 				response.sendRedirect("/project_web");
 			}
 			else {
@@ -154,7 +156,7 @@ public class ChiTietSPController extends HttpServlet {
 					 SanPham sp = new SanPham(maSP, maKichThuoc, maMauSac);
 					 GioHang gh = new GioHang(sp, soLuong);
 					 try {
-						 GioHangDAO.ThemGioHang(conn, gh);
+						 GioHangDAO.ThemGioHang(conn, gh,(int)session.getAttribute("userId"));
 						 Thread.sleep(2000);
 						 
 					 }

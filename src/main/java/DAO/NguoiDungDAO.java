@@ -14,16 +14,16 @@ import models.NguoiDung;
 import models.SanPham;
 
 public class NguoiDungDAO {
-	public static NguoiDung LayThongTinNguoiDung(Connection conn) throws SQLException {
+	public static NguoiDung LayThongTinNguoiDung(Connection conn,int userId) throws SQLException {
 			
 		String sql = "select * from NguoiDung where NguoiDung.ID = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			sql = "select Madiachi, TenDiaChi from DiaChiNhanHang where DiaChiNhanHang.IDNguoiDung = ?";
 			PreparedStatement psDC = conn.prepareStatement(sql);
-			psDC.setInt(1, AccountDAO.getID());
+			psDC.setInt(1, userId);
 			ResultSet rsDC = psDC.executeQuery();
 			List<DiaChiNhanHang> diaChiNhanHang = new ArrayList<DiaChiNhanHang>();
 			while (rsDC.next()) {
@@ -44,11 +44,11 @@ public class NguoiDungDAO {
 		return null;
 	}
 	
-	public static NguoiDung ThongTinCaNhan(Connection conn) throws SQLException {
+	public static NguoiDung ThongTinCaNhan(Connection conn,int userId) throws SQLException {
 		NguoiDung nguoi = null;
 		String sql = "select NguoiDung.*, username, pass from NguoiDung, Account where NguoiDung.ID = Account.ID and NguoiDung.ID = ?";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			Account account = new Account(rs.getString("username"), rs.getString("pass"));
@@ -120,7 +120,7 @@ public class NguoiDungDAO {
 		}
 		return nguoiMua;
 	}
-	public static void suaThongTin(Connection conn, NguoiDung nguoiDung) throws SQLException {
+	public static void suaThongTin(Connection conn, NguoiDung nguoiDung,int userId) throws SQLException {
 		String sql = "{call proc_suaThongTin(?, ?, ?, ?, ?, ?, ?, ?)}";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setString(1, nguoiDung.getAccount().getUsername());
@@ -130,14 +130,14 @@ public class NguoiDungDAO {
 		ps.setString(5, nguoiDung.getGioiTinh());
 		ps.setString(6, nguoiDung.getSdt());
 		ps.setString(7, nguoiDung.getEmail());
-		ps.setInt(8, AccountDAO.getID());
+		ps.setInt(8, userId);
 		ps.executeUpdate();
 	}
 	
-	public static NguoiDung LayThongTinNguoiDung_DonHang(Connection conn, int maHoaDon) throws SQLException {
+	public static NguoiDung LayThongTinNguoiDung_DonHang(Connection conn, int maHoaDon,int userId) throws SQLException {
 		String sql = "{call proc_ThongTinNguoiDung_HoaDon(?, ?)}";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(1, userId);
 		ps.setInt(2, maHoaDon);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {		
@@ -211,11 +211,11 @@ public class NguoiDungDAO {
 		return null;
 	}
 	
-	public static void themDiaChiNhanHang(Connection conn, String diaChi) throws SQLException {
+	public static void themDiaChiNhanHang(Connection conn, String diaChi, int userId) throws SQLException {
 		String sql = "{call proc_ThemDiaChiNhanHang(?, ?)}";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		
-		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(1, userId);
 		ps.setString(2, diaChi);
 		ps.executeUpdate();
 	}

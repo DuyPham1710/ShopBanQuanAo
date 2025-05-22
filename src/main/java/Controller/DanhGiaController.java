@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.DanhGia;
 import models.DonMua;
 
@@ -37,7 +38,8 @@ public class DanhGiaController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (AccountDAO.getID() == 0) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
 			response.sendRedirect("/project_web");
 		}
 		else {
@@ -53,7 +55,7 @@ public class DanhGiaController extends HttpServlet {
 			
 			List<DanhGia> listDanhGia = null;
 			try {
-				listDanhGia = DanhGiaDAO.LoadDanhSachDanhGia(conn, trangThai);
+				listDanhGia = DanhGiaDAO.LoadDanhSachDanhGia(conn, trangThai, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -64,7 +66,7 @@ public class DanhGiaController extends HttpServlet {
 			int soSanPhamGioHang = 0;
 			
 			try {
-				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();

@@ -8,10 +8,10 @@ import java.sql.Types;
 import models.GioHang;
 
 public class ThanhToanDAO {
-	public static int ThemHoaDon(Connection conn, int tongTienHoaDon, String diaChi) throws SQLException {
+	public static int ThemHoaDon(Connection conn, int tongTienHoaDon, String diaChi, int userId) throws SQLException {
 		String sql = "{call proc_ThemHoaDon(?, ?, ?, ?)}";
         CallableStatement stmt = conn.prepareCall(sql) ;
-        stmt.setInt(1, AccountDAO.getID()); 
+        stmt.setInt(1, userId); 
         stmt.setInt(2, tongTienHoaDon);  
         stmt.setString(3, diaChi);
         stmt.registerOutParameter(4, Types.INTEGER);
@@ -20,11 +20,11 @@ public class ThanhToanDAO {
         return maHoaDon;
 	}
 	
-	public static void ThemChiTietHoaDon(Connection conn, GioHang gh, int maHoaDon) throws SQLException {
+	public static void ThemChiTietHoaDon(Connection conn, GioHang gh, int maHoaDon, int userId) throws SQLException {
 		String sql = "{call proc_ThemChiTietHoaDon(?, ?, ?, ?, ?, ?, ?)}";
         CallableStatement stmt = conn.prepareCall(sql) ;
      
-        stmt.setInt(1, AccountDAO.getID());
+        stmt.setInt(1, userId);
         stmt.setInt(2, maHoaDon);
         stmt.setInt(3, (gh.getSoLuongGH() * gh.getSanPham().getGiaHienTai())); 
         stmt.setInt(4, gh.getSoLuongGH());

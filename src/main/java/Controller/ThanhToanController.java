@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.GioHang;
 import models.KichCo;
 import models.MauSac;
@@ -34,7 +35,8 @@ public class ThanhToanController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (AccountDAO.getID() == 0) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
 			response.sendRedirect("/project_web");
 		}
 		else {
@@ -53,7 +55,7 @@ public class ThanhToanController extends HttpServlet {
 			
 			NguoiDung nguoiDung = null;
 			try {
-				nguoiDung = NguoiDungDAO.LayThongTinNguoiDung(conn);
+				nguoiDung = NguoiDungDAO.LayThongTinNguoiDung(conn, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -93,7 +95,7 @@ public class ThanhToanController extends HttpServlet {
 	            }
 	            if (totalTemp > 0) {
         			try {
-        				listGH = GioHangDAO.DanhSachGioHangThanhToan(conn,listMa);
+        				listGH = GioHangDAO.DanhSachGioHangThanhToan(conn,listMa,(int)session.getAttribute("userId"));
         			}
         			catch (Exception e) {
         				e.printStackTrace();
@@ -116,85 +118,91 @@ public class ThanhToanController extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		String redirect = request.getParameter("redirect");
-		if (redirect.equals("cart") || redirect.equals("buyNow")) {
-			doGet(request, response);
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
+			response.sendRedirect("/project_web");
 		}
-		else{
-			int tongTienHoaDon = Integer.parseInt(request.getParameter("tongTienHoaDon"));
-			String diaChi = request.getParameter("selectedAddress");
-			
-			
-			int maHoaDon = 0;
-			Connection conn = null;
-			try {
-				conn = new ConnectJDBC().getConnection();
+		else {
+			String redirect = request.getParameter("redirect");
+			if (redirect.equals("cart") || redirect.equals("buyNow")) {
+				doGet(request, response);
 			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-			
-			try {
-				maHoaDon = ThanhToanDAO.ThemHoaDon(conn, tongTienHoaDon, diaChi);
-				NguoiDungDAO.themDiaChiNhanHang(conn, diaChi);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-			
-			List<GioHang> listGH = new ArrayList<GioHang>();
-			
-			if (redirect.equals("1_San_Pham")) {
-				int maSP = Integer.parseInt(request.getParameter("maSP"));
-				int maKichCo = Integer.parseInt(request.getParameter("maKichCo"));
-				int maMauSac = Integer.parseInt(request.getParameter("maMau"));
-				int soLuong1SP = Integer.parseInt(request.getParameter("soLuong1SP"));
+			else{
+				int tongTienHoaDon = Integer.parseInt(request.getParameter("tongTienHoaDon"));
+				String diaChi = request.getParameter("selectedAddress");
 				
+				
+				int maHoaDon = 0;
+				Connection conn = null;
 				try {
-					SanPham sp = new SanPham(maSP, maKichCo, maMauSac);
-					sp.setGiaHienTai((tongTienHoaDon - 30000) / soLuong1SP);
-					GioHang gh = new GioHang(sp, soLuong1SP);
-					listGH.add(gh);
+					conn = new ConnectJDBC().getConnection();
 				}
 				catch (Exception e) {
 					e.printStackTrace();
 					response.getWriter().println("Error: " + e.getMessage());
 				}
-			}
-			else if (redirect.equals("Nhieu_Hon_1_San_Pham")) {
-				String CacSanPhamDuocChon = request.getParameter("CacSanPhamDuocChon");
-				String[] listMa = CacSanPhamDuocChon.split(",");
+				
 				try {
-    				listGH = GioHangDAO.DanhSachGioHangThanhToan(conn,listMa);
-    			}
-    			catch (Exception e) {
-    				e.printStackTrace();
-    				response.getWriter().println("Error: " + e.getMessage());
-    			}
-			}
-			
-			for (int i=0; i<listGH.size(); i++) {
-				try {
-					ThanhToanDAO.ThemChiTietHoaDon(conn, listGH.get(i), maHoaDon);
+					maHoaDon = ThanhToanDAO.ThemHoaDon(conn, tongTienHoaDon, diaChi, (int)session.getAttribute("userId"));
+					NguoiDungDAO.themDiaChiNhanHang(conn, diaChi, (int)session.getAttribute("userId"));
 				}
 				catch (Exception e) {
 					e.printStackTrace();
-    				response.getWriter().println("Error: " + e.getMessage());
+					response.getWriter().println("Error: " + e.getMessage());
 				}
-			}
-		//	response.sendRedirect("/project_web/Donhang");
-		
-//			RequestDispatcher req = request.getRequestDispatcher("/views/ThanhToan.jsp");
-//			req.forward(request, response);
-			// request.setAttribute("paymentSuccess", "true");
+				
+				List<GioHang> listGH = new ArrayList<GioHang>();
+				
+				if (redirect.equals("1_San_Pham")) {
+					int maSP = Integer.parseInt(request.getParameter("maSP"));
+					int maKichCo = Integer.parseInt(request.getParameter("maKichCo"));
+					int maMauSac = Integer.parseInt(request.getParameter("maMau"));
+					int soLuong1SP = Integer.parseInt(request.getParameter("soLuong1SP"));
+					
+					try {
+						SanPham sp = new SanPham(maSP, maKichCo, maMauSac);
+						sp.setGiaHienTai((tongTienHoaDon - 30000) / soLuong1SP);
+						GioHang gh = new GioHang(sp, soLuong1SP);
+						listGH.add(gh);
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+						response.getWriter().println("Error: " + e.getMessage());
+					}
+				}
+				else if (redirect.equals("Nhieu_Hon_1_San_Pham")) {
+					String CacSanPhamDuocChon = request.getParameter("CacSanPhamDuocChon");
+					String[] listMa = CacSanPhamDuocChon.split(",");
+					try {
+	    				listGH = GioHangDAO.DanhSachGioHangThanhToan(conn,listMa,(int)session.getAttribute("userId"));
+	    			}
+	    			catch (Exception e) {
+	    				e.printStackTrace();
+	    				response.getWriter().println("Error: " + e.getMessage());
+	    			}
+				}
+				
+				for (int i=0; i<listGH.size(); i++) {
+					try {
+						ThanhToanDAO.ThemChiTietHoaDon(conn, listGH.get(i), maHoaDon, (int)session.getAttribute("userId"));
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+	    				response.getWriter().println("Error: " + e.getMessage());
+					}
+				}
+			//	response.sendRedirect("/project_web/Donhang");
+			
+//				RequestDispatcher req = request.getRequestDispatcher("/views/ThanhToan.jsp");
+//				req.forward(request, response);
+				// request.setAttribute("paymentSuccess", "true");
 
-		        // Chuyển tiếp tới trang ThanhToan.jsp
-		        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/CheckOut.jsp");
-		        dispatcher.forward(request, response);
+			        // Chuyển tiếp tới trang ThanhToan.jsp
+			        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/CheckOut.jsp");
+			        dispatcher.forward(request, response);
+			}
 		}
-		
+
 	}
 
 }

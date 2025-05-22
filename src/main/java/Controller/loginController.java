@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Account;
 import models.SanPham;
 
@@ -42,9 +43,11 @@ public class loginController extends HttpServlet {
 		}
 		
 		Account acountBean = new Account(username, password);
+		HttpSession session = request.getSession();
 		int ID = 0;
 		try {
 			ID = AccountDAO.Validate(conn, acountBean);
+			session.setAttribute("userId", ID);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

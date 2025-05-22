@@ -18,10 +18,10 @@ import models.NguoiDung;
 import models.SanPham;
 
 public class DanhGiaDAO {
-	public static boolean danhGiaSanPham(Connection conn, int maSP, int maChiTiet, String comment, int rating) throws SQLException {
+	public static boolean danhGiaSanPham(Connection conn, int maSP, int maChiTiet, String comment, int rating,int userId) throws SQLException {
 		String sql = "{call proc_ThemDanhGia(?, ?, ?, ?, ?, ?)}";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(1, userId);
 		ps.setInt(2, maSP);
 		ps.setInt(3, maChiTiet);
 		ps.setString(4, comment);
@@ -52,12 +52,12 @@ public class DanhGiaDAO {
 		
 	}
 	
-	public static List<DanhGia> LoadDanhSachDanhGia(Connection conn, String trangThai) throws SQLException {
+	public static List<DanhGia> LoadDanhSachDanhGia(Connection conn, String trangThai, int userId) throws SQLException {
 		List<DanhGia> listDanhGia = new ArrayList<DanhGia>();
 		 String sql = "{call proc_LoadThongTinDanhGia(?, ?)}";
 
 	    PreparedStatement ps = conn.prepareStatement(sql);
-	    ps.setInt(1, AccountDAO.getID());
+	    ps.setInt(1, userId);
 	    ps.setString(2, trangThai);
 	    ResultSet rs = ps.executeQuery();
 		

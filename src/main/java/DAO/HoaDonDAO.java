@@ -83,12 +83,12 @@ public class HoaDonDAO {
 		return DanhSachHoaDon;
 	}
 	
-    public static boolean capNhatTrangThai(Connection conn, int maHoaDon, String trangThai) throws SQLException {
+    public static boolean capNhatTrangThai(Connection conn, int maHoaDon, String trangThai, int userId) throws SQLException {
         String sql = "UPDATE HoaDon SET TrangThai = ? WHERE MaHoaDon = ?";
         if (trangThai.equals("Đã giao")) { 	
         	String sqlUpdate = "{call proc_capNhatSoLuongDaBan(?, ?)}";
         	PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate);
-        	psUpdate.setInt(1, AccountDAO.getID());
+        	psUpdate.setInt(1, userId);
         	psUpdate.setInt(2, maHoaDon);
         	psUpdate.executeUpdate();
         }

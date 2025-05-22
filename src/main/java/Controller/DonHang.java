@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.ChiTietHoaDon;
 import models.DanhGia;
 import models.DonMua;
@@ -31,7 +32,8 @@ public class DonHang extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (AccountDAO.getID() == 0) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
 			response.sendRedirect("/project_web");
 		}
 		else {
@@ -47,7 +49,7 @@ public class DonHang extends HttpServlet {
 			
 			List<DonMua> DanhSachDonHang = null;
 			try {
-				DanhSachDonHang = DonHangDAO.DanhSachDonHang(conn, trangThai);
+				DanhSachDonHang = DonHangDAO.DanhSachDonHang(conn, trangThai, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -71,7 +73,7 @@ public class DonHang extends HttpServlet {
 			int soSanPhamGioHang = 0;
 			
 			try {
-				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -87,88 +89,101 @@ public class DonHang extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("method") != null && request.getParameter("method").equals("Put")) {
-			doPut(request, response);
-			return;
-		} 
-		
-		int maHoaDon = Integer.parseInt(request.getHeader("X-MaHoaDon"));
-		
-		Connection conn = null;
-		try {
-			conn = new ConnectJDBC().getConnection();
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
+			response.sendRedirect("/project_web");
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		
-		}
-		
-		NguoiDung nguoiDung = null;
-		try {
-			nguoiDung = NguoiDungDAO.LayThongTinNguoiDung_DonHang(conn, maHoaDon);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		DonMua donMua = null;
-		try {
-			donMua = DonHangDAO.LoadThongTinMotDonHang(conn, maHoaDon);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
+		else {
+			if (request.getParameter("method") != null && request.getParameter("method").equals("Put")) {
+				doPut(request, response);
+				return;
+			} 
+			
+			int maHoaDon = Integer.parseInt(request.getHeader("X-MaHoaDon"));
+			
+			Connection conn = null;
+			try {
+				conn = new ConnectJDBC().getConnection();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			
+			}
+			
+			NguoiDung nguoiDung = null;
+			try {
+				nguoiDung = NguoiDungDAO.LayThongTinNguoiDung_DonHang(conn, maHoaDon, (int)session.getAttribute("userId"));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			DonMua donMua = null;
+			try {
+				donMua = DonHangDAO.LoadThongTinMotDonHang(conn, maHoaDon,(int)session.getAttribute("userId"));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
 
-		request.setAttribute("nguoiDung", nguoiDung);
-		request.setAttribute("donMua", donMua);
-		
-		RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietDonHang.jsp");
-		req.include(request, response);
+			request.setAttribute("nguoiDung", nguoiDung);
+			request.setAttribute("donMua", donMua);
+			
+			RequestDispatcher req = request.getRequestDispatcher("/views/ChiTietDonHang.jsp");
+			req.include(request, response);
+		}
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int maSP = 0;
-		if (request.getParameter("maSP") != null) {
-			maSP = Integer.parseInt(request.getParameter("maSP"));
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
+			response.sendRedirect("/project_web");
+		}
+		else {
+			int maSP = 0;
+			if (request.getParameter("maSP") != null) {
+				maSP = Integer.parseInt(request.getParameter("maSP"));
+			}
+			
+			int maChiTiet = 0;
+			if (request.getParameter("maChiTiet") != null) {
+				maChiTiet = Integer.parseInt(request.getParameter("maChiTiet"));
+			}
+			
+			String comment = request.getParameter("comment");
+		    int rating = 0;
+		    if (request.getParameter("rating") != null) {
+		        rating = Integer.parseInt(request.getParameter("rating"));
+		    }
+		    boolean isSuccess = false; 
+		    
+			Connection conn = null;
+			try {
+				conn = new ConnectJDBC().getConnection();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+		//	System.out.println(maSP + " " + maChiTiet + " " + comment + " " + rating);
+			try {
+				isSuccess = DanhGiaDAO.danhGiaSanPham(conn, maSP, maChiTiet, comment, rating, (int)session.getAttribute("userId"));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+		
+			if (isSuccess) {
+			    response.sendRedirect("DonHang?ratingSuccess=true");
+			} else {
+			    doGet(request, response);
+			}
 		}
 		
-		int maChiTiet = 0;
-		if (request.getParameter("maChiTiet") != null) {
-			maChiTiet = Integer.parseInt(request.getParameter("maChiTiet"));
-		}
-		
-		String comment = request.getParameter("comment");
-	    int rating = 0;
-	    if (request.getParameter("rating") != null) {
-	        rating = Integer.parseInt(request.getParameter("rating"));
-	    }
-	    boolean isSuccess = false; 
-	    
-		Connection conn = null;
-		try {
-			conn = new ConnectJDBC().getConnection();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-	//	System.out.println(maSP + " " + maChiTiet + " " + comment + " " + rating);
-		try {
-			isSuccess = DanhGiaDAO.danhGiaSanPham(conn, maSP, maChiTiet, comment, rating);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-	
-		if (isSuccess) {
-		    response.sendRedirect("DonHang?ratingSuccess=true");
-		} else {
-		    doGet(request, response);
-		}
 	}
 	
 }

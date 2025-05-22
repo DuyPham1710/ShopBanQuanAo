@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.GioHang;
 import models.SanPham;
 
@@ -27,7 +28,8 @@ public class GioHangController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (AccountDAO.getID() == 0) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
 			response.sendRedirect("/project_web");
 		}
 		else {
@@ -42,7 +44,7 @@ public class GioHangController extends HttpServlet {
 			
 			List<GioHang> listGH = null;
 			try {
-				listGH = GioHangDAO.DanhSachGioHang(conn);
+				listGH = GioHangDAO.DanhSachGioHang(conn,(int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -56,7 +58,7 @@ public class GioHangController extends HttpServlet {
 			int soSanPhamGioHang = 0;
 			
 			try {
-				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, (int)session.getAttribute("userId"));
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -110,7 +112,8 @@ public class GioHangController extends HttpServlet {
 			doGet(request, response);
 		}
 		protected void doCapNhatGioHang(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			if(AccountDAO.getID() != 0) {
+			HttpSession session = request.getSession();
+			if(session.getAttribute("userId") != null) {
 				int maSP = Integer.parseInt(request.getParameter("id"));				
 				String phanbiet = request.getParameter("phanbiet");
 				int maKichThuoc = Integer.parseInt(request.getParameter("sizeoption"));
@@ -130,7 +133,7 @@ public class GioHangController extends HttpServlet {
 				models.SanPham sp = new models.SanPham(maSP, maKichThuoc, maMau);
 				models.GioHang item = new models.GioHang(sp, quantity );
 				try {
-					GioHangDAO.ThemGioHang(conn, item);
+					GioHangDAO.ThemGioHang(conn, item, (int)session.getAttribute("userId"));
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

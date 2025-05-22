@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
 import models.DanhMucSanPham;
 import models.SanPham;
 
@@ -29,89 +29,96 @@ public class SanPhamController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection conn = null;
-		try {
-			conn = new ConnectJDBC().getConnection();
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null) {
+			response.sendRedirect("/project_web");
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		if (request.getParameter("searchText") != null) {
-			searchText = request.getParameter("searchText");
-		}
-		else {
-			searchText = "";
-		}
-		
-		if (request.getParameter("maDanhMuc") == null) {
-			maDanhMuc = 0;
-		}
-		else {			
-			maDanhMuc = Integer.parseInt(request.getParameter("maDanhMuc"));
-		}
-		
-		int sortType = 0; // Default: Sản phẩm nổi bật
-	    if (request.getParameter("sortType") != null) {
-	        sortType = Integer.parseInt(request.getParameter("sortType"));
-	    }
-	    SanPhamDAO.resetFilters();
-		List<SanPham> listSP = null;
-		try {
-			listSP = SanPhamDAO.DanhSachSP(conn, maDanhMuc, sortType, searchText);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
+		else{
+			Connection conn = null;
+			try {
+				conn = new ConnectJDBC().getConnection();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
 			
-		}
-	
-		List<DanhMucSanPham> listDanhMuc = null;
-		try {
-			listDanhMuc = SanPhamDAO.DanhSachDanhMucSP(conn);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
+			if (request.getParameter("searchText") != null) {
+				searchText = request.getParameter("searchText");
+			}
+			else {
+				searchText = "";
+			}
+			
+			if (request.getParameter("maDanhMuc") == null) {
+				maDanhMuc = 0;
+			}
+			else {			
+				maDanhMuc = Integer.parseInt(request.getParameter("maDanhMuc"));
+			}
+			
+			int sortType = 0; // Default: Sản phẩm nổi bật
+			if (request.getParameter("sortType") != null) {
+				sortType = Integer.parseInt(request.getParameter("sortType"));
+			}
+			SanPhamDAO.resetFilters();
+			List<SanPham> listSP = null;
+			try {
+				listSP = SanPhamDAO.DanhSachSP(conn, maDanhMuc, sortType, searchText);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+				
+			}
+		
+			List<DanhMucSanPham> listDanhMuc = null;
+			try {
+				listDanhMuc = SanPhamDAO.DanhSachDanhMucSP(conn);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			List<String> listMauHex = null;
+			try {
+				listMauHex = SanPhamDAO.DanhSachMaMauHex(conn);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			List<String> listAllSize = null;
+			try {
+				listAllSize = SanPhamDAO.ListAllSize(conn);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			int soSanPhamGioHang = 0;
+			
+			try {
+				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, (int)session.getAttribute("userId"));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
+			request.setAttribute("ListSP", listSP);
+			request.setAttribute("ListDanhMuc", listDanhMuc);
+			request.setAttribute("listMauHex", listMauHex);
+			request.setAttribute("listAllSize", listAllSize);
+			
+			RequestDispatcher req = request.getRequestDispatcher("/views/SanPhamPage.jsp");
+			req.forward(request, response);
 		}
 		
-		List<String> listMauHex = null;
-		try {
-			listMauHex = SanPhamDAO.DanhSachMaMauHex(conn);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		List<String> listAllSize = null;
-		try {
-			listAllSize = SanPhamDAO.ListAllSize(conn);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		int soSanPhamGioHang = 0;
-		
-		try {
-			soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, AccountDAO.getID());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
-		request.setAttribute("ListSP", listSP);
-		request.setAttribute("ListDanhMuc", listDanhMuc);
-		request.setAttribute("listMauHex", listMauHex);
-		request.setAttribute("listAllSize", listAllSize);
-		
-		RequestDispatcher req = request.getRequestDispatcher("/views/SanPhamPage.jsp");
-		req.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	

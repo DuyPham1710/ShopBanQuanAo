@@ -19,13 +19,13 @@ import models.MauSac;
 import models.SanPham;
 
 public class DonHangDAO {
-	public static List<DonMua> DanhSachDonHang(Connection conn, String trangThai) throws SQLException {
+	public static List<DonMua> DanhSachDonHang(Connection conn, String trangThai,int userId) throws SQLException {
 		List<DonMua> danhSachDonHang = new ArrayList<>();
 	    Map<Integer, DonMua> donMuaMap = new HashMap<>(); 
 	    String sql = "{call proc_LoadThongTinDonHang(?, ?)}";
 
 	    PreparedStatement ps = conn.prepareStatement(sql);
-	    ps.setInt(1, AccountDAO.getID());
+	    ps.setInt(1, userId);
 	   // ps.setInt(1, 2);
 	    ps.setString(2, trangThai);
 	    ResultSet rs = ps.executeQuery();
@@ -82,12 +82,12 @@ public class DonHangDAO {
 	    return danhSachDonHang;
 	}
 	
-	public static DonMua LoadThongTinMotDonHang(Connection conn, int maHoaDon) throws SQLException {
+	public static DonMua LoadThongTinMotDonHang(Connection conn, int maHoaDon,int userId) throws SQLException {
 		List<ChiTietHoaDon> listChiTietHD = new ArrayList<ChiTietHoaDon>();
 	    String sql = "{call proc_LoadThongTinMotDonHang(?, ?)}";
 
 	    PreparedStatement ps = conn.prepareStatement(sql);
-	    ps.setInt(1, AccountDAO.getID());
+	    ps.setInt(1, userId);
 	    ps.setInt(2, maHoaDon);
 	    ResultSet rs = ps.executeQuery();
 	    String trangThai = "";

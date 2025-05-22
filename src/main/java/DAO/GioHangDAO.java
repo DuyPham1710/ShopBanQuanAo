@@ -15,11 +15,11 @@ import models.MauSac;
 import models.SanPham;
 
 public class GioHangDAO {
-	public static void ThemGioHang(Connection conn, GioHang gh) throws SQLException {
+	public static void ThemGioHang(Connection conn, GioHang gh,int userId) throws SQLException {
 		 String checkSQL = "select 1 FROM GioHang where IDNguoiMua = ? and MaSanPham = ? and MaKichCo = ? and MaMau = ?";
 		 String sql = "";
 		 PreparedStatement checkStmt = conn.prepareStatement(checkSQL);
-		 checkStmt.setInt(1, AccountDAO.getID()); 
+		 checkStmt.setInt(1, userId); 
 		 checkStmt.setInt(2, gh.getSanPham().getMaSP()); 
 		 checkStmt.setInt(3, gh.getSanPham().getKichCo().get(0).getMaKichCo()); 
 		 checkStmt.setInt(4, gh.getSanPham().getMauSac().get(0).getMaMau()); 
@@ -34,7 +34,7 @@ public class GioHangDAO {
         	 sql = "{call proc_ThemGioHang(?, ?, ?, ?, ?)}";
          }
          CallableStatement stmt = conn.prepareCall(sql) ;
-         stmt.setInt(1, AccountDAO.getID()); 
+         stmt.setInt(1, userId); 
          stmt.setInt(2, gh.getSanPham().getMaSP()); 
          stmt.setInt(3, gh.getSanPham().getKichCo().get(0).getMaKichCo()); 
          stmt.setInt(4, gh.getSanPham().getMauSac().get(0).getMaMau()); 
@@ -52,11 +52,11 @@ public class GioHangDAO {
         stmt.executeUpdate();
 		
 	}
-	public static List<GioHang> DanhSachGioHang(Connection conn) throws SQLException {
+	public static List<GioHang> DanhSachGioHang(Connection conn, int userId) throws SQLException {
 		List<GioHang> listGH = new ArrayList<GioHang>();
 		String sql = "{call proc_DanhSachGioHang(?,0,0,0)}";
 		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, AccountDAO.getID());
+		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
 		
 		while (rs.next()) {			
@@ -82,13 +82,13 @@ public class GioHangDAO {
 		}
 		return listGH;
 	}
-	public static List<GioHang> DanhSachGioHangThanhToan(Connection conn,String[] listMa) throws SQLException {
+	public static List<GioHang> DanhSachGioHangThanhToan(Connection conn,String[] listMa,int userId) throws SQLException {
 		List<GioHang> listGH = new ArrayList<GioHang>();
 		
 		for(int i=0;i<listMa.length;i+=3) {
 			String sql = "{call proc_DanhSachGioHang(?,?,?,?)}";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, AccountDAO.getID());
+			ps.setInt(1, userId);
 			ps.setInt(2,Integer.parseInt(listMa[i].trim()));
 			ps.setInt(3,Integer.parseInt(listMa[i+1].trim()));
 			ps.setInt(4,Integer.parseInt(listMa[i+2].trim()));
