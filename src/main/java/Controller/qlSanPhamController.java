@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
+import Filters.InputSanitizer;
 
 /**
  * Servlet implementation class qlSanPhamController
@@ -225,6 +226,16 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 		}
 		
 		String moTa = json.getString("moTaEdit");
+		
+		// Check XSS
+		if (containsXSS(tenSP, response) || containsXSS(hinh, response) || 
+				containsXSS(xuatXu, response) ||
+		    containsXSS(chatLieu, response) || containsXSS(danhMucMoi, response) ||
+		    containsXSS(strMau, response) || containsXSS(strKichThuoc, response) ||
+		    containsXSS(moTa, response)) {
+		    return; // Stop execution if XSS found
+		}
+		
 		HinhAnhSanPham ha= new HinhAnhSanPham(0, hinh);
 		DanhMucSanPham dm = new DanhMucSanPham(maDanhMucNew);
 		SanPham sp = new SanPham(masp, tenSP, moTa, giaBanDau, giamGia, soLuong,null,xuatXu,chatLieu, 0, dm, ha );
@@ -298,6 +309,8 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 		String chatLieu = json.getString("chatLieuAdd");
 		String danhMucMoi = json.getString("danhMucThemVao");
 
+		
+		
 		int maDanhMucNew =danhMuc;
 		//them danh muc
 		if(danhMuc==0) {
@@ -366,7 +379,15 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 		LocalDate day = LocalDate.now();
 		Date sqlDate = Date.valueOf(day);
 		
-		
+		// Check XSS
+		if (containsXSS(tenSP, response) || containsXSS(hinh, response) || 
+				containsXSS(xuatXu, response) ||
+		    containsXSS(chatLieu, response) || containsXSS(danhMucMoi, response) ||
+		    containsXSS(strMau, response) || containsXSS(strKichThuoc, response) ||
+		    containsXSS(moTa, response)) {
+		    return; // Stop execution if XSS found
+		}
+				
 		try {
 			masp = SanPhamDAO.MaSPTiepTheo(conn);
 		}
@@ -400,6 +421,17 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
+	}
+	
+	// Hàm kiểm tra XSS
+	private boolean containsXSS(String original, HttpServletResponse response) throws IOException {
+	    String clean = InputSanitizer.sanitize(original);
+	    if (!clean.equals(original)) {
+	        response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // Set 400 Bad Request
+	        response.getWriter().println("Phat hien tan cong XSS!");
+	        return true;
+	    }
+	    return false;
 	}
 	
 	protected void doLoadSanPham(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

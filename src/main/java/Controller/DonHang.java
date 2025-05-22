@@ -23,6 +23,8 @@ import DAO.DonHangDAO;
 import DAO.NguoiDungDAO;
 import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
+import Filters.InputSanitizer;
+import Filters.XSSValidator;
 
 public class DonHang extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -154,6 +156,15 @@ public class DonHang extends HttpServlet {
 			}
 			
 			String comment = request.getParameter("comment");
+			String cleanComment = InputSanitizer.sanitize(comment);
+			if (!cleanComment.equals(comment)) {
+			    response.getWriter().println("Phat Hien Tan Cong XSS!");
+			    return;
+			}
+//			if (XSSValidator.isMaliciousInput(comment)) {
+//			    response.getWriter().println("Phat Hien Tan Cong XSS.");
+//			    return;
+//			}
 		    int rating = 0;
 		    if (request.getParameter("rating") != null) {
 		        rating = Integer.parseInt(request.getParameter("rating"));
