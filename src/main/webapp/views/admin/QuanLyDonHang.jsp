@@ -159,7 +159,7 @@
 							</td>
 
                             <td>
-							  <a href="javascript:void(0);" class="btn btn-warning btn-sm text-end" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails(${hoaDon.maHD}, ${hoaDon.idNguoiDung})">
+							  <a href="javascript:void(0);" class="btn btn-warning btn-sm text-end" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails(${hoaDon.maHD}, ${hoaDon.idNguoiDung},'${csrfToken}')">
 	                          		<span class="font-weight-bold">Xem Chi Tiết</span>
 	                          </a>
 							</td>
@@ -197,7 +197,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
  
   <script>
-  function loadOrderDetails(maHoaDon, idNguoiMua) {
+  function loadOrderDetails(maHoaDon, idNguoiMua, csrfToken) {
   	console.log(maHoaDon);
       // Gửi mã đơn hàng đến Controller
       fetch(`/project_web/HoaDonController`, {
@@ -206,6 +206,7 @@
           	"Content-Type": "application/json",
               "X-MaHoaDon": maHoaDon,
               "X-IdNguoiMua": idNguoiMua,
+              "csrfToken": csrfToken
           },
           body: `id=${maHoaDon}`,
       })

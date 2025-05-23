@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <c:forEach var="sp" items="${ListSP}">
    	<form action="./ChiTietSPController" method="post">
+        <input type="hidden" name="csrfToken" value="${csrfToken}" />
    		<div class="product-card hover-effect" onclick="this.closest('form').submit();">
            <div class="discount">-${sp.giamGia}%</div>
            <img src="${sp.hinhAnhSP.duongDanHinh}" alt="${sp.tenSP}">

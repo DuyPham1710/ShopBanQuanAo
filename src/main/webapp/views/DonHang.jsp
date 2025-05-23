@@ -235,6 +235,7 @@
 										
 	                                    <!-- Nút Mua lại -->
 	                                    <form action="./ChiTietSPController" method="post">
+											<input type="hidden" name="csrfToken" value="${csrfToken}" />
 	                                         <c:if test="${donMua.trangThai == 'Đã giao' || donMua.trangThai == 'Đã hủy'}">
 		                                    	<input type="hidden" name="method" value="get">
 						        				<input type="hidden" name="maSP" value="${donMua.chiTietHD[0].sp.maSP}">	
@@ -299,6 +300,7 @@
 		                                        </c:if>   --%>
 		                                         <!-- Nút Mua lại -->
 		                                         <form action="./ChiTietSPController" method="post">
+													<input type="hidden" name="csrfToken" value="${csrfToken}" />
 			                                         <c:if test="${donMua.trangThai == 'Đã giao' || donMua.trangThai == 'Đã hủy'}">
 			                                         	  <input type="hidden" name="method" value="get">
 						      							  <input type="hidden" name="maSP" value="${ChiTietHD.sp.maSP}">	
@@ -316,7 +318,7 @@
 	                            
 	                             <div class="text-end" style="width: 90%; border-top: 1px solid #ccc; padding: 10px; margin: 10px auto;">
 	                                 <p class="mb-1 text-end product-price">Tổng tiền: <strong>${donMua.tongTien} VND</strong></p>
-	                                 <a href="javascript:void(0);" class="btn btn-warning btn-sm text-end" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails(${donMua.maHoaDon})">
+	                                 <a href="javascript:void(0);" class="btn btn-warning btn-sm text-end" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails(${donMua.maHoaDon},"${csrfToken}")">
 	                                     <span class="font-weight-bold">Xem Chi Tiết</span>
 	                                 </a>
 	                             </div>
@@ -453,6 +455,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="DonHang" method="Post" id="ratingForm">
+						<input type="hidden" name="csrfToken" value="${csrfToken}" />
                         <!-- Rating Section -->
                         <div class="mb-3 text-center">
                             <label class="form-label">Chọn Số Sao:</label>
@@ -610,13 +613,14 @@
         
     </script>
     <script>
-	    function loadOrderDetails(maHoaDon) {
+	    function loadOrderDetails(maHoaDon,csrfToken) {
 	        // Gửi mã đơn hàng đến Controller
 	        fetch(`/project_web/DonHang`, {
 	            method: "POST",
 	            headers: {
 	            	"Content-Type": "application/json",
 	                "X-MaHoaDon": maHoaDon,
+					"csrfToken": csrfToken
 	            },
 	            body: `id=${maHoaDon}`,
 	        })

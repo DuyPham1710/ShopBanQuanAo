@@ -15,6 +15,7 @@
 <body>
     <div class="wrapper">
         <form action="/project_web/loginController" method="POST">
+            <input type="hidden" name="csrfToken" value="${csrfToken}" />
             <h1>Login</h1>
             <div class="input-box">
                 <input type="text" name="username" placeholder="Username" required>

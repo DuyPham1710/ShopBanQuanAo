@@ -135,7 +135,7 @@
   <!-- Nút lưu -->
   
 	<div class="text-center">
-     <button type="button" class="btn btn-primary" onclick="kiemTraRongKhiAdd()">Thêm sản phẩm</button>
+     <button type="button" class="btn btn-primary" onclick="kiemTraRongKhiAdd('${csrfToken}')">Thêm sản phẩm</button>
    </div>
 </form>
 

@@ -122,6 +122,7 @@
                         <div class="icon-controls"><i class="fas fa-sort-down"></i></div>
                         <div class="dropdown-content">
                        	 	<form action="SanPhamController" method="post">
+								<input type="hidden" name="csrfToken" value="${csrfToken}" />
 	                       	 	<button type="submit" name="giaHienTai" value="-1" class="btn btn-link">
 					                <span class="price-range">Tất cả</span>
 					            </button>
@@ -182,6 +183,7 @@
 			    <div id="product-grid" class="product-grid">
 				     <c:forEach var="sp" items="${ListSP}">
 				     	<form action="./ChiTietSPController" method="post">
+							<input type="hidden" name="csrfToken" value="${csrfToken}" />
 				     		<div class="product-card hover-effect" onclick="this.closest('form').submit();">
 					            <div class="discount">-${sp.giamGia}%</div>
 					            <img src="${sp.hinhAnhSP.duongDanHinh}" alt="${sp.tenSP}">
@@ -223,10 +225,10 @@
                 element.classList.add("selected");
             }
 
-            fetchProductsByColors();
+            fetchProductsByColors('${csrfToken}');
         }
         
-        function fetchProductsByColors() {
+        function fetchProductsByColors(csrfToken) {
             const colorsArray = Array.from(selectedColors);
             const colorsParam = colorsArray.join(',');
 
@@ -236,6 +238,7 @@
                     "Content-Type": "application/json",
                     "X-colorsParam": colorsParam,
                     "_method": "LocMau",
+					"csrfToken": csrfToken
                 },
                 body: `colors=${colorsParam}`,
             })
@@ -262,10 +265,10 @@
 		        element.classList.add("selected");
 		    }
 
-		    fetchProductsBySizes();
+		    fetchProductsBySizes('${csrfToken}');
 		}
 
-		function fetchProductsBySizes() {
+		function fetchProductsBySizes(csrfToken) {
 		    const sizesArray = Array.from(selectedSizes);
 		    const sizesParam = sizesArray.join(',');
 
@@ -275,6 +278,7 @@
 		            "Content-Type": "application/json",
 		            "X-sizesParam": sizesParam,
 		            "_method": "LocSize",
+					"csrfToken": csrfToken
 		        },
 		        body: `sizes=${sizesParam}`,
 		    })

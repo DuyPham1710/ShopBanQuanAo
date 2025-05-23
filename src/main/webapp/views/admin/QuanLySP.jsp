@@ -62,7 +62,7 @@
         <header class="d-flex justify-content-between align-items-center py-3">
           <h2>Quản lý Sản phẩm</h2>
           <div class="d-flex align-items-center">
-            <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addProductModal" onclick="loadThongTinAddSP()">Thêm sản phẩm</button>
+            <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addProductModal" onclick="loadThongTinAddSP('${csrfToken}')">Thêm sản phẩm</button>
             
             <div class="profile">
               <img src="https://cdn-icons-png.flaticon.com/512/1794/1794749.png" alt="Profile Picture" width="40" class="rounded-circle me-2">
@@ -122,6 +122,7 @@
             <!-- Input chọn năm -->
             <div class="d-flex align-items-center mb-4">
 	              <form id="yearForm" method="post" _method="thayDoiNam" action="qlSanPhamController?_method=thayDoiNam">
+                  <input type="hidden" name="csrfToken" value="${csrfToken}" />
 				    <label for="chartYear">Chọn năm:</label>
 				    <input type="number" id="chartYear" name="year" class="form-control" style="width: auto;" value="${Nam}" onchange="submitYearForm()">
 				</form>
@@ -176,10 +177,11 @@
 		                    <td>${sp.daBan}</td>
 		                    <td style="text-align: center; vertical-align: middle;">
 							    <div class="d-flex align-items-center justify-content-center" style="gap: 5px;">
-							        <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editProductModal" onclick="loadSanPham(${sp.maSP})">
+							        <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editProductModal" onclick="loadSanPham(${sp.maSP},'${csrfToken}')">
 							            Sửa
 							        </button>
 							        <form id="xoaSanPham" action="qlSanPhamController" method="POST" style="margin: 0; display: inline;">
+                          <input type="hidden" name="csrfToken" value="${csrfToken}" />
 							            <input type="hidden" name="maSPCanXoa" value="${sp.maSP}" style="width: 0; height: 0; padding: 0; border: none;">
 							            <input type="hidden" name="_method" value="xoaSanPham" style="width: 0; height: 0; padding: 0; border: none;">
 							            <button class="btn btn-danger btn-sm" onclick="return confirmDelete()">Xóa</button>

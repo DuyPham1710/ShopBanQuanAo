@@ -107,13 +107,14 @@ function submitYearForm() {
 }
 
 //Sửa sản phẩm
-function loadSanPham(maSP) {
+function loadSanPham(maSP, csrfToken) {
     // Gửi mã đến Controller
     fetch(`/project_web/qlSanPhamController?_method=loadSanPham`, {
         method: "POST",
         headers: {
         	"Content-Type": "application/json",
             "X-MaSP": maSP,
+            "csrfToken": csrfToken
         },
 		body: JSON.stringify({
 	    }),
@@ -190,7 +191,7 @@ function confirmImageUpload() {
   }
 }
 
-function luuChinhSua(){
+function luuChinhSua(csrfToken){
 	const sizeString = Array.from(selectedSizes).join(",");
 	const colorString = Array.from(selectedColors).join(",");
 	document.getElementById("sizeDaDuocChon").value = sizeString;
@@ -204,7 +205,7 @@ function luuChinhSua(){
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-			
+			"csrfToken": csrfToken
         },
         body: JSON.stringify({
 			sizeDaDuocChonEdit: sizeString,
@@ -238,7 +239,7 @@ function luuChinhSua(){
         alert("Có lỗi xảy ra khi sửa sản phẩm: " + error.message);
     });
 }
-function kiemTraRongKhiEdit() {
+function kiemTraRongKhiEdit(csrfToken) {
 	const sizeString = Array.from(selectedSizes).join(",");
 	const colorString = Array.from(selectedColors).join(",");
     const tenSP = document.getElementById("tenSPEdit").value.trim();
@@ -257,19 +258,20 @@ function kiemTraRongKhiEdit() {
         return;
     }
 	else{
-		luuChinhSua();
+		luuChinhSua(csrfToken);
 	}
 }
 
 
 
 //add sản phẩm
-function loadThongTinAddSP() {
+function loadThongTinAddSP(csrfToken) {
     // Gửi mã đến Controller
     fetch(`/project_web/qlSanPhamController?_method=loadThongTinAddSP`, {
         method: "POST",
         headers: {
         	"Content-Type": "application/json",
+            "csrfToken": csrfToken
         },
 		body: JSON.stringify({
 	    }),
@@ -340,7 +342,7 @@ function toggleSizeSelection(element) {
 
 }
 
-function themSanPham(){
+function themSanPham(csrfToken){
 	const sizeString = Array.from(selectedSizes).join(",");
 	const colorString = Array.from(selectedColors).join(",");
     console.log(sizeString);
@@ -365,7 +367,7 @@ function themSanPham(){
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-			
+			"csrfToken": csrfToken
         },
         body: JSON.stringify({
 			sizeDaDuocChonAdd: sizeString,
@@ -402,7 +404,7 @@ function themSanPham(){
 }
 
 
-function kiemTraRongKhiAdd() {
+function kiemTraRongKhiAdd(csrfToken) {
 	const sizeString = Array.from(selectedSizes).join(",");
 	const colorString = Array.from(selectedColors).join(",");
     const tenSP = document.getElementById("tenSPAdd").value;
@@ -425,6 +427,6 @@ function kiemTraRongKhiAdd() {
         return;
 	}
 	else{
-		themSanPham();
+		themSanPham(csrfToken);
 	}
 }

@@ -162,6 +162,7 @@
 	                    </div>
 	
 	                        <form action="TaiKhoanController" method="POST">
+								<input type="hidden" name="csrfToken" value="${csrfToken}" />
 	                            <div class="row">
 	                                <div class="col-md-9 " style="padding-right: 30px;" >
 	                                    <div class="form-group">

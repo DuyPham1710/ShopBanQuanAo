@@ -36,12 +36,13 @@ function locKhachHang(){
 	document.getElementById("locKhachHang").submit();
 }
 
-function loadNguoiDung(idNguoiDung){
+function loadNguoiDung(idNguoiDung, csrfToken){
 	fetch(`/project_web/qlKhachHangController?_method=loadThongTinKhachHang`, {
 	        method: "POST",
 	        headers: {
 	        	"Content-Type": "application/json",
 				"iDNguoiDung" : idNguoiDung,
+				"csrfToken": csrfToken
 	        },
 			body: JSON.stringify({
 		    }),

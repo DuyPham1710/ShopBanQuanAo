@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <form id="productFormEdit" action="qlSanPhamController" _method="suaSanPham" method="POST">
+  <input type="hidden" name="csrfToken" value="${csrfToken}" />
   <!-- Row 1: Tên sản phẩm -->
   <input type="hidden" id="maSanPhamEdit" name="maSanPhamEdit" value="${ThongTinSP.maSP }" />
   <div class="row mb-5">
@@ -131,7 +132,7 @@
 
   <!-- Nút lưu -->
   <div class="text-center">
-	<button type="button" class="btn btn-primary Edit" onclick="kiemTraRongKhiEdit()">Lưu</button>
+	<button type="button" class="btn btn-primary Edit" onclick="kiemTraRongKhiEdit('${csrfToken}')">Lưu</button>
   </div>
 </form>
 

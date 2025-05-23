@@ -114,6 +114,7 @@
                     <div class="card-body">
                     	<h4>Doanh thu của shop</h4>
                       	<form id="yearForm" method="post" action="TrangChuADController">
+                          <input type="hidden" name="csrfToken" value="${csrfToken}" />
 		              		<input type="hidden" name ="_method" value="thayDoiNam"/>
 						    <label for="chartYear">Chọn năm:</label>
 						    <input type="number" id="nam" name="year" class="form-control" style="width: auto;" value="${NamThongKe}" onchange="submitForm()">

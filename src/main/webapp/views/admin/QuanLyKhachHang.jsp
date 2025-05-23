@@ -83,6 +83,7 @@
             <!-- Input chọn năm -->
             <div class="d-flex align-items-center mb-4">
               	<form id="yearForm" method="post" action="qlKhachHangController">
+                  <input type="hidden" name="csrfToken" value="${csrfToken}" />
               		<input type="hidden" name ="_method" value="thayDoiNam"/>
 				    <label for="chartYear">Chọn năm:</label>
 				    <input type="number" id="chartYear" name="year" class="form-control" style="width: auto;" value="${NamThongKe}" onchange="submitYearForm()">
@@ -119,6 +120,7 @@
             <h4>Danh sách khách hàng</h4>
             <!-- Combobox lọc dữ liệu -->
             <form id="locKhachHang" action="qlKhachHangController" method="POST">
+              <input type="hidden" name="csrfToken" value="${csrfToken}" />
             	<input type="hidden" name ="_method" value="locKhachHang"/>
 	            <div class="d-flex align-items-center mb-3">
 	              <label for="filterMonth" class="me-2">Lọc theo tháng:</label>
@@ -161,7 +163,7 @@
 	                    <td>${nd.daMua }</td>
 	                    <td>${nd.tongTien }</td>
 	                    <td>
-	                      <button class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#thongTinNguoiDung" onclick="loadNguoiDung(${nd.id})">Xem</button>
+	                      <button class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#thongTinNguoiDung" onclick="loadNguoiDung(${nd.id},'${csrfToken}')">Xem</button>
 	                    </td>
 	                </tr>
                   </c:forEach>

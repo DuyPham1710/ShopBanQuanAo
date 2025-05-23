@@ -97,6 +97,7 @@
                     <!-- Cart Item 1 -->
                     <c:forEach var="gh" items="${ListGH}">
                     	<form action="./GioHangController" method="post">
+							<input type="hidden" name="csrfToken" value="${csrfToken}" />
 	                    	<div class="cart-item d-flex align-items-center py-3">
 		                        <div class="cart-check" style="width: 5%;"><input type="checkbox" data-maSP="${gh.sanPham.maSP}" data-maMau="${gh.sanPham.mauSac[0].maMau}" data-maSize="${gh.sanPham.kichCo[0].maKichCo}" onchange="capNhatDanhSachMua(this, ${gh.sanPham.maSP},${gh.sanPham.kichCo[0].maKichCo},${gh.sanPham.mauSac[0].maMau})"></div>
 		                        <div class="cart-product d-flex align-items-center" style="width: 45%;">
@@ -110,10 +111,10 @@
 		                        </div>
 		                        <div class="cart-quantity" style="width: 25%;">
 		                           <div class="button-group">
-									    <div class="button" onclick="changeQuantity(-1, ${gh.sanPham.maSP}, ${gh.sanPham.kichCo[0].maKichCo}, ${gh.sanPham.mauSac[0].maMau}, ${gh.sanPham.soLuong}, ${gh.sanPham.giaHienTai}, ${gh.sanPham.giaBanDau})">-</div>
+									    <div class="button" onclick="changeQuantity(-1, ${gh.sanPham.maSP}, ${gh.sanPham.kichCo[0].maKichCo}, ${gh.sanPham.mauSac[0].maMau}, ${gh.sanPham.soLuong}, ${gh.sanPham.giaHienTai}, ${gh.sanPham.giaBanDau},'${csrfToken}')">-</div>
 									    <div class="button quantity-display" id="quantity-${gh.sanPham.maSP}-${gh.sanPham.kichCo[0].maKichCo}-${gh.sanPham.mauSac[0].maMau}">${gh.soLuongGH}</div>
 									    <input type="hidden" name="soLuong" id="hiddenQuantity-${gh.sanPham.maSP}-${gh.sanPham.kichCo[0].maKichCo}-${gh.sanPham.mauSac[0].maMau}" value="${gh.soLuongGH}">
-									    <div class="button" onclick="changeQuantity(1, ${gh.sanPham.maSP}, ${gh.sanPham.kichCo[0].maKichCo}, ${gh.sanPham.mauSac[0].maMau}, ${gh.sanPham.soLuong}, ${gh.sanPham.giaHienTai}, ${gh.sanPham.giaBanDau})">+</div>
+									    <div class="button" onclick="changeQuantity(1, ${gh.sanPham.maSP}, ${gh.sanPham.kichCo[0].maKichCo}, ${gh.sanPham.mauSac[0].maMau}, ${gh.sanPham.soLuong}, ${gh.sanPham.giaHienTai}, ${gh.sanPham.giaBanDau},'${csrfToken}')">+</div>
 									</div>
 									
 								
@@ -160,6 +161,7 @@
                             <span class="total" id="tongTienTrongGioHang">30000đ</span>
                         </div>
                         <form action="./ThanhToanController" method="post">
+							<input type="hidden" name="csrfToken" value="${csrfToken}" />
                         	 <input type="hidden" id = "totalTempThanhToan" name="totalTemp" value="${totalTemp}">
                         	  <input type="hidden" name="redirect" value="cart">
                         	  <input type="hidden" id="listSPCheck" name="listSPCheck" value="">

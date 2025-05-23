@@ -20,6 +20,7 @@
 <body>
     <div class="wrapper">
         <form action="/project_web/SignUpController" method="post" onsubmit="return validatePassword(event)">
+            <input type="hidden" name="csrfToken" value="${csrfToken}" />
             <h1>Register</h1>
             
             <!-- Full Name Field -->

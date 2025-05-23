@@ -18,7 +18,7 @@ document.querySelector("form[action='./ThanhToanController']").addEventListener(
         $('#emptyCartModal').modal('show'); // Hiển thị modal thông báo
     }
 });
-function changeQuantity(value, maSP, maKichThuoc, maMau, soLuongSP, giaHienTai, giaBanDau) {
+function changeQuantity(value, maSP, maKichThuoc, maMau, soLuongSP, giaHienTai, giaBanDau,csrfToken) {
 	// Lấy phần tử hiển thị số lượng và giá trị ẩn của sản phẩm tương ứng
 		        const quantityElement = document.getElementById("quantity-" + maSP + "-" + maKichThuoc + "-" + maMau);
 		        const hiddenQuantity = document.getElementById("hiddenQuantity-" + maSP + "-" + maKichThuoc + "-" + maMau);
@@ -85,7 +85,9 @@ function changeQuantity(value, maSP, maKichThuoc, maMau, soLuongSP, giaHienTai, 
 		            	_method: "capNhatGioHang",
 		            	sizeoption: maKichThuoc,
 		    			coloroption: maMau,
-		            	quantity: value},
+		            	quantity: value,
+						csrfToken: csrfToken
+		            },
 		            success: function(response) {
 		            	
 		                $("#response").text(response.message);},

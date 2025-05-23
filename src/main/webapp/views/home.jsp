@@ -164,6 +164,7 @@
                 <span class="contact-title">Hãy nhập các thông tin dưới đây. Chúng tôi sẽ sớm liên lạc với bạn</span>
             </div>
             <form action="" method="">
+            	<input type="hidden" name="csrfToken" value="${csrfToken}" />
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" name="name" id="floatingInput" placeholder="Họ và tên">
                     <label for="floatingInput">Họ và tên</label>

@@ -176,6 +176,7 @@
 		        	
 		        <!-- Order Summary -->
 		        <form action="ThanhToanController" method="POST" class="section order-summary">
+					<input type="hidden" name="csrfToken" value="${csrfToken}" />
 		            <h3>Thông tin đơn hàng</h3>
 		            <div class="order-row">
 		                <span class="label">Tạm tính</span>

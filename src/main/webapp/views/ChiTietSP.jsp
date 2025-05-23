@@ -82,6 +82,7 @@
 			</div>
 
             <form action="./ChiTietSPController" method="post" class="product">
+				<input type="hidden" name="csrfToken" value="${csrfToken}" />
             	 <input type="hidden" name="method" value="post">
             	  <input type="hidden" name="maSP" value="${sp.maSP}">	 
 		        <div class="product-container">
@@ -221,6 +222,7 @@
 					<div class="product-grid">
 					     <c:forEach var="sp" items="${ListSPTuongTu}">
 					     	<form action="./ChiTietSPController" method="post">
+								<input type="hidden" name="csrfToken" value="${csrfToken}" />
 					     		<div class="product-card hover-effect" onclick="this.closest('form').submit();">
 						            <div class="discount">-${sp.giamGia}%</div>
 						            <img src="${sp.hinhAnhSP.duongDanHinh}" alt="${sp.tenSP}">
