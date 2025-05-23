@@ -318,7 +318,7 @@
 	                            
 	                             <div class="text-end" style="width: 90%; border-top: 1px solid #ccc; padding: 10px; margin: 10px auto;">
 	                                 <p class="mb-1 text-end product-price">Tổng tiền: <strong>${donMua.tongTien} VND</strong></p>
-	                                 <a href="javascript:void(0);" class="btn btn-warning btn-sm text-end" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick="loadOrderDetails(${donMua.maHoaDon},"${csrfToken}")">
+	                                 <a href="javascript:void(0);" class="btn btn-warning btn-sm text-end" data-bs-toggle="modal" data-bs-target="#orderDetailModal" onclick='loadOrderDetails(${donMua.maHoaDon},"${csrfToken}")'>
 	                                     <span class="font-weight-bold">Xem Chi Tiết</span>
 	                                 </a>
 	                             </div>
