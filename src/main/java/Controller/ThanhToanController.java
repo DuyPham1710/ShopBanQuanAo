@@ -154,10 +154,62 @@ public class ThanhToanController extends HttpServlet {
 				List<GioHang> listGH = new ArrayList<GioHang>();
 				
 				if (redirect.equals("1_San_Pham")) {
-					int maSP = Integer.parseInt(request.getParameter("maSP"));
-					int maKichCo = Integer.parseInt(request.getParameter("maKichCo"));
-					int maMauSac = Integer.parseInt(request.getParameter("maMau"));
-					int soLuong1SP = Integer.parseInt(request.getParameter("soLuong1SP"));
+//					int maSP = Integer.parseInt(request.getParameter("maSP"));
+//					int maKichCo = Integer.parseInt(request.getParameter("maKichCo"));
+//					int maMauSac = Integer.parseInt(request.getParameter("maMau"));
+//					int soLuong1SP = Integer.parseInt(request.getParameter("soLuong1SP"));
+					int maSP = 0, maKichCo = 0, maMauSac = 0, soLuong1SP = 1;
+					String paramMaSP = request.getParameter("maSP");
+					if (paramMaSP == null || paramMaSP.length() > 6 || !paramMaSP.matches("\\d{1,6}")) {
+					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maSP'");
+					    return;
+					}
+					try {
+					    maSP = Integer.parseInt(paramMaSP);
+					} catch (NumberFormatException e) {
+					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maSP' is not a valid number");
+					    return;
+					}
+
+					String paramKichCo = request.getParameter("maKichCo");
+					if (paramKichCo == null || paramKichCo.length() > 4 || !paramKichCo.matches("\\d{1,4}")) {
+					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maKichCo'");
+					    return;
+					}
+					try {
+					    maKichCo = Integer.parseInt(paramKichCo);
+					} catch (NumberFormatException e) {
+					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maKichCo' is not a valid number");
+					    return;
+					}
+
+					String paramMau = request.getParameter("maMau");
+					if (paramMau == null || paramMau.length() > 4 || !paramMau.matches("\\d{1,4}")) {
+					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maMau'");
+					    return;
+					}
+					try {
+					    maMauSac = Integer.parseInt(paramMau);
+					} catch (NumberFormatException e) {
+					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maMau' is not a valid number");
+					    return;
+					}
+
+					String paramSoLuong = request.getParameter("soLuong1SP");
+					if (paramSoLuong == null || paramSoLuong.length() > 3 || !paramSoLuong.matches("\\d{1,3}")) {
+					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'soLuong1SP'");
+					    return;
+					}
+					try {
+					    soLuong1SP = Integer.parseInt(paramSoLuong);
+					    if (soLuong1SP <= 0 || soLuong1SP > 100) {
+					        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Số lượng không hợp lệ.");
+					        return;
+					    }
+					} catch (NumberFormatException e) {
+					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'soLuong1SP' is not a valid number");
+					    return;
+					}
 					
 					try {
 						SanPham sp = new SanPham(maSP, maKichCo, maMauSac);
