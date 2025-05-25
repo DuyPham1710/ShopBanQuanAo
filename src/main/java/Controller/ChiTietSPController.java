@@ -47,7 +47,7 @@ public class ChiTietSPController extends HttpServlet {
 			    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maSP'");
 			    return;
 			}
-			if (param != null && param.length() <= 1 && param.matches("\\d{1,6}")) {
+			if (param != null && param.length() <= 4 && param.matches("\\d{1,6}")) {
 			    try {
 			    	maSP = Integer.parseInt(param);
 			    } catch (NumberFormatException e) {

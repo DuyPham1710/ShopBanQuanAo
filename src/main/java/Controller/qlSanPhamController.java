@@ -136,7 +136,18 @@ public class qlSanPhamController extends HttpServlet {
 		
 		String method = request.getParameter("_method");
 		if ("thayDoiNam".equalsIgnoreCase(method)) {
-			year = Integer.parseInt(request.getParameter("year"));
+			String param = request.getParameter("year");
+			if (param == null || param.length() > 4 || !param.matches("\\d{1,4}")) {
+			    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'year'");
+			    return;
+			}
+			if (param != null && param.length() <= 4 && param.matches("\\d{1,4}")) {
+			    try {
+			    	year = Integer.parseInt(param);
+			    } catch (NumberFormatException e) {
+			    	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'year' is not a valid number");
+			    }
+			}
 			doGet(request, response);
 		}
 		else if("loadSanPham".equalsIgnoreCase(method)) {
