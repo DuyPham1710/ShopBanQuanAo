@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.DanhMucSanPham;
 import models.HinhAnhSanPham;
 import models.SanPham;
@@ -48,6 +49,11 @@ public class qlSanPhamController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("userId") == null || (int)session.getAttribute("userId") !=1) {
+			response.sendRedirect("/project_web");
+			return;
+		}
 		Connection conn = null;
 		try {
 			conn = new ConnectJDBC().getConnection();
@@ -119,6 +125,7 @@ public class qlSanPhamController extends HttpServlet {
 		
 		RequestDispatcher req = request.getRequestDispatcher("/views/admin/QuanLySP.jsp");
 		req.forward(request, response);
+		
 	}
 
 	/**

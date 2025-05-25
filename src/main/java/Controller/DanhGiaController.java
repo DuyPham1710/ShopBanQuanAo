@@ -19,6 +19,7 @@ import DAO.DanhGiaDAO;
 import DAO.DonHangDAO;
 import DAO.SanPhamDAO;
 import DBConnection.ConnectJDBC;
+import Filters.InputSanitizer;
 
 /**
  * Servlet implementation class DanhGiaController
@@ -44,6 +45,11 @@ public class DanhGiaController extends HttpServlet {
 		}
 		else {
 			String trangThai = request.getParameter("trangThai");
+			String cleanComment = InputSanitizer.sanitize(trangThai);
+			if (!cleanComment.equals(trangThai)) {
+			    response.getWriter().println("Phat Hien Tan Cong XSS!");
+			    return;
+			}
 			Connection conn = null;
 			try {
 				conn = new ConnectJDBC().getConnection();

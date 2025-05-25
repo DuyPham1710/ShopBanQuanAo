@@ -51,66 +51,65 @@ public class HoaDonController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("userId") == null) {
+		if (session.getAttribute("userId") == null || (int)session.getAttribute("userId") != 1 ) {
 			response.sendRedirect("/project_web");
+			return;
 		}
-		else{
-			Connection conn = null;
-			try {
-				conn = new ConnectJDBC().getConnection();
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-			
-			List<HoaDon> listHD = null;
-			try {
-				listHD = HoaDonDAO.DanhSachHoaDon(conn);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-			
-			int tongDonHang = 0, choXacNhan = 0, dangGiao = 0, daGiao = 0, daHuy = 0;
-			try {
-				String sql = "SELECT * FROM dbo.SoDonHangTheoTrangThai()";
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();
-				if (rs.next()) {
-					tongDonHang = rs.getInt("TongDonHang");
-					choXacNhan = rs.getInt("ChoXacNhan");
-					dangGiao = rs.getInt("DangGiao");
-					daGiao = rs.getInt("DaGiao");
-					daHuy = rs.getInt("DaHuy");
-				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-			int soSanPhamGioHang = 0;
-			
-			try {
-				soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, (int)session.getAttribute("userId"));
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-			
-			request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
-			
-			request.setAttribute("ListHD", listHD);
-			request.setAttribute("TongDonHang", tongDonHang);
-			request.setAttribute("DonDangChoXacNhan", choXacNhan);
-			request.setAttribute("DonDangGiao", dangGiao);
-			request.setAttribute("DonDaGiao", daGiao);
-			request.setAttribute("DonDaHuy", daHuy);
-			RequestDispatcher req = request.getRequestDispatcher("/views/admin/QuanLyDonHang.jsp");
-			req.forward(request, response);
+		Connection conn = null;
+		try {
+			conn = new ConnectJDBC().getConnection();
 		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		List<HoaDon> listHD = null;
+		try {
+			listHD = HoaDonDAO.DanhSachHoaDon(conn);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		int tongDonHang = 0, choXacNhan = 0, dangGiao = 0, daGiao = 0, daHuy = 0;
+		try {
+			String sql = "SELECT * FROM dbo.SoDonHangTheoTrangThai()";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				tongDonHang = rs.getInt("TongDonHang");
+				choXacNhan = rs.getInt("ChoXacNhan");
+				dangGiao = rs.getInt("DangGiao");
+				daGiao = rs.getInt("DaGiao");
+				daHuy = rs.getInt("DaHuy");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		int soSanPhamGioHang = 0;
+		
+		try {
+			soSanPhamGioHang = SanPhamDAO.DemSoSanPhamTrongGioHang(conn, (int)session.getAttribute("userId"));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error: " + e.getMessage());
+		}
+		
+		request.setAttribute("soSanPhamGioHang", soSanPhamGioHang);
+		
+		request.setAttribute("ListHD", listHD);
+		request.setAttribute("TongDonHang", tongDonHang);
+		request.setAttribute("DonDangChoXacNhan", choXacNhan);
+		request.setAttribute("DonDangGiao", dangGiao);
+		request.setAttribute("DonDaGiao", daGiao);
+		request.setAttribute("DonDaHuy", daHuy);
+		RequestDispatcher req = request.getRequestDispatcher("/views/admin/QuanLyDonHang.jsp");
+		req.forward(request, response);
 		
 	}
 

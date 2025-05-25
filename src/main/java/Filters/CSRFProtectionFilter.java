@@ -22,6 +22,14 @@ public class CSRFProtectionFilter implements Filter{
 		HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(true); // tạo nếu chưa có
+        
+        response.setHeader("X-Frame-Options", "DENY");
+        String sessionId = session.getId();
+
+	    // Ghi đè lại Set-Cookie để thêm SameSite
+	    response.setHeader("Set-Cookie",
+	         "JSESSIONID=" + sessionId + "; Path=" + request.getContextPath() + 
+	         "; Secure; HttpOnly; SameSite=Strict");
 
         // Tạo token nếu chưa có
         if (session.getAttribute("csrfToken") == null) {
@@ -49,7 +57,7 @@ public class CSRFProtectionFilter implements Filter{
                 return;
             }
         }
-
+        
         chain.doFilter(req, res);
     }
 }

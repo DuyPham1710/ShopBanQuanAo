@@ -50,16 +50,36 @@ public class SanPhamController extends HttpServlet {
 				searchText = "";
 			}
 			
-			if (request.getParameter("maDanhMuc") == null) {
-				maDanhMuc = 0;
+//			if (request.getParameter("maDanhMuc") == null) {
+//				maDanhMuc = 0;
+//			}
+//			else {			
+//				maDanhMuc = Integer.parseInt(request.getParameter("maDanhMuc"));
+//			}
+			String param = request.getParameter("maDanhMuc");
+
+			if (param == null || param.length() > 3 || !param.matches("\\d+")) {
+			    maDanhMuc = 0;
+			} else {
+			    try {
+			        maDanhMuc = Integer.parseInt(param);
+			    } catch (NumberFormatException e) {
+			        maDanhMuc = 0;
+			        // Optionally log the error
+			    }
 			}
-			else {			
-				maDanhMuc = Integer.parseInt(request.getParameter("maDanhMuc"));
-			}
-			
 			int sortType = 0; // Default: Sản phẩm nổi bật
-			if (request.getParameter("sortType") != null) {
-				sortType = Integer.parseInt(request.getParameter("sortType"));
+//			if (request.getParameter("sortType") != null) {
+//				sortType = Integer.parseInt(request.getParameter("sortType"));
+//			}
+			String sortParam = request.getParameter("sortType");
+
+			if (sortParam != null && sortParam.length() <= 1 && sortParam.matches("\\d+")) {
+			    try {
+			        sortType = Integer.parseInt(sortParam);
+			    } catch (NumberFormatException e) {
+			        sortType = 0; // hoặc bạn có thể log lỗi tại đây nếu cần
+			    }
 			}
 			SanPhamDAO.resetFilters();
 			List<SanPham> listSP = null;

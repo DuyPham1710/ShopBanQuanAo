@@ -39,9 +39,22 @@ public class ChiTietSPController extends HttpServlet {
 		}
 		else {
 			int maSP = 0; 
-            if (request.getParameter("maSP") != null) {
-            	maSP = Integer.parseInt(request.getParameter("maSP"));
-            }
+			String param = request.getParameter("maSP");
+//            if (request.getParameter("maSP") != null) {
+//            	maSP = Integer.parseInt(request.getParameter("maSP"));
+//            }
+			if (param == null || param.length() > 5 || !param.matches("\\d{1,6}")) {
+			    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maSP'");
+			    return;
+			}
+			if (param != null && param.length() <= 1 && param.matches("\\d{1,6}")) {
+			    try {
+			    	maSP = Integer.parseInt(param);
+			    } catch (NumberFormatException e) {
+			    	maSP = 0; // hoặc bạn có thể log lỗi tại đây nếu cần
+			    	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maSP' is not a valid number");
+			    }
+			}
 		
 		    Connection conn = null;
 			try {
@@ -125,6 +138,10 @@ public class ChiTietSPController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method = request.getParameter("method");
 		HttpSession session = request.getSession();
+		if (method == null || (!method.equals("get") && !method.equals("post"))) {
+		    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid method");
+		    return;
+		}
 		if (method.equals("get")) {
 			doGet(request, response);
 		}
@@ -168,8 +185,9 @@ public class ChiTietSPController extends HttpServlet {
 				}
 				
 			}
-			
+				
 		}
+		
 	}
 
 }
