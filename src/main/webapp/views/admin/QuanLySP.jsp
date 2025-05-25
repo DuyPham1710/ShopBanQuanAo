@@ -51,7 +51,7 @@
             
             <li class="nav-item">
               <i class="bi bi-box-arrow-right me-2"></i>
-              <a class="nav-link" href="/project_web">Đăng xuất</a>
+              <a class="nav-link" href="/project_web/logout">Đăng xuất</a>
             </li>
           </ul>
         </div>
