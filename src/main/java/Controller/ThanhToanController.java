@@ -142,80 +142,34 @@ public class ThanhToanController extends HttpServlet {
 					response.getWriter().println("Error: " + e.getMessage());
 				}
 				
-				try {
-					maHoaDon = ThanhToanDAO.ThemHoaDon(conn, tongTienHoaDon, diaChi, (int)session.getAttribute("userId"));
-					NguoiDungDAO.themDiaChiNhanHang(conn, diaChi, (int)session.getAttribute("userId"));
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-					response.getWriter().println("Error: " + e.getMessage());
-				}
+//				try {
+//					maHoaDon = ThanhToanDAO.ThemHoaDon(conn, tongTienHoaDon, diaChi, (int)session.getAttribute("userId"));
+//					NguoiDungDAO.themDiaChiNhanHang(conn, diaChi, (int)session.getAttribute("userId"));
+//				}
+//				catch (Exception e) {
+//					e.printStackTrace();
+//					response.getWriter().println("Error: " + e.getMessage());
+//				}
 				
 				List<GioHang> listGH = new ArrayList<GioHang>();
 				
+				String danhSachMaSP = "";
+				String danhSachSoLuong = "";
+				int soLuong1SP = 0;
+				SanPham spForSingleProduct = null;
 				if (redirect.equals("1_San_Pham")) {
-//					int maSP = Integer.parseInt(request.getParameter("maSP"));
-//					int maKichCo = Integer.parseInt(request.getParameter("maKichCo"));
-//					int maMauSac = Integer.parseInt(request.getParameter("maMau"));
-//					int soLuong1SP = Integer.parseInt(request.getParameter("soLuong1SP"));
-					int maSP = 0, maKichCo = 0, maMauSac = 0, soLuong1SP = 1;
-					String paramMaSP = request.getParameter("maSP");
-					if (paramMaSP == null || paramMaSP.length() > 6 || !paramMaSP.matches("\\d{1,6}")) {
-					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maSP'");
-					    return;
-					}
+					int maSP = Integer.parseInt(request.getParameter("maSP"));
+					int maKichCo = Integer.parseInt(request.getParameter("maKichCo"));
+					int maMauSac = Integer.parseInt(request.getParameter("maMau"));
+					soLuong1SP = Integer.parseInt(request.getParameter("soLuong1SP"));
+					danhSachMaSP = String.valueOf(maSP);
+				    danhSachSoLuong = String.valueOf(soLuong1SP);
+				    
 					try {
-					    maSP = Integer.parseInt(paramMaSP);
-					} catch (NumberFormatException e) {
-					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maSP' is not a valid number");
-					    return;
-					}
-
-					String paramKichCo = request.getParameter("maKichCo");
-					if (paramKichCo == null || paramKichCo.length() > 4 || !paramKichCo.matches("\\d{1,4}")) {
-					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maKichCo'");
-					    return;
-					}
-					try {
-					    maKichCo = Integer.parseInt(paramKichCo);
-					} catch (NumberFormatException e) {
-					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maKichCo' is not a valid number");
-					    return;
-					}
-
-					String paramMau = request.getParameter("maMau");
-					if (paramMau == null || paramMau.length() > 4 || !paramMau.matches("\\d{1,4}")) {
-					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maMau'");
-					    return;
-					}
-					try {
-					    maMauSac = Integer.parseInt(paramMau);
-					} catch (NumberFormatException e) {
-					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maMau' is not a valid number");
-					    return;
-					}
-
-					String paramSoLuong = request.getParameter("soLuong1SP");
-					if (paramSoLuong == null || paramSoLuong.length() > 3 || !paramSoLuong.matches("\\d{1,3}")) {
-					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'soLuong1SP'");
-					    return;
-					}
-					try {
-					    soLuong1SP = Integer.parseInt(paramSoLuong);
-					    if (soLuong1SP <= 0 || soLuong1SP > 100) {
-					        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Số lượng không hợp lệ.");
-					        return;
-					    }
-					} catch (NumberFormatException e) {
-					    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'soLuong1SP' is not a valid number");
-					    return;
-					}
-					
-					try {
-						SanPham sp = new SanPham(maSP, maKichCo, maMauSac);
-						sp.setGiaHienTai((tongTienHoaDon - 30000) / soLuong1SP);
-						GioHang gh = new GioHang(sp, soLuong1SP);
-						listGH.add(gh);
+						// Tạo đối tượng SanPham và GioHang, nhưng CHƯA đặt GiaHienTai
+                        spForSingleProduct = new SanPham(maSP, maKichCo, maMauSac);
+                        GioHang gh = new GioHang(spForSingleProduct, soLuong1SP);
+                        listGH.add(gh);
 					}
 					catch (Exception e) {
 						e.printStackTrace();
@@ -225,13 +179,56 @@ public class ThanhToanController extends HttpServlet {
 				else if (redirect.equals("Nhieu_Hon_1_San_Pham")) {
 					String CacSanPhamDuocChon = request.getParameter("CacSanPhamDuocChon");
 					String[] listMa = CacSanPhamDuocChon.split(",");
+					danhSachMaSP = CacSanPhamDuocChon;
 					try {
 	    				listGH = GioHangDAO.DanhSachGioHangThanhToan(conn,listMa,(int)session.getAttribute("userId"));
+	    				
+	    				StringBuilder sbSoLuong = new StringBuilder();
+	    		        for (int i = 0; i < listGH.size(); i++) {
+	    		            int soLuong = listGH.get(i).getSoLuongGH(); // Lấy số lượng từ GioHang
+	    		            if (i > 0) {
+	    		                sbSoLuong.append(","); // ngăn cách dấu phẩy
+	    		            }
+	    		            sbSoLuong.append(soLuong);
+	    		        }
+	    		        danhSachSoLuong = sbSoLuong.toString();
 	    			}
 	    			catch (Exception e) {
 	    				e.printStackTrace();
 	    				response.getWriter().println("Error: " + e.getMessage());
 	    			}
+				}
+				
+				try {
+				    int tongTienThucTe = ThanhToanDAO.TinhTongTienThucTe(conn, danhSachMaSP, danhSachSoLuong);
+				  
+//				    if (tongTienHoaDon != tongTienThucTe) {
+//				        // Nếu tổng tiền người dùng gửi không khớp với tổng tiền thực tế DB thì sửa lại
+				        tongTienHoaDon = tongTienThucTe;
+				    //}
+				} catch (SQLException e) {
+				    e.printStackTrace();
+				    response.getWriter().println("Error khi kiểm tra tổng tiền: " + e.getMessage());
+				}
+	
+				if (redirect.equals("1_San_Pham")) {
+                    if (soLuong1SP > 0) {
+                        // Cập nhật GiaHienTai cho sản phẩm đơn lẻ
+                        spForSingleProduct.setGiaHienTai((tongTienHoaDon) / soLuong1SP);
+                    } else {
+                        // Xử lý trường hợp số lượng là 0 để tránh chia cho 0
+                        spForSingleProduct.setGiaHienTai(0); 
+                        System.err.println("Warning: soLuong1SP is 0 for single product checkout.");
+                    }
+                }
+				
+				try {
+					maHoaDon = ThanhToanDAO.ThemHoaDon(conn, tongTienHoaDon, diaChi, (int)session.getAttribute("userId"));
+					NguoiDungDAO.themDiaChiNhanHang(conn, diaChi, (int)session.getAttribute("userId"));
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					response.getWriter().println("Error: " + e.getMessage());
 				}
 				
 				for (int i=0; i<listGH.size(); i++) {

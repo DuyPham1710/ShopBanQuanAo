@@ -2,6 +2,8 @@ package DAO;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -33,5 +35,19 @@ public class ThanhToanDAO {
         stmt.setInt(7, gh.getSanPham().getMauSac().get(0).getMaMau()); 
        
         stmt.executeUpdate();		
+	}
+	
+	public static int TinhTongTienThucTe(Connection conn, String danhSachMaSP, String danhSachSoLuong) throws SQLException {
+	    String sql = "SELECT dbo.fn_TinhTongTienSanPham(?, ?) AS TongTien";
+	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setString(1, danhSachMaSP);
+	        stmt.setString(2, danhSachSoLuong);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt("TongTien");
+	            }
+	        }
+	    }
+	    return 0;
 	}
 }

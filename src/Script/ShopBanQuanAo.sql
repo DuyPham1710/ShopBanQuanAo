@@ -802,3 +802,44 @@ RETURN
         M.Thang
 )
 GO
+
+
+CREATE FUNCTION fn_TinhTongTienSanPham (
+    @listMaSanPham NVARCHAR(MAX),
+    @listSoLuong NVARCHAR(MAX)
+)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @TongTien INT = 0;
+
+    -- Bảng tạm chứa mã sản phẩm và số lượng tương ứng
+    DECLARE @tbl TABLE (
+        MaSanPham INT,
+        SoLuong INT
+    );
+
+    -- Chuyển list mã và số lượng thành bảng có chỉ mục để ghép đúng theo thứ tự
+    ;WITH MaSanPhamCTE AS (
+        SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS rn, TRY_CAST(value AS INT) AS MaSanPham
+        FROM STRING_SPLIT(@listMaSanPham, ',')
+        WHERE TRY_CAST(value AS INT) IS NOT NULL
+    ),
+    SoLuongCTE AS (
+        SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS rn, TRY_CAST(value AS INT) AS SoLuong
+        FROM STRING_SPLIT(@listSoLuong, ',')
+        WHERE TRY_CAST(value AS INT) IS NOT NULL
+    )
+    INSERT INTO @tbl (MaSanPham, SoLuong)
+    SELECT m.MaSanPham, s.SoLuong
+    FROM MaSanPhamCTE m
+    JOIN SoLuongCTE s ON m.rn = s.rn;
+
+    -- Tính tổng tiền (đã áp dụng giảm giá và nhân với số lượng)
+    SELECT @TongTien = SUM(sp.GiaBanDau * (1 - sp.GiamGia / 100.0) * t.SoLuong)
+    FROM @tbl t
+    JOIN SanPham sp ON t.MaSanPham = sp.MaSanPham;
+
+    RETURN ISNULL(@TongTien, 0);
+END;
+GO
