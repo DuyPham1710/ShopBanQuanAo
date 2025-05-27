@@ -21,7 +21,7 @@ import DBConnection.ConnectJDBC;
 
 public class TaiKhoanController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private static String passwordStatic = "";
     public TaiKhoanController() {
         super();
     }
@@ -44,6 +44,7 @@ public class TaiKhoanController extends HttpServlet {
 			NguoiDung nguoiDung = null;
 			try {
 				nguoiDung = NguoiDungDAO.ThongTinCaNhan(conn, (int)session.getAttribute("userId"));
+				passwordStatic = nguoiDung.getAccount().getPassword();
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -95,6 +96,9 @@ public class TaiKhoanController extends HttpServlet {
 			String email = request.getParameter("email");
 			String sdt = request.getParameter("sdt");
 			String password = request.getParameter("password");
+			if (password.isEmpty()) {
+				password = passwordStatic;
+			}
 			
 			Connection conn = null;
 			try {

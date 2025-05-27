@@ -210,7 +210,8 @@
 	        
 	                                    <div class="form-group">
 	                                        <label for="pass">Mật khẩu</label>
-	                                        <input type="password" id="pass" name="password" class="form-control" value="${nguoiDung.account.password}">
+	                             <%--            <input type="password" id="pass" name="password" class="form-control" value="${nguoiDung.account.password}"> --%>
+	                              				 <input type="password" id="pass" name="password" class="form-control" value="">	
 	                                    </div>
 	                                    <div class="text-center">
 	                                        <button type="submit" class="btn btn-primary">Lưu</button>
