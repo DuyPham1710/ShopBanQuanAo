@@ -40,20 +40,16 @@ public class ChiTietSPController extends HttpServlet {
 		else {
 			int maSP = 0; 
 			String param = request.getParameter("maSP");
-//            if (request.getParameter("maSP") != null) {
-//            	maSP = Integer.parseInt(request.getParameter("maSP"));
-//            }
-			if (param == null || param.length() > 5 || !param.matches("\\d{1,6}")) {
+			// Validate input
+			if (param == null || param.length() > 6 || !param.matches("\\d{1,6}")) {
 			    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter 'maSP'");
 			    return;
 			}
-			if (param != null && param.length() <= 4 && param.matches("\\d{1,6}")) {
-			    try {
-			    	maSP = Integer.parseInt(param);
-			    } catch (NumberFormatException e) {
-			    	maSP = 0; // hoặc bạn có thể log lỗi tại đây nếu cần
-			    	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maSP' is not a valid number");
-			    }
+			try {
+			    maSP = Integer.parseInt(param);
+			} catch (NumberFormatException e) {
+			    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter 'maSP' is not a valid number");
+			    return;
 			}
 		
 		    Connection conn = null;
@@ -153,14 +149,28 @@ public class ChiTietSPController extends HttpServlet {
 				String redirect = request.getParameter("redirect");
 				
 				if (redirect.equals("buyNow")) {
-					//response.sendRedirect("/project_web/ThanhToanController");
 					request.getRequestDispatcher("/ThanhToanController").forward(request, response);
 				}
 				else if (redirect.equals("addToCart")) {
-					int maSP = Integer.parseInt(request.getParameter("maSP"));
-					int maKichThuoc = Integer.parseInt(request.getParameter("size"));
-					int maMauSac = Integer.parseInt(request.getParameter("tenmau"));
-					int soLuong = Integer.parseInt(request.getParameter("soLuong"));
+					String maSPStr = request.getParameter("maSP");
+					String maKichThuocStr = request.getParameter("size");
+					String maMauSacStr = request.getParameter("tenmau");
+					String soLuongStr = request.getParameter("soLuong");
+					int maSP, maKichThuoc, maMauSac, soLuong;
+					try {
+						if (maSPStr == null || maKichThuocStr == null || maMauSacStr == null || soLuongStr == null ||
+							maSPStr.length() > 6 || maKichThuocStr.length() > 6 || maMauSacStr.length() > 6 || soLuongStr.length() > 6) {
+							response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
+							return;
+						}
+						maSP = Integer.parseInt(maSPStr);
+						maKichThuoc = Integer.parseInt(maKichThuocStr);
+						maMauSac = Integer.parseInt(maMauSacStr);
+						soLuong = Integer.parseInt(soLuongStr);
+					} catch (NumberFormatException e) {
+						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+						return;
+					}
 					 Connection conn = null;
 					 try {
 						 conn = new ConnectJDBC().getConnection();

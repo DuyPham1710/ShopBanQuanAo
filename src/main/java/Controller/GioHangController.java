@@ -87,11 +87,25 @@ public class GioHangController extends HttpServlet {
 		
 	}
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-			int maSP = Integer.parseInt(request.getParameter("maSP"));
-			int maKichThuoc = Integer.parseInt(request.getParameter("maKichThuoc"));
-			int maMau = Integer.parseInt(request.getParameter("maMau"));
-			
+			// Validate and parse input safely
+			String maSPStr = request.getParameter("maSP");
+			String maKichThuocStr = request.getParameter("maKichThuoc");
+			String maMauStr = request.getParameter("maMau");
+			int maSP, maKichThuoc, maMau;
+			try {
+				if (maSPStr == null || maKichThuocStr == null || maMauStr == null ||
+					maSPStr.length() > 10 || maKichThuocStr.length() > 10 || maMauStr.length() > 10) {
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
+					return;
+				}
+				maSP = Integer.parseInt(maSPStr);
+				maKichThuoc = Integer.parseInt(maKichThuocStr);
+				maMau = Integer.parseInt(maMauStr);
+			} catch (NumberFormatException e) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+				return;
+			}
+					
 			Connection conn = null;
 			try {
 				conn = new ConnectJDBC().getConnection();
@@ -99,7 +113,6 @@ public class GioHangController extends HttpServlet {
 			catch (Exception e) {
 				e.printStackTrace();
 				response.getWriter().println("Error: " + e.getMessage());
-			
 			}
 					
 			try {
@@ -114,11 +127,26 @@ public class GioHangController extends HttpServlet {
 		protected void doCapNhatGioHang(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			HttpSession session = request.getSession();
 			if(session.getAttribute("userId") != null) {
-				int maSP = Integer.parseInt(request.getParameter("id"));				
+				String maSPStr = request.getParameter("id");
 				String phanbiet = request.getParameter("phanbiet");
-				int maKichThuoc = Integer.parseInt(request.getParameter("sizeoption"));
-				int maMau = Integer.parseInt(request.getParameter("coloroption"));
-				int quantity = Integer.parseInt(request.getParameter("quantity"));	
+				String maKichThuocStr = request.getParameter("sizeoption");
+				String maMauStr = request.getParameter("coloroption");
+				String quantityStr = request.getParameter("quantity");
+				int maSP, maKichThuoc, maMau, quantity;
+				try {
+					if (maSPStr == null || maKichThuocStr == null || maMauStr == null || quantityStr == null ||
+						maSPStr.length() > 10 || maKichThuocStr.length() > 10 || maMauStr.length() > 10 || quantityStr.length() > 10) {
+						response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
+						return;
+					}
+					maSP = Integer.parseInt(maSPStr);
+					maKichThuoc = Integer.parseInt(maKichThuocStr);
+					maMau = Integer.parseInt(maMauStr);
+					quantity = Integer.parseInt(quantityStr);
+				} catch (NumberFormatException e) {
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+					return;
+				}
 				
 				Connection conn = null;
 				try {

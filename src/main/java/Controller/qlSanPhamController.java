@@ -170,7 +170,18 @@ public class qlSanPhamController extends HttpServlet {
 		
 	}
 	protected void doXoaSanPham(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int maSP = Integer.parseInt(request.getParameter("maSPCanXoa"));
+		String maSPStr = request.getParameter("maSPCanXoa");
+		int maSP;
+		try {
+			if (maSPStr == null || maSPStr.length() > 10) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
+				return;
+			}
+			maSP = Integer.parseInt(maSPStr);
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format");
+			return;
+		}
 		Connection conn = null;
 		try {
 			conn = new ConnectJDBC().getConnection();
@@ -201,11 +212,18 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
-        // Đọc dữ liệu từ body
+        // Đọc dữ liệu từ body với giới hạn độ dài
         StringBuilder jsonBuffer = new StringBuilder();
         String line;
+        int totalLength = 0;
+        final int MAX_BODY_SIZE = 10000; // Giới hạn tối đa 10.000 ký tự
         try (BufferedReader reader = request.getReader()) {
             while ((line = reader.readLine()) != null) {
+                totalLength += line.length();
+                if (totalLength > MAX_BODY_SIZE) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Request body too large");
+                    return;
+                }
                 jsonBuffer.append(line);
             }
         }
@@ -213,50 +231,57 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 
         // Chuyển JSON thành đối tượng
         JSONObject json = new JSONObject(jsonBuffer.toString());
-		masp = json.getInt("maSanPhamEdit");
-		String tenSP = json.getString("tenSPEdit");
-		int giaBanDau = json.getInt("giaSanPhamEdit");
-		int giamGia = json.getInt("giamGiaEdit");
-		int soLuong = json.getInt("soLuongEdit");
-		int danhMuc = json.getInt("maDanhMucEdit");
-		String hinh = json.getString("linkAnhEdit");
-		String xuatXu = json.getString("xuatXuEdit");
-		String chatLieu = json.getString("chatLieuEdit");
-		
-		String strKichThuoc = json.getString("sizeDaDuocChonEdit");
-		List<String> listSize = Arrays.asList(strKichThuoc.split(","));
-		
-		String strMau = json.getString("mauDaDuocChonEdit");
-		List<String> listMau = Arrays.asList(strMau.split(","));
-		
-		String danhMucMoi = json.getString("danhMucThemVao");
+		try {
+			String maspStr = json.get("maSanPhamEdit").toString();
+			if (maspStr == null || maspStr.length() > 10) throw new NumberFormatException();
+			masp = Integer.parseInt(maspStr);
+			String giaBanDauStr = json.get("giaSanPhamEdit").toString();
+			String giamGiaStr = json.get("giamGiaEdit").toString();
+			String soLuongStr = json.get("soLuongEdit").toString();
+			if (giaBanDauStr.length() > 10 || giamGiaStr.length() > 10 || soLuongStr.length() > 10) throw new NumberFormatException();
+			int giaBanDau = Integer.parseInt(giaBanDauStr);
+			int giamGia = Integer.parseInt(giamGiaStr);
+			int soLuong = Integer.parseInt(soLuongStr);
+			String tenSP = json.getString("tenSPEdit");
+			int danhMuc = json.getInt("maDanhMucEdit");
+			String hinh = json.getString("linkAnhEdit");
+			String xuatXu = json.getString("xuatXuEdit");
+			String chatLieu = json.getString("chatLieuEdit");
+			
+			String strKichThuoc = json.getString("sizeDaDuocChonEdit");
+			List<String> listSize = Arrays.asList(strKichThuoc.split(","));
+			
+			String strMau = json.getString("mauDaDuocChonEdit");
+			List<String> listMau = Arrays.asList(strMau.split(","));
+			
+			String danhMucMoi = json.getString("danhMucThemVao");
 
-		int maDanhMucNew =danhMuc;
-		//them danh muc
-		if(danhMuc==0) {
-			try {
-				maDanhMucNew = SanPhamDAO.ThemDanhMucMoi(conn,danhMucMoi);
+			int maDanhMucNew =danhMuc;
+			//them danh muc
+			if(danhMuc==0) {
+				try {
+					maDanhMucNew = SanPhamDAO.ThemDanhMucMoi(conn,danhMucMoi);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					response.getWriter().println("Error: " + e.getMessage());
+				}
 			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
+			
+			String moTa = json.getString("moTaEdit");
+			
+			// Check XSS
+			if (containsXSS(tenSP, response) || containsXSS(hinh, response) || 
+					containsXSS(xuatXu, response) ||
+			    containsXSS(chatLieu, response) || containsXSS(danhMucMoi, response) ||
+			    containsXSS(strMau, response) || containsXSS(strKichThuoc, response) ||
+			    containsXSS(moTa, response)) {
+			    return; // Stop execution if XSS found
 			}
-		}
-		
-		String moTa = json.getString("moTaEdit");
-		
-		// Check XSS
-		if (containsXSS(tenSP, response) || containsXSS(hinh, response) || 
-				containsXSS(xuatXu, response) ||
-		    containsXSS(chatLieu, response) || containsXSS(danhMucMoi, response) ||
-		    containsXSS(strMau, response) || containsXSS(strKichThuoc, response) ||
-		    containsXSS(moTa, response)) {
-		    return; // Stop execution if XSS found
-		}
-		
-		HinhAnhSanPham ha= new HinhAnhSanPham(0, hinh);
-		DanhMucSanPham dm = new DanhMucSanPham(maDanhMucNew);
-		SanPham sp = new SanPham(masp, tenSP, moTa, giaBanDau, giamGia, soLuong,null,xuatXu,chatLieu, 0, dm, ha );
+			
+			HinhAnhSanPham ha= new HinhAnhSanPham(0, hinh);
+			DanhMucSanPham dm = new DanhMucSanPham(maDanhMucNew);
+			SanPham sp = new SanPham(masp, tenSP, moTa, giaBanDau, giamGia, soLuong,null,xuatXu,chatLieu, 0, dm, ha );
 
 //		try {
 //			SanPhamDAO.SuaMau(conn,masp,listMau);
@@ -291,6 +316,10 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 			response.getWriter().println("Error: " + e.getMessage());
 		}
 		
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format in JSON");
+			return;
+		}
 	}
 	
 	
@@ -306,138 +335,154 @@ protected void doSuaSanPham(HttpServletRequest request, HttpServletResponse resp
 		}
 		
 
-        // Đọc dữ liệu từ body
+        // Đọc dữ liệu từ body với giới hạn độ dài
         StringBuilder jsonBuffer = new StringBuilder();
         String line;
+        int totalLength = 0;
+        final int MAX_BODY_SIZE = 10000; // Giới hạn tối đa 10.000 ký tự
         try (BufferedReader reader = request.getReader()) {
             while ((line = reader.readLine()) != null) {
+                totalLength += line.length();
+                if (totalLength > MAX_BODY_SIZE) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Request body too large");
+                    return;
+                }
                 jsonBuffer.append(line);
             }
         }
 
         // Chuyển JSON thành đối tượng
         JSONObject json = new JSONObject(jsonBuffer.toString());
-		String tenSP = json.getString("tenSPAdd");
-		int giaBanDau = json.getInt("giaSanPhamAdd");
-		int giamGia = json.getInt("giamGiaAdd");
-		int soLuong = json.getInt("soLuongAdd");
-		int danhMuc = json.getInt("maDanhMucAdd");
-		String hinh = json.getString("linkAnhAdd");
-		String xuatXu = json.getString("xuatXuAdd");
-		String chatLieu = json.getString("chatLieuAdd");
-		String danhMucMoi = json.getString("danhMucThemVao");
+		try {
+			String tenSP = json.getString("tenSPAdd");
+			String giaBanDauStr = json.get("giaSanPhamAdd").toString();
+			String giamGiaStr = json.get("giamGiaAdd").toString();
+			String soLuongStr = json.get("soLuongAdd").toString();
+			if (giaBanDauStr.length() > 10 || giamGiaStr.length() > 10 || soLuongStr.length() > 10) throw new NumberFormatException();
+			int giaBanDau = Integer.parseInt(giaBanDauStr);
+			int giamGia = Integer.parseInt(giamGiaStr);
+			int soLuong = Integer.parseInt(soLuongStr);
+			int danhMuc = json.getInt("maDanhMucAdd");
+			String hinh = json.getString("linkAnhAdd");
+			String xuatXu = json.getString("xuatXuAdd");
+			String chatLieu = json.getString("chatLieuAdd");
+			String danhMucMoi = json.getString("danhMucThemVao");
 
-		
-		
-		int maDanhMucNew =danhMuc;
-		//them danh muc
-		if(danhMuc==0) {
-			try {
-				maDanhMucNew = SanPhamDAO.ThemDanhMucMoi(conn,danhMucMoi);
+			
+			
+			int maDanhMucNew =danhMuc;
+			//them danh muc
+			if(danhMuc==0) {
+				try {
+					maDanhMucNew = SanPhamDAO.ThemDanhMucMoi(conn,danhMucMoi);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					response.getWriter().println("Error: " + e.getMessage());
+				}
 			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
-			}
-		}
-		
-		String strKichThuoc;
-		String sizeThemVao = json.getString("sizeThemVao");
-		if(sizeThemVao == "") {
-			strKichThuoc = json.getString("sizeDaDuocChonAdd");
-		}
-		else {
-			if(json.getString("sizeDaDuocChonAdd")=="") {
-				strKichThuoc= sizeThemVao;
+			
+			String strKichThuoc;
+			String sizeThemVao = json.getString("sizeThemVao");
+			if(sizeThemVao == "") {
+				strKichThuoc = json.getString("sizeDaDuocChonAdd");
 			}
 			else {
-				strKichThuoc= json.getString("sizeDaDuocChonAdd")+","+sizeThemVao;
+				if(json.getString("sizeDaDuocChonAdd")=="") {
+					strKichThuoc= sizeThemVao;
+				}
+				else {
+					strKichThuoc= json.getString("sizeDaDuocChonAdd")+","+sizeThemVao;
+				}
 			}
-		}
-		List<String> listSize = Arrays.asList(strKichThuoc.split(","));
-		
-		
-		String strMau = json.getString("mauDaDuocChonAdd");
-		List<String> listMauThemVao = null;
-		List<String> listMau = null;
-		String mauThemVao = json.getString("mauThemVao");
-		if(strMau != "") {
-			listMau = Arrays.asList(strMau.split(","));
-		}
-		if(mauThemVao!="") {
-			listMauThemVao = Arrays.asList(mauThemVao.split(","));
-		}
-		
-		int index = 0;
-		if(listMau != null) {
-			index= listMau.size();
-			try {
-				SanPhamDAO.ThemMau(conn,masp,listMau);
+			List<String> listSize = Arrays.asList(strKichThuoc.split(","));
+			
+			
+			String strMau = json.getString("mauDaDuocChonAdd");
+			List<String> listMauThemVao = null;
+			List<String> listMau = null;
+			String mauThemVao = json.getString("mauThemVao");
+			if(strMau != "") {
+				listMau = Arrays.asList(strMau.split(","));
 			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
+			if(mauThemVao!="") {
+				listMauThemVao = Arrays.asList(mauThemVao.split(","));
 			}
-		}
-		if(listMauThemVao!= null) {
-			try {
-				SanPhamDAO.ThemMauMoi(conn,masp,listMauThemVao,index);
+			
+			int index = 0;
+			if(listMau != null) {
+				index= listMau.size();
+				try {
+					SanPhamDAO.ThemMau(conn,masp,listMau);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					response.getWriter().println("Error: " + e.getMessage());
+				}
 			}
-			catch (Exception e) {
-				e.printStackTrace();
-				response.getWriter().println("Error: " + e.getMessage());
+			if(listMauThemVao!= null) {
+				try {
+					SanPhamDAO.ThemMauMoi(conn,masp,listMauThemVao,index);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					response.getWriter().println("Error: " + e.getMessage());
+				}
 			}
-		}
-		
-		
-		String moTa = json.getString("moTaAdd");
-		HinhAnhSanPham ha= new HinhAnhSanPham(masp, hinh);
-		DanhMucSanPham dm = new DanhMucSanPham(maDanhMucNew);
+			
+			
+			String moTa = json.getString("moTaAdd");
+			HinhAnhSanPham ha= new HinhAnhSanPham(masp, hinh);
+			DanhMucSanPham dm = new DanhMucSanPham(maDanhMucNew);
 
-		LocalDate day = LocalDate.now();
-		Date sqlDate = Date.valueOf(day);
-		
-		// Check XSS
-		if (containsXSS(tenSP, response) || containsXSS(hinh, response) || 
-				containsXSS(xuatXu, response) ||
-		    containsXSS(chatLieu, response) || containsXSS(danhMucMoi, response) ||
-		    containsXSS(strMau, response) || containsXSS(strKichThuoc, response) ||
-		    containsXSS(moTa, response)) {
-		    return; // Stop execution if XSS found
-		}
-				
-		try {
-			masp = SanPhamDAO.MaSPTiepTheo(conn);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		SanPham sp = new SanPham(masp, tenSP, moTa, giaBanDau, giamGia, soLuong, sqlDate, xuatXu,chatLieu, 0, dm, ha );
-		
-		try {
-			SanPhamDAO.ThemSanPham(conn,sp);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		try {
-			SanPhamDAO.ThemSize(conn,masp,listSize);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
-		}
-		
-		
-		try {
-			SanPhamDAO.ThemHinh(conn,sp);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error: " + e.getMessage());
+			LocalDate day = LocalDate.now();
+			Date sqlDate = Date.valueOf(day);
+			
+			// Check XSS
+			if (containsXSS(tenSP, response) || containsXSS(hinh, response) || 
+					containsXSS(xuatXu, response) ||
+			    containsXSS(chatLieu, response) || containsXSS(danhMucMoi, response) ||
+			    containsXSS(strMau, response) || containsXSS(strKichThuoc, response) ||
+			    containsXSS(moTa, response)) {
+			    return; // Stop execution if XSS found
+			}
+					
+			try {
+				masp = SanPhamDAO.MaSPTiepTheo(conn);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			SanPham sp = new SanPham(masp, tenSP, moTa, giaBanDau, giamGia, soLuong, sqlDate, xuatXu,chatLieu, 0, dm, ha );
+			
+			try {
+				SanPhamDAO.ThemSanPham(conn,sp);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			try {
+				SanPhamDAO.ThemSize(conn,masp,listSize);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+			
+			
+			try {
+				SanPhamDAO.ThemHinh(conn,sp);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error: " + e.getMessage());
+			}
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid number format in JSON");
+			return;
 		}
 	}
 	

@@ -14,6 +14,7 @@ import java.sql.Date;
 
 import DAO.NguoiDungDAO;
 import DBConnection.ConnectJDBC;
+import Filters.InputSanitizer;
 
 /**
  * Servlet implementation class SignUpController
@@ -40,29 +41,55 @@ public class SignUpController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Validate and sanitize input
 		String fullName = request.getParameter("fullName");
 		String cccd = request.getParameter("cccd");
         String email = request.getParameter("email");
         String dateOfBirthStr = request.getParameter("date");
-        Date dateOfBirth = null;
+        String gender = request.getParameter("gender");
+        String address = request.getParameter("address");
+        String username = request.getParameter("username");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String password = request.getParameter("password");
+
+        // Check null and length
+        if (fullName == null || fullName.length() > 100 ||
+            cccd == null || cccd.length() > 20 ||
+            email == null || email.length() > 100 ||
+            dateOfBirthStr == null || dateOfBirthStr.length() > 20 ||
+            gender == null || gender.length() > 10 ||
+            address == null || address.length() > 255 ||
+            username == null || username.length() > 50 ||
+            phoneNumber == null || phoneNumber.length() > 20 ||
+            password == null || password.length() > 100) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
+            return;
+        }
+
+        // Sanitize input
+        fullName = InputSanitizer.sanitize(fullName);
+        cccd = InputSanitizer.sanitize(cccd);
+        email = InputSanitizer.sanitize(email);
+        gender = InputSanitizer.sanitize(gender);
+        address = InputSanitizer.sanitize(address);
+        username = InputSanitizer.sanitize(username);
+        phoneNumber = InputSanitizer.sanitize(phoneNumber);
+        password = InputSanitizer.sanitize(password);
+
+        java.sql.Date dateOfBirth = null;
 		try {
 			dateOfBirth = java.sql.Date.valueOf(dateOfBirthStr);
 		} catch (IllegalArgumentException  e) {
-			e.printStackTrace();
-		};
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid date format");
+			return;
+		}
         
-        String gender = request.getParameter("gender");
         if ("Male".equals(gender)) {
         	gender = "Nam";
 		} else if ("Female".equals(gender)) {
 			gender = "Nữ";
 		}
         
-        String address = request.getParameter("address");
-        String username = request.getParameter("username");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String password = request.getParameter("password");
-
         Connection conn = null;
 		try {
 			conn = new ConnectJDBC().getConnection();
@@ -77,15 +104,11 @@ public class SignUpController extends HttpServlet {
 		
 		try {
 			NguoiDungDAO.DangKy(conn, nguoiDung, address);
-			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			response.getWriter().println("Error: " + e.getMessage());
 		}
-//		request.setAttribute("success", "Đăng ký thành công!");
-//		request.getRequestDispatcher("/views/SignUp.jsp").forward(request, response);
-	//	response.sendRedirect("/project_web");
 		response.sendRedirect("/project_web/views/SignUp.jsp?SignUpSuccess=true");
 	}
 
